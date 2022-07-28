@@ -30,6 +30,7 @@ $ hexo generate
 More info: [Generating](https://hexo.io/docs/generating.html)
 
 ### Deploy to remote sites
+![](a1.jpg)
 
 ``` bash
 $ hexo deploy
