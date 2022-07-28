@@ -105,4 +105,3 @@ deploy:
   type: git
   repo: https://github.com/xiaoyaofeihu/xiaoyaofeihu.github.io
   branch: master
-:
