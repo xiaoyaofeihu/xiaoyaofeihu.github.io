@@ -2,6 +2,8 @@
 title: dependencyManagement与dependencies的区别
 date: 2022-07-31 13:33:41
 tags:
+	- java
+categories: 笔记
 ---
 
 

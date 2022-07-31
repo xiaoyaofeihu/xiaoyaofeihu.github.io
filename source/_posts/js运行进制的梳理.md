@@ -2,6 +2,8 @@
 title: js运行进制的梳理
 date: 2022-07-31 13:33:41
 tags:
+	- JavaScript
+categories: 笔记
 ---
 
 
