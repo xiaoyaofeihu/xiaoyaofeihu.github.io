@@ -1,3 +1,10 @@
+---
+title: Date获取7天后的日期
+date: 2022-07-31 13:33:41
+tags:
+---
+
+```
 1、 DateUtils.addDays();
 2、 private static Date getAfterDay(Date date, int diff) {
         Calendar calendar = Calendar.getInstance();
@@ -5,3 +12,4 @@
         calendar.add(Calendar.DATE, diff);
         return calendar.getTime();
     }
+```
