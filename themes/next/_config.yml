@@ -46,13 +46,13 @@ index_with_subtitle: false
 
 # When running the site in a subdirectory (e.g. domain.tld/blog), remove the leading slash (/archives -> archives)
 menu:
-  home: /
-  #categories: /categories/
-  #about: /about/
-  archives: /archives/
-  tags: /tags/
-  #sitemap: /sitemap.xml
-  #commonweal: /404/
+  home: / || home
+  categories: /categories/ || th
+  about: /about/ || user
+  archives: /archives/ || archive
+  tags: /tags/ || tags
+  sitemap: /sitemap.xml || sitemap
+  # commonweal: /404/
 
 # Enable/Disable menu icons.
 # Icon Mapping:
@@ -70,7 +70,9 @@ menu_icons:
   archives: archive
   sitemap: sitemap
   commonweal: heartbeat
-
+menu_settings:
+  icons: true
+  badges: true
 
 # ---------------------------------------------------------------
 # Scheme Settings
@@ -186,6 +188,7 @@ save_scroll: false
 # Automatically excerpt description in homepage as preamble text.
 excerpt_description: true
 
+read_more_btn: true
 # Automatically Excerpt. Not recommend.
 # Please use <!-- more --> in the post to control excerpt accurately.
 auto_excerpt:
@@ -196,7 +199,7 @@ auto_excerpt:
 post_meta:
   item_text: true
   created_at: true
-  updated_at: false
+  updated_at: true
   categories: true
 
 # Post wordcount display settings
@@ -668,3 +671,10 @@ images: images
 
 # Theme version
 version: 5.1.2
+
+
+back2top:
+  enable: true
+  sidebar: false
+  scrollpercent: true
+
