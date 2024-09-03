@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="权限," />
 
 
 
@@ -94,16 +94,17 @@
 
 
 
-<meta name="description" content="java版opencv之Javacv各种场景使用案例————————————————版权声明：本文为CSDN博主「jwolf2」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。原文链接：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_39506978&#x2F;article&#x2F;details&#x2F;133251234 java opencv 基本操作6https:&#x2F;&#x2F;blog.">
+<meta name="description" content="SpringSecurity+ oauth2实现同账号多端同时登录参考链接：https:&#x2F;&#x2F;blog.csdn.net&#x2F;m0_67391377&#x2F;article&#x2F;details&#x2F;126509478    单点登录：https:&#x2F;&#x2F;mp.weixin.qq.com&#x2F;s&#x2F;DGFFPl93kZxS5G_DSFTBDA    多端登录：https:&#x2F;&#x2F;blog.csdn.net&#x2F;zhourenfei17&#x2F;a">
 <meta property="og:type" content="article">
-<meta property="og:title" content="余声-个人博客">
-<meta property="og:url" content="http://example.com/2024/09/03/javacv%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:title" content="SpringSecurity+ oauth2实现同账号多端同时登录">
+<meta property="og:url" content="http://example.com/2022/07/31/SpringSecurity+%20oauth2%E5%AE%9E%E7%8E%B0%E5%90%8C%E8%B4%A6%E5%8F%B7%E5%A4%9A%E7%AB%AF%E5%90%8C%E6%97%B6%E7%99%BB%E5%BD%95/index.html">
 <meta property="og:site_name" content="余声-个人博客">
-<meta property="og:description" content="java版opencv之Javacv各种场景使用案例————————————————版权声明：本文为CSDN博主「jwolf2」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。原文链接：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_39506978&#x2F;article&#x2F;details&#x2F;133251234 java opencv 基本操作6https:&#x2F;&#x2F;blog.">
+<meta property="og:description" content="SpringSecurity+ oauth2实现同账号多端同时登录参考链接：https:&#x2F;&#x2F;blog.csdn.net&#x2F;m0_67391377&#x2F;article&#x2F;details&#x2F;126509478    单点登录：https:&#x2F;&#x2F;mp.weixin.qq.com&#x2F;s&#x2F;DGFFPl93kZxS5G_DSFTBDA    多端登录：https:&#x2F;&#x2F;blog.csdn.net&#x2F;zhourenfei17&#x2F;a">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-09-03T03:15:10.161Z">
-<meta property="article:modified_time" content="2024-09-03T03:15:10.161Z">
+<meta property="article:published_time" content="2022-07-31T13:33:41.000Z">
+<meta property="article:modified_time" content="2024-09-03T03:25:16.308Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="权限">
 <meta name="twitter:card" content="summary">
 
 
@@ -133,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="http://example.com/2024/09/03/javacv 学习笔记/"/>
+  <link rel="canonical" href="http://example.com/2022/07/31/SpringSecurity+ oauth2实现同账号多端同时登录/"/>
 
 
 
 
 
-  <title> | 余声-个人博客</title>
+  <title>SpringSecurity+ oauth2实现同账号多端同时登录 | 余声-个人博客</title>
   
 
 
@@ -292,7 +293,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/03/javacv%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/31/SpringSecurity+%20oauth2%E5%AE%9E%E7%8E%B0%E5%90%8C%E8%B4%A6%E5%8F%B7%E5%A4%9A%E7%AB%AF%E5%90%8C%E6%97%B6%E7%99%BB%E5%BD%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -309,7 +310,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline"></h1>
+          <h1 class="post-title" itemprop="name headline">SpringSecurity+ oauth2实现同账号多端同时登录</h1>
         
 
         <div class="post-meta">
@@ -321,8 +322,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2024-09-03T03:15:10+00:00">
-                2024-09-03
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-07-31T13:33:41+00:00">
+                2022-07-31
               </time>
             
 
@@ -337,12 +338,34 @@
               
                 <span class="post-meta-item-text">Post modified</span>
               
-              <time title="Post modified" itemprop="dateModified" datetime="2024-09-03T03:15:10+00:00">
+              <time title="Post modified" itemprop="dateModified" datetime="2024-09-03T03:25:16+00:00">
                 2024-09-03
               </time>
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -402,8 +425,11 @@
       
 
       
-        <h1 id="java版opencv之Javacv各种场景使用案例"><a href="#java版opencv之Javacv各种场景使用案例" class="headerlink" title="java版opencv之Javacv各种场景使用案例"></a>java版opencv之Javacv各种场景使用案例</h1><p>————————————————<br>版权声明：本文为CSDN博主「jwolf2」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_39506978/article/details/133251234">https://blog.csdn.net/qq_39506978/article/details/133251234</a></p>
-<h1 id="java-opencv-基本操作6"><a href="#java-opencv-基本操作6" class="headerlink" title="java opencv 基本操作6"></a>java opencv 基本操作6</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/kan_Feng/article/details/126456760">https://blog.csdn.net/kan_Feng/article/details/126456760</a></p>
+        <h1 id="SpringSecurity-oauth2实现同账号多端同时登录"><a href="#SpringSecurity-oauth2实现同账号多端同时登录" class="headerlink" title="SpringSecurity+ oauth2实现同账号多端同时登录"></a>SpringSecurity+ oauth2实现同账号多端同时登录</h1><p>参考链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_67391377/article/details/126509478">https://blog.csdn.net/m0_67391377/article/details/126509478</a><br>    单点登录：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/DGFFPl93kZxS5G_DSFTBDA">https://mp.weixin.qq.com/s/DGFFPl93kZxS5G_DSFTBDA</a><br>    多端登录：<a target="_blank" rel="noopener" href="https://blog.csdn.net/zhourenfei17/article/details/88826911">https://blog.csdn.net/zhourenfei17/article/details/88826911</a></p>
+<h1 id="shiro中的Realm如何使用"><a href="#shiro中的Realm如何使用" class="headerlink" title="shiro中的Realm如何使用"></a>shiro中的Realm如何使用</h1><p>参考链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_54849873/article/details/124345270">https://blog.csdn.net/m0_54849873/article/details/124345270</a></p>
+<h1 id="shiro域（安全数据源）"><a href="#shiro域（安全数据源）" class="headerlink" title="shiro域（安全数据源）"></a>shiro域（安全数据源）</h1><pre><code>shiro从Realm获取安全的数据（例如用户，角色，权限等）
+SecurityManager需要进行身份验证就必须从Realm中获取到一个合法的用户身份，从而比较用户身份是否合法，同时在SecurityManager获取身份的同时Realm也需要维护一套用户身份用来判断用户是否能执行某项操作
+</code></pre>
 
       
     </div>
@@ -427,6 +453,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%9D%83%E9%99%90/" rel="tag"># 权限</a>
+          
+        </div>
+      
 
       
       
@@ -436,8 +468,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2024/09/03/shiro%20%E6%B3%A8%E8%A7%A3@RequiresPermissions/" rel="next" title="">
-                <i class="fa fa-chevron-left"></i> 
+              <a href="/2022/07/31/cookie%E5%92%8Csession%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%88%E5%89%8D%E5%90%8E%E7%AB%AF%EF%BC%89/" rel="next" title="cookie和session的区别">
+                <i class="fa fa-chevron-left"></i> cookie和session的区别
               </a>
             
           </div>
@@ -446,8 +478,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2024/09/03/hello-world/" rel="prev" title="Hello">
-                Hello <i class="fa fa-chevron-right"></i>
+              <a href="/2022/07/31/Date%E8%8E%B7%E5%8F%967%E5%A4%A9%E5%90%8E%E7%9A%84%E6%97%A5%E6%9C%9F/" rel="prev" title="Date获取7天后的日期">
+                Date获取7天后的日期 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -547,7 +579,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">tags</span>
               
             </div>
@@ -582,7 +614,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#java%E7%89%88opencv%E4%B9%8BJavacv%E5%90%84%E7%A7%8D%E5%9C%BA%E6%99%AF%E4%BD%BF%E7%94%A8%E6%A1%88%E4%BE%8B"><span class="nav-number">1.</span> <span class="nav-text">java版opencv之Javacv各种场景使用案例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#java-opencv-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C6"><span class="nav-number">2.</span> <span class="nav-text">java opencv 基本操作6</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SpringSecurity-oauth2%E5%AE%9E%E7%8E%B0%E5%90%8C%E8%B4%A6%E5%8F%B7%E5%A4%9A%E7%AB%AF%E5%90%8C%E6%97%B6%E7%99%BB%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">SpringSecurity+ oauth2实现同账号多端同时登录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#shiro%E4%B8%AD%E7%9A%84Realm%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">shiro中的Realm如何使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#shiro%E5%9F%9F%EF%BC%88%E5%AE%89%E5%85%A8%E6%95%B0%E6%8D%AE%E6%BA%90%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">shiro域（安全数据源）</span></a></li></ol></div>
             
 
           </div>
