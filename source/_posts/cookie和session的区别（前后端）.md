@@ -1,3 +1,11 @@
+---
+title: cookie和session的区别
+date: 2022-07-31 13:33:41
+tags:
+	- cookie session
+categories: 笔记
+---
+
 # cookie 和 session 的区别
 # localstorage 和cookie 的区别
 + 都可以用来做本地存储，实现数据的持久化,区别如下

@@ -1,3 +1,11 @@
+---
+title: Spring Joinpoint类注解
+date: 2022-07-31 13:33:41
+tags:
+	- shiro
+categories: 笔记
+---
+
 # Spring Joinpoint类注解
     joinpoint是AOP 的连接点（一个连接点代表一个被代理的方法）
         静态连接点就是被代理的方法本身，可以直接通过getStaticPart方法调用，动态连接点就是对静态方法之外的增强方法；

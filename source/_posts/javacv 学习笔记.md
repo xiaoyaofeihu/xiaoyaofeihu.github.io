@@ -1,3 +1,11 @@
+---
+title: javacv学习笔记
+date: 2022-07-31 13:33:41
+tags:
+	- javacv
+categories: 笔记
+---
+
 # java版opencv之Javacv各种场景使用案例
 
 ————————————————
