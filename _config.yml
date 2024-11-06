@@ -7,13 +7,13 @@ title: 余声-个人博客
 subtitle: ''
 description: ''
 keywords:
-author: John Doe
-language: zh-CN
+author: javayun
+language: zh-Hans
 timezone: ''
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: https://xiaoyaofeihu.github.io/project
+url: https://xiaoyaofeihu.github.io/
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -29,7 +29,6 @@ category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
 skip_render:
-
 # Writing
 new_post_name: :title.md # File name of new posts
 default_layout: post

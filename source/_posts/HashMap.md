@@ -5,8 +5,11 @@ tags:
 	- 集合
 categories: java
 ---
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> a5eb6f5203a7e03c21785b519967b54588c89db8
 ## HashMap是Java中一种非常重要的数据结构，它基于哈希表的原理，实现了对键值对（key-value pair）的快速存储和访问。下面详细解释HashMap的数据结构以及其在JDK 1.8中的变化。
 
 ### HashMap的基本数据结构
