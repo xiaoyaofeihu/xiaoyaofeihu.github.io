@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<html class="theme-next gemini use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -39,7 +39,7 @@
 
   
   
-  <link href="/project/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -73,9 +73,9 @@
 
 
 
-<link href="/project/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/project/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
   <meta name="keywords" content="并发," />
@@ -87,7 +87,7 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/project/favicon.ico?v=5.1.2" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
 
 
 
@@ -97,12 +97,12 @@
 <meta name="description" content="并发synchronized同一时刻只能一个线程执行代码块可以修饰方法和代码块如何实现可见性问题 实现可见性的过程  获取互斥锁  清空本地代码，将主内存中的最新拷贝到本地内存  将更改后共享变量值刷新到主内存  释放互斥锁     如何实现同步 都是使用mointorenter和monitorexit两个JVM指令实现  什么是管程  管理共享变量以及对共享变量操作过程，使得支持并发  线程可以">
 <meta property="og:type" content="article">
 <meta property="og:title" content="并发笔记">
-<meta property="og:url" content="https://xiaoyaofeihu.github.io/project/2024/10/10/%E5%B9%B6%E5%8F%91/index.html">
+<meta property="og:url" content="https://xiaoyaofeihu.github.io/2024/10/10/%E5%B9%B6%E5%8F%91/index.html">
 <meta property="og:site_name" content="余声-个人博客">
 <meta property="og:description" content="并发synchronized同一时刻只能一个线程执行代码块可以修饰方法和代码块如何实现可见性问题 实现可见性的过程  获取互斥锁  清空本地代码，将主内存中的最新拷贝到本地内存  将更改后共享变量值刷新到主内存  释放互斥锁     如何实现同步 都是使用mointorenter和monitorexit两个JVM指令实现  什么是管程  管理共享变量以及对共享变量操作过程，使得支持并发  线程可以">
 <meta property="og:locale">
 <meta property="article:published_time" content="2024-10-10T17:33:00.000Z">
-<meta property="article:modified_time" content="2024-10-31T08:32:36.301Z">
+<meta property="article:modified_time" content="2024-11-06T06:08:19.447Z">
 <meta property="article:author" content="javayun">
 <meta property="article:tag" content="并发">
 <meta name="twitter:card" content="summary">
@@ -113,7 +113,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '',
-    scheme: 'Muse',
+    scheme: 'Gemini',
     sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
     tabs: true,
@@ -134,7 +134,7 @@
 
 
 
-  <link rel="canonical" href="https://xiaoyaofeihu.github.io/project/2024/10/10/并发/"/>
+  <link rel="canonical" href="https://xiaoyaofeihu.github.io/2024/10/10/并发/"/>
 
 
 
@@ -174,7 +174,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/project/"  class="brand" rel="start">
+      <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">余声-个人博客</span>
         <span class="logo-line-after"><i></i></span>
@@ -202,7 +202,7 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/project/%20%7C%7C%20home" rel="section">
+          <a href="/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
@@ -212,7 +212,7 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/project/categories/%20%7C%7C%20th" rel="section">
+          <a href="/categories/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
@@ -221,18 +221,8 @@
         </li>
       
         
-        <li class="menu-item menu-item-about">
-          <a href="/project/about/%20%7C%7C%20user" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
-          </a>
-        </li>
-      
-        
         <li class="menu-item menu-item-archives">
-          <a href="/project/archives/%20%7C%7C%20archive" rel="section">
+          <a href="/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
@@ -242,21 +232,11 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/project/tags/%20%7C%7C%20tags" rel="section">
+          <a href="/tags/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-sitemap">
-          <a href="/project/sitemap.xml%20%7C%7C%20sitemap" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
-            
-            站点地图
           </a>
         </li>
       
@@ -293,12 +273,12 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/project/project/2024/10/10/%E5%B9%B6%E5%8F%91/">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/%E5%B9%B6%E5%8F%91/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/project/images/11.jpg">
+      <meta itemprop="image" content="/images/11.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -338,8 +318,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-10-31T08:32:36+00:00">
-                2024-10-31
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-06T06:08:19+00:00">
+                2024-11-06
               </time>
             
           </span>
@@ -357,7 +337,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/project/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
                     <span itemprop="name">笔记</span>
                   </a>
                 </span>
@@ -626,7 +606,7 @@
       
         <div class="post-tags">
           
-            <a href="/project/tags/%E5%B9%B6%E5%8F%91/" rel="tag"># 并发</a>
+            <a href="/tags/%E5%B9%B6%E5%8F%91/" rel="tag"># 并发</a>
           
         </div>
       
@@ -639,8 +619,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/project/2024/09/01/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/" rel="next" title="微服务教程笔记">
-                <i class="fa fa-chevron-left"></i> 微服务教程笔记
+              <a href="/2024/10/10/%E6%8E%92%E5%BA%8F/" rel="next" title="Java中几种集合的排序方式">
+                <i class="fa fa-chevron-left"></i> Java中几种集合的排序方式
               </a>
             
           </div>
@@ -649,8 +629,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/project/2024/10/31/websokcet%E9%97%AE%E9%A2%98/" rel="prev" title="">
-                 <i class="fa fa-chevron-right"></i>
+              <a href="/2024/10/10/%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%96%B9%E5%BC%8F/" rel="prev" title="创建线程的方式">
+                创建线程的方式 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -716,7 +696,7 @@
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="/project/images/11.jpg"
+               src="/images/11.jpg"
                alt="" />
           <p class="site-author-name" itemprop="name"></p>
            
@@ -727,8 +707,8 @@
 
           
             <div class="site-state-item site-state-posts">
-              <a href="/project/archives/%20%7C%7C%20archive">
-                <span class="site-state-item-count">18</span>
+              <a href="/archives/">
+                <span class="site-state-item-count">29</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -739,7 +719,7 @@
             
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -750,7 +730,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
@@ -823,7 +803,7 @@
 <div class="theme-info">
   主题 -
   <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Muse
+    NexT.Gemini
   </a>
 </div>
 
@@ -873,46 +853,53 @@
 
 
   
-  <script type="text/javascript" src="/project/lib/jquery/index.js?v=2.1.3"></script>
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
 
   
-  <script type="text/javascript" src="/project/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
 
   
-  <script type="text/javascript" src="/project/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
 
   
-  <script type="text/javascript" src="/project/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
 
   
-  <script type="text/javascript" src="/project/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
 
   
-  <script type="text/javascript" src="/project/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/project/js/src/utils.js?v=5.1.2"></script>
-
-  <script type="text/javascript" src="/project/js/src/motion.js?v=5.1.2"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/project/js/src/scrollspy.js?v=5.1.2"></script>
-<script type="text/javascript" src="/project/js/src/post-details.js?v=5.1.2"></script>
-
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
 
 
   
 
 
-  <script type="text/javascript" src="/project/js/src/bootstrap.js?v=5.1.2"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
 
 
 
