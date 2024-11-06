@@ -5,11 +5,7 @@ tags:
 	- 集合
 categories: java
 ---
-<<<<<<< HEAD
 
-
-=======
->>>>>>> a5eb6f5203a7e03c21785b519967b54588c89db8
 在Java中，`HashMap`、`Hashtable`和`ConcurrentHashMap`都是用于存储键值对的数据结构，但它们在使用场景和内部实现上有显著的区别。下面是对这些区别的详细解释：
 
 ### 线程安全

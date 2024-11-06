@@ -5,11 +5,7 @@ tags:
 	- 并发
 categories: 笔记
 ---
-<<<<<<< HEAD
 
-
-=======
->>>>>>> a5eb6f5203a7e03c21785b519967b54588c89db8
 ## synchronized
 ### 1. synchronized 的使用方法
 
