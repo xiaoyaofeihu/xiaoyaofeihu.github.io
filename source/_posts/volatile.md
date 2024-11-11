@@ -1,4 +1,10 @@
-
+---
+title: volatile笔记 
+date: 2024-11-10 17:33:00
+tags:
+	- 并发
+categories: 笔记
+---
 
 ## volatile能保证原子性吗？
 **volatile本身不是锁**
