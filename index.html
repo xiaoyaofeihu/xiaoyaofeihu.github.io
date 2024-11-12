@@ -270,6 +270,473 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/11/12/%E6%9C%AC%E5%9C%B0%E7%BC%93%E5%AD%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/11/12/%E6%9C%AC%E5%9C%B0%E7%BC%93%E5%AD%98/" itemprop="url">本地缓存</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-11-12T17:33:00+00:00">
+                2024-11-12
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-12T11:27:35+00:00">
+                2024-11-12
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%93%E5%AD%98/" itemprop="url" rel="index">
+                    <span itemprop="name">缓存</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="多级缓存"><a href="#多级缓存" class="headerlink" title="多级缓存"></a>多级缓存</h3><p>多级缓存是通过在数据访问路径的不同层级上部署缓存来提高数据访问效率的技术。通常包括：</p>
+<ol>
+<li><p><strong>本地缓存</strong>：位于应用服务器本地，访问速度非常快，但容量有限。常用的本地缓存框架有Caffeine和Guava，它们提供了缓存过期策略、缓存项管理等高级功能。</p>
+</li>
+<li><p><strong>分布式缓存</strong>：通常部署在多台服务器上，容量大，适合存储热点数据。常用的分布式缓存框架有Redis和Memcached。分布式缓存通过网络访问，速度比本地缓存慢，但提供了更高的可用性和可扩展性。</p>
+</li>
+</ol>
+<h3 id="查询逻辑"><a href="#查询逻辑" class="headerlink" title="查询逻辑"></a>查询逻辑</h3><p>在多级缓存系统中，查询数据的逻辑通常是：</p>
+<ol>
+<li>首先查询本地缓存。</li>
+<li>如果本地缓存未命中，则查询分布式缓存。</li>
+<li>如果分布式缓存命中，则将结果存入本地缓存（通常称为“回写”或“预热”缓存）。</li>
+<li>如果分布式缓存也未命中，则可能需要查询数据库或其他持久化存储。</li>
+</ol>
+<h3 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h3><p>您提供的代码示例中有几个问题和遗漏，下面是修正后的版本：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> String <span class="title function_">query</span><span class="params">(String key)</span> &#123;</span><br><span class="line">    <span class="comment">// 查询本地缓存</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">localResult</span> <span class="operator">=</span> localCache.get(key);</span><br><span class="line">    <span class="keyword">if</span> (localResult != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="comment">// 本地缓存命中，直接返回结果</span></span><br><span class="line">        <span class="keyword">return</span> localResult;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 本地缓存未命中，查询分布式缓存</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">remoteResult</span> <span class="operator">=</span> remoteCache.get(key);</span><br><span class="line">    <span class="keyword">if</span> (remoteResult != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="comment">// 分布式缓存命中，将结果存入本地缓存</span></span><br><span class="line">        localCache.put(key, remoteResult); <span class="comment">// 注意：这里需要指定key和value</span></span><br><span class="line">        <span class="keyword">return</span> remoteResult;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 分布式缓存也未命中，这里可能需要处理，例如查询数据库</span></span><br><span class="line">    <span class="comment">// 注意：此示例未包含该逻辑</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果没有其他数据源或查询失败，返回null或适当的默认值</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="特殊场景：黑名单与Bloom-Filter"><a href="#特殊场景：黑名单与Bloom-Filter" class="headerlink" title="特殊场景：黑名单与Bloom Filter"></a>特殊场景：黑名单与Bloom Filter</h3><p>对于某些特殊场景，如黑名单检查，可以使用Bloom Filter来进一步优化。Bloom Filter是一种空间效率很高的概率型数据结构，用于判断一个元素是否在一个集合中。它允许一定程度的假阳性（即判断为在集合中但实际上不在），但不会有假阴性（即判断为不在集合中但实际上在）。</p>
+<p>在使用Bloom Filter作为本地缓存的场景中，如果Bloom Filter判断某个元素可能在集合中（即可能命中黑名单），则需要再次查询分布式缓存或数据库以确认。如果确认命中，则可以进行相应的处理；如果未命中，则可以直接返回结果。</p>
+<p>这种组合使用Bloom Filter和分布式缓存的方法可以在保持高性能的同时，降低对分布式缓存的访问频率和带宽消耗。</p>
+<p>你提出的问题涉及到了本地缓存一致性的保证方法，这是一个在使用本地缓存时经常需要考虑的问题。以下是对你问题的详细解答：</p>
+<h3 id="如何保证本地缓存的一致性？"><a href="#如何保证本地缓存的一致性？" class="headerlink" title="如何保证本地缓存的一致性？"></a>如何保证本地缓存的一致性？</h3><p>本地缓存的一致性问题主要是由于数据在多个节点（或进程）间的不同步更新导致的。为了解决这个问题，我们可以采取以下几种策略：</p>
+<ol>
+<li><p><strong>使用版本号或时间戳</strong>：</p>
+<ul>
+<li>当本地缓存更新时，将新的数据及其版本号或时间戳存储到数据库中。</li>
+<li>其他节点在访问本地缓存时，先检查数据库中的版本号或时间戳，如果发现自己本地缓存的版本较旧，则从数据库中更新本地缓存。</li>
+</ul>
+</li>
+<li><p><strong>借助配置中心</strong>：</p>
+<ul>
+<li>当本地缓存更新时，将变更通知到配置中心。</li>
+<li>配置中心将变更推送到所有相关节点，节点监听配置变化并更新本地缓存。</li>
+</ul>
+</li>
+<li><p><strong>使用消息队列（MQ）</strong>：</p>
+<ul>
+<li>当本地缓存更新时，发送一个广播消息到消息队列。</li>
+<li>所有订阅了该消息的节点接收到消息后，更新自己的本地缓存。</li>
+</ul>
+</li>
+<li><p><strong>设置合理的失效时长</strong>：</p>
+<ul>
+<li>根据业务对数据一致性的需求，设置本地缓存的失效时长。</li>
+<li>在失效时长内，本地缓存的数据是有效的，但可能不是最新的。失效后，查询将触发从分布式缓存或数据库中更新本地缓存。</li>
+</ul>
+</li>
+<li><p><strong>使用自动更新策略</strong>：</p>
+<ul>
+<li>一些缓存库（如Caffeine）支持自动更新策略。</li>
+<li>可以配置定时刷新策略，让缓存库在后台定期从分布式缓存或数据库中更新数据。</li>
+</ul>
+</li>
+</ol>
+<h3 id="注意事项："><a href="#注意事项：" class="headerlink" title="注意事项："></a>注意事项：</h3><ul>
+<li><strong>评估数据变化频率</strong>：频繁更新的数据不适合放在本地缓存中。</li>
+<li><strong>评估业务一致性需求</strong>：根据业务需求决定是否使用本地缓存，以及能接受的不一致时长。</li>
+<li><strong>选择合适的缓存库</strong>：一些缓存库提供了丰富的配置选项，可以帮助更好地管理本地缓存。</li>
+</ul>
+<h3 id="RocketMQ消息分发："><a href="#RocketMQ消息分发：" class="headerlink" title="RocketMQ消息分发："></a>RocketMQ消息分发：</h3><p>RocketMQ支持两种消息模式：广播消费和集群消费。</p>
+<ul>
+<li><strong>广播消费</strong>：消息会发送给集群内的所有消费者，确保每个消费者都能收到消息。这种模式适用于需要向所有消费者广播消息的场景。</li>
+<li><strong>集群消费</strong>：消息只会被发送到集群中的一个消费者（根据负载均衡算法选择）。这种模式适用于需要处理大量消息且不需要每个消费者都收到所有消息的场景。</li>
+</ul>
+<h3 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h3><p>保证本地缓存的一致性是一个复杂的问题，需要根据业务需求和数据变化频率来选择合适的策略。在实际应用中，通常会结合多种策略来确保数据的一致性和系统的性能。同时，也需要关注缓存库的选择和配置，以充分利用其提供的特性来优化系统性能。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/11/12/%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8B%E5%A4%9A%E7%BA%A7%E7%BC%93%E5%AD%98%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/11/12/%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8B%E5%A4%9A%E7%BA%A7%E7%BC%93%E5%AD%98%E9%97%AE%E9%A2%98/" itemprop="url">高并发下的缓存问题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-11-12T17:33:00+00:00">
+                2024-11-12
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-12T11:27:35+00:00">
+                2024-11-12
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%AB%98%E5%B9%B6%E5%8F%91/" itemprop="url" rel="index">
+                    <span itemprop="name">高并发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="在高并发的情况下，特别是当-本地缓存（如-Guava-Caffeine-等）接到每秒-2000-万（QPS）的请求时，系统面临的挑战主要有两个方面："><a href="#在高并发的情况下，特别是当-本地缓存（如-Guava-Caffeine-等）接到每秒-2000-万（QPS）的请求时，系统面临的挑战主要有两个方面：" class="headerlink" title="在高并发的情况下，特别是当 本地缓存（如 Guava, Caffeine 等）接到每秒 2000 万（QPS）的请求时，系统面临的挑战主要有两个方面："></a>在高并发的情况下，特别是当 本地缓存（如 Guava, Caffeine 等）接到每秒 2000 万（QPS）的请求时，系统面临的挑战主要有两个方面：</h2><p>缓存的读写性能瓶颈：即如何高效地处理大量的读写请求。<br>缓存的内存管理问题：如何合理利用内存，以应对大量数据的存储需求，并防止内存泄漏或过载。<br>为了应对这些挑战，可以采取以下几种优化和设计策略：</p>
+<ol>
+<li>选择合适的本地缓存库<br>对于高并发场景，选择一个高效的本地缓存库至关重要。常见的库有：</li>
+</ol>
+<p>Caffeine：一个高性能的 Java 本地缓存库，基于 Google 的 Guava，通过 基于时间的过期策略 和 大小限制 来管理缓存，并提供 异步加载 和 弱引用缓存 支持。<br>Guava：较为成熟的缓存库，但对于高并发处理可能稍逊色于 Caffeine。<br>Caffeine 的性能通常优于 Guava，尤其在处理大量并发请求时，它在 缓存淘汰算法（如 LRU）和 内存管理（如使用弱引用、自动过期等）上做了很多优化。</p>
+<ol start="2">
+<li>内存和缓存的容量管理<br>本地缓存的一个关键问题是如何管理 缓存容量，尤其是在高并发时。可以通过以下方式进行优化：</li>
+</ol>
+<p>设置合理的缓存大小限制：根据应用的内存容量设置合理的缓存大小，避免缓存占用过多内存导致的内存溢出。常见的策略是 按大小（maximumSize）或按时间（expireAfterWrite）限制缓存大小。</p>
+<p>LRU（Least Recently Used）策略：通过限制缓存条目的数量，当缓存的条目数超过限制时，自动淘汰最久未使用的数据。</p>
+<p>自动过期（TTL）：为缓存数据设置一个过期时间（例如 expireAfterWrite 或 expireAfterAccess），避免缓存占用过多内存。</p>
+<p>批量过期机制：在高并发环境下，可以通过批量清除缓存或定期刷新缓存来减少单个请求的压力。</p>
+<ol start="3">
+<li>缓存穿透、雪崩和击穿的处理<br>在高并发情况下，避免 缓存穿透、缓存雪崩 和 缓存击穿 是非常重要的：</li>
+</ol>
+<p>缓存穿透：是指查询的数据在缓存和数据库中都不存在。为了避免这种情况，可以使用 布隆过滤器（Bloom Filter）来快速判断某个数据是否存在，避免无效查询。</p>
+<p>缓存雪崩：是指缓存中的大量数据在同一时刻过期，导致大量请求直接访问数据库。可以通过以下方式避免：</p>
+<p>设置 不同的过期时间（例如，随机化过期时间，避免所有缓存同时过期）。<br>使用 后台异步更新 机制，确保缓存能够及时更新。<br>缓存击穿：是指某一时刻大量并发请求访问同一缓存条目，导致缓存失效后直接访问数据库。可以通过以下方式避免：</p>
+<p>使用 锁机制（例如 ReentrantLock、synchronized 等）来确保只有一个请求能去加载数据，其他请求等待加载完成后共享缓存结果。<br>使用 队列或 信号量 来限制并发请求对数据库的访问。<br>4. 使用异步加载和缓存预加载<br>在高并发场景下， 异步加载 缓存可以显著提高性能，避免同步加载带来的性能瓶颈。</p>
+<p>异步加载：通过异步方式加载缓存数据，使得当缓存数据不存在时，其他线程可以并发等待数据的加载结果，而不是阻塞。</p>
+<p>缓存预加载：对于一些访问频繁的数据，可以提前预加载到缓存中，避免高并发时大量缓存未命中的情况。</p>
+<ol start="5">
+<li>多级缓存策略<br>在高并发的情况下，采用 多级缓存 策略非常有效。例如：</li>
+</ol>
+<p>本地缓存 + 分布式缓存：对于极其频繁的查询，使用本地缓存（如 Caffeine）进行快速响应；对于数据量较大、频率较低的查询，则使用 分布式缓存（如 Redis）来保证数据的一致性和持久性。</p>
+<p>本地缓存与二级缓存结合：当本地缓存未命中时，可以查询 Redis 等分布式缓存。若 Redis 中也没有，则最终回退到数据库。</p>
+<ol start="6">
+<li>限流与请求排队<br>在高并发环境中，可以使用 限流 和 请求排队 技术来避免请求过载，减少对本地缓存和数据库的压力。</li>
+</ol>
+<p>限流：可以通过 令牌桶 或 漏桶算法 实现请求限流，确保系统不会因为过载而崩溃。<br>请求排队：对于高并发请求，可以通过队列对请求进行排队处理，保证系统的稳定性。<br>7. 监控与预警<br>在高并发情况下，必须监控缓存的使用情况、命中率、缓存大小和过期情况等，以便及时发现和处理性能瓶颈。</p>
+<p>监控 缓存命中率 和 缓存填充率，确保缓存系统的健康运行。<br>对 缓存容量、加载时间、过期时间、缓存清除策略 等进行实时监控，及时调整系统参数。<br>8. 分布式缓存的结合<br>在极高 QPS 的情况下，单机本地缓存 可能无法承载如此大的流量，此时可以考虑使用 分布式缓存（如 Redis、Memcached 等）作为备份或辅助缓存。</p>
+<p>分布式缓存 提供了跨机器的缓存能力，能有效扩展缓存容量和处理高并发的请求。<br>与本地缓存结合，采用 分层缓存 模型，将常用的数据放在本地缓存中，其他数据存储在 Redis 等分布式缓存中。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>当面对每秒 2000 万（QPS）的请求时，本地缓存和分布式缓存的设计需要特别注意：</p>
+<p>使用 高效的缓存库（如 Caffeine）来处理高并发的缓存读写。<br>合理设置缓存的 大小限制 和 过期策略，避免内存溢出和缓存过载。<br>通过 多级缓存、异步加载、缓存预加载 和 限流机制 来减轻系统负载，确保系统的稳定性和性能。<br>缓存穿透、缓存雪崩 和 缓存击穿 的问题也需要特别注意，通过布隆过滤器、过期时间随机化、加锁等机制来应对。<br>如果有更多关于高并发缓存设计的具体问题，随时可以提问！</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/11/10/Mysql%E4%BA%8B%E5%8A%A1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +784,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-11T05:27:47+00:00">
-                2024-11-11
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-12T11:27:35+00:00">
+                2024-11-12
               </time>
             
           </span>
@@ -552,8 +1019,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-11T05:27:47+00:00">
-                2024-11-11
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-12T11:27:35+00:00">
+                2024-11-12
               </time>
             
           </span>
@@ -779,8 +1246,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-11T05:27:47+00:00">
-                2024-11-11
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-12T11:27:35+00:00">
+                2024-11-12
               </time>
             
           </span>
@@ -937,6 +1404,210 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/List%E7%9A%84%E9%81%8D%E5%8E%86%E6%96%B9%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/10/List%E7%9A%84%E9%81%8D%E5%8E%86%E6%96%B9%E5%BC%8F/" itemprop="url">List中的遍历方式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-10T17:33:00+00:00">
+                2024-10-10
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-12T11:27:35+00:00">
+                2024-11-12
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li>在Java中，遍历并修改一个List集合是一个常见的操作，但如果不小心处理，可能会遇到<code>ConcurrentModificationException</code>异常，这通常是因为在遍历过程中直接修改了集合的结构（如添加、删除元素）。下面是你提到的几种处理方案及其详细解释：</li>
+</ul>
+<ol>
+<li><p><strong>通过普通的for循环（不建议，可能会漏删）</strong>：<br>使用普通的for循环遍历List，并通过索引直接修改或删除元素。这种方法的问题是，如果删除元素后没有相应地调整索引（例如，连续删除元素时），可能会导致跳过某些元素的检查或索引越界异常。</p>
+</li>
+<li><p><strong>通过普通的for循环进行倒序遍历</strong>：<br>倒序遍历可以避免因删除元素而导致的索引调整问题，因为即使删除了元素，后面的元素索引也不会改变（相对于当前遍历方向）。这种方法可以有效避免漏删的问题。</p>
+</li>
+<li><p><strong>使用迭代器循环</strong>：<br>迭代器提供了一种安全的方式来遍历并修改集合。使用迭代器的<code>remove</code>方法可以安全地删除当前元素，而不会触发<code>ConcurrentModificationException</code>。注意，不能使用集合的<code>remove</code>方法，而应该使用迭代器的<code>remove</code>方法。</p>
+</li>
+<li><p><strong>复制列表</strong>：<br>创建一个原始列表的副本，遍历原始列表，同时在副本上进行删除操作。这种方法是fail-safe的，因为遍历和修改发生在不同的列表上。但这种方法相对复杂，且需要额外的内存来存储副本。此外，如果列表中的元素是复杂对象，可能需要正确地实现<code>equals</code>和<code>hashCode</code>方法以确保正确的删除。</p>
+</li>
+<li><p><strong>使用并发安全的集合类</strong>：<br>使用如<code>CopyOnWriteArrayList</code>这样的线程安全的集合类。这种集合类在修改时创建集合的副本，因此遍历和修改可以安全地进行，但这也可能导致在大量修改时性能下降，因为每次修改都需要复制整个集合。</p>
+</li>
+<li><p><strong>使用Stream的过滤方法</strong>：<br>Java 8引入的Stream API提供了一种声明性的方式来处理集合。通过<code>filter</code>方法，可以创建一个新的Stream，只包含满足特定条件的元素。然后，可以使用<code>collect</code>方法将结果收集到一个新的列表中。这种方法简单高效，因为它避免了在遍历过程中直接修改原始集合。</p>
+</li>
+<li><p><strong>通过<code>removeIf</code>方法</strong>：<br>Java 8的<code>List</code>接口引入了<code>removeIf</code>方法，它接受一个谓词（Predicate），并删除所有满足该谓词的元素。这是一个非常简洁和高效的方法，用于根据条件删除元素。</p>
+</li>
+</ol>
+<p>综上所述，每种方法都有其适用的场景和优缺点。在选择方法时，应考虑集合的大小、修改的频率、内存使用以及对性能的要求。对于大多数情况，使用<code>removeIf</code>或Stream的<code>filter</code>方法是推荐的做法，因为它们既简单又高效。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/HashMap%E5%92%8CHashTable%E7%9A%84%E6%AF%94%E8%BE%83/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -984,8 +1655,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-11T05:27:47+00:00">
-                2024-11-11
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-12T11:27:35+00:00">
+                2024-11-12
               </time>
             
           </span>
@@ -1160,210 +1831,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/List%E7%9A%84%E9%81%8D%E5%8E%86%E6%96%B9%E5%BC%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/10/List%E7%9A%84%E9%81%8D%E5%8E%86%E6%96%B9%E5%BC%8F/" itemprop="url">List中的遍历方式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-10T17:33:00+00:00">
-                2024-10-10
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-11T05:27:47+00:00">
-                2024-11-11
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li>在Java中，遍历并修改一个List集合是一个常见的操作，但如果不小心处理，可能会遇到<code>ConcurrentModificationException</code>异常，这通常是因为在遍历过程中直接修改了集合的结构（如添加、删除元素）。下面是你提到的几种处理方案及其详细解释：</li>
-</ul>
-<ol>
-<li><p><strong>通过普通的for循环（不建议，可能会漏删）</strong>：<br>使用普通的for循环遍历List，并通过索引直接修改或删除元素。这种方法的问题是，如果删除元素后没有相应地调整索引（例如，连续删除元素时），可能会导致跳过某些元素的检查或索引越界异常。</p>
-</li>
-<li><p><strong>通过普通的for循环进行倒序遍历</strong>：<br>倒序遍历可以避免因删除元素而导致的索引调整问题，因为即使删除了元素，后面的元素索引也不会改变（相对于当前遍历方向）。这种方法可以有效避免漏删的问题。</p>
-</li>
-<li><p><strong>使用迭代器循环</strong>：<br>迭代器提供了一种安全的方式来遍历并修改集合。使用迭代器的<code>remove</code>方法可以安全地删除当前元素，而不会触发<code>ConcurrentModificationException</code>。注意，不能使用集合的<code>remove</code>方法，而应该使用迭代器的<code>remove</code>方法。</p>
-</li>
-<li><p><strong>复制列表</strong>：<br>创建一个原始列表的副本，遍历原始列表，同时在副本上进行删除操作。这种方法是fail-safe的，因为遍历和修改发生在不同的列表上。但这种方法相对复杂，且需要额外的内存来存储副本。此外，如果列表中的元素是复杂对象，可能需要正确地实现<code>equals</code>和<code>hashCode</code>方法以确保正确的删除。</p>
-</li>
-<li><p><strong>使用并发安全的集合类</strong>：<br>使用如<code>CopyOnWriteArrayList</code>这样的线程安全的集合类。这种集合类在修改时创建集合的副本，因此遍历和修改可以安全地进行，但这也可能导致在大量修改时性能下降，因为每次修改都需要复制整个集合。</p>
-</li>
-<li><p><strong>使用Stream的过滤方法</strong>：<br>Java 8引入的Stream API提供了一种声明性的方式来处理集合。通过<code>filter</code>方法，可以创建一个新的Stream，只包含满足特定条件的元素。然后，可以使用<code>collect</code>方法将结果收集到一个新的列表中。这种方法简单高效，因为它避免了在遍历过程中直接修改原始集合。</p>
-</li>
-<li><p><strong>通过<code>removeIf</code>方法</strong>：<br>Java 8的<code>List</code>接口引入了<code>removeIf</code>方法，它接受一个谓词（Predicate），并删除所有满足该谓词的元素。这是一个非常简洁和高效的方法，用于根据条件删除元素。</p>
-</li>
-</ol>
-<p>综上所述，每种方法都有其适用的场景和优缺点。在选择方法时，应考虑集合的大小、修改的频率、内存使用以及对性能的要求。对于大多数情况，使用<code>removeIf</code>或Stream的<code>filter</code>方法是推荐的做法，因为它们既简单又高效。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/ThreadLocal/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1411,8 +1878,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-11T05:27:47+00:00">
-                2024-11-11
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-12T11:27:35+00:00">
+                2024-11-12
               </time>
             
           </span>
@@ -1654,8 +2121,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-11T05:27:47+00:00">
-                2024-11-11
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-12T11:27:35+00:00">
+                2024-11-12
               </time>
             
           </span>
@@ -1881,8 +2348,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-11T05:27:47+00:00">
-                2024-11-11
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-12T11:27:35+00:00">
+                2024-11-12
               </time>
             
           </span>
@@ -2241,8 +2708,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-11T05:27:47+00:00">
-                2024-11-11
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-12T11:27:35+00:00">
+                2024-11-12
               </time>
             
           </span>
@@ -2464,8 +2931,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-11T05:27:47+00:00">
-                2024-11-11
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-12T11:27:35+00:00">
+                2024-11-12
               </time>
             
           </span>
@@ -2694,8 +3161,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-11T05:27:47+00:00">
-                2024-11-11
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-12T11:27:35+00:00">
+                2024-11-12
               </time>
             
           </span>
@@ -2914,8 +3381,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-11T05:27:47+00:00">
-                2024-11-11
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-12T11:27:35+00:00">
+                2024-11-12
               </time>
             
           </span>
@@ -3139,8 +3606,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-11T05:27:47+00:00">
-                2024-11-11
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-12T11:27:35+00:00">
+                2024-11-12
               </time>
             
           </span>
@@ -3367,8 +3834,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-11T05:27:47+00:00">
-                2024-11-11
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-12T11:27:35+00:00">
+                2024-11-12
               </time>
             
           </span>
@@ -3574,8 +4041,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-11T05:27:47+00:00">
-                2024-11-11
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-12T11:27:35+00:00">
+                2024-11-12
               </time>
             
           </span>
@@ -3800,8 +4267,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-11T05:27:47+00:00">
-                2024-11-11
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-12T11:27:35+00:00">
+                2024-11-12
               </time>
             
           </span>
@@ -4043,8 +4510,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-11T05:27:47+00:00">
-                2024-11-11
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-12T11:27:35+00:00">
+                2024-11-12
               </time>
             
           </span>
@@ -4244,8 +4711,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-11T05:27:47+00:00">
-                2024-11-11
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-12T11:27:35+00:00">
+                2024-11-12
               </time>
             
           </span>
@@ -4368,396 +4835,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/SpringSecurity+%20oauth2%E5%AE%9E%E7%8E%B0%E5%90%8C%E8%B4%A6%E5%8F%B7%E5%A4%9A%E7%AB%AF%E5%90%8C%E6%97%B6%E7%99%BB%E5%BD%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2022/07/31/SpringSecurity+%20oauth2%E5%AE%9E%E7%8E%B0%E5%90%8C%E8%B4%A6%E5%8F%B7%E5%A4%9A%E7%AB%AF%E5%90%8C%E6%97%B6%E7%99%BB%E5%BD%95/" itemprop="url">SpringSecurity+ oauth2实现同账号多端同时登录</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-07-31T13:33:41+00:00">
-                2022-07-31
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-11T05:27:47+00:00">
-                2024-11-11
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="SpringSecurity-oauth2实现同账号多端同时登录"><a href="#SpringSecurity-oauth2实现同账号多端同时登录" class="headerlink" title="SpringSecurity+ oauth2实现同账号多端同时登录"></a>SpringSecurity+ oauth2实现同账号多端同时登录</h1><p>参考链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_67391377/article/details/126509478">https://blog.csdn.net/m0_67391377/article/details/126509478</a><br>    单点登录：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/DGFFPl93kZxS5G_DSFTBDA">https://mp.weixin.qq.com/s/DGFFPl93kZxS5G_DSFTBDA</a><br>    多端登录：<a target="_blank" rel="noopener" href="https://blog.csdn.net/zhourenfei17/article/details/88826911">https://blog.csdn.net/zhourenfei17/article/details/88826911</a></p>
-<h1 id="shiro中的Realm如何使用"><a href="#shiro中的Realm如何使用" class="headerlink" title="shiro中的Realm如何使用"></a>shiro中的Realm如何使用</h1><p>参考链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_54849873/article/details/124345270">https://blog.csdn.net/m0_54849873/article/details/124345270</a></p>
-<h1 id="shiro域（安全数据源）"><a href="#shiro域（安全数据源）" class="headerlink" title="shiro域（安全数据源）"></a>shiro域（安全数据源）</h1><pre><code>shiro从Realm获取安全的数据（例如用户，角色，权限等）
-SecurityManager需要进行身份验证就必须从Realm中获取到一个合法的用户身份，从而比较用户身份是否合法，同时在SecurityManager获取身份的同时Realm也需要维护一套用户身份用来判断用户是否能执行某项操作
-</code></pre>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/cookie%E5%92%8Csession%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%88%E5%89%8D%E5%90%8E%E7%AB%AF%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2022/07/31/cookie%E5%92%8Csession%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%88%E5%89%8D%E5%90%8E%E7%AB%AF%EF%BC%89/" itemprop="url">cookie和session的区别</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-07-31T13:33:41+00:00">
-                2022-07-31
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-11T05:27:47+00:00">
-                2024-11-11
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="cookie-和-session-的区别"><a href="#cookie-和-session-的区别" class="headerlink" title="cookie 和 session 的区别"></a>cookie 和 session 的区别</h1><h1 id="localstorage-和cookie-的区别"><a href="#localstorage-和cookie-的区别" class="headerlink" title="localstorage 和cookie 的区别"></a>localstorage 和cookie 的区别</h1><ul>
-<li>都可以用来做本地存储，实现数据的持久化,区别如下<ul>
-<li>localstroage存储的内容会多一点，5M；cookie存储的只有4k；</li>
-<li>有效时间不一样；cookie 的有效时间可以自行设置，local可以一直生效；</li>
-<li>请求时cookie可以被携带，同源的cookie信息会自动作为请求头的一部分发给服务端；local不会，一直存储在浏览器端</li>
-</ul>
-</li>
-</ul>
-<h1 id="localstroage-和sessionstroage-的区别"><a href="#localstroage-和sessionstroage-的区别" class="headerlink" title="localstroage 和sessionstroage 的区别"></a>localstroage 和sessionstroage 的区别</h1><ul>
-<li>都是前端的本地存储（保存在客户端，不与服务器进行交互通信，存储数据的大小一样，只能存储字符串类型的数据）<ul>
-<li>生命周期不同，local是永久的，除非主动删除；session的生命周期仅在当前会话下有效，在同源的窗口中始终存在的数据（只要浏览器的窗口没有关闭，即使刷新页面或者进入同源的另一个页面数据依旧存在，但在关闭浏览器窗口就会被销毁）</li>
-</ul>
-</li>
-</ul>
-<h1 id="session-和sessionStroage-的区别"><a href="#session-和sessionStroage-的区别" class="headerlink" title="session 和sessionStroage 的区别"></a>session 和sessionStroage 的区别</h1><ul>
-<li>session主要的作用是维持会话状态的key，sessionStroage则是存储会话期间的数据</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4808,7 +4885,7 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-count">33</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -4819,7 +4896,7 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -4830,7 +4907,7 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
