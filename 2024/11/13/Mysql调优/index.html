@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Mysql," />
+  <meta name="keywords" content="优化," />
 
 
 
@@ -94,17 +94,17 @@
 
 
 
-<meta name="description" content="一、事务事务指的是逻辑上的一组操作，组成这组操作的各个单元要么全都成功，要么全都失败。事务作用：保证在一个事务中多次SQL操作要么全都成功，要么全都失败。 1、特性 原子性：事务的操作要么都发生，要么都不发生； 一致性：事务前后数据的完整性必须保持一致； 隔离性：一个用户的事务不能被其他用户的事务干扰；多个并发事务之间的数据相互隔离；隔离性由隔离级别保障！ 持久性：事务一旦提交，对数据的修改时永久">
+<meta name="description" content="数据库调优到底调什么？ 调SQL语句：根据需求创建结构良好的SQL语句【实现同一个需求，SQL语句写法很多】 调索引：索引创建原则 调数据库表结构 调MySQL配置：最大连接数，连接超时，线程缓存，查询缓存，排序缓存，连接查询缓存… 调MySQL宿主机OS：TCP连接数，打开文件数，线程栈大小… 调服务器硬件：更多核CPU、更大内存 MySQL客户端：连接池（MaxActive，MaxWait），">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Mysql事务">
-<meta property="og:url" content="https://xiaoyaofeihu.github.io/2024/11/10/Mysql%E4%BA%8B%E5%8A%A1/index.html">
+<meta property="og:title" content="Mysql数据库调优">
+<meta property="og:url" content="https://xiaoyaofeihu.github.io/2024/11/13/Mysql%E8%B0%83%E4%BC%98/index.html">
 <meta property="og:site_name" content="余声-个人博客">
-<meta property="og:description" content="一、事务事务指的是逻辑上的一组操作，组成这组操作的各个单元要么全都成功，要么全都失败。事务作用：保证在一个事务中多次SQL操作要么全都成功，要么全都失败。 1、特性 原子性：事务的操作要么都发生，要么都不发生； 一致性：事务前后数据的完整性必须保持一致； 隔离性：一个用户的事务不能被其他用户的事务干扰；多个并发事务之间的数据相互隔离；隔离性由隔离级别保障！ 持久性：事务一旦提交，对数据的修改时永久">
+<meta property="og:description" content="数据库调优到底调什么？ 调SQL语句：根据需求创建结构良好的SQL语句【实现同一个需求，SQL语句写法很多】 调索引：索引创建原则 调数据库表结构 调MySQL配置：最大连接数，连接超时，线程缓存，查询缓存，排序缓存，连接查询缓存… 调MySQL宿主机OS：TCP连接数，打开文件数，线程栈大小… 调服务器硬件：更多核CPU、更大内存 MySQL客户端：连接池（MaxActive，MaxWait），">
 <meta property="og:locale">
-<meta property="article:published_time" content="2024-11-10T17:33:00.000Z">
+<meta property="article:published_time" content="2024-11-13T17:33:00.000Z">
 <meta property="article:modified_time" content="2024-11-13T02:51:11.046Z">
 <meta property="article:author" content="javayun">
-<meta property="article:tag" content="Mysql">
+<meta property="article:tag" content="优化">
 <meta name="twitter:card" content="summary">
 
 
@@ -134,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="https://xiaoyaofeihu.github.io/2024/11/10/Mysql事务/"/>
+  <link rel="canonical" href="https://xiaoyaofeihu.github.io/2024/11/13/Mysql调优/"/>
 
 
 
 
 
-  <title>Mysql事务 | 余声-个人博客</title>
+  <title>Mysql数据库调优 | 余声-个人博客</title>
   
 
 
@@ -273,7 +273,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/11/10/Mysql%E4%BA%8B%E5%8A%A1/">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/11/13/Mysql%E8%B0%83%E4%BC%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -290,7 +290,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Mysql事务</h1>
+          <h1 class="post-title" itemprop="name headline">Mysql数据库调优</h1>
         
 
         <div class="post-meta">
@@ -302,8 +302,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-11-10T17:33:00+00:00">
-                2024-11-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-11-13T17:33:00+00:00">
+                2024-11-13
               </time>
             
 
@@ -405,58 +405,55 @@
       
 
       
-        <h2 id="一、事务"><a href="#一、事务" class="headerlink" title="一、事务"></a>一、事务</h2><p><strong>事务指的是逻辑上的一组操作，组成这组操作的各个单元要么全都成功，要么全都失败。</strong><br><strong>事务作用：保证在一个事务中多次SQL操作要么全都成功，要么全都失败。</strong></p>
-<h3 id="1、特性"><a href="#1、特性" class="headerlink" title="1、特性"></a>1、特性</h3><ul>
-<li>原子性：事务的操作要么都发生，要么都不发生；</li>
-<li>一致性：事务前后数据的完整性必须保持一致；</li>
-<li>隔离性：一个用户的事务不能被其他用户的事务干扰；多个并发事务之间的数据相互隔离；隔离性由隔离级别保障！</li>
-<li>持久性：事务一旦提交，对数据的修改时永久性的；</li>
+        <h2 id="数据库调优到底调什么？"><a href="#数据库调优到底调什么？" class="headerlink" title="数据库调优到底调什么？"></a>数据库调优到底调什么？</h2><ul>
+<li>调SQL语句：根据需求创建结构良好的SQL语句【实现同一个需求，SQL语句写法很多】</li>
+<li>调索引：索引创建原则</li>
+<li>调数据库表结构</li>
+<li>调MySQL配置：最大连接数，连接超时，线程缓存，查询缓存，排序缓存，连接查询缓存…</li>
+<li>调MySQL宿主机OS：TCP连接数，打开文件数，线程栈大小…</li>
+<li>调服务器硬件：更多核CPU、更大内存</li>
+<li>MySQL客户端：连接池（MaxActive，MaxWait），连接属性</li>
 </ul>
-<h3 id="2、事务并发问题"><a href="#2、事务并发问题" class="headerlink" title="2、事务并发问题"></a>2、事务并发问题</h3><ul>
-<li>脏读：一个事务读到了另一个事务未提交的数据</li>
-<li>不可重复读：一个事务读到了另一个事务已经提交(update)的数据。引发事务中的多次查询结果不<br>一致</li>
-<li>虚读 &#x2F;幻读：一个事务读到了另一个事务已经插入(insert)的数据。导致事务中多次查询的结果不一<br>致</li>
-<li>丢失更新的问题！</li>
+<h1 id="前置工作："><a href="#前置工作：" class="headerlink" title="前置工作："></a>前置工作：</h1><h2 id="1、数据库压力测试"><a href="#1、数据库压力测试" class="headerlink" title="1、数据库压力测试"></a>1、数据库压力测试</h2><ul>
+<li>配置数据库驱动</li>
+<li>配置线程组</li>
+<li>配置 JDBC 连接池 </li>
+<li>添加 JDBC 请求</li>
+<li>添加结果监听器</li>
 </ul>
-<h3 id="3、隔离级别"><a href="#3、隔离级别" class="headerlink" title="3、隔离级别"></a>3、隔离级别</h3><ul>
-<li>read uncommitted 读未提交【RU】，一个事务读到另一个事务没有提交的数据<br>存在：3个问题（脏读、不可重复读、幻读）。</li>
-<li>read committed 读已提交【RC】，一个事务读到另一个事务已经提交的数据<br>存在：2个问题（不可重复读、幻读）。<br>解决：1个问题（脏读）</li>
-<li>repeatable read:可重复读【RR】，在一个事务中读到的数据始终保持一致，无论另一个事务是<br>否提交<br>解决：3个问题（脏读、不可重复读、幻读）</li>
-<li>serializable 串行化，同时只能执行一个事务，相当于事务中的单线程<br>解决：3个问题（脏读、不可重复读、幻读）</li>
+<h2 id="2、客户端-连接池"><a href="#2、客户端-连接池" class="headerlink" title="2、客户端-连接池"></a>2、客户端-连接池</h2><h3 id="连接池参数设置"><a href="#连接池参数设置" class="headerlink" title="连接池参数设置"></a>连接池参数设置</h3><ul>
+<li>MaxWait 参数表示从连接池获取连接的超时等待时间，单位毫秒。</li>
+<li>MaxActive</li>
 </ul>
-<h2 id="二、事务底层"><a href="#二、事务底层" class="headerlink" title="二、事务底层"></a>二、事务底层</h2><h3 id="1、丢失更新问题"><a href="#1、丢失更新问题" class="headerlink" title="1、丢失更新问题"></a>1、丢失更新问题</h3><ul>
-<li>两个事务针对同一个数据进行修改操作时会丢失更新！</li>
-<li>解决方案：<ul>
-<li>基于锁并发控制LBCC</li>
-<li>基于版本并发控制MVCC</li>
+<h1 id="正式调优"><a href="#正式调优" class="headerlink" title="正式调优"></a>正式调优</h1><h2 id="一、SQL语句优化"><a href="#一、SQL语句优化" class="headerlink" title="一、SQL语句优化"></a>一、SQL语句优化</h2><h3 id="1、查看SQL执行计划【Explain】"><a href="#1、查看SQL执行计划【Explain】" class="headerlink" title="1、查看SQL执行计划【Explain】"></a>1、查看SQL执行计划【Explain】</h3><ul>
+<li>id：SELECT识别符，这是SELECT查询序列号。</li>
+<li>select_type：表示单位查询的查询类型，比如：普通查询、联合查询(union、union  all)、子查询等复杂查询。</li>
+<li>table：表示查询的表</li>
+<li>partitions：使用的哪些分区（对于非分区表值为null）。</li>
+<li>type（重要）表示表的连接类型。</li>
+<li>possible_keys：此次查询中可能选用的索引</li>
+<li>key：查询真正使用到的索引</li>
+<li>key_len：显示MySQL决定使用的索引size</li>
+<li>ref：哪个字段或常数与 key 一起被使用</li>
+<li>rows：显示此查询一共扫描了多少行，这个是一个估计值，不是精确的值。</li>
+<li>filtered: 表示此查询条件所过滤的数据的百分比</li>
+<li>Extra：额外信息</li>
 </ul>
-</li>
+<h3 id="2、索引优化"><a href="#2、索引优化" class="headerlink" title="2、索引优化"></a>2、索引优化</h3><h3 id="3、深分页LIMIT优化"><a href="#3、深分页LIMIT优化" class="headerlink" title="3、深分页LIMIT优化"></a>3、深分页LIMIT优化</h3><h3 id="4、子查询优化-（减少子查询，多用join）"><a href="#4、子查询优化-（减少子查询，多用join）" class="headerlink" title="4、子查询优化 （减少子查询，多用join）"></a>4、子查询优化 （减少子查询，多用join）</h3><h3 id="5、其他查询优化"><a href="#5、其他查询优化" class="headerlink" title="5、其他查询优化"></a>5、其他查询优化</h3><ul>
+<li>小表驱动大表</li>
+<li>避免全表扫描</li>
+<li>WHERE条件中尽量不要使用not in语句，建议使用not exists</li>
+<li>利用慢查询日志、explain执行计划查询、show profile查看SQL执行时的资源使用情况</li>
 </ul>
-<h2 id="三、MVCC"><a href="#三、MVCC" class="headerlink" title="三、MVCC"></a>三、MVCC</h2><h3 id="核心思想是读不加锁，读写不冲突"><a href="#核心思想是读不加锁，读写不冲突" class="headerlink" title="核心思想是读不加锁，读写不冲突"></a>核心思想是读不加锁，读写不冲突</h3><p><strong>MVCC 实现原理关键在于数据快照，不同的事务访问不同版本的数据快照，从而实现事务下对数据的隔离级别</strong></p>
-<p>MVCC，全称Multiversion Concurrency Control，即多版本并发控制，是数据库领域中一种用于管理并发数据访问的机制。与数据库锁相似，MVCC也是一种并发控制的解决方案，但它侧重于通过维护数据的多个版本来避免读写冲突，从而提高并发性能。</p>
-<h3 id="MVCC的基本原理"><a href="#MVCC的基本原理" class="headerlink" title="MVCC的基本原理"></a>MVCC的基本原理</h3><p>在数据库中，对数据的操作主要分为读和写两种。在并发场景下，会出现读-读并发、读-写并发和写-写并发三种情况。其中，读-读并发通常不会引发问题，写-写并发则常通过加锁来解决，而读-写并发则可以通过MVCC机制来高效处理。</p>
-<p>MVCC的核心思想是，对于同一份数据，每个事务在读取时都会看到一个特定的、一致的数据版本，这个版本是在该事务开始时刻生成的。这样，即使有其他事务在修改数据，也不会影响到当前事务的读取结果。</p>
-<h3 id="快照读与当前读"><a href="#快照读与当前读" class="headerlink" title="快照读与当前读"></a>快照读与当前读</h3><p>MVCC的实现依赖于快照读的概念。快照读是指读取的是快照数据，即快照生成时的数据状态。在MySQL中，普通的SELECT语句（不加锁）通常就是快照读。与快照读相对应的是当前读，它读取的是最新数据，通常用于加锁的SELECT操作或数据的增删改操作。</p>
-<h3 id="Undo-Log与快照"><a href="#Undo-Log与快照" class="headerlink" title="Undo Log与快照"></a>Undo Log与快照</h3><p>Undo Log是MySQL中用于回退的事务日志。在事务提交之前，MySQL会先记录更新前的数据到Undo Log中。这些“更新前的数据”实际上就是快照数据。因此，Undo Log是MVCC实现的重要手段。</p>
-<p>每当一条记录发生变更时，MySQL都会先将其快照存储到Undo Log中，并更新记录中的隐式字段。这些隐式字段包括：</p>
-<ul>
-<li><code>db_row_id</code>：隐藏主键，用于创建聚簇索引。</li>
-<li><code>db_trx_id</code>：对这条记录做了最新一次修改的事务的ID。</li>
-<li><code>db_roll_ptr</code>：回滚指针，指向这条记录的上一个版本（即Undo Log中的上一个快照的地址）。</li>
+<h3 id="6、SQL语句性能分析"><a href="#6、SQL语句性能分析" class="headerlink" title="6、SQL语句性能分析"></a>6、SQL语句性能分析</h3><h2 id="二、数据库优化"><a href="#二、数据库优化" class="headerlink" title="二、数据库优化"></a>二、数据库优化</h2><h3 id="1、慢查询日志"><a href="#1、慢查询日志" class="headerlink" title="1、慢查询日志"></a>1、慢查询日志</h3><h3 id="2、连接数max-connections"><a href="#2、连接数max-connections" class="headerlink" title="2、连接数max_connections"></a>2、连接数max_connections</h3><h3 id="3、线程使用情况"><a href="#3、线程使用情况" class="headerlink" title="3、线程使用情况"></a>3、线程使用情况</h3><h3 id="4、数据库优化-结构优化"><a href="#4、数据库优化-结构优化" class="headerlink" title="4、数据库优化-结构优化"></a>4、数据库优化-结构优化</h3><ul>
+<li>将字段很多的表分解为多个表</li>
+<li>增加中间表</li>
+<li>增加冗余字段</li>
 </ul>
-<p>这样，每个快照都通过<code>db_trx_id</code>和<code>db_roll_ptr</code>字段形成了一个快照链表。</p>
-<h3 id="Read-View与可见性"><a href="#Read-View与可见性" class="headerlink" title="Read View与可见性"></a>Read View与可见性</h3><p>然而，即使有了Undo Log和快照链表，我们仍然需要确定在当前事务中应该读取哪个快照。这时，就需要用到Read View了。</p>
-<p>Read View是InnoDB中一个至关重要的概念，它是实现MVCC的基础。Read View主要用来解决可见性问题，即它会告诉当前事务应该看到哪个版本的数据。具体来说，Read View会根据当前事务的ID和其他活跃事务的ID来构建一个视图，然后基于这个视图来确定哪些数据版本对当前事务是可见的。</p>
-<p>通过Read View，InnoDB能够确保每个事务在读取数据时都能看到一个一致的快照，从而避免了读写冲突，提高了并发性能。</p>
-<p>综上所述，MVCC通过维护数据的多个版本、利用快照读和Undo Log以及Read View等机制，实现了高效的并发控制。这使得数据库能够在高并发环境下保持数据的一致性和完整性，同时提高了系统的性能和吞吐量。</p>
-<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><ul>
-<li>MVCC指在使用RC、RR隔离级别下，使不同事务的 读-写 、 写-读 操作并发执行，提升系统性能</li>
-<li>MVCC核心思想是读不加锁，读写不冲突。</li>
-<li>RC、RR这两个隔离级别的一个很大不同就是生成 ReadView 的时机不同</li>
-<li>RC在每一次进行普通 SELECT 操作前都会生成一个 ReadView</li>
-<li>RR在第一次进行普通 SELECT 操作前生成一个 ReadView ，之后的查询操作都重复这个ReadView</li>
+<h2 id="三、服务器层面的优化"><a href="#三、服务器层面的优化" class="headerlink" title="三、服务器层面的优化"></a>三、服务器层面的优化</h2><h3 id="1、缓冲区优化"><a href="#1、缓冲区优化" class="headerlink" title="1、缓冲区优化"></a>1、缓冲区优化</h3><ul>
+<li>修改buffer_pool</li>
 </ul>
-
+<h3 id="2、减少磁盘写入次数"><a href="#2、减少磁盘写入次数" class="headerlink" title="2、减少磁盘写入次数"></a>2、减少磁盘写入次数</h3><h3 id="3、MySQL数据库配置优化"><a href="#3、MySQL数据库配置优化" class="headerlink" title="3、MySQL数据库配置优化"></a>3、MySQL数据库配置优化</h3><h3 id="4、服务器硬件优化"><a href="#4、服务器硬件优化" class="headerlink" title="4、服务器硬件优化"></a>4、服务器硬件优化</h3>
       
     </div>
     
@@ -481,7 +478,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Mysql/" rel="tag"># Mysql</a>
+            <a href="/tags/%E4%BC%98%E5%8C%96/" rel="tag"># 优化</a>
           
         </div>
       
@@ -494,8 +491,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2024/11/10/volatile/" rel="next" title="volatile笔记">
-                <i class="fa fa-chevron-left"></i> volatile笔记
+              <a href="/2024/11/12/%E6%9C%AC%E5%9C%B0%E7%BC%93%E5%AD%98/" rel="next" title="本地缓存">
+                <i class="fa fa-chevron-left"></i> 本地缓存
               </a>
             
           </div>
@@ -503,10 +500,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2024/11/12/%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8B%E5%A4%9A%E7%BA%A7%E7%BC%93%E5%AD%98%E9%97%AE%E9%A2%98/" rel="prev" title="高并发下的缓存问题">
-                高并发下的缓存问题 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -640,7 +633,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%BA%8B%E5%8A%A1"><span class="nav-number">1.</span> <span class="nav-text">一、事务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E7%89%B9%E6%80%A7"><span class="nav-number">1.1.</span> <span class="nav-text">1、特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E4%BA%8B%E5%8A%A1%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98"><span class="nav-number">1.2.</span> <span class="nav-text">2、事务并发问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="nav-number">1.3.</span> <span class="nav-text">3、隔离级别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%BA%8B%E5%8A%A1%E5%BA%95%E5%B1%82"><span class="nav-number">2.</span> <span class="nav-text">二、事务底层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E4%B8%A2%E5%A4%B1%E6%9B%B4%E6%96%B0%E9%97%AE%E9%A2%98"><span class="nav-number">2.1.</span> <span class="nav-text">1、丢失更新问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81MVCC"><span class="nav-number">3.</span> <span class="nav-text">三、MVCC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3%E6%98%AF%E8%AF%BB%E4%B8%8D%E5%8A%A0%E9%94%81%EF%BC%8C%E8%AF%BB%E5%86%99%E4%B8%8D%E5%86%B2%E7%AA%81"><span class="nav-number">3.1.</span> <span class="nav-text">核心思想是读不加锁，读写不冲突</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MVCC%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="nav-number">3.2.</span> <span class="nav-text">MVCC的基本原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%AB%E7%85%A7%E8%AF%BB%E4%B8%8E%E5%BD%93%E5%89%8D%E8%AF%BB"><span class="nav-number">3.3.</span> <span class="nav-text">快照读与当前读</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Undo-Log%E4%B8%8E%E5%BF%AB%E7%85%A7"><span class="nav-number">3.4.</span> <span class="nav-text">Undo Log与快照</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Read-View%E4%B8%8E%E5%8F%AF%E8%A7%81%E6%80%A7"><span class="nav-number">3.5.</span> <span class="nav-text">Read View与可见性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">3.6.</span> <span class="nav-text">小结</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E8%B0%83%E4%BC%98%E5%88%B0%E5%BA%95%E8%B0%83%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">数据库调优到底调什么？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E5%B7%A5%E4%BD%9C%EF%BC%9A"><span class="nav-number"></span> <span class="nav-text">前置工作：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95"><span class="nav-number">1.</span> <span class="nav-text">1、数据库压力测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E5%AE%A2%E6%88%B7%E7%AB%AF-%E8%BF%9E%E6%8E%A5%E6%B1%A0"><span class="nav-number">2.</span> <span class="nav-text">2、客户端-连接池</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E6%B1%A0%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.1.</span> <span class="nav-text">连接池参数设置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%A3%E5%BC%8F%E8%B0%83%E4%BC%98"><span class="nav-number"></span> <span class="nav-text">正式调优</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81SQL%E8%AF%AD%E5%8F%A5%E4%BC%98%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">一、SQL语句优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E6%9F%A5%E7%9C%8BSQL%E6%89%A7%E8%A1%8C%E8%AE%A1%E5%88%92%E3%80%90Explain%E3%80%91"><span class="nav-number">1.1.</span> <span class="nav-text">1、查看SQL执行计划【Explain】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96"><span class="nav-number">1.2.</span> <span class="nav-text">2、索引优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E6%B7%B1%E5%88%86%E9%A1%B5LIMIT%E4%BC%98%E5%8C%96"><span class="nav-number">1.3.</span> <span class="nav-text">3、深分页LIMIT优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E5%AD%90%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96-%EF%BC%88%E5%87%8F%E5%B0%91%E5%AD%90%E6%9F%A5%E8%AF%A2%EF%BC%8C%E5%A4%9A%E7%94%A8join%EF%BC%89"><span class="nav-number">1.4.</span> <span class="nav-text">4、子查询优化 （减少子查询，多用join）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E3%80%81%E5%85%B6%E4%BB%96%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96"><span class="nav-number">1.5.</span> <span class="nav-text">5、其他查询优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6%E3%80%81SQL%E8%AF%AD%E5%8F%A5%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90"><span class="nav-number">1.6.</span> <span class="nav-text">6、SQL语句性能分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BC%98%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">二、数据库优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97"><span class="nav-number">2.1.</span> <span class="nav-text">1、慢查询日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E8%BF%9E%E6%8E%A5%E6%95%B0max-connections"><span class="nav-number">2.2.</span> <span class="nav-text">2、连接数max_connections</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E7%BA%BF%E7%A8%8B%E4%BD%BF%E7%94%A8%E6%83%85%E5%86%B5"><span class="nav-number">2.3.</span> <span class="nav-text">3、线程使用情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BC%98%E5%8C%96-%E7%BB%93%E6%9E%84%E4%BC%98%E5%8C%96"><span class="nav-number">2.4.</span> <span class="nav-text">4、数据库优化-结构优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%B1%82%E9%9D%A2%E7%9A%84%E4%BC%98%E5%8C%96"><span class="nav-number">3.</span> <span class="nav-text">三、服务器层面的优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E7%BC%93%E5%86%B2%E5%8C%BA%E4%BC%98%E5%8C%96"><span class="nav-number">3.1.</span> <span class="nav-text">1、缓冲区优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E5%87%8F%E5%B0%91%E7%A3%81%E7%9B%98%E5%86%99%E5%85%A5%E6%AC%A1%E6%95%B0"><span class="nav-number">3.2.</span> <span class="nav-text">2、减少磁盘写入次数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E9%85%8D%E7%BD%AE%E4%BC%98%E5%8C%96"><span class="nav-number">3.3.</span> <span class="nav-text">3、MySQL数据库配置优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%A1%AC%E4%BB%B6%E4%BC%98%E5%8C%96"><span class="nav-number">3.4.</span> <span class="nav-text">4、服务器硬件优化</span></a></li></ol></li></ol></div>
             
 
           </div>
