@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="JavaScript," />
+  <meta name="keywords" content="集合," />
 
 
 
@@ -94,17 +94,17 @@
 
 
 
-<meta name="description" content="参考连接：https:&#x2F;&#x2F;mp.weixin.qq.com&#x2F;s&#x2F;0tLxTybwJ7NCLBPtQClXoA js运行进制的梳理进程与线程 两者区别 简单来讲，能看到的就是进程，例如：资源管理器中的进程列表；看不到的就是线程； 进程是cpu资源分配的最小单元（系统会给他分配资源，能拥有资源和独立运行的最小单位）； 线程是cpu调度的最小单位（线程是建立在进程的基础上的一次程序运行单位）；    浏">
+<meta name="description" content="1、HashMap 线程不安全 key和value能存null值123456789101112131415        HashMap&lt;Object, Object&gt; map &#x3D; new HashMap&lt;&gt;();        map.put(1,1);        map.put(1,1);        map.put(null,2);        map.put">
 <meta property="og:type" content="article">
-<meta property="og:title" content="js运行进制的梳理">
-<meta property="og:url" content="https://xiaoyaofeihu.github.io/2022/07/31/js%E8%BF%90%E8%A1%8C%E8%BF%9B%E5%88%B6%E7%9A%84%E6%A2%B3%E7%90%86/index.html">
+<meta property="og:title" content="HashMap">
+<meta property="og:url" content="https://xiaoyaofeihu.github.io/2024/11/15/%E9%9D%A2%E8%AF%95%E9%A2%98/HashMap/index.html">
 <meta property="og:site_name" content="余声-个人博客">
-<meta property="og:description" content="参考连接：https:&#x2F;&#x2F;mp.weixin.qq.com&#x2F;s&#x2F;0tLxTybwJ7NCLBPtQClXoA js运行进制的梳理进程与线程 两者区别 简单来讲，能看到的就是进程，例如：资源管理器中的进程列表；看不到的就是线程； 进程是cpu资源分配的最小单元（系统会给他分配资源，能拥有资源和独立运行的最小单位）； 线程是cpu调度的最小单位（线程是建立在进程的基础上的一次程序运行单位）；    浏">
+<meta property="og:description" content="1、HashMap 线程不安全 key和value能存null值123456789101112131415        HashMap&lt;Object, Object&gt; map &#x3D; new HashMap&lt;&gt;();        map.put(1,1);        map.put(1,1);        map.put(null,2);        map.put">
 <meta property="og:locale">
-<meta property="article:published_time" content="2022-07-31T13:33:41.000Z">
+<meta property="article:published_time" content="2024-11-15T13:33:41.000Z">
 <meta property="article:modified_time" content="2024-11-16T06:04:09.387Z">
 <meta property="article:author" content="javayun">
-<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="集合">
 <meta name="twitter:card" content="summary">
 
 
@@ -134,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="https://xiaoyaofeihu.github.io/2022/07/31/js运行进制的梳理/"/>
+  <link rel="canonical" href="https://xiaoyaofeihu.github.io/2024/11/15/面试题/HashMap/"/>
 
 
 
 
 
-  <title>js运行进制的梳理 | 余声-个人博客</title>
+  <title>HashMap | 余声-个人博客</title>
   
 
 
@@ -273,7 +273,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/js%E8%BF%90%E8%A1%8C%E8%BF%9B%E5%88%B6%E7%9A%84%E6%A2%B3%E7%90%86/">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/11/15/%E9%9D%A2%E8%AF%95%E9%A2%98/HashMap/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -290,7 +290,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">js运行进制的梳理</h1>
+          <h1 class="post-title" itemprop="name headline">HashMap</h1>
         
 
         <div class="post-meta">
@@ -302,8 +302,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-07-31T13:33:41+00:00">
-                2022-07-31
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-11-15T13:33:41+00:00">
+                2024-11-15
               </time>
             
 
@@ -337,8 +337,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
                   </a>
                 </span>
 
@@ -405,45 +405,14 @@
       
 
       
-        <p>参考连接：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/0tLxTybwJ7NCLBPtQClXoA">https://mp.weixin.qq.com/s/0tLxTybwJ7NCLBPtQClXoA</a></p>
-<h1 id="js运行进制的梳理"><a href="#js运行进制的梳理" class="headerlink" title="js运行进制的梳理"></a>js运行进制的梳理</h1><h2 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h2><ul>
-<li>两者区别<ul>
-<li>简单来讲，能看到的就是进程，例如：资源管理器中的进程列表；看不到的就是线程；</li>
-<li>进程是cpu资源分配的最小单元（系统会给他分配资源，能拥有资源和独立运行的最小单位）；</li>
-<li>线程是cpu调度的最小单位（线程是建立在进程的基础上的一次程序运行单位）；</li>
+        <h2 id="1、HashMap-线程不安全-key和value能存null值"><a href="#1、HashMap-线程不安全-key和value能存null值" class="headerlink" title="1、HashMap 线程不安全 key和value能存null值"></a>1、HashMap 线程不安全 key和value能存null值</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">        HashMap&lt;Object, Object&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">        map.put(<span class="number">1</span>,<span class="number">1</span>);</span><br><span class="line">        map.put(<span class="number">1</span>,<span class="number">1</span>);</span><br><span class="line">        map.put(<span class="literal">null</span>,<span class="number">2</span>);</span><br><span class="line">        map.put(<span class="literal">null</span>,<span class="string">&quot;12&quot;</span>);</span><br><span class="line">        System.out.println(map.get(<span class="number">1</span>));</span><br><span class="line">````</span><br><span class="line">### HashMap 能存<span class="literal">null</span>值 不会出现空指针的原因是：HashMap 的key如果是<span class="literal">null</span> 底层在去hashCode 的时候是默认赋值为<span class="number">0</span>；</span><br><span class="line"></span><br><span class="line">```java</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="title function_">hash</span><span class="params">(Object key)</span> &#123;</span><br><span class="line">        <span class="type">int</span> h;</span><br><span class="line">        <span class="keyword">return</span> (key == <span class="literal">null</span>) ? <span class="number">0</span> : (h = key.hashCode()) ^ (h &gt;&gt;&gt; <span class="number">16</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2、ConcurrentHashMap-线程安全是因为加了锁-key和value不能存null值"><a href="#2、ConcurrentHashMap-线程安全是因为加了锁-key和value不能存null值" class="headerlink" title="2、ConcurrentHashMap 线程安全是因为加了锁 key和value不能存null值"></a>2、ConcurrentHashMap 线程安全是因为加了锁 key和value不能存null值</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ConcurrentHashMap&lt;Object, Object&gt; objectObjectConcurrentHashMap = <span class="keyword">new</span> <span class="title class_">ConcurrentHashMap</span>&lt;&gt;();</span><br><span class="line">objectObjectConcurrentHashMap.put(<span class="literal">null</span>, <span class="literal">null</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="key-如果是null，key-hashCode-会报空指针"><a href="#key-如果是null，key-hashCode-会报空指针" class="headerlink" title="key 如果是null，key.hashCode() 会报空指针"></a>key 如果是null，key.hashCode() 会报空指针</h3><ul>
+<li>部分原码</li>
 </ul>
-</li>
-</ul>
-<h2 id="浏览器是多线程的，它包括哪些进程"><a href="#浏览器是多线程的，它包括哪些进程" class="headerlink" title="浏览器是多线程的，它包括哪些进程"></a>浏览器是多线程的，它包括哪些进程</h2><ul>
-<li>Browser线程：浏览器的主线程，只有一个</li>
-<li>第三方的插件进程：每个类型的插件对应一个进程，使用时才会创建</li>
-<li>GPU进程（最多一个，用于3D绘制等）</li>
-<li>浏览器渲染进程（浏览器内核） Renderer进程，每个tab页面一个进程：用于页面渲染、脚本执行、事件处理</li>
-</ul>
-<h2 id="为什么浏览器是多线程的"><a href="#为什么浏览器是多线程的" class="headerlink" title="为什么浏览器是多线程的"></a>为什么浏览器是多线程的</h2><pre><code>如果是单线程的，某个tab页面崩溃或者插件崩溃，就会影响到整个的浏览器
-</code></pre>
-<h3 id="浏览器内核（渲染进程）多线程的"><a href="#浏览器内核（渲染进程）多线程的" class="headerlink" title="浏览器内核（渲染进程）多线程的"></a>浏览器内核（渲染进程）多线程的</h3><ul>
-<li>GUI渲染线程（渲染页面，解析html、css）</li>
-<li>js引擎线程（js内核，处理js脚本程序，一个tab页面只有一个js线程来运行js程序）</li>
-<li>GUI渲染线程和js线程是互斥的</li>
-<li>事件触发归属于浏览器，用于控制事件循环；js是单线程，事件队列中的任务都是排队等待js引擎处理</li>
-<li>定时触发器线程</li>
-<li>异步http请求线程</li>
-</ul>
-<h3 id="Browser进程和浏览器内核（Renderer进程）的通信过程"><a href="#Browser进程和浏览器内核（Renderer进程）的通信过程" class="headerlink" title="Browser进程和浏览器内核（Renderer进程）的通信过程"></a>Browser进程和浏览器内核（Renderer进程）的通信过程</h3><ul>
-<li>B进程收到用户请求，需要获取页面内容，随后将该任务通过RendererHost接口传递给Renderer进程；<br>Renderer接口收到信息后，交给渲染线程（加载网页开始渲染网页，可能会使用到Brwerer进程获取资源或者GPU进程来帮助渲染-可能会有js线程操作DOM-最后Renderer进程将结果传递给Browser进程），Browser进程收到结果并绘制出来</li>
-</ul>
-<h3 id="浏览器内核线程之间的关系"><a href="#浏览器内核线程之间的关系" class="headerlink" title="浏览器内核线程之间的关系"></a>浏览器内核线程之间的关系</h3><ul>
-<li>GUI渲染线程和js引擎线程互斥<ul>
-<li>js是可以操作DOM的，如果在修改这个元素属性的同时渲染界面，那渲染线程前后获取的元素数据就不一样了；</li>
-</ul>
-</li>
-<li>js阻塞页面加载<ul>
-<li>避免js执行实践过长，这样会造成页面的渲染不连贯，导致渲染加载阻塞，用户体验不佳</li>
-</ul>
-</li>
-<li>WebWorker，js的多线程？</li>
-</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">final</span> V <span class="title function_">putVal</span><span class="params">(K key, V value, <span class="type">boolean</span> onlyIfAbsent)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (key == <span class="literal">null</span> || value == <span class="literal">null</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">NullPointerException</span>();</span><br><span class="line">    <span class="type">int</span> <span class="variable">hash</span> <span class="operator">=</span> spread(key.hashCode());</span><br><span class="line">    <span class="type">int</span> <span class="variable">binCount</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (Node&lt;K,V&gt;[] tab = table;;) &#123;</span><br><span class="line">        Node&lt;K,V&gt; f; <span class="type">int</span> n, i, fh;</span><br><span class="line">        <span class="keyword">if</span> (tab == <span class="literal">null</span> || (n = tab.length) == <span class="number">0</span>)</span><br><span class="line">            tab = initTable();</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> ((f = tabAt(tab, i = (n - <span class="number">1</span>) &amp; hash)) == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (casTabAt(tab, i, <span class="literal">null</span>,</span><br><span class="line">                         <span class="keyword">new</span> <span class="title class_">Node</span>&lt;K,V&gt;(hash, key, value, <span class="literal">null</span>)))</span><br><span class="line">                <span class="keyword">break</span>;                   <span class="comment">// no lock when adding to empty bin</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> ((fh = f.hash) == MOVED)</span><br><span class="line">            tab = helpTransfer(tab, f);</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="type">V</span> <span class="variable">oldVal</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">            <span class="keyword">synchronized</span> (f) &#123;&#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -469,7 +438,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+            <a href="/tags/%E9%9B%86%E5%90%88/" rel="tag"># 集合</a>
           
         </div>
       
@@ -482,8 +451,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2022/07/31/springcloud%E4%B8%ADfeign%E8%B0%83%E7%94%A8%E6%97%B6token%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98/" rel="next" title="springcloud中feign调用时token丢失问题">
-                <i class="fa fa-chevron-left"></i> springcloud中feign调用时token丢失问题
+              <a href="/2024/11/13/Mysql%E8%B0%83%E4%BC%98/" rel="next" title="Mysql数据库调优">
+                <i class="fa fa-chevron-left"></i> Mysql数据库调优
               </a>
             
           </div>
@@ -492,8 +461,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2022/07/31/javacv%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="prev" title="javacv学习笔记">
-                javacv学习笔记 <i class="fa fa-chevron-right"></i>
+              <a href="/2024/11/15/%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/" rel="prev" title="学习笔记">
+                学习笔记 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -628,7 +597,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#js%E8%BF%90%E8%A1%8C%E8%BF%9B%E5%88%B6%E7%9A%84%E6%A2%B3%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">js运行进制的梳理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B"><span class="nav-number">1.1.</span> <span class="nav-text">进程与线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E6%98%AF%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84%EF%BC%8C%E5%AE%83%E5%8C%85%E6%8B%AC%E5%93%AA%E4%BA%9B%E8%BF%9B%E7%A8%8B"><span class="nav-number">1.2.</span> <span class="nav-text">浏览器是多线程的，它包括哪些进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%B5%8F%E8%A7%88%E5%99%A8%E6%98%AF%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84"><span class="nav-number">1.3.</span> <span class="nav-text">为什么浏览器是多线程的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E6%A0%B8%EF%BC%88%E6%B8%B2%E6%9F%93%E8%BF%9B%E7%A8%8B%EF%BC%89%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84"><span class="nav-number">1.3.1.</span> <span class="nav-text">浏览器内核（渲染进程）多线程的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Browser%E8%BF%9B%E7%A8%8B%E5%92%8C%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E6%A0%B8%EF%BC%88Renderer%E8%BF%9B%E7%A8%8B%EF%BC%89%E7%9A%84%E9%80%9A%E4%BF%A1%E8%BF%87%E7%A8%8B"><span class="nav-number">1.3.2.</span> <span class="nav-text">Browser进程和浏览器内核（Renderer进程）的通信过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E6%A0%B8%E7%BA%BF%E7%A8%8B%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">1.3.3.</span> <span class="nav-text">浏览器内核线程之间的关系</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81HashMap-%E7%BA%BF%E7%A8%8B%E4%B8%8D%E5%AE%89%E5%85%A8-key%E5%92%8Cvalue%E8%83%BD%E5%AD%98null%E5%80%BC"><span class="nav-number">1.</span> <span class="nav-text">1、HashMap 线程不安全 key和value能存null值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81ConcurrentHashMap-%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E6%98%AF%E5%9B%A0%E4%B8%BA%E5%8A%A0%E4%BA%86%E9%94%81-key%E5%92%8Cvalue%E4%B8%8D%E8%83%BD%E5%AD%98null%E5%80%BC"><span class="nav-number">2.</span> <span class="nav-text">2、ConcurrentHashMap 线程安全是因为加了锁 key和value不能存null值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#key-%E5%A6%82%E6%9E%9C%E6%98%AFnull%EF%BC%8Ckey-hashCode-%E4%BC%9A%E6%8A%A5%E7%A9%BA%E6%8C%87%E9%92%88"><span class="nav-number">2.1.</span> <span class="nav-text">key 如果是null，key.hashCode() 会报空指针</span></a></li></ol></li></ol></div>
             
 
           </div>

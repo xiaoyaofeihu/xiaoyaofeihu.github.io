@@ -270,6 +270,232 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/09/10/Stream%E7%9A%84%E5%B9%B6%E8%A1%8C%E6%B5%81%E6%98%AF%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%9A%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/09/10/Stream%E7%9A%84%E5%B9%B6%E8%A1%8C%E6%B5%81%E6%98%AF%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%9A%84/" itemprop="url">Stream</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-09-10T17:33:00+00:00">
+                2024-09-10
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
+                2024-11-16
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Stream的并行流是如何实现的"><a href="#Stream的并行流是如何实现的" class="headerlink" title="Stream的并行流是如何实现的"></a>Stream的并行流是如何实现的</h1><h3 id="Stream的并行流是如何实现的？"><a href="#Stream的并行流是如何实现的？" class="headerlink" title="Stream的并行流是如何实现的？"></a>Stream的并行流是如何实现的？</h3><p>在Java中，Stream API提供了一种高效且声明式的方式来处理数据集合。并行流（parallel stream）是Stream API中的一个重要特性，它允许开发者利用多核处理器的并行处理能力来提高数据处理的效率。</p>
+<ol>
+<li><p><strong>获取并行流</strong>：</p>
+<ul>
+<li>使用<code>Collection</code>接口的<code>parallelStream</code>方法，或者通过<code>Stream</code>接口的<code>parallel</code>方法将顺序流转换为并行流。</li>
+</ul>
+</li>
+<li><p><strong>底层实现</strong>：</p>
+<ul>
+<li>并行流底层使用了Java 7中引入的Fork&#x2F;Join框架。</li>
+<li>Fork&#x2F;Join框架旨在将一个大任务分割（fork）成多个小任务，这些小任务可以并行执行，然后再将这些小任务的结果合并（join）成最终结果。</li>
+<li>这种分治策略非常适合处理可以递归分解的大规模计算任务。</li>
+</ul>
+</li>
+<li><p><strong>执行方式</strong>：</p>
+<ul>
+<li>并行流通过并发运行的方式执行流的迭代及操作，从而充分利用多核处理器的性能。</li>
+</ul>
+</li>
+</ol>
+<h3 id="ForkJoinPool和ThreadPoolExecutor的区别"><a href="#ForkJoinPool和ThreadPoolExecutor的区别" class="headerlink" title="ForkJoinPool和ThreadPoolExecutor的区别"></a>ForkJoinPool和ThreadPoolExecutor的区别</h3><p>ForkJoinPool和ThreadPoolExecutor都是Java中用于管理线程和并行任务的工具，但它们在实现方式和适用场景上有所不同。</p>
+<ol>
+<li><p><strong>实现方式</strong>：</p>
+<ul>
+<li><strong>ForkJoinPool</strong>：基于工作窃取（Work-Stealing）算法实现的线程池。它适用于处理可以递归分解的大规模计算任务。每个线程都有自己的双端队列（deque）来存储任务，当某个线程的任务队列为空时，它会从其他线程的队列中窃取任务来执行。</li>
+<li><strong>ThreadPoolExecutor</strong>：基于任务队列和线程池的实现。它适用于处理不同类型的任务，包括计算密集型、IO密集型和混合型任务。ThreadPoolExecutor允许更灵活的任务调度和线程管理。</li>
+</ul>
+</li>
+<li><p><strong>适用场景</strong>：</p>
+<ul>
+<li><strong>ForkJoinPool</strong>：更适合处理可以递归分解的大规模计算任务，如排序、归并、搜索等。</li>
+<li><strong>ThreadPoolExecutor</strong>：适用于更广泛的场景，包括异步执行、定时执行和周期性执行等。</li>
+</ul>
+</li>
+<li><p><strong>性能</strong>：</p>
+<ul>
+<li>ForkJoinPool通过工作窃取算法来减少线程之间的空闲时间，提高CPU利用率，但在任务划分不均衡时可能导致线程饥饿。</li>
+<li>ThreadPoolExecutor的性能取决于任务类型、线程数量和任务队列的配置。</li>
+</ul>
+</li>
+</ol>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Stream的并行流是Java中处理大规模数据集合的高效工具，它底层使用了Fork&#x2F;Join框架来实现并行处理。而ForkJoinPool和ThreadPoolExecutor则是Java中用于管理线程和并行任务的两种不同实现方式，它们在实现方式、适用场景和性能上有所不同。开发者应根据具体的应用场景和需求选择合适的工具来优化程序的性能。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/09/10/synchronized/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,7 +543,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T05:51:38+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
                 2024-11-16
               </time>
             
@@ -560,7 +786,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T05:51:38+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
                 2024-11-16
               </time>
             
@@ -761,7 +987,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T05:51:38+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
                 2024-11-16
               </time>
             
@@ -945,7 +1171,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T05:51:38+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
                 2024-11-16
               </time>
             
@@ -1134,7 +1360,7 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T05:51:38+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
                 2024-11-16
               </time>
             
@@ -1335,7 +1561,7 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T05:51:38+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
                 2024-11-16
               </time>
             
@@ -1531,7 +1757,7 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T05:51:38+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
                 2024-11-16
               </time>
             
@@ -1721,7 +1947,7 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T05:51:38+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
                 2024-11-16
               </time>
             
@@ -1907,7 +2133,7 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T05:51:38+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
                 2024-11-16
               </time>
             
@@ -2083,6 +2309,193 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/springcloud%E4%B8%ADfeign%E8%B0%83%E7%94%A8%E6%97%B6token%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2022/07/31/springcloud%E4%B8%ADfeign%E8%B0%83%E7%94%A8%E6%97%B6token%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98/" itemprop="url">springcloud中feign调用时token丢失问题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-07-31T13:33:41+00:00">
+                2022-07-31
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
+                2024-11-16
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_39267497/article/details/119213250">https://blog.csdn.net/weixin_39267497/article/details/119213250</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/shiro%20%E6%B3%A8%E8%A7%A3@RequiresPermissions/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2130,7 +2543,7 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T05:51:38+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
                 2024-11-16
               </time>
             
@@ -2290,193 +2703,6 @@ ReflectiveMethodInvocation类是joinpoint的实现类
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/springcloud%E4%B8%ADfeign%E8%B0%83%E7%94%A8%E6%97%B6token%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2022/07/31/springcloud%E4%B8%ADfeign%E8%B0%83%E7%94%A8%E6%97%B6token%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98/" itemprop="url">springcloud中feign调用时token丢失问题</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-07-31T13:33:41+00:00">
-                2022-07-31
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T05:51:38+00:00">
-                2024-11-16
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_39267497/article/details/119213250">https://blog.csdn.net/weixin_39267497/article/details/119213250</a></li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2524,7 +2750,7 @@ ReflectiveMethodInvocation类是joinpoint的实现类
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T05:51:38+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
                 2024-11-16
               </time>
             
@@ -2713,7 +2939,7 @@ ReflectiveMethodInvocation类是joinpoint的实现类
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T05:51:38+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
                 2024-11-16
               </time>
             
@@ -2909,7 +3135,7 @@ ReflectiveMethodInvocation类是joinpoint的实现类
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T05:51:38+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
                 2024-11-16
               </time>
             
@@ -3096,7 +3322,7 @@ ReflectiveMethodInvocation类是joinpoint的实现类
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T05:51:38+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
                 2024-11-16
               </time>
             
@@ -3280,7 +3506,7 @@ ReflectiveMethodInvocation类是joinpoint的实现类
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T05:51:38+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
                 2024-11-16
               </time>
             
@@ -3455,7 +3681,7 @@ ReflectiveMethodInvocation类是joinpoint的实现类
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">36</span>
+                <span class="site-state-item-count">37</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -3466,7 +3692,7 @@ ReflectiveMethodInvocation类是joinpoint的实现类
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
