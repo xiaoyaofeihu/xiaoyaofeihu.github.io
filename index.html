@@ -270,6 +270,224 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/11/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E8%A7%A3%E5%86%B3hash%E7%A2%B0%E6%92%9E%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/11/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E8%A7%A3%E5%86%B3hash%E7%A2%B0%E6%92%9E%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%9F/" itemprop="url">解决hash碰撞的方法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-11-16T13:33:41+00:00">
+                2024-11-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
+                2024-11-18
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="解决hash碰撞的方法？"><a href="#解决hash碰撞的方法？" class="headerlink" title="解决hash碰撞的方法？"></a>解决hash碰撞的方法？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="链地址法（Chaining）"><a href="#链地址法（Chaining）" class="headerlink" title="链地址法（Chaining）"></a>链地址法（Chaining）</h2><p>链地址法是最常见的解决哈希碰撞的方法之一。在这种方法中，每个桶（bucket）包含一个链表（或树结构，Java 8 及以上版本）。当发生哈希碰撞时，新的键值对被添加到相应桶的链表中。</p>
+<p><strong>优点：</strong></p>
+<p>简单易实现。</p>
+<p>动态调整链表长度，不需要提前知道元素数量。</p>
+<p><strong>缺点：</strong></p>
+<p>当链表长度增加时，查找效率下降。</p>
+<p>需要额外的存储空间来存储指针。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class HashMapNode&lt;K, V&gt; &#123;</span><br><span class="line">    K key;</span><br><span class="line">    V value;</span><br><span class="line">    HashMapNode&lt;K, V&gt; next;</span><br><span class="line"></span><br><span class="line">    HashMapNode(K key, V value) &#123;</span><br><span class="line">        this.key = key;</span><br><span class="line">        this.value = value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="开放地址法（Open-Addressing）"><a href="#开放地址法（Open-Addressing）" class="headerlink" title="开放地址法（Open Addressing）"></a>开放地址法（Open Addressing）</h2><p>开放地址法不使用链表，而是在哈希表本身寻找空闲位置来存储碰撞的元素。常见的开放地址法有以下几种：</p>
+<h3 id="线性探测（Linear-Probing）"><a href="#线性探测（Linear-Probing）" class="headerlink" title="线性探测（Linear Probing）"></a>线性探测（Linear Probing）</h3><p>当发生哈希碰撞时，线性探测法在哈希表中向后依次查找下一个空闲位置。</p>
+<p>优点：实现简单，不需要额外的存储空间。</p>
+<p>缺点：当哈希表接近满时，查找效率急剧下降（称为“主群集”问题）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int hash = key.hashCode() % table.length;</span><br><span class="line">while (table[hash] != null) &#123;</span><br><span class="line">    hash = (hash + 1) % table.length;</span><br><span class="line">&#125;</span><br><span class="line">table[hash] = new Entry(key, value);</span><br></pre></td></tr></table></figure>
+
+<h3 id="二次探测（Quadratic-Probing）"><a href="#二次探测（Quadratic-Probing）" class="headerlink" title="二次探测（Quadratic Probing）"></a>二次探测（Quadratic Probing）</h3><p>二次探测法在发生哈希碰撞时，按照平方序列查找空闲位置（如 1, 4, 9, 16, …）。</p>
+<p>优点：减少主群集问题。</p>
+<p>缺点：实现较复杂，可能会导致二次群集问题。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">int hash = key.hashCode() % table.length;</span><br><span class="line">int i = 1;</span><br><span class="line">while (table[hash] != null) &#123;</span><br><span class="line">    hash = (hash + i * i) % table.length;</span><br><span class="line">    i++;</span><br><span class="line">&#125;</span><br><span class="line">table[hash] = new Entry(key, value);</span><br></pre></td></tr></table></figure>
+
+<h3 id="双重散列（Double-Hashing）"><a href="#双重散列（Double-Hashing）" class="headerlink" title="双重散列（Double Hashing）"></a>双重散列（Double Hashing）</h3><p>双重散列法使用两个不同的哈希函数。当第一个哈希函数发生碰撞时，使用第二个哈希函数计算新的索引。</p>
+<p>优点：减少群集问题。较好的查找性能。</p>
+<p>缺点：实现复杂。需要设计两个有效的哈希函数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int hash1 = key.hashCode() % table.length;</span><br><span class="line">int hash2 = 1 + (key.hashCode() % (table.length - 1));</span><br><span class="line">while (table[hash1] != null) &#123;</span><br><span class="line">    hash1 = (hash1 + hash2) % table.length;</span><br><span class="line">&#125;</span><br><span class="line">table[hash1] = new Entry(key, value);</span><br></pre></td></tr></table></figure>
+
+<h3 id="再哈希法（Rehashing）"><a href="#再哈希法（Rehashing）" class="headerlink" title="再哈希法（Rehashing）"></a>再哈希法（Rehashing）</h3><p>再哈希法在发生碰撞时，使用不同的哈希函数重新计算哈希值，直到找到空闲位置。</p>
+<p>优点：减少群集问题。</p>
+<p>缺点：实现复杂。需要设计多个有效的哈希函数。</p>
+<h3 id="分离链接法"><a href="#分离链接法" class="headerlink" title="分离链接法"></a>分离链接法</h3><p>在 Java 8 及以上版本中，当链表长度超过一定阈值（默认是 8）时，链表会转换为红黑树，以提高查找效率。</p>
+<p>优点：在高冲突情况下性能较好，动态调整链表和树的长度。</p>
+<p>缺点：实现复杂，需要额外的存储空间。</p>
+<h2 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h2><p><strong>Cuckoo Hashing</strong>：使用两个哈希表和两个哈希函数，如果插入时发生冲突，将原来的元素“踢出”并重新插入到另一个哈希表中。</p>
+<p><strong>Hopscotch Hashing</strong>：类似于线性探测，但在插入时会调整元素的位置，使得查找路径更短。</p>
+<p>链地址法是最常见的解决哈希碰撞的方法，适用于大多数情况。开放地址法在空间利用率上有优势，但在高负载情况下性能可能下降。再哈希法和其他高级方法适用于特定的高性能需求场景。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/11/15/%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +535,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
-                2024-11-16
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
+                2024-11-18
               </time>
             
           </span>
@@ -605,8 +823,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
-                2024-11-16
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
+                2024-11-18
               </time>
             
           </span>
@@ -797,8 +1015,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
-                2024-11-16
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
+                2024-11-18
               </time>
             
           </span>
@@ -1029,8 +1247,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
-                2024-11-16
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
+                2024-11-18
               </time>
             
           </span>
@@ -1278,8 +1496,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
-                2024-11-16
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
+                2024-11-18
               </time>
             
           </span>
@@ -1496,8 +1714,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
-                2024-11-16
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
+                2024-11-18
               </time>
             
           </span>
@@ -1731,8 +1949,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
-                2024-11-16
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
+                2024-11-18
               </time>
             
           </span>
@@ -1929,8 +2147,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
-                2024-11-16
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
+                2024-11-18
               </time>
             
           </span>
@@ -2109,7 +2327,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/HashMap/">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E5%88%9D%E5%A7%8B%E5%AE%B9%E9%87%8F%E6%98%AF%E5%A4%9A%E5%B0%91%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -2128,7 +2346,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2024/10/10/HashMap/" itemprop="url">HashMap底层</a></h1>
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E5%88%9D%E5%A7%8B%E5%AE%B9%E9%87%8F%E6%98%AF%E5%A4%9A%E5%B0%91%EF%BC%9F/" itemprop="url">ArrayList初始容量是多少</a></h1>
         
 
         <div class="post-meta">
@@ -2140,8 +2358,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-10T17:33:00+00:00">
-                2024-10-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
               </time>
             
 
@@ -2156,8 +2374,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
-                2024-11-16
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
+                2024-11-18
               </time>
             
           </span>
@@ -2175,8 +2393,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
                   </a>
                 </span>
 
@@ -2245,27 +2463,641 @@
       
         
           
-            <h2 id="HashMap是Java中一种非常重要的数据结构，它基于哈希表的原理，实现了对键值对（key-value-pair）的快速存储和访问。下面详细解释HashMap的数据结构以及其在JDK-1-8中的变化。"><a href="#HashMap是Java中一种非常重要的数据结构，它基于哈希表的原理，实现了对键值对（key-value-pair）的快速存储和访问。下面详细解释HashMap的数据结构以及其在JDK-1-8中的变化。" class="headerlink" title="HashMap是Java中一种非常重要的数据结构，它基于哈希表的原理，实现了对键值对（key-value pair）的快速存储和访问。下面详细解释HashMap的数据结构以及其在JDK 1.8中的变化。"></a>HashMap是Java中一种非常重要的数据结构，它基于哈希表的原理，实现了对键值对（key-value pair）的快速存储和访问。下面详细解释HashMap的数据结构以及其在JDK 1.8中的变化。</h2><h3 id="HashMap的基本数据结构"><a href="#HashMap的基本数据结构" class="headerlink" title="HashMap的基本数据结构"></a>HashMap的基本数据结构</h3><p>在HashMap中，数据是通过“数组+链表”的方式存储的，这种结构也被称为“链表的数组”。具体来说：</p>
+            <h1 id="👌ArrayList初始容量是多少？"><a href="#👌ArrayList初始容量是多少？" class="headerlink" title="👌ArrayList初始容量是多少？"></a>👌ArrayList初始容量是多少？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>ArrayList 是 Java 中用于动态数组的一个类。它可以在添加或删除元素时自动调整其大小。然而，ArrayList 有一个默认的初始容量，这个容量是在你创建 ArrayList 实例时如果没有明确指定容量参数时所使用的。</p>
+<p>在 Java 的 ArrayList 实现中，默认的初始容量是 10。这意味着当你创建一个新的 ArrayList 而不指定其容量时，它会以一个内部数组长度为 10 的数组来开始。当添加的元素数量超过这个初始容量时，ArrayList 的内部数组会进行扩容，通常是增长为原来的 1.5 倍。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ArrayList&lt;String&gt; list = new ArrayList&lt;&gt;(); // 默认的初始容量是 10</span><br></pre></td></tr></table></figure>
+
+<p>但是，如果你知道你将要在 ArrayList 中存储多少元素，或者预计会存储多少元素，那么最好在创建时指定一个初始容量，这样可以减少由于扩容而导致的重新分配数组和复制元素的操作，从而提高性能。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ArrayList&lt;String&gt; list = new ArrayList&lt;&gt;(50); // 初始容量设置为 50</span><br></pre></td></tr></table></figure>
+
+<p><font style="color:rgb(51, 51, 51);">自从1.7之后，arraylist初始化的时候为一个空数组。但是当你去放入第一个元素的时候，会触发他的懒加载机制，使得数量变为10。</font></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">private static int calculateCapacity(Object[] elementData, int minCapacity) &#123;</span><br><span class="line">if (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) &#123;</span><br><span class="line">return Math.max(DEFAULT_CAPACITY, minCapacity);        </span><br><span class="line">&#125;        </span><br><span class="line">return minCapacity;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><font style="color:rgb(51, 51, 51);">所以我们的arraylist初始容量的确是10。只不过jdk8变为懒加载来节省内存。进行了一点优化。</font></p>
+<blockquote>
+<p>&#x2F;sp17yx6dqwcrail5&gt;</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%EF%BC%9F/" itemprop="url">ArrayList如何保证线程安全</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
+                2024-11-18
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌ArrayList如何保证线程安全？"><a href="#👌ArrayList如何保证线程安全？" class="headerlink" title="👌ArrayList如何保证线程安全？"></a>👌ArrayList如何保证线程安全？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="借助锁"><a href="#借助锁" class="headerlink" title="借助锁"></a>借助锁</h2><p>可以通过在访问 ArrayList 的代码块上使用 synchronized 关键字来手动同步对 ArrayList 的访问。这要求所有访问 ArrayList 的代码都知道并使用相同的锁。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = new ArrayList&lt;&gt;();</span><br><span class="line">// ... 填充列表 ...</span><br><span class="line"></span><br><span class="line">synchronized(list) &#123;</span><br><span class="line">    Iterator&lt;String&gt; it = list.iterator();</span><br><span class="line">    while (it.hasNext()) &#123;</span><br><span class="line">        String element = it.next();</span><br><span class="line">        // 处理元素...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="使用-Collections-synchronizedList"><a href="#使用-Collections-synchronizedList" class="headerlink" title="使用 Collections.synchronizedList"></a>使用 Collections.synchronizedList</h2><p>Collections.synchronizedList 方法返回一个线程安全的列表，该列表是通过在每个公共方法（如 add(), get(), iterator() 等）上添加同步来实现的，其中同步是基于里面的同步代码块实现。但是，和手动同步一样，它也不能解决在迭代过程中进行结构修改导致的问题。</p>
+<p><img src="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%EF%BC%9F/u2gabD4e1XNpme_5/1721369333026-315b65c8-9222-48af-add6-fde77b52b82b-123723.png" alt="1721369333026-315b65c8-9222-48af-add6-fde77b52b82b.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = Collections.synchronizedList(new ArrayList&lt;&gt;());</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用并发集合"><a href="#使用并发集合" class="headerlink" title="使用并发集合"></a>使用并发集合</h2><p>Java 并发包 java.util.concurrent 提供了一些线程安全的集合类，如 CopyOnWriteArrayList。这些类提供了不同的线程安全保证和性能特性。</p>
+<p>CopyOnWriteArrayList是一个线程安全的变体，其中所有可变操作（add、set 等等）都是通过对底层数组进行新的复制来实现的。因此，迭代器不会受到并发修改的影响，并且遍历期间不需要额外的同步。但是，当有很多写操作时，这种方法可能会很昂贵，因为它需要在每次修改时复制整个底层数组。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = new CopyOnWriteArrayList&lt;&gt;();</span><br></pre></td></tr></table></figure>
+
+<p>选择解决方案时，需要考虑并发模式、读写比例以及性能需求。如果你的应用主要是读操作并且偶尔有写操作，CopyOnWriteArrayList是一个好选择。如果你的应用有大量的写操作，那么可能需要使用其他并发集合或手动同步策略。</p>
+<blockquote>
+<p>&#x2F;hkx8lgbi0mny13uc&gt;</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E6%98%AF%E5%A6%82%E4%BD%95%E6%89%A9%E5%AE%B9%E7%9A%84%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E6%98%AF%E5%A6%82%E4%BD%95%E6%89%A9%E5%AE%B9%E7%9A%84%EF%BC%9F/" itemprop="url">ArrayList是如何扩容的</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
+                2024-11-18
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌ArrayList是如何扩容的？"><a href="#👌ArrayList是如何扩容的？" class="headerlink" title="👌ArrayList是如何扩容的？"></a>👌ArrayList是如何扩容的？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>ArrayList的扩容机制是Java集合框架中一个重要的概念，它允许ArrayList在需要时自动增加其内部数组的大小以容纳更多的元素。主要有以下的步骤</p>
+<p>1、初始容量和扩容因子：</p>
+<p>当创建一个新的ArrayList对象时，它通常会分配一个初始容量，这个初始容量默认为10。</p>
+<p>ArrayList的扩容因子是一个用于计算新容量的乘数，默认为1.5。</p>
+<p>2、扩容触发条件：</p>
+<p>当向ArrayList中添加一个新元素，并且该元素的数量超过当前数组的容量时，就会触发扩容操作。</p>
+<p>3、扩容策略：</p>
+<p>扩容时，首先根据当前容量和扩容因子计算出一个新的容量。新容量的计算公式为：</p>
+<p>newCapacity &#x3D; oldCapacity + (oldCapacity &gt;&gt; 1)，这实际上是将原容量增加50%（即乘以1.5）。</p>
+<p>如果需要的容量大于Integer.MAX_VALUE - 8（因为数组的长度是一个int类型，其最大值是Integer.MAX_VALUE，但ArrayList需要预留一些空间用于内部操作），则会使用Integer.MAX_VALUE作为新的容量。</p>
+<p>4、扩容过程：</p>
+<p>创建一个新的数组，其长度为新计算的容量。</p>
+<p>将原数组中的所有元素复制到新数组中。</p>
+<p>将ArrayList的内部引用从原数组更新为新数组。</p>
+<p>将新元素添加到新数组的末尾。</p>
+<p>5、性能影响：</p>
+<p>扩容过程涉及到内存分配和元素复制，可能会对性能产生一定的影响。因此，在使用ArrayList时，如果可能的话，最好预估需要存储的元素数量，并设置一个合适的初始容量，以减少扩容的次数。</p>
+<p>6、扩容源码</p>
+<p><img src="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E6%98%AF%E5%A6%82%E4%BD%95%E6%89%A9%E5%AE%B9%E7%9A%84%EF%BC%9F/a6dlsBfyxSbkioxG/1719246984492-7f242ac2-c31e-4cdd-a074-bc448c5d3148-182828.png" alt="1719246984492-7f242ac2-c31e-4cdd-a074-bc448c5d3148.png"></p>
+<blockquote>
+<p>&#x2F;ghpqbh9ig3hu1coh&gt;</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E6%98%AF%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E5%90%97%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E6%98%AF%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E5%90%97%EF%BC%9F/" itemprop="url">ArrayList是线程安全的吗</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
+                2024-11-18
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌ArrayList是线程安全的吗？"><a href="#👌ArrayList是线程安全的吗？" class="headerlink" title="👌ArrayList是线程安全的吗？"></a>👌ArrayList是线程安全的吗？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>ArrayList不是线程安全的。在多线程环境下，如果多个线程同时对ArrayList进行操作，可能会出现数据不一致的情况。</p>
+<p>当多个线程同时对ArrayList进行添加、删除等操作时，可能会导致数组大小的变化，从而引发数据不一致的问题。例如，当一个线程在对ArrayList进行添加元素的操作时（这通常分为两步：先在指定位置存放元素，然后增加size的值），另一个线程可能同时进行删除或其他操作，导致数据的不一致或错误。</p>
+<p>比如下面的这个代码，就是实际上ArrayList 放入元素的代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">elementData[size] = e;</span><br><span class="line">size = size + 1;</span><br></pre></td></tr></table></figure>
+
 <ol>
-<li><p><strong>数组</strong>：HashMap内部维护了一个Entry数组（在JDK 1.8及以后版本中，Entry被Node类替代，但功能相同），数组的每个元素都是一个桶（Bucket），桶中存放的是指向链表节点的引用。</p>
-</li>
-<li><p><strong>链表</strong>：当发生哈希冲突（即不同的key通过哈希函数计算得到的下标相同）时，这些key-value对会被存储在同一桶中的链表中。链表中的每个节点都包含key、value、next等字段，用于存储数据和指向下一个节点的引用。</p>
-</li>
+<li>elementData[size] &#x3D; e; 这一行代码是将新的元素 e 放置在 ArrayList 的内部数组 elementData 的当前大小 size 的位置上。这里假设 elementData 数组已经足够大，可以容纳新添加的元素（实际上 ArrayList 在必要时会增长数组的大小）。</li>
+<li>size &#x3D; size + 1; 这一行代码是更新 ArrayList 的大小，使其包含新添加的元素。</li>
 </ol>
-<h3 id="哈希函数与冲突解决"><a href="#哈希函数与冲突解决" class="headerlink" title="哈希函数与冲突解决"></a>哈希函数与冲突解决</h3><ol>
-<li><p><strong>哈希函数</strong>：HashMap通过哈希函数（hash()方法）将key转换为数组的下标。这个哈希函数的目标是尽量均匀地分布元素，以减少哈希冲突的发生。</p>
-</li>
-<li><p><strong>冲突解决</strong>：当发生哈希冲突时，HashMap采用链地址法（也称为拉链法）来解决。即在同一桶中维护一个链表，将冲突的元素依次添加到链表中。</p>
-</li>
-</ol>
-<h3 id="JDK-1-8中的优化"><a href="#JDK-1-8中的优化" class="headerlink" title="JDK 1.8中的优化"></a>JDK 1.8中的优化</h3><p>在JDK 1.8中，HashMap进行了重要的优化，引入了红黑树来进一步减少哈希冲突对性能的影响。具体来说：</p>
+<p>如果两个线程同时尝试向同一个 ArrayList 实例中添加元素，那么可能会发生以下情况：</p>
+<ul>
+<li>线程 A 执行 elementData[size] &#x3D; eA;（假设当前 size 是 0）</li>
+<li>线程 B 执行 elementData[size] &#x3D; eB;（由于线程 A 尚未更新 size，线程 B 看到的 size 仍然是 0）</li>
+<li>此时，elementData[0] 被线程 B 的 eB 覆盖，线程 A 的 eA 丢失</li>
+<li>线程 A 更新 size &#x3D; 1;</li>
+<li>线程 B 更新 size &#x3D; 1;（现在 size 仍然是 1，但是应该是 2，因为有两个元素被添加）</li>
+</ul>
+<p>为了解决ArrayList的线程安全问题，可以采取以下几种方式：</p>
 <ol>
-<li><p><strong>链表转红黑树</strong>：当桶中的链表长度超过一定阈值（默认为8）时，HashMap会将这个链表转换为红黑树。红黑树是一种平衡二叉搜索树，具有更高的查找效率（O(log n)），从而提高了HashMap的性能。</p>
+<li><p>使用Collections类的synchronizedList方法：将ArrayList转换为线程安全的List。这种方式通过在对ArrayList进行操作时加锁来保证线程安全，但可能会带来一定的性能损耗。</p>
 </li>
-<li><p><strong>阈值调整</strong>：在JDK 1.8中，HashMap还引入了一个新的参数<code>treeifyThreshold</code>来控制链表转换为红黑树的阈值，以及<code>untreeifyThreshold</code>来控制红黑树转换为链表的阈值（当链表长度小于等于6时）。此外，还有一个<code>minTreeifyCapacity</code>参数，用于确保在链表转换为红黑树之前，HashMap的容量至少达到一定的阈值（默认为64），以避免频繁的树化操作。</p>
+<li><p>使用CopyOnWriteArrayList类：它是Java并发包中提供的线程安全的List实现。CopyOnWriteArrayList在对集合进行修改时，会创建一个新的数组来保存修改后的数据，这样就不会影响到其他线程对原数组的访问。因此，它适合在读操作远远多于写操作的场景下使用。</p>
+</li>
+<li><p>使用并发包中的锁机制：如Lock或Semaphore等，显式地使用锁来保护对ArrayList的操作，可以确保在多线程环境下数据的一致性。但这种方式需要开发人员自行管理锁的获取和释放，容易出现死锁等问题。</p>
 </li>
 </ol>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>HashMap的数据结构是基于“数组+链表”的，通过哈希函数将key映射到数组的下标，并通过链表解决哈希冲突。在JDK 1.8中，HashMap引入了红黑树来优化性能，当链表长度超过一定阈值时，会将链表转换为红黑树以提高查找效率。这些优化使得HashMap在处理大量数据时具有更高的性能和更好的稳定性。</p>
+<p>还可以考虑使用其他线程安全的集合类，如Vector或ConcurrentLinkedQueue等，它们本身就是线程安全的，可以直接在多线程环境下使用。</p>
+<blockquote>
+<p>&#x2F;sok8k2bhymx7np2u&gt;</p>
+</blockquote>
 
           
         
@@ -2314,7 +3146,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/HashMap%E5%92%8CHashTable%E7%9A%84%E6%AF%94%E8%BE%83/">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E7%9A%84%E6%B7%BB%E5%8A%A0%E4%B8%8E%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0%E4%B8%BA%E4%BB%80%E4%B9%88%E6%85%A2%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -2333,7 +3165,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2024/10/10/HashMap%E5%92%8CHashTable%E7%9A%84%E6%AF%94%E8%BE%83/" itemprop="url">HashMap、Hashtable和ConcurrentHashMap</a></h1>
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E7%9A%84%E6%B7%BB%E5%8A%A0%E4%B8%8E%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0%E4%B8%BA%E4%BB%80%E4%B9%88%E6%85%A2%EF%BC%9F/" itemprop="url">ArrayList的添加与删除元素为什么慢</a></h1>
         
 
         <div class="post-meta">
@@ -2345,8 +3177,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-10T17:33:00+00:00">
-                2024-10-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
               </time>
             
 
@@ -2361,8 +3193,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
-                2024-11-16
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
+                2024-11-18
               </time>
             
           </span>
@@ -2380,8 +3212,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
                   </a>
                 </span>
 
@@ -2450,45 +3282,21 @@
       
         
           
-            <p>在Java中，<code>HashMap</code>、<code>Hashtable</code>和<code>ConcurrentHashMap</code>都是用于存储键值对的数据结构，但它们在使用场景和内部实现上有显著的区别。下面是对这些区别的详细解释：</p>
-<h3 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h3><ol>
-<li><p><strong>HashMap</strong>：</p>
-<ul>
-<li><strong>非线程安全</strong>：<code>HashMap</code>没有考虑线程安全问题，如果在多线程环境下不加同步地使用<code>HashMap</code>，可能会导致数据不一致的问题，如死锁、数据丢失或覆盖。</li>
-</ul>
-</li>
-<li><p><strong>Hashtable</strong>：</p>
-<ul>
-<li><strong>线程安全</strong>：<code>Hashtable</code>是线程安全的，它的所有方法都是同步的。这意味着在多线程环境中，同时访问和修改<code>Hashtable</code>不会导致数据不一致。但是，由于每个方法都使用同步，这可能导致在高并发环境下性能较低。</li>
-</ul>
-</li>
-<li><p><strong>ConcurrentHashMap</strong>：</p>
-<ul>
-<li><strong>线程安全且高效</strong>：<code>ConcurrentHashMap</code>是为了解决在高并发环境下<code>HashMap</code>的性能问题和<code>Hashtable</code>的同步性能瓶颈而设计的。</li>
-<li><strong>JDK 1.7及之前</strong>：使用分段锁（Segment Lock）机制，将整个哈希表分为多个段（Segment），每个段本质上是一个小的哈希表，并且有自己的锁。这样，在高并发情况下，只要多个线程访问的是不同的段，就可以并行处理，提高了并发性能。</li>
-<li><strong>JDK 1.8及之后</strong>：取消了分段锁，而是采用了CAS（Compare-And-Swap）操作和<code>synchronized</code>关键字来实现更细粒度的锁。每个桶（Node）的锁控制更加精确，只有在必要时才锁定相关的桶，进一步提高了并发性能。</li>
-</ul>
-</li>
-</ol>
-<h3 id="继承关系"><a href="#继承关系" class="headerlink" title="继承关系"></a>继承关系</h3><ol>
-<li><p><strong>Hashtable</strong>：</p>
-<ul>
-<li>继承自<code>java.util.Dictionary</code>类，这是一个抽象类，提供了基本的键值对存储功能。<code>Hashtable</code>是最早的键值对存储实现之一，因此在Java早期版本中广泛使用。</li>
-</ul>
-</li>
-<li><p><strong>HashMap</strong>和<strong>ConcurrentHashMap</strong>：</p>
-<ul>
-<li>都继承自<code>java.util.AbstractMap</code>抽象类，并实现了<code>java.util.Map</code>接口。<code>AbstractMap</code>提供了Map接口的部分实现，以减少子类实现的工作量。</li>
-<li><code>HashMap</code>和<code>ConcurrentHashMap</code>都提供了Map接口的所有功能，但在实现上有所不同，以适应不同的使用场景。</li>
-</ul>
-</li>
-</ol>
-<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><ul>
-<li><strong>HashMap</strong>：适用于单线程环境或不需要考虑线程安全的情况，因为它提供了最好的性能。</li>
-<li><strong>Hashtable</strong>：适用于多线程环境，但需要同步（即线程安全）的键值对存储。然而，由于性能原因，现在通常推荐使用<code>ConcurrentHashMap</code>。</li>
-<li><strong>ConcurrentHashMap</strong>：适用于高并发环境，提供了线程安全的键值对存储，并且性能优于<code>Hashtable</code>。</li>
-</ul>
-<p>总之，选择哪种Map实现取决于应用程序的具体需求，包括是否需要线程安全以及并发性能的要求。</p>
+            <h1 id="👌ArrayList的添加与删除元素为什么慢？"><a href="#👌ArrayList的添加与删除元素为什么慢？" class="headerlink" title="👌ArrayList的添加与删除元素为什么慢？"></a>👌ArrayList的添加与删除元素为什么慢？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>主要是由于其内部实现基于数组的特性所导致的。</p>
+<p>ArrayList的添加与删除操作慢，主要是因为其内部实现基于数组，而数组在插入和删除元素时需要移动其他元素来保证连续性和顺序性，这个过程需要耗费较多的时间。</p>
+<p>相对于基于链表的数据结构（如LinkedList），ArrayList的插入和删除操作的时间复杂度是O(n)级别的，而链表的时间复杂度为O(1)。</p>
+<h2 id="添加元素"><a href="#添加元素" class="headerlink" title="添加元素"></a>添加元素</h2><p><strong>尾部添加</strong>：</p>
+<p>当在ArrayList的尾部添加元素时，如果当前数组的容量还未达到最大值，只需要将新元素添加到数组的末尾即可，此时时间复杂度为O(1)。</p>
+<p>但是，当数组容量已满时，需要进行扩容操作。扩容操作通常会将数组的容量增加到当前容量的1.5倍或2倍，并将原数组中的所有元素复制到新的更大的数组中。这一过程的时间复杂度为O(n)，其中n为当前数组中的元素数量。</p>
+<p><strong>指定位置插入</strong>：</p>
+<p>当在ArrayList的指定位置（非尾部）插入元素时，需要将目标位置之后的所有元素向后移动一个位置，然后将新元素插入到指定位置。这个过程涉及到移动元素的操作，时间复杂度为O(n)，在最坏情况下，如头部插入，需要移动所有的元素。</p>
+<h2 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h2><p><strong>尾部删除</strong>：</p>
+<p>当删除的元素位于列表末尾时，只需要将末尾元素移除即可，时间复杂度为O(1)。</p>
+<p><strong>指定位置删除</strong>：</p>
+<p>当在ArrayList的指定位置（非尾部）删除元素时，需要将删除点之后的所有元素向前移动一个位置，以填补被删除元素的位置。这个过程同样涉及到移动元素的操作，时间复杂度为O(n)，在最坏情况下，如头部删除，需要移动除了被删除元素之外的所有元素。</p>
+<blockquote>
+<p>&#x2F;ngcbam50s7fa0twf&gt;</p>
+</blockquote>
 
           
         
@@ -2537,7 +3345,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/List%E7%9A%84%E9%81%8D%E5%8E%86%E6%96%B9%E5%BC%8F/">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/BlockingQueue%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -2556,7 +3364,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2024/10/10/List%E7%9A%84%E9%81%8D%E5%8E%86%E6%96%B9%E5%BC%8F/" itemprop="url">List中的遍历方式</a></h1>
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/BlockingQueue%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/" itemprop="url">BlockingQueue是什么</a></h1>
         
 
         <div class="post-meta">
@@ -2568,8 +3376,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-10T17:33:00+00:00">
-                2024-10-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
               </time>
             
 
@@ -2584,8 +3392,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
-                2024-11-16
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
+                2024-11-18
               </time>
             
           </span>
@@ -2603,8 +3411,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
                   </a>
                 </span>
 
@@ -2673,26 +3481,48 @@
       
         
           
-            <ul>
-<li>在Java中，遍历并修改一个List集合是一个常见的操作，但如果不小心处理，可能会遇到<code>ConcurrentModificationException</code>异常，这通常是因为在遍历过程中直接修改了集合的结构（如添加、删除元素）。下面是你提到的几种处理方案及其详细解释：</li>
-</ul>
+            <h1 id="👌BlockingQueue是什么？"><a href="#👌BlockingQueue是什么？" class="headerlink" title="👌BlockingQueue是什么？"></a>👌BlockingQueue是什么？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>BlockingQueue是 Java 中定义在java.util.concurrent包下的一个接口，它扩展了Queue接口，并添加了阻塞操作。BlockingQueue提供了一种线程安全的机制，用于在多线程环境中处理生产者-消费者问题。</p>
+<h2 id="特点和功能"><a href="#特点和功能" class="headerlink" title="特点和功能"></a>特点和功能</h2><p><strong>阻塞操作</strong>：BlockingQueue提供了阻塞的put和take方法：</p>
+<p>put(E e)：如果队列已满，则阻塞直到有空间可插入元素。</p>
+<p>take()：如果队列为空，则阻塞直到有元素可取。</p>
+<p><strong>线程安全</strong>：所有方法都使用内部锁或其他同步机制来确保线程安全。</p>
+<p><strong>多种实现</strong>：BlockingQueue有多种实现方式，适用于不同的场景：</p>
+<p>ArrayBlockingQueue：基于数组的有界阻塞队列。</p>
+<p>LinkedBlockingQueue：基于链表的可选有界阻塞队列。</p>
+<p>PriorityBlockingQueue：支持优先级排序的无界阻塞队列。</p>
+<p>DelayQueue：支持延迟元素的无界阻塞队列。</p>
+<p>SynchronousQueue：不存储元素的阻塞队列，每个插入操作必须等待一个对应的移除操作。</p>
+<p>LinkedTransferQueue：基于链表的无界阻塞队列，支持传输操作。</p>
+<h2 id="代码-Demo"><a href="#代码-Demo" class="headerlink" title="代码 Demo"></a>代码 Demo</h2><p>如何使用BlockingQueue实现生产者-消费者模式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">import java.util.concurrent.BlockingQueue;</span><br><span class="line">import java.util.concurrent.LinkedBlockingQueue;</span><br><span class="line"></span><br><span class="line">public class BlockingQueueExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        BlockingQueue&lt;Integer&gt; queue = new LinkedBlockingQueue&lt;&gt;(5);</span><br><span class="line"></span><br><span class="line">        // 生产者线程</span><br><span class="line">        Thread producer = new Thread(() -&gt; &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                for (int i = 0; i &lt; 10; i++) &#123;</span><br><span class="line">                    System.out.println(&quot;Producing: &quot; + i);</span><br><span class="line">                    queue.put(i); // 如果队列已满，阻塞</span><br><span class="line">                    Thread.sleep(100); // 模拟生产时间</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                Thread.currentThread().interrupt();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        // 消费者线程</span><br><span class="line">        Thread consumer = new Thread(() -&gt; &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                for (int i = 0; i &lt; 10; i++) &#123;</span><br><span class="line">                    Integer value = queue.take(); // 如果队列为空，阻塞</span><br><span class="line">                    System.out.println(&quot;Consuming: &quot; + value);</span><br><span class="line">                    Thread.sleep(150); // 模拟消费时间</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                Thread.currentThread().interrupt();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        producer.start();</span><br><span class="line">        consumer.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>LinkedBlockingQueue被用作BlockingQueue的实现。生产者线程不断地向队列中添加元素，而消费者线程不断地从队列中取出元素。如果队列已满，生产者线程会阻塞，直到有空间可插入元素；如果队列为空，消费者线程会阻塞，直到有元素可取。</p>
+<h2 id="主要方法"><a href="#主要方法" class="headerlink" title="主要方法"></a>主要方法</h2><p>BlockingQueue提供了一些常用的方法，这些方法分为四类：</p>
 <ol>
-<li><p><strong>通过普通的for循环（不建议，可能会漏删）</strong>：<br>使用普通的for循环遍历List，并通过索引直接修改或删除元素。这种方法的问题是，如果删除元素后没有相应地调整索引（例如，连续删除元素时），可能会导致跳过某些元素的检查或索引越界异常。</p>
-</li>
-<li><p><strong>通过普通的for循环进行倒序遍历</strong>：<br>倒序遍历可以避免因删除元素而导致的索引调整问题，因为即使删除了元素，后面的元素索引也不会改变（相对于当前遍历方向）。这种方法可以有效避免漏删的问题。</p>
-</li>
-<li><p><strong>使用迭代器循环</strong>：<br>迭代器提供了一种安全的方式来遍历并修改集合。使用迭代器的<code>remove</code>方法可以安全地删除当前元素，而不会触发<code>ConcurrentModificationException</code>。注意，不能使用集合的<code>remove</code>方法，而应该使用迭代器的<code>remove</code>方法。</p>
-</li>
-<li><p><strong>复制列表</strong>：<br>创建一个原始列表的副本，遍历原始列表，同时在副本上进行删除操作。这种方法是fail-safe的，因为遍历和修改发生在不同的列表上。但这种方法相对复杂，且需要额外的内存来存储副本。此外，如果列表中的元素是复杂对象，可能需要正确地实现<code>equals</code>和<code>hashCode</code>方法以确保正确的删除。</p>
-</li>
-<li><p><strong>使用并发安全的集合类</strong>：<br>使用如<code>CopyOnWriteArrayList</code>这样的线程安全的集合类。这种集合类在修改时创建集合的副本，因此遍历和修改可以安全地进行，但这也可能导致在大量修改时性能下降，因为每次修改都需要复制整个集合。</p>
-</li>
-<li><p><strong>使用Stream的过滤方法</strong>：<br>Java 8引入的Stream API提供了一种声明性的方式来处理集合。通过<code>filter</code>方法，可以创建一个新的Stream，只包含满足特定条件的元素。然后，可以使用<code>collect</code>方法将结果收集到一个新的列表中。这种方法简单高效，因为它避免了在遍历过程中直接修改原始集合。</p>
-</li>
-<li><p><strong>通过<code>removeIf</code>方法</strong>：<br>Java 8的<code>List</code>接口引入了<code>removeIf</code>方法，它接受一个谓词（Predicate），并删除所有满足该谓词的元素。这是一个非常简洁和高效的方法，用于根据条件删除元素。</p>
-</li>
+<li><strong>抛出异常</strong>：</li>
 </ol>
-<p>综上所述，每种方法都有其适用的场景和优缺点。在选择方法时，应考虑集合的大小、修改的频率、内存使用以及对性能的要求。对于大多数情况，使用<code>removeIf</code>或Stream的<code>filter</code>方法是推荐的做法，因为它们既简单又高效。</p>
+<p>add(E e)：如果队列已满，抛出IllegalStateException。</p>
+<p>remove()：如果队列为空，抛出NoSuchElementException。</p>
+<p>element()：如果队列为空，抛出NoSuchElementException。</p>
+<ol start="2">
+<li><strong>返回特殊值</strong>：</li>
+</ol>
+<p>offer(E e)：如果队列已满，返回false。</p>
+<p>poll()：如果队列为空，返回null。</p>
+<p>peek()：如果队列为空，返回null。</p>
+<ol start="3">
+<li><strong>阻塞操作</strong>：</li>
+</ol>
+<p>put(E e)：如果队列已满，阻塞直到有空间可插入元素。</p>
+<p>take()：如果队列为空，阻塞直到有元素可取。</p>
+<ol start="4">
+<li><strong>超时操作</strong>：</li>
+</ol>
+<p>offer(E e, long timeout, TimeUnit unit)：在指定的时间内插入元素，如果队列已满，等待直到超时或插入成功。</p>
+<p>poll(long timeout, TimeUnit unit)：在指定的时间内取出元素，如果队列为空，等待直到超时或取出成功。</p>
+<blockquote>
+<p>&#x2F;wuyri8q61obeufmq&gt;</p>
+</blockquote>
 
           
         
@@ -2741,7 +3571,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/ThreadLocal/">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/Comparable%E5%92%8CComparator%E7%9A%84%E5%8C%BA%E5%88%AB_/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -2760,7 +3590,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2024/10/10/ThreadLocal/" itemprop="url">ThreadLocal的实现原理</a></h1>
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/Comparable%E5%92%8CComparator%E7%9A%84%E5%8C%BA%E5%88%AB_/" itemprop="url">Comparable 和 Comparator 的区别</a></h1>
         
 
         <div class="post-meta">
@@ -2772,8 +3602,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-10T17:33:00+00:00">
-                2024-10-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
               </time>
             
 
@@ -2788,8 +3618,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
-                2024-11-16
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
+                2024-11-18
               </time>
             
           </span>
@@ -2807,8 +3637,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
                   </a>
                 </span>
 
@@ -2877,1985 +3707,883 @@
       
         
           
-            <h2 id="ThreadLocal是Java中用于解决多线程环境下数据隔离问题的一个类。它提供了一种方式，使得每个线程都可以拥有其独立的变量副本，这样每个线程都可以独立地改变自己的副本，而不会影响其他线程的副本。这种机制在多线程编程中非常有用，特别是当需要在多个线程之间共享某些数据，但又不希望这些数据因为并发访问而引发问题时。"><a href="#ThreadLocal是Java中用于解决多线程环境下数据隔离问题的一个类。它提供了一种方式，使得每个线程都可以拥有其独立的变量副本，这样每个线程都可以独立地改变自己的副本，而不会影响其他线程的副本。这种机制在多线程编程中非常有用，特别是当需要在多个线程之间共享某些数据，但又不希望这些数据因为并发访问而引发问题时。" class="headerlink" title="ThreadLocal是Java中用于解决多线程环境下数据隔离问题的一个类。它提供了一种方式，使得每个线程都可以拥有其独立的变量副本，这样每个线程都可以独立地改变自己的副本，而不会影响其他线程的副本。这种机制在多线程编程中非常有用，特别是当需要在多个线程之间共享某些数据，但又不希望这些数据因为并发访问而引发问题时。"></a>ThreadLocal是Java中用于解决多线程环境下数据隔离问题的一个类。它提供了一种方式，使得每个线程都可以拥有其独立的变量副本，这样每个线程都可以独立地改变自己的副本，而不会影响其他线程的副本。这种机制在多线程编程中非常有用，特别是当需要在多个线程之间共享某些数据，但又不希望这些数据因为并发访问而引发问题时。</h2><h3 id="ThreadLocal的实现原理"><a href="#ThreadLocal的实现原理" class="headerlink" title="ThreadLocal的实现原理"></a>ThreadLocal的实现原理</h3><p>ThreadLocal的实现主要依赖于一个内部类ThreadLocalMap。这个Map以ThreadLocal对象为键，以线程独有的变量为值。每个线程都维护着一个ThreadLocalMap的引用，这样线程就可以通过ThreadLocal对象作为键，在其自己的ThreadLocalMap中查找或设置值。</p>
+            <h1 id="👌Comparable-和-Comparator-的区别"><a href="#👌Comparable-和-Comparator-的区别" class="headerlink" title="👌Comparable 和 Comparator 的区别?"></a>👌Comparable 和 Comparator 的区别?</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>Comparable和Comparator是 Java 中用于排序的两个接口，它们有不同的用途和实现方式。</p>
+<h2 id="Comparable接口"><a href="#Comparable接口" class="headerlink" title="Comparable接口"></a>Comparable接口</h2><p>Comparable接口用于定义对象的自然排序顺序。实现此接口的类必须覆盖compareTo方法，该方法用于比较当前对象与指定对象的顺序。</p>
+<p>类实现Comparable接口，并覆盖compareTo方法。</p>
+<h3 id="代码-Demo"><a href="#代码-Demo" class="headerlink" title="代码 Demo"></a>代码 Demo</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">import java.util.*;</span><br><span class="line"></span><br><span class="line">class Person implements Comparable&lt;Person&gt; &#123;</span><br><span class="line">    private String name;</span><br><span class="line">    private int age;</span><br><span class="line"></span><br><span class="line">    public Person(String name, int age) &#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">        this.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int compareTo(Person other) &#123;</span><br><span class="line">        return Integer.compare(this.age, other.age); // 按年龄排序</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String toString() &#123;</span><br><span class="line">        return name + &quot; (&quot; + age + &quot;)&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class ComparableExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        List&lt;Person&gt; people = new ArrayList&lt;&gt;();</span><br><span class="line">        people.add(new Person(&quot;Alice&quot;, 30));</span><br><span class="line">        people.add(new Person(&quot;Bob&quot;, 25));</span><br><span class="line">        people.add(new Person(&quot;Charlie&quot;, 35));</span><br><span class="line"></span><br><span class="line">        Collections.sort(people);</span><br><span class="line"></span><br><span class="line">        for (Person person : people) &#123;</span><br><span class="line">            System.out.println(person);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Comparator接口"><a href="#Comparator接口" class="headerlink" title="Comparator接口"></a>Comparator接口</h2><p>Comparator接口用于定义对象的自定义排序顺序。它允许你定义多个排序标准，而不需要修改对象的类。</p>
+<p>创建一个或多个实现Comparator接口的类，并覆盖compare方法。</p>
+<h3 id="代码-Demo-1"><a href="#代码-Demo-1" class="headerlink" title="代码 Demo"></a>代码 Demo</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">import java.util.*;</span><br><span class="line"></span><br><span class="line">class Person &#123;</span><br><span class="line">    private String name;</span><br><span class="line">    private int age;</span><br><span class="line"></span><br><span class="line">    public Person(String name, int age) &#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">        this.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getName() &#123;</span><br><span class="line">        return name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int getAge() &#123;</span><br><span class="line">        return age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String toString() &#123;</span><br><span class="line">        return name + &quot; (&quot; + age + &quot;)&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class NameComparator implements Comparator&lt;Person&gt; &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public int compare(Person p1, Person p2) &#123;</span><br><span class="line">        return p1.getName().compareTo(p2.getName()); // 按名字排序</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class AgeComparator implements Comparator&lt;Person&gt; &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public int compare(Person p1, Person p2) &#123;</span><br><span class="line">        return Integer.compare(p1.getAge(), p2.getAge()); // 按年龄排序</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class ComparatorExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        List&lt;Person&gt; people = new ArrayList&lt;&gt;();</span><br><span class="line">        people.add(new Person(&quot;Alice&quot;, 30));</span><br><span class="line">        people.add(new Person(&quot;Bob&quot;, 25));</span><br><span class="line">        people.add(new Person(&quot;Charlie&quot;, 35));</span><br><span class="line"></span><br><span class="line">        // 按名字排序</span><br><span class="line">        Collections.sort(people, new NameComparator());</span><br><span class="line">        System.out.println(&quot;按名字排序:&quot;);</span><br><span class="line">        for (Person person : people) &#123;</span><br><span class="line">            System.out.println(person);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 按年龄排序</span><br><span class="line">        Collections.sort(people, new AgeComparator());</span><br><span class="line">        System.out.println(&quot;按年龄排序:&quot;);</span><br><span class="line">        for (Person person : people) &#123;</span><br><span class="line">            System.out.println(person);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="主要区别"><a href="#主要区别" class="headerlink" title="主要区别"></a>主要区别</h2><p><strong>接口实现位置</strong>：</p>
+<p>Comparable：对象类自身实现Comparable接口，定义其自然排序顺序。</p>
+<p>Comparator：单独的类或匿名类实现Comparator接口，定义自定义排序顺序。</p>
+<p><strong>方法名称</strong>：</p>
+<p>Comparable：实现compareTo方法。</p>
+<p>Comparator：实现compare方法。</p>
+<p><strong>排序标准</strong>：</p>
+<p>Comparable：只能有一个排序标准（自然顺序）。</p>
+<p>Comparator：可以有多个排序标准，可以根据需要定义不同的Comparator实现。</p>
+<p><strong>使用场景</strong>：</p>
+<p>Comparable：适用于单一的自然排序顺序，例如字典顺序、数字顺序等。</p>
+<p>Comparator：适用于需要多个排序标准的场景，例如按名字排序、按年龄排序等。</p>
+<blockquote>
+<p>&#x2F;yz4xnv56p75pof6a&gt;</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ConcurrentHashMap%E7%9A%84%E5%8E%9F%E7%90%86%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ConcurrentHashMap%E7%9A%84%E5%8E%9F%E7%90%86%EF%BC%9F/" itemprop="url">ConcurrentHashMap的原理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
+                2024-11-18
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌ConcurrentHashMap的原理？"><a href="#👌ConcurrentHashMap的原理？" class="headerlink" title="👌ConcurrentHashMap的原理？"></a>👌ConcurrentHashMap的原理？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>ConcurrentHashMap 是 Java 中一种高效的线程安全哈希表，主要用于在多线程环境下进行高并发的读写操作。它的设计和实现使得在大多数情况下能够提供比其他同步哈希表（如 HashMap）更高的并发性能。以下是 ConcurrentHashMap 的主要原理和机制</p>
+<h2 id="分段锁机制"><a href="#分段锁机制" class="headerlink" title="分段锁机制"></a>分段锁机制</h2><p>在早期版本（Java 7及之前），ConcurrentHashMap 使用了分段锁机制（Segmented Locking）来实现高并发性。</p>
+<p><strong>分段锁</strong>：ConcurrentHashMap 将整个哈希表分成多个段（Segment），每个段维护一个独立的哈希表和锁。这样，在不同段上的操作可以并发进行，从而提高并发度。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 伪代码示例</span><br><span class="line">class ConcurrentHashMap&lt;K, V&gt; &#123;</span><br><span class="line">    Segment&lt;K, V&gt;[] segments;</span><br><span class="line">    </span><br><span class="line">    static class Segment&lt;K, V&gt; &#123;</span><br><span class="line">        final ReentrantLock lock = new ReentrantLock();</span><br><span class="line">        HashEntry&lt;K, V&gt;[] table;</span><br><span class="line">        // 其他字段和方法</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>锁粒度</strong>：由于每个段都有自己的锁，只有在操作同一个段时才需要竞争锁，这大大降低了锁竞争的几率，提高了并发性能。</p>
+<h2 id="CAS-操作和无锁机制"><a href="#CAS-操作和无锁机制" class="headerlink" title="CAS 操作和无锁机制"></a>CAS 操作和无锁机制</h2><p>在 Java 8 及之后，ConcurrentHashMap 进行了重构，摒弃了分段锁机制，转而采用了更加细粒度的锁和无锁机制（CAS 操作）。</p>
+<p><strong>CAS 操作</strong>：CAS（Compare-And-Swap）是一种无锁的原子操作，用于在不加锁的情况下实现线程安全。<code>ConcurrentHashMap</code>使用<code>Unsafe</code>类中的 CAS 方法来更新某些字段，从而避免了锁的开销。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 伪代码示例</span><br><span class="line">boolean casTabAt(Node&lt;K, V&gt;[] tab, int i, Node&lt;K, V&gt; c, Node&lt;K, V&gt; v) &#123;</span><br><span class="line">    return U.compareAndSwapObject(tab, ((long)i &lt;&lt; ASHIFT) + ABASE, c, v);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>细粒度锁</strong>：在 Java 8 中，<code>ConcurrentHashMap</code>使用了更加细粒度的锁（<code>synchronized</code>和<code>ReentrantLock</code>），只在必要时锁定特定的桶（bin）或节点，从而进一步提高并发性能。</p>
+<h2 id="红黑树"><a href="#红黑树" class="headerlink" title="红黑树"></a>红黑树</h2><p>为了应对哈希冲突，ConcurrentHashMap 在链表长度超过一定阈值（默认是8）时，将链表转换为红黑树，以提高查找效率。</p>
+<p><strong>链表</strong>：在哈希冲突较少时，使用链表存储冲突的键值对。</p>
+<p><strong>红黑树</strong>：当链表长度超过阈值时，转换为红黑树，以便在大量冲突时仍能保持较高的查找效率。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 伪代码示例</span><br><span class="line">if (binCount &gt;= TREEIFY_THRESHOLD) &#123;</span><br><span class="line">    treeifyBin(tab, hash);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="扩容机制（Rehashing）"><a href="#扩容机制（Rehashing）" class="headerlink" title="扩容机制（Rehashing）"></a>扩容机制（Rehashing）</h2><p>ConcurrentHashMap 采用了渐进式扩容机制来避免扩容过程中长时间的全表锁定。</p>
+<p><strong>渐进式扩容</strong>：在扩容过程中，<code>ConcurrentHashMap</code>并不会一次性将所有数据迁移到新的哈希表中，而是采用渐进式扩容的方式，在每次插入或删除操作时，逐步迁移部分数据。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 伪代码示例</span><br><span class="line">void transfer(Node&lt;K, V&gt;[] tab, Node&lt;K, V&gt;[] nextTab) &#123;</span><br><span class="line">    // 渐进式迁移数据</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="读写操作"><a href="#读写操作" class="headerlink" title="读写操作"></a>读写操作</h2><p><strong>读取操作</strong>：读取操作大部分情况下是无锁的，因为<code>ConcurrentHashMap</code>使用了<code>volatile</code>变量和 CAS 操作来保证读取的可见性和一致性。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// 伪代码示例</span><br><span class="line">V get(Object key) &#123;</span><br><span class="line">    Node&lt;K, V&gt;[] tab; Node&lt;K, V&gt; e, p; int n, eh; K ek;</span><br><span class="line">    int h = spread(key.hashCode());</span><br><span class="line">    if ((tab = table) != null &amp;&amp; (n = tab.length) &gt; 0 &amp;&amp;</span><br><span class="line">        (e = tabAt(tab, (n - 1) &amp; h)) != null) &#123;</span><br><span class="line">        if ((eh = e.hash) == h) &#123;</span><br><span class="line">            if ((ek = e.key) == key || (ek != null &amp;&amp; key.equals(ek)))</span><br><span class="line">                return e.val;</span><br><span class="line">        &#125;</span><br><span class="line">        // 其他读取逻辑</span><br><span class="line">    &#125;</span><br><span class="line">    return null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>写入操作</strong>：写入操作则需要在必要时使用锁或 CAS 操作来保证线程安全。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">// 伪代码示例</span><br><span class="line">V put(K key, V value) &#123;</span><br><span class="line">    return putVal(key, value, false);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">final V putVal(K key, V value, boolean onlyIfAbsent) &#123;</span><br><span class="line">    if (key == null || value == null) throw new NullPointerException();</span><br><span class="line">    int hash = spread(key.hashCode());</span><br><span class="line">    int binCount = 0;</span><br><span class="line">    for (Node&lt;K, V&gt;[] tab = table;;) &#123;</span><br><span class="line">        Node&lt;K, V&gt; f; int n, i, fh;</span><br><span class="line">        if (tab == null || (n = tab.length) == 0)</span><br><span class="line">            tab = initTable();</span><br><span class="line">        else if ((f = tabAt(tab, i = (n - 1) &amp; hash)) == null) &#123;</span><br><span class="line">            if (casTabAt(tab, i, null, new Node&lt;K, V&gt;(hash, key, value, null)))</span><br><span class="line">                break;                   // no lock when adding to empty bin</span><br><span class="line">        &#125;</span><br><span class="line">        else if ((fh = f.hash) == MOVED)</span><br><span class="line">            tab = helpTransfer(tab, f);</span><br><span class="line">        else &#123;</span><br><span class="line">            V oldVal = null;</span><br><span class="line">            synchronized (f) &#123;</span><br><span class="line">                if (tabAt(tab, i) == f) &#123;</span><br><span class="line">                    if (fh &gt;= 0) &#123;</span><br><span class="line">                        binCount = 1;</span><br><span class="line">                        for (Node&lt;K, V&gt; e = f;; ++binCount) &#123;</span><br><span class="line">                            K ek;</span><br><span class="line">                            if (e.hash == hash &amp;&amp;</span><br><span class="line">                                ((ek = e.key) == key || (ek != null &amp;&amp; key.equals(ek)))) &#123;</span><br><span class="line">                                oldVal = e.val;</span><br><span class="line">                                if (!onlyIfAbsent)</span><br><span class="line">                                    e.val = value;</span><br><span class="line">                                break;</span><br><span class="line">                            &#125;</span><br><span class="line">                            Node&lt;K, V&gt; pred = e;</span><br><span class="line">                            if ((e = e.next) == null) &#123;</span><br><span class="line">                                pred.next = new Node&lt;K, V&gt;(hash, key, value, null);</span><br><span class="line">                                break;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    else if (f instanceof TreeBin) &#123;</span><br><span class="line">                        Node&lt;K, V&gt; p;</span><br><span class="line">                        binCount = 2;</span><br><span class="line">                        if ((p = ((TreeBin&lt;K, V&gt;)f).putTreeVal(hash, key, value)) != null) &#123;</span><br><span class="line">                            oldVal = p.val;</span><br><span class="line">                            if (!onlyIfAbsent)</span><br><span class="line">                                p.val = value;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            if (binCount != 0) &#123;</span><br><span class="line">                if (binCount &gt;= TREEIFY_THRESHOLD)</span><br><span class="line">                    treeifyBin(tab, i);</span><br><span class="line">                if (oldVal != null)</span><br><span class="line">                    return oldVal;</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    addCount(1L, binCount);</span><br><span class="line">    return null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<blockquote>
+<p>&#x2F;gr29od28mo8ulrk5&gt;</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ConcurrentHashMap%E8%83%BD%E4%BF%9D%E8%AF%81%E5%A4%8D%E5%90%88%E6%93%8D%E4%BD%9C%E7%9A%84%E5%8E%9F%E5%AD%90%E6%80%A7%E5%90%97_/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ConcurrentHashMap%E8%83%BD%E4%BF%9D%E8%AF%81%E5%A4%8D%E5%90%88%E6%93%8D%E4%BD%9C%E7%9A%84%E5%8E%9F%E5%AD%90%E6%80%A7%E5%90%97_/" itemprop="url">ConcurrentHashMap 能保证复合操作的原子性吗</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
+                2024-11-18
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="ConcurrentHashMap-能保证复合操作的原子性吗"><a href="#ConcurrentHashMap-能保证复合操作的原子性吗" class="headerlink" title="ConcurrentHashMap 能保证复合操作的原子性吗?"></a>ConcurrentHashMap 能保证复合操作的原子性吗?</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>不能，ConcurrentHashMap 是 Java 中用于处理并发访问的线程安全集合类。它通过分段锁机制来提高并发性能。然而，尽管 ConcurrentHashMap 能够保证单个操作的线程安全性，但它不能保证复合操作的原子性。</p>
+<h2 id="单个操作的线程安全性"><a href="#单个操作的线程安全性" class="headerlink" title="单个操作的线程安全性"></a>单个操作的线程安全性</h2><p>ConcurrentHashMap中的单个操作，如put(),get(),remove()，是线程安全的。这意味着多个线程可以同时执行这些操作而不会导致数据不一致或抛出异常。</p>
+<h2 id="复合操作的原子性"><a href="#复合操作的原子性" class="headerlink" title="复合操作的原子性"></a>复合操作的原子性</h2><p>复合操作是指多个基本操作的组合，例如“检查-然后-执行”模式（check-then-act），如：</p>
+<p>如果键不存在，则添加一个新的键值对。如果键存在，则更新其值。</p>
+<p>这些操作在ConcurrentHashMap中不是原子性的，因为在执行复合操作的过程中，可能会有其他线程对ConcurrentHashMap进行修改，导致数据不一致。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ConcurrentHashMap&lt;String, Integer&gt; map = new ConcurrentHashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">// 检查是否包含键，然后添加键值对</span><br><span class="line">if (!map.containsKey(&quot;key&quot;)) &#123;</span><br><span class="line">    map.put(&quot;key&quot;, 1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码片段不是线程安全的，因为在containsKey()和put()之间，另一个线程可能已经插入了相同的键。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>为了保证复合操作的原子性，可以使用ConcurrentHashMap提供的原子方法，如computeIfAbsent(),compute(),merge()等。这些方法允许在单个操作中执行复杂的计算，从而保证操作的原子性。</p>
+<h3 id="使用computeIfAbsent"><a href="#使用computeIfAbsent" class="headerlink" title="使用computeIfAbsent()"></a>使用<code>computeIfAbsent()</code></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">map.computeIfAbsent(&quot;key&quot;, k -&gt; 1);</span><br></pre></td></tr></table></figure>
+
+<p>如果键<code>&quot;key&quot;</code>不存在，则将其值设置为<code>1</code>。此操作是原子性的。</p>
+<h3 id="使用compute"><a href="#使用compute" class="headerlink" title="使用compute()"></a>使用<code>compute()</code></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">map.compute(&quot;key&quot;, (k, v) -&gt; (v == null) ? 1 : v + 1);</span><br></pre></td></tr></table></figure>
+
+<p>此方法允许对键进行计算，如果键不存在，则<code>v</code>为<code>null</code>，否则可以对其值进行更新。</p>
+<h3 id="使用merge"><a href="#使用merge" class="headerlink" title="使用merge()"></a>使用<code>merge()</code></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">map.merge(&quot;key&quot;, 1, Integer::sum);</span><br></pre></td></tr></table></figure>
+
+<p>如果键<code>&quot;key&quot;</code>存在，则将其值与<code>1</code>相加，否则将其值设置为<code>1</code>。此操作也是原子性的。</p>
+<blockquote>
+<p>&#x2F;bg29eue26kgthvqq&gt;</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/Enumeration%E5%92%8CIterator%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/Enumeration%E5%92%8CIterator%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F/" itemprop="url">Enumeration和Iterator接口的区别</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
+                2024-11-18
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌Enumeration和Iterator接口的区别？"><a href="#👌Enumeration和Iterator接口的区别？" class="headerlink" title="👌Enumeration和Iterator接口的区别？"></a>👌Enumeration和Iterator接口的区别？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>Enumeration和Iterator是 Java 中用于遍历集合的两个接口。虽然它们有相似的功能，但它们有不同的设计和使用方式。</p>
+<h2 id="Enumeration接口"><a href="#Enumeration接口" class="headerlink" title="Enumeration接口"></a>Enumeration接口</h2><p>Enumeration是一个较老的接口，存在于 Java 1.0 中。它主要用于遍历旧的集合类，如Vector和Hashtable。</p>
+<h3 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h3><p>boolean hasMoreElements(): 如果枚举中仍有更多元素，则返回true。</p>
+<p>Object nextElement(): 返回枚举中的下一个元素。</p>
+<h3 id="代码-Demo"><a href="#代码-Demo" class="headerlink" title="代码 Demo"></a>代码 Demo</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import java.util.*;</span><br><span class="line"></span><br><span class="line">public class EnumerationExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Vector&lt;String&gt; vector = new Vector&lt;&gt;();</span><br><span class="line">        vector.add(&quot;A&quot;);</span><br><span class="line">        vector.add(&quot;B&quot;);</span><br><span class="line">        vector.add(&quot;C&quot;);</span><br><span class="line"></span><br><span class="line">        Enumeration&lt;String&gt; enumeration = vector.elements();</span><br><span class="line">        while (enumeration.hasMoreElements()) &#123;</span><br><span class="line">            String element = enumeration.nextElement();</span><br><span class="line">            System.out.println(element);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Iterator接口"><a href="#Iterator接口" class="headerlink" title="Iterator接口"></a>Iterator接口</h2><p>Iterator是在 Java 2 (JDK 1.2) 中引入的。它是集合框架的一部分，适用于所有集合类（如ArrayList、HashSet、HashMap等）。Iterator提供了更灵活的遍历方法，并允许在遍历过程中安全地移除元素。</p>
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>boolean hasNext(): 如果迭代器中仍有更多元素，则返回true。</p>
+<p>E next(): 返回迭代器中的下一个元素。</p>
+<p>void remove(): 从集合中移除迭代器返回的最后一个元素（可选操作）。</p>
+<h3 id="代码-Demo-1"><a href="#代码-Demo-1" class="headerlink" title="代码 Demo"></a>代码 Demo</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">import java.util.*;</span><br><span class="line"></span><br><span class="line">public class IteratorExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        List&lt;String&gt; list = new ArrayList&lt;&gt;();</span><br><span class="line">        list.add(&quot;A&quot;);</span><br><span class="line">        list.add(&quot;B&quot;);</span><br><span class="line">        list.add(&quot;C&quot;);</span><br><span class="line"></span><br><span class="line">        Iterator&lt;String&gt; iterator = list.iterator();</span><br><span class="line">        while (iterator.hasNext()) &#123;</span><br><span class="line">            String element = iterator.next();</span><br><span class="line">            System.out.println(element);</span><br><span class="line">            if (element.equals(&quot;B&quot;)) &#123;</span><br><span class="line">                iterator.remove(); // 安全地移除元素</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;After removal: &quot; + list);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="主要区别"><a href="#主要区别" class="headerlink" title="主要区别"></a>主要区别</h2><p><strong>接口引入时间</strong>：</p>
+<p>Enumeration：引入于 Java 1.0。</p>
+<p>Iterator：引入于 Java 2 (JDK 1.2)。</p>
+<p><strong>方法名称和功能</strong>：</p>
+<p>Enumeration：使用hasMoreElements()和nextElement()方法。</p>
+<p>Iterator：使用hasNext()和next()方法，并增加了remove()方法。</p>
+<p><strong>元素移除</strong>：</p>
+<p>Enumeration：不支持在遍历过程中移除元素。</p>
+<p>Iterator：支持在遍历过程中安全地移除元素（通过remove()方法）。</p>
+<p><strong>适用范围</strong>：</p>
+<p>Enumeration：主要用于旧的集合类，如Vector和Hashtable。</p>
+<p>Iterator：适用于所有集合类，是集合框架的一部分。</p>
+<blockquote>
+<p>&#x2F;vk496pkev2ub6nh4&gt;</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/HashMap%E6%80%8E%E4%B9%88%E8%AE%A1%E7%AE%97hashCode%E7%9A%84%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/HashMap%E6%80%8E%E4%B9%88%E8%AE%A1%E7%AE%97hashCode%E7%9A%84%EF%BC%9F/" itemprop="url">HashMap怎么计算hashCode的？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
+                2024-11-18
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌HashMap怎么计算hashCode的？"><a href="#👌HashMap怎么计算hashCode的？" class="headerlink" title="👌HashMap怎么计算hashCode的？"></a>👌HashMap怎么计算hashCode的？</h1><p>HashMap使用键的hashCode()方法来生成哈希值，并对其进行一些处理，以提高哈希表的性能和均匀分布。</p>
+<h2 id="调用键的hashCode-方法"><a href="#调用键的hashCode-方法" class="headerlink" title="调用键的hashCode()方法"></a>调用键的hashCode()方法</h2><p>首先，HashMap调用键对象的hashCode()方法来获取一个整数哈希码。这个哈希码是由键对象的类定义的，通常是通过某种算法基于对象的内部状态计算出来的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int hashCode= key.hashCode();</span><br></pre></td></tr></table></figure>
+
+<h2 id="扰动函数-Perturbation-Function"><a href="#扰动函数-Perturbation-Function" class="headerlink" title="扰动函数 (Perturbation Function)"></a>扰动函数 (Perturbation Function)</h2><p>为了减少哈希冲突并使哈希码更加均匀地分布，HashMap对原始哈希码进行了一些额外的处理。这种处理被称为扰动函数。Java 8 及以后的HashMap实现使用以下算法来计算最终的哈希值：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">static final int hash(Object key) &#123;</span><br><span class="line">    int h;</span><br><span class="line">    return (key == null) ? 0 : (h = key.hashCode()) ^ (h &gt;&gt;&gt; 16);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个算法的步骤如下：</p>
 <ol>
-<li><p><strong>ThreadLocalMap的结构</strong>：</p>
-<ul>
-<li>ThreadLocalMap是一个哈希表，它的键（Key）是ThreadLocal对象本身的一个弱引用（WeakReference），而值（Value）则是线程独有的变量。</li>
-<li>使用弱引用作为键的好处是，当ThreadLocal对象被垃圾回收时，不会因为ThreadLocalMap中的引用而阻止其被回收。但这也带来了一个问题，即如果ThreadLocal对象被回收了，而ThreadLocalMap中的Entry还存在（且Value还未被回收），那么就会出现键为null的情况，这需要在ThreadLocalMap的操作中特别处理。</li>
-</ul>
-</li>
-<li><p><strong>ThreadLocal的方法</strong>：</p>
-<ul>
-<li><code>initialValue()</code>：返回此线程局部变量的初始值。</li>
-<li><code>get()</code>：返回此线程局部变量的当前线程副本中的值。如果这是线程第一次调用该方法，则通过调用<code>initialValue()</code>方法创建并初始化此副本。</li>
-<li><code>set(T value)</code>：将此线程局部变量的当前线程副本中的值设置为指定值。</li>
-<li><code>remove()</code>：移除此线程局部变量的值。这是一个清理操作，有助于避免内存泄漏，特别是在使用线程池时。</li>
-</ul>
-</li>
-<li><p><strong>ThreadLocalMap的扩容和清理</strong>：</p>
-<ul>
-<li>ThreadLocalMap的扩容机制与HashMap类似，当元素数量超过阈值时，会进行扩容。</li>
-<li>由于ThreadLocalMap的键是弱引用，当没有强引用指向ThreadLocal对象时，ThreadLocal对象可以被垃圾回收。但是，如果ThreadLocal对象被回收了，而对应的Value对象还有强引用存在（即还没有被线程显式地调用<code>remove()</code>方法移除），那么这些Value对象就变成了“孤儿对象”，可能会导致内存泄漏。因此，在使用ThreadLocal时，建议显式地调用<code>remove()</code>方法来清理不再需要的线程局部变量。</li>
-</ul>
-</li>
+<li><strong>获取键的哈希码</strong>：h &#x3D; key.hashCode()</li>
+<li><strong>右移 16 位</strong>：h &gt;&gt;&gt; 16</li>
+<li><strong>异或运算</strong>：h ^ (h &gt;&gt;&gt; 16)</li>
 </ol>
-<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><p>ThreadLocal的典型使用场景包括：</p>
-<ul>
-<li>在多线程环境中，每个线程需要维护一个独立的、不与其他线程共享的状态或数据。</li>
-<li>在处理用户请求时，将用户相关的信息（如用户ID、会话信息等）保存在ThreadLocal中，以便在同一个请求处理流程中方便地访问这些信息，而不需要通过参数传递。</li>
-</ul>
-<h3 id="内存泄漏与内存溢出的区别"><a href="#内存泄漏与内存溢出的区别" class="headerlink" title="内存泄漏与内存溢出的区别"></a>内存泄漏与内存溢出的区别</h3><ul>
-<li><strong>内存泄漏</strong>：指的是程序中分配的内存在不再需要时没有被正确释放或回收的情况。随着时间的推移，可用内存逐渐减少，最终可能导致程序性能下降或崩溃。</li>
-<li><strong>内存溢出</strong>（OOM, Out of Memory）：当程序运行时，如果请求的内存超出了可用内存的限制，就会抛出内存溢出异常。内存泄漏如果不及时解决，最终可能导致内存溢出。</li>
-</ul>
-<h3 id="ThreadLocal内存泄漏问题"><a href="#ThreadLocal内存泄漏问题" class="headerlink" title="ThreadLocal内存泄漏问题"></a>ThreadLocal内存泄漏问题</h3><p>ThreadLocal是一个用于创建线程本地变量的类。每个线程都拥有自己独立的、初始化为null的变量副本，这些变量对其他线程是不可见的。然而，ThreadLocal的内存泄漏问题是一个比较典型的问题。</p>
-<h4 id="ThreadLocal内存泄漏的来源"><a href="#ThreadLocal内存泄漏的来源" class="headerlink" title="ThreadLocal内存泄漏的来源"></a>ThreadLocal内存泄漏的来源</h4><ol>
-<li><p><strong>ThreadLocal对象在堆上存储的ThreadLocalMap</strong>：</p>
-<ul>
-<li>ThreadLocalMap是ThreadLocal的内部类，用于存储线程局部变量。</li>
-<li>ThreadLocalMap的key是ThreadLocal对象，value是线程变量的值。</li>
-</ul>
-</li>
-<li><p><strong>ThreadLocal的引用链</strong>：</p>
-<ul>
-<li>ThreadLocal对象有两个引用源：一个是栈上的ThreadLocal引用（方法内创建），一个是ThreadLocalMap中的key对它的引用。</li>
-<li>如果栈上的ThreadLocal引用不再使用（方法结束），但ThreadLocal对象因为还有ThreadLocalMap中的key引用而无法被回收，就会导致内存泄漏。</li>
-</ul>
-</li>
-<li><p><strong>线程对象被重复使用</strong>：</p>
-<ul>
-<li>在线程池场景中，线程对象会被重复使用。如果线程中的ThreadLocalMap没有及时清理，就会导致内存泄漏。</li>
-</ul>
-</li>
-</ol>
-<h4 id="弱引用解决部分内存泄漏问题"><a href="#弱引用解决部分内存泄漏问题" class="headerlink" title="弱引用解决部分内存泄漏问题"></a>弱引用解决部分内存泄漏问题</h4><p>为了解决ThreadLocal对象因为ThreadLocalMap中的key引用而无法被回收的问题，ThreadLocalMap使用了弱引用。</p>
-<ul>
-<li><strong>弱引用</strong>：如果一个对象只具有弱引用，那么这个对象就会在下次垃圾回收时被回收。</li>
-<li>在ThreadLocalMap中，key（ThreadLocal对象）是弱引用。这意味着，当栈上的ThreadLocal引用不再使用时，ThreadLocal对象可以被垃圾回收器回收，从而避免了因为ThreadLocal对象无法被回收而导致的内存泄漏。</li>
-</ul>
-<p>然而，即使使用了弱引用，ThreadLocal的内存泄漏问题并没有完全解决。因为value（线程变量的值）还是强引用，如果线程对象被重复使用（如在线程池中），并且ThreadLocalMap没有及时清理，那么value所占用的内存仍然无法被回收。因此，开发者还需要在使用完ThreadLocal后，显式地调用<code>remove()</code>方法来清理ThreadLocalMap中的entry，以避免内存泄漏。</p>
-<p>综上所述，ThreadLocal的内存泄漏问题是一个复杂的问题，需要开发者和JDK共同解决。JDK通过使用弱引用来解决了一部分问题，但开发者还需要在使用完ThreadLocal后显式地调用<code>remove()</code>方法来避免内存泄漏。<br>总之，ThreadLocal是一个强大的工具，它可以帮助我们在多线程环境中实现数据的隔离和线程安全。但是，使用时也需要注意其潜在的内存泄漏问题，特别是在使用线程池时。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%96%B9%E5%BC%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/10/%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%96%B9%E5%BC%8F/" itemprop="url">创建线程的方式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-10T17:33:00+00:00">
-                2024-10-10
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
-                2024-11-16
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ol>
-<li><p><strong>继承<code>Thread</code>类创建线程</strong>：</p>
-<ul>
-<li>这种方式是通过创建一个新的类，该类继承自<code>Thread</code>类，并重写<code>run</code>方法。然后，通过创建该类的实例并调用其<code>start</code>方法来启动线程。</li>
-<li>优点：代码简单，易于理解。</li>
-<li>缺点：由于Java是单继承的，继承<code>Thread</code>类后就不能再继承其他类了，这在一定程度上限制了类的扩展性。</li>
-</ul>
-</li>
-<li><p><strong>实现<code>Runnable</code>接口创建线程</strong>：</p>
-<ul>
-<li>这种方式是通过创建一个实现了<code>Runnable</code>接口的类，并实现其<code>run</code>方法。然后，将该类的实例作为参数传递给<code>Thread</code>类的构造器，创建<code>Thread</code>对象并调用其<code>start</code>方法来启动线程。</li>
-<li>优点：由于Java支持接口的多实现，因此这种方式更具灵活性，可以继承其他类并实现<code>Runnable</code>接口。</li>
-<li>缺点：相对于继承<code>Thread</code>类，代码稍显复杂。</li>
-</ul>
-</li>
-<li><p><strong>通过<code>Callable</code>和<code>FutureTask</code>创建线程</strong>：</p>
-<ul>
-<li><code>Callable</code>接口类似于<code>Runnable</code>接口，但它可以返回结果并且可以抛出受检异常（checked exception）。</li>
-<li><code>FutureTask</code>是<code>Future</code>接口的一个实现，它包装了一个<code>Callable</code>对象，可以提交给<code>Executor</code>（如线程池）来执行。</li>
-<li>这种方式通常用于需要获取线程执行结果或处理受检异常的场景。</li>
-</ul>
-</li>
-<li><p><strong>通过线程池创建线程</strong>：</p>
-<ul>
-<li>线程池是提前创建好一批线程，并保存在池中。当有任务需要执行时，从池中取出一个线程来执行任务。这种方式可以显著提高资源的利用率和性能。</li>
-<li>Java中的<code>ExecutorService</code>接口提供了管理线程池的方法，如<code>newFixedThreadPool</code>、<code>newCachedThreadPool</code>等。</li>
-<li>优点：提高资源利用率、性能；简化线程管理。</li>
-<li>缺点：增加了代码的复杂性；需要合理配置线程池的大小以避免资源耗尽或性能下降。</li>
-</ul>
-</li>
-</ol>
-<p>关于<code>Runnable</code>和<code>Callable</code>的区别：</p>
-<ul>
-<li><code>Runnable</code>的<code>run</code>方法无返回值，而<code>Callable</code>的<code>call</code>方法有返回值。</li>
-<li><code>Callable</code>中可以抛出受检异常，而<code>Runnable</code>不可以。</li>
-<li><code>Callable</code>和<code>Runnable</code>都可以应用于<code>executors</code>（执行器），但<code>Thread</code>类只支持<code>Runnable</code>。</li>
-</ul>
-<p>关于<code>Future</code>和<code>FutureTask</code>：</p>
-<ul>
-<li><code>Future</code>是一个接口，代表了一个异步执行的结果。它提供了检查执行是否完成、等待完成和获取执行结果的方法。</li>
-<li><code>FutureTask</code>是<code>Future</code>接口的一个实现，它实现了一个可以提交给<code>Executor</code>执行的任务，并且可以用来检查任务的执行状态和获取任务的执行结果。</li>
-</ul>
-<p>最后，线程池是池化技术的一种典型实现，用于提高资源的利用率和性能。在编程中，线程池通常用于管理大量并发任务的执行。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/%E5%B9%B6%E5%8F%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/10/%E5%B9%B6%E5%8F%91/" itemprop="url">并发笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-10T17:33:00+00:00">
-                2024-10-10
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
-                2024-11-16
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h1><h2 id="synchronized"><a href="#synchronized" class="headerlink" title="synchronized"></a>synchronized</h2><h3 id="同一时刻只能一个线程执行代码块"><a href="#同一时刻只能一个线程执行代码块" class="headerlink" title="同一时刻只能一个线程执行代码块"></a>同一时刻只能一个线程执行代码块</h3><h3 id="可以修饰方法和代码块"><a href="#可以修饰方法和代码块" class="headerlink" title="可以修饰方法和代码块"></a>可以修饰方法和代码块</h3><h3 id="如何实现可见性问题"><a href="#如何实现可见性问题" class="headerlink" title="如何实现可见性问题"></a>如何实现可见性问题</h3><ul>
-<li><p>实现可见性的过程</p>
-<ul>
-<li><p>获取互斥锁</p>
-</li>
-<li><p>清空本地代码，将主内存中的最新拷贝到本地内存</p>
-</li>
-<li><p>将更改后共享变量值刷新到主内存</p>
-</li>
-<li><p>释放互斥锁</p>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="如何实现同步"><a href="#如何实现同步" class="headerlink" title="如何实现同步"></a>如何实现同步</h3><ul>
-<li><p>都是使用mointorenter和monitorexit两个JVM指令实现</p>
-</li>
-<li><p>什么是管程</p>
-<ul>
-<li><p>管理共享变量以及对共享变量操作过程，使得支持并发</p>
-</li>
-<li><p>线程可以对monitor执行lock和unlock操作进行加锁和释放锁</p>
-</li>
-<li><p>解决互斥问题的思路：将共享变量及对共享变量的操作统一封装起来</p>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="锁优化"><a href="#锁优化" class="headerlink" title="锁优化"></a>锁优化</h3><ul>
-<li><p>同步锁的四种状态：无锁、偏向锁、轻量级锁、重量级锁</p>
-</li>
-<li><p>偏向锁：一个线程加锁</p>
-</li>
-<li><p>轻量级锁：两个线程交替自旋</p>
-</li>
-<li><p>同步锁锁定资源是对象</p>
-</li>
-</ul>
-<h2 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h2><h3 id="可见性：对变量的修改对所有线程可见"><a href="#可见性：对变量的修改对所有线程可见" class="headerlink" title="可见性：对变量的修改对所有线程可见"></a>可见性：对变量的修改对所有线程可见</h3><ul>
-<li><p>可见性</p>
-<ul>
-<li>volatile在写操作的时候，JVM会发一条lock前缀的指令，将这个缓存的变量会写到系统主存中；其他的使用的时候会从主存读取最新的数据。所以可见</li>
-</ul>
-</li>
-</ul>
-<h3 id="内存屏障（Memory-Barrier）是CPU的一种指令，用于控制特定条件下的重排序和内存可见性问题。"><a href="#内存屏障（Memory-Barrier）是CPU的一种指令，用于控制特定条件下的重排序和内存可见性问题。" class="headerlink" title="内存屏障（Memory Barrier）是CPU的一种指令，用于控制特定条件下的重排序和内存可见性问题。"></a>内存屏障（Memory Barrier）是CPU的一种指令，用于控制特定条件下的重排序和内存可见性问题。</h3><p>Java编译器会根据内存屏障的规则禁止重排序</p>
-<ul>
-<li><p>为了保障volatile变量的可见性和禁止指令重排序，java在字节码中插入内存屏障实现</p>
-<ul>
-<li><p>内存屏障解决指令重排</p>
-<ul>
-<li></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="有序性：禁止指令重排，遵循happens-before原则"><a href="#有序性：禁止指令重排，遵循happens-before原则" class="headerlink" title="有序性：禁止指令重排，遵循happens-before原则"></a>有序性：禁止指令重排，遵循happens-before原则</h3><h3 id="双重检验锁必须加volatile，因为内存屏障"><a href="#双重检验锁必须加volatile，因为内存屏障" class="headerlink" title="双重检验锁必须加volatile，因为内存屏障"></a>双重检验锁必须加volatile，因为内存屏障</h3><ul>
-<li><p>双重校验锁实现一个单例</p>
-</li>
-<li><p>否则会出现空指针</p>
-</li>
-</ul>
-<h3 id="存在问题"><a href="#存在问题" class="headerlink" title="存在问题"></a>存在问题</h3><ul>
-<li><p>不满足原子性</p>
-<ul>
-<li><p>解决方法</p>
-<ul>
-<li><p>使用syn</p>
-</li>
-<li><p>使用可重入锁</p>
-</li>
-<li><p>使用原子类</p>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="与syn的区别"><a href="#与syn的区别" class="headerlink" title="与syn的区别"></a>与syn的区别</h3><ul>
-<li><p>volatile不需要加锁，不会阻塞线程</p>
-</li>
-<li><p>volatile是一种简单的同步机制</p>
-</li>
-</ul>
-<h2 id="JUC"><a href="#JUC" class="headerlink" title="JUC"></a>JUC</h2><h3 id="锁的分类"><a href="#锁的分类" class="headerlink" title="锁的分类"></a>锁的分类</h3><h3 id="CAS：一条CPU的原子指令，可以保证共享变量修改的原子性"><a href="#CAS：一条CPU的原子指令，可以保证共享变量修改的原子性" class="headerlink" title="CAS：一条CPU的原子指令，可以保证共享变量修改的原子性"></a>CAS：一条CPU的原子指令，可以保证共享变量修改的原子性</h3><ul>
-<li><p>使用unsafe类实现，其中都是native方法</p>
-</li>
-<li><p>根据内存偏移量找到待更新的原值的准确内存地址，使用compareAndSwaplant将待更新的值和预期值进行比较</p>
-</li>
-<li><p>CAS缺陷</p>
-<ul>
-<li><p>循环时间太长</p>
-</li>
-<li><p>只能保证一个共享变量原子操作</p>
-</li>
-<li><p>ABA问题</p>
-<ul>
-<li>解决方案：AtomicStampedReference（加个时间作为版本号）</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="问题：Thread-的join方法"><a href="#问题：Thread-的join方法" class="headerlink" title="问题：Thread 的join方法"></a>问题：Thread 的join方法</h3><h3 id="与syn的比较"><a href="#与syn的比较" class="headerlink" title="与syn的比较"></a>与syn的比较</h3><ul>
-<li><p>syn在以下情况下释放锁</p>
-<ul>
-<li><p>线程执行完释放</p>
-</li>
-<li><p>线程执行时发生异常，JVM会自动释放</p>
-</li>
-<li><p>锁方法执行了wait方法，进行释放锁</p>
-</li>
-</ul>
-</li>
-<li><p>syn的问题</p>
-<ul>
-<li><p>无法控制阻塞时长——&gt;JUC trylock()解决</p>
-</li>
-<li><p>阻塞不可中断——&gt;lockInterruptibly解决</p>
-</li>
-<li><p>syn不支持读写锁分离——&gt;JUC的ReentrantReadWriteLock锁</p>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="AQS"><a href="#AQS" class="headerlink" title="AQS"></a>AQS</h3><ul>
-<li><p>先进先出队列+CAS+volatile</p>
-<ul>
-<li>维护一个volatile的int类型的state变量，state&#x3D;1是获取到锁；state的值变化是由CAS完成的</li>
-</ul>
-</li>
-<li><p>实现</p>
-<ul>
-<li><p>CAS操作提供原子性避免锁</p>
-</li>
-<li><p>volatile确保修改的可见性和内存操作的有序性</p>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h2><h3 id="解决并发问题，在线程中传递数据"><a href="#解决并发问题，在线程中传递数据" class="headerlink" title="解决并发问题，在线程中传递数据"></a>解决并发问题，在线程中传递数据</h3><h3 id="通过为每一个线程创建一份共享变量的副本保证各个线程之间的变量访问和修改互不影响"><a href="#通过为每一个线程创建一份共享变量的副本保证各个线程之间的变量访问和修改互不影响" class="headerlink" title="通过为每一个线程创建一份共享变量的副本保证各个线程之间的变量访问和修改互不影响"></a>通过为每一个线程创建一份共享变量的副本保证各个线程之间的变量访问和修改互不影响</h3><h3 id="内存泄漏问题"><a href="#内存泄漏问题" class="headerlink" title="内存泄漏问题"></a>内存泄漏问题</h3><ul>
-<li><p>为什么</p>
-<ul>
-<li><p>key ThreadLocal的引用缘</p>
-<ul>
-<li><p>栈上的ThreadLocal引用</p>
-</li>
-<li><p>ThreadLocalMap中的key对他的引用</p>
-</li>
-</ul>
-</li>
-<li><p>value</p>
-<ul>
-<li>引用只有一条，从Thread过来的引用</li>
-</ul>
-</li>
-<li><p>出现的问题</p>
-<ul>
-<li><p>ThreadLocal栈上的引用不见了，但是Threadlocal对象因为还有一个引用，索引无法回收</p>
-<ul>
-<li>解决方法：ThreadLocal的key改成弱引用</li>
-</ul>
-</li>
-<li><p>Thread对象一直被使用，无法释放</p>
-<ul>
-<li>解决方法：对于value，Thread一直没有释放，只有在一个ThreadLocal用完的时候，手动调用一下remove方法</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>解决</p>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/%E6%8E%92%E5%BA%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/10/%E6%8E%92%E5%BA%8F/" itemprop="url">Java中几种集合的排序方式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-10T17:33:00+00:00">
-                2024-10-10
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
-                2024-11-16
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li>包括实现Comparable接口、借助Comparator比较器进行排序，以及通过Stream API进行排序。同时还解释了Comparable和Comparator的区别、compareTo和equals的使用场景差异，以及Set集合的排序问题。</li>
-</ul>
+<p>这种方法通过将高位和低位的哈希码混合在一起，减少了哈希冲突的概率，从而使得哈希码更加均匀地分布在哈希表的桶中。</p>
+<h2 id="计算数组索引"><a href="#计算数组索引" class="headerlink" title="计算数组索引"></a>计算数组索引</h2><p>计算出扰动后的哈希值后，HashMap使用这个值来确定键值对在哈希表中的位置。通常，HashMap使用哈希值对数组的长度取模（取余数）来计算索引：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int index = (n - 1) &amp; hash;</span><br></pre></td></tr></table></figure>
+
+<p>其中，n是哈希表数组的长度。n通常是 2 的幂，这样(n - 1)就是一个全 1 的二进制数，这使得按位与操作&amp;可以有效地替代取模操作%，从而提高性能。</p>
+<h1 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h1><p>假设我们有一个键对象，其hashCode()返回值为 123456。那么，计算哈希值的过程如下：</p>
 <ol>
-<li><strong>实现Comparable接口</strong>：<ul>
-<li>Java中的类可以通过实现Comparable接口来具备排序能力。</li>
-<li>实现Comparable接口的类需要重写compareTo方法，该方法定义了对象的排序规则。</li>
-<li>例如，学生类（Student）可以实现Comparable接口，并按照姓名和年龄进行排序。</li>
+<li>调用hashCode()方法：int hashCode &#x3D; 123456;</li>
+<li>扰动函数计算：<ul>
+<li>h &#x3D; 123456</li>
+<li>h &gt;&gt;&gt; 16 &#x3D; 123456 &gt;&gt;&gt; 16 &#x3D; 1（右移 16 位）</li>
+<li>hash &#x3D; h ^ (h &gt;&gt;&gt; 16) &#x3D; 123456 ^ 1 &#x3D; 123457</li>
 </ul>
 </li>
-<li><strong>借助Comparator比较器进行排序</strong>：<ul>
-<li>当类本身没有实现Comparable接口，或者需要不同的排序规则时，可以使用Comparator接口。</li>
-<li>Comparator是一个函数式接口，可以独立于原类之外定义排序逻辑。</li>
-<li>例如，可以使用Comparator对学生对象按照姓名和年龄进行排序。</li>
-</ul>
-</li>
-<li><strong>通过Stream API进行排序</strong>：<ul>
-<li>Java 8引入了Stream API，可以方便地对集合进行排序操作。</li>
-<li>Stream API的sorted方法可以接受一个Comparator作为参数来进行排序。</li>
-<li>例如，使用Stream对学生列表进行排序，可以简化排序的代码。</li>
-</ul>
-</li>
-<li><strong>Comparable与Comparator的区别</strong>：<ul>
-<li>Comparable用于使类本身具备排序能力，通过实现compareTo方法实现。</li>
-<li>Comparator是一个独立的比较器，可以为不具备排序能力的类提供排序逻辑，或者提供不同的排序规则。</li>
-</ul>
-</li>
-<li><strong>compareTo与equals的使用场景</strong>：<ul>
-<li>compareTo主要用于排序和数值比较，如BigDecimal的比较。</li>
-<li>equals主要用于判断两个对象在业务语义上是否相同，如String的比较通常使用equals来判断字面意义是否相同。</li>
-</ul>
-</li>
-<li><strong>Set集合的排序问题</strong>：<ul>
-<li>Set集合本身是无序的，即元素的插入顺序不保证。</li>
-<li>但是，SortedSet接口可以保证元素的排序，通过要求元素实现Comparable接口来实现。</li>
-<li>LinkedHashSet类通过双向链表记录插入顺序，实现了插入有序的Set。</li>
+<li>计算数组索引（假设数组长度n为 16，即n - 1为 15）：<ul>
+<li>index &#x3D; (15) &amp; 123457 &#x3D; 15 &amp; 123457 &#x3D; 1</li>
 </ul>
 </li>
 </ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/%E6%AD%BB%E9%94%81/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/10/%E6%AD%BB%E9%94%81/" itemprop="url">死锁</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-10T17:33:00+00:00">
-                2024-10-10
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
-                2024-11-16
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="死锁的定义"><a href="#死锁的定义" class="headerlink" title="死锁的定义"></a>死锁的定义</h2><p>死锁是指两个或两个以上的进程（或线程）在执行过程中，因竞争资源或彼此通信而造成的一种阻塞现象。当这些进程都在等待对方释放资源时，就会形成一个无法打破的僵局，若无外力作用，它们都将无法继续执行。此时，系统处于死锁状态。</p>
-<h3 id="产生死锁的四个必要条件"><a href="#产生死锁的四个必要条件" class="headerlink" title="产生死锁的四个必要条件"></a>产生死锁的四个必要条件</h3><ol>
-<li><strong>互斥条件</strong>：一个资源每次只能被一个进程使用。</li>
-<li><strong>占有且等待</strong>：一个进程因请求资源而阻塞时，对已获得的资源保持不放。</li>
-<li><strong>不可抢占</strong>：进程已获得的资源，在未使用完之前，不能强行剥夺。</li>
-<li><strong>循环等待条件</strong>：若干进程之间形成一种头尾相接的循环等待资源关系。</li>
-</ol>
-<h3 id="如何解决死锁"><a href="#如何解决死锁" class="headerlink" title="如何解决死锁"></a>如何解决死锁</h3><p>解决死锁的方法主要分为预防死锁、避免死锁、检测死锁和解除死锁四种。</p>
-<ol>
-<li><p><strong>预防死锁</strong>：</p>
-<ul>
-<li>破坏互斥条件：允许资源被多个进程同时访问（但某些资源可能无法这样做）。</li>
-<li>破坏占有且等待条件：要求进程一次性申请所有所需资源，或者允许进程在持有资源的同时申请其他资源（但可能降低系统效率）。</li>
-<li>破坏不可抢占条件：允许进程被抢占已分配的资源（但可能导致数据不一致等问题）。</li>
-<li>破坏循环等待条件：对资源编号，要求进程按编号顺序申请资源（但可能增加资源管理的复杂性）。</li>
-</ul>
-</li>
-<li><p><strong>避免死锁</strong>：</p>
-<ul>
-<li>使用银行家算法等算法来动态地检查资源分配的安全性，确保系统不会进入不安全状态。</li>
-<li>在资源分配过程中，采用资源预分配策略或资源按需分配策略，并监控系统的资源使用情况。</li>
-</ul>
-</li>
-<li><p><strong>检测死锁</strong>：</p>
-<ul>
-<li>定期检查系统是否存在死锁现象，如使用资源分配图等方法。</li>
-<li>一旦发现死锁，立即采取措施进行解除。</li>
-</ul>
-</li>
-<li><p><strong>解除死锁</strong>：</p>
-<ul>
-<li>终止一个或多个进程，以打破循环等待条件。</li>
-<li>回滚到安全状态，重新分配资源。</li>
-<li>在数据库系统中，可以采用自动回滚事务、重启事务等方法来解除死锁。</li>
-</ul>
-</li>
-</ol>
-<h3 id="数据库死锁的发生与解决"><a href="#数据库死锁的发生与解决" class="headerlink" title="数据库死锁的发生与解决"></a>数据库死锁的发生与解决</h3><p>在数据库中，死锁通常发生在多个事务并发执行时。当事务A持有资源A的锁并尝试获取资源B的锁时，而事务B持有资源B的锁并尝试获取资源A的锁时，就会发生死锁。</p>
-<p>解决数据库死锁的方法包括：</p>
-<ul>
-<li>避免并发修改：尽量减少多个事务对同一资源的并发访问。</li>
-<li>保证操作顺序：确保多个事务按照相同的顺序访问资源。</li>
-<li>使用锁超时机制：设置锁的超时时间，当事务持有锁超过一定时间时自动释放锁。</li>
-<li>使用乐观锁或悲观锁等锁策略来管理资源访问。</li>
-</ul>
-<p>综上所述，死锁是并发系统中常见的问题之一。通过理解死锁的产生条件、掌握解决死锁的方法以及合理设计资源访问策略，可以有效地预防和解决死锁问题。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/%E7%BA%BF%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/10/%E7%BA%BF%E7%A8%8B/" itemprop="url">线程</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-10T17:33:00+00:00">
-                2024-10-10
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
-                2024-11-16
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="线程状态的详细解释"><a href="#线程状态的详细解释" class="headerlink" title="线程状态的详细解释"></a>线程状态的详细解释</h3><ol>
-<li><p><strong>初始(NEW)</strong></p>
-<p>线程对象被创建，但尚未调用<code>start()</code>方法。此时线程还未开始执行，只是作为一个对象存在于内存中。</p>
-</li>
-<li><p><strong>运行(RUNNABLE)</strong></p>
-<ul>
-<li><strong>就绪(READY)</strong>: 线程对象创建后，通过调用<code>start()</code>方法启动。此时线程进入就绪状态，等待操作系统的调度，以获取CPU时间片。</li>
-<li><strong>运行中(RUNNING)</strong>: 当就绪状态的线程获得CPU时间片时，开始执行程序代码，进入运行状态。</li>
-</ul>
-<p>在Java中，由于就绪和运行状态的切换非常频繁，且难以准确区分，因此将两者统称为“运行(RUNNABLE)”状态。</p>
-</li>
-<li><p><strong>阻塞(BLOCKED)</strong></p>
-<p>线程尝试获取某个对象的锁（如通过<code>synchronized</code>关键字），但锁已被其他线程持有。此时线程进入阻塞状态，直到锁被释放并成功获取。</p>
-</li>
-<li><p><strong>等待(WAITING)</strong></p>
-<p>线程通过调用<code>Object</code>类的<code>wait()</code>方法或其他等待方法（如<code>Condition</code>的<code>await()</code>方法）进入等待状态。此时线程需要等待其他线程的通知（通过<code>notify()</code>或<code>notifyAll()</code>方法）或中断来唤醒。</p>
-</li>
-<li><p><strong>超时等待(TIMED_WAITING)</strong></p>
-<p>线程通过调用带有超时参数的等待方法（如<code>Thread.sleep(long millis)</code>、<code>Object.wait(long timeout)</code>等）进入超时等待状态。此时线程在指定的时间内等待，如果超时时间到达或收到其他线程的通知，则线程会被唤醒。</p>
-</li>
-<li><p><strong>终止(TERMINATED)</strong></p>
-<p>线程执行完毕或由于异常等原因终止执行，进入终止状态。此时线程不再占用系统资源。</p>
-</li>
-</ol>
-<h3 id="状态流转的细化"><a href="#状态流转的细化" class="headerlink" title="状态流转的细化"></a>状态流转的细化</h3><ul>
-<li>从<strong>初始(NEW)<strong>到</strong>运行(RUNNABLE)</strong>: 调用<code>start()</code>方法。</li>
-<li>从<strong>运行(RUNNABLE)<strong>到</strong>阻塞(BLOCKED)</strong>: 尝试获取锁失败。</li>
-<li>从<strong>阻塞(BLOCKED)<strong>到</strong>运行(RUNNABLE)</strong>: 成功获取锁。</li>
-<li>从<strong>运行(RUNNABLE)<strong>到</strong>等待(WAITING)</strong>: 调用<code>wait()</code>等方法。</li>
-<li>从<strong>等待(WAITING)<strong>到</strong>运行(RUNNABLE)</strong>: 收到其他线程的通知或中断。</li>
-<li>从<strong>运行(RUNNABLE)<strong>到</strong>超时等待(TIMED_WAITING)</strong>: 调用带有超时参数的等待方法。</li>
-<li>从<strong>超时等待(TIMED_WAITING)<strong>到</strong>运行(RUNNABLE)</strong>: 超时时间到达或收到其他线程的通知。</li>
-<li>从<strong>运行(RUNNABLE)<strong>到</strong>终止(TERMINATED)</strong>: 线程执行完毕或异常终止。</li>
-</ul>
-<h3 id="关于RUNNING状态的缺失"><a href="#关于RUNNING状态的缺失" class="headerlink" title="关于RUNNING状态的缺失"></a>关于RUNNING状态的缺失</h3><p>如你所述，由于CPU时间片的分配和线程状态的频繁切换，很难准确区分线程是处于就绪状态还是运行状态。因此，Java将两者统称为“运行(RUNNABLE)”状态，以表示线程当前是可执行的，只要获得CPU时间片就能立即执行。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>了解线程的状态及其流转对于编写高效、可靠的并发程序至关重要。通过合理管理线程状态，可以确保程序的正确性和性能。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/%E7%BA%BF%E7%A8%8B%E6%B1%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/10/%E7%BA%BF%E7%A8%8B%E6%B1%A0/" itemprop="url">线程池</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-10T17:33:00+00:00">
-                2024-10-10
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
-                2024-11-16
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>线程池的解释与实现原理</strong></p>
-<p><strong>一、线程池的概念</strong></p>
-<p>线程池是池化技术的一种典型实现，所谓池化技术就是提前保存大量的资源，以备不时之需。在机器资源有限的情况下，使用池化技术可以大大提高资源的利用率，提升性能等。线程池，即提前创建好一批线程，并保存在线程池中。当有任务需要执行时，从线程池中选一个线程来执行任务。这样可以避免频繁地创建和销毁线程，从而提高系统的效率和响应速度。</p>
-<p><strong>二、线程池的实现</strong></p>
-<ol>
-<li><p><strong>Java中的线程池</strong></p>
-<p>Java中的线程池通过实现<code>ExecutorService</code>接口来提供线程池的功能。<code>Executors</code>类提供了几种创建线程池的方法，如<code>newFixedThreadPool(int Threads)</code>创建固定数目线程的线程池，<code>newCachedThreadPool()</code>创建一个可缓存的线程池，<code>newSingleThreadExecutor()</code>创建一个单线程化的Executor，以及<code>newScheduledThreadPool(int corePoolSize)</code>创建一个支持定时及周期性的任务执行的线程池。</p>
-</li>
-<li><p><strong>线程池的主要参数</strong></p>
-<ul>
-<li><code>corePoolSize</code>：核心线程数量，可以类比为正式员工数量，常驻线程数量。</li>
-<li><code>maximumPoolSize</code>：最大的线程数量，公司最多雇佣员工数量，包括常驻和临时线程数量。</li>
-<li><code>workQueue</code>：多余任务等待队列，当任务数量超过当前线程处理能力时，任务会放入此队列等待执行。</li>
-<li><code>keepAliveTime</code>：非核心线程空闲时间，即外包人员等待任务的时间，如果超过这个时间还没有任务执行，则会被销毁。</li>
-<li><code>threadFactory</code>：创建线程的工厂，可以在这里统一设置创建的线程的属性。</li>
-<li><code>handler</code>：线程池拒绝策略，当任务数量超过线程池的处理能力（包括核心线程、最大线程和任务队列）时，会执行此策略，默认是抛出异常。</li>
-</ul>
-</li>
-<li><p><strong>线程池的工作原理</strong></p>
-<p>线程池的工作流程大致如下：</p>
-<ul>
-<li>当有任务提交到线程池时，首先判断当前线程数量是否小于核心线程数量。如果是，则创建新的线程来执行任务。</li>
-<li>如果当前线程数量已经达到核心线程数量，但任务队列未满，则将任务放入任务队列等待执行。</li>
-<li>如果任务队列已满，但当前线程数量小于最大线程数量，则创建新的非核心线程来执行任务。</li>
-<li>如果当前线程数量已经达到最大线程数量，且任务队列已满，则根据拒绝策略处理新提交的任务。</li>
-</ul>
-</li>
-<li><p><strong>线程池的<code>execute</code>方法</strong></p>
-<p><code>execute</code>方法是线程池的核心方法，用于向线程池中添加一个任务。该方法的实现逻辑相对复杂，但大致可以分为以下几个步骤：</p>
-<ul>
-<li>首先判断线程池的状态和当前线程数量，以及任务队列的状态。</li>
-<li>如果满足条件，则尝试创建新的线程来执行任务。</li>
-<li>如果不满足条件，则根据拒绝策略处理新提交的任务。</li>
-</ul>
-</li>
-<li><p><strong>添加工作线程</strong></p>
-<p>添加工作线程的过程是通过<code>addWorker</code>方法实现的。该方法首先判断线程池的状态和当前线程数量，然后尝试创建新的线程。创建线程的过程可能会受到多种因素的影响，如核心线程数量、最大线程数量、任务队列状态等。</p>
-</li>
-</ol>
-<p><strong>三、总结</strong></p>
-<p>线程池是一种高效的并发处理机制，通过提前创建并保存一批线程，当有任务需要执行时，从线程池中选取一个线程来执行任务。这样可以避免频繁地创建和销毁线程，从而提高系统的效率和响应速度。Java中的线程池通过实现<code>ExecutorService</code>接口来提供线程池的功能，并提供了多种创建线程池的方法和参数配置选项。了解线程池的工作原理和实现机制对于编写高效、可扩展的并发程序具有重要意义。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/%E9%9B%86%E5%90%88/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/10/%E9%9B%86%E5%90%88/" itemprop="url">java中的集合</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-10T17:33:00+00:00">
-                2024-10-10
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
-                2024-11-16
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Java中的集合类有哪些？如何分类的？"><a href="#Java中的集合类有哪些？如何分类的？" class="headerlink" title="Java中的集合类有哪些？如何分类的？"></a>Java中的集合类有哪些？如何分类的？</h1><h2 id="Java的集合框架中主要包含以下几种数据结构："><a href="#Java的集合框架中主要包含以下几种数据结构：" class="headerlink" title="Java的集合框架中主要包含以下几种数据结构："></a>Java的集合框架中主要包含以下几种数据结构：</h2><ol>
-<li>List（列表）：有序集合，可以包含重复元素。常见的实现类有ArrayList（基于动态数组实现）和LinkedList（基于链表实现）。</li>
-<li>Set（集合）：无序集合，不包含重复元素。常见的实现类有HashSet（基于哈希表实现）和TreeSet（基于红黑树实现）。</li>
-<li>Queue（队列）：一种先进先出（FIFO）的数据结构。常见的实现类有LinkedList（也可以作为队列使用）、ArrayDeque（双端队列）和PriorityQueue（优先队列）。</li>
-<li>Stack（栈）：一种后进先出（LIFO）的数据结构。在Java中，Stack类继承自Vector类，但现在推荐使用Deque接口的实现类（如ArrayDeque）来代替Stack。</li>
-<li>Map（映射）：存储键值对（K-V对）的数据结构。常见的实现类有HashMap（基于哈希表实现）和TreeMap（基于红黑树实现）。</li>
-</ol>
-<p>从继承关系上讲，List、Set和Queue都是Collection接口的子接口，而Collection接口又继承了Iterable接口。这意味着这些集合都是可以遍历的。</p>
-<p>从功能上讲：</p>
-<ul>
-<li>List代表一个有序容器，元素可以重复。</li>
-<li>Set是无序的（除了TreeSet，它是有序的），并且元素不可重复。</li>
-<li>Map存储键值对，通过键来访问值。</li>
-</ul>
-<p>从实现上讲：</p>
-<ul>
-<li>List可以通过链表（如LinkedList）或数组（如ArrayList）实现。</li>
-<li>Queue可以有不同的实现，如优先队列（PriorityQueue）和双端队列（ArrayDeque）。</li>
-<li>Map的实现包括普通的HashMap和可以排序的TreeMap。</li>
-</ul>
-<p>知识扩展：</p>
-<p>Collection和Collections有什么区别？</p>
-<ol>
-<li>Collection是一个集合接口，提供了对集合对象进行基本操作的通用接口方法。它是List、Set等的父接口。</li>
-<li>Collections是一个包装类，包含各种有关集合操作的静态多态方法。它不能实例化，就像一个工具类，服务于Java的Collection框架。</li>
-</ol>
-<p>Java中的Collection如何遍历迭代？</p>
-<ol>
-<li>传统的for循环遍历，基于计数器。</li>
-<li>迭代器遍历，使用Iterator接口。</li>
-<li>foreach循环遍历，内部也是采用了Iterator的方式实现。</li>
-<li>迭代器遍历，使用Enumeration接口，这是Iterator的“古老版本”。</li>
-<li>Stream API，JDK 1.8中新增，使用一种类似用SQL语句从数据库查询数据的直观方式来提供一种对Java集合运算和表达的高阶抽象。</li>
-</ol>
-<p>Iterable和Iterator如何使用?</p>
-<ul>
-<li>Iterator接口代表迭代的方式，包含next和hasNext方法。</li>
-<li>Iterable接口代表的是是否可以迭代，如果可以迭代，会返回Iterator接口，即返回迭代方式。</li>
-</ul>
-<p>为什么不把Iterable和Iterator合成一个使用？</p>
-<ol>
-<li>Iterable和Iterator并不是同时出现的，Iterator先于Iterable出现，目的是为了代替Enumeration。</li>
-<li>将“是否可以迭代”和“迭代方式”抽出来，更符合单一职责原则，使得迭代方式可以被多个可迭代的集合复用，更符合面向对象的特点。</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/09/10/Stream/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/09/10/Stream/" itemprop="url">Stream</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-09-10T17:33:00+00:00">
-                2024-09-10
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-16T06:04:09+00:00">
-                2024-11-16
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Stream"><a href="#Stream" class="headerlink" title="Stream"></a>Stream</h1><h3 id="Stream-API的深入理解"><a href="#Stream-API的深入理解" class="headerlink" title="Stream API的深入理解"></a>Stream API的深入理解</h3><p>Stream API是Java 8中引入的一个关键抽象概念，它允许你以声明性方式处理数据集合（包括数组等）。Stream通过一系列的操作（如筛选、转换、聚合等）来构建复杂的数据处理流水线。</p>
-<h4 id="特性及优点详解"><a href="#特性及优点详解" class="headerlink" title="特性及优点详解"></a>特性及优点详解</h4><ol>
-<li><p><strong>无存储</strong>：Stream本身不存储数据，它只是数据源的一个视图。这意味着你可以对原始数据集合进行多次Stream操作，而不会改变原始数据。</p>
-</li>
-<li><p><strong>为函数式编程而生</strong>：Stream API的设计符合函数式编程的范式，它鼓励使用不可变的数据和纯函数（即没有副作用的函数）。这使得代码更加简洁、易于理解和维护。</p>
-</li>
-<li><p><strong>惰式执行</strong>：Stream上的操作是惰式执行的，这意味着只有在需要结果时才会执行操作。这有助于优化性能，因为它允许Stream API在可能的情况下延迟计算，直到真正需要结果为止。</p>
-</li>
-<li><p><strong>可消费性</strong>：Stream只能被消费一次，一旦遍历过就会失效。这是为了保持流的不可变性，并防止在多个线程中同时修改流。</p>
-</li>
-</ol>
-<h4 id="关键性操作"><a href="#关键性操作" class="headerlink" title="关键性操作"></a>关键性操作</h4><ul>
-<li><p><strong>流的创建</strong>：可以通过集合的<code>stream()</code>或<code>parallelStream()</code>方法、<code>Stream.of()</code>方法或<code>Stream.Builder</code>来创建流。</p>
-</li>
-<li><p><strong>中间操作</strong>：这些操作会返回一个新的流，并允许你进行链式调用。常见的中间操作包括<code>filter()</code>（筛选）、<code>map()</code>（转换）、<code>flatMap()</code>（扁平化映射）、<code>sorted()</code>（排序）、<code>distinct()</code>（去重）等。</p>
-</li>
-<li><p><strong>最终操作</strong>：这些操作会触发流的计算，并返回一个结果或副作用。常见的最终操作包括<code>forEach()</code>（遍历）、<code>collect()</code>（收集到集合）、<code>reduce()</code>（归约）、<code>count()</code>（计数）等。</p>
-</li>
-</ul>
-<h4 id="示例分析"><a href="#示例分析" class="headerlink" title="示例分析"></a>示例分析</h4><p>你给出的示例很好地展示了Stream API的使用场景。在这个示例中，你首先通过<code>filter()</code>筛选出非红色的球，然后通过<code>map()</code>将它们融化成随机的三角形，再通过另一个<code>filter()</code>筛选出非小的三角形，最后通过某种方式计算出剩余图形的周长。</p>
-<p>这个示例展示了如何使用Stream API来构建一个复杂的数据处理流水线，并通过链式调用中间操作和最终操作来得到最终结果。</p>
-<h3 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h3><p>Stream API在实际应用中非常有用，特别是在处理大型数据集时。它允许你以声明性方式编写代码，而不需要关心底层实现细节。此外，Stream API还支持并行处理，这使得它能够在多核处理器上更有效地利用计算资源。</p>
-<p>总之，Stream API是Java 8中一个非常重要的特性，它极大地提高了Java程序员的生产力，并使得编写高效、简洁和易于维护的代码变得更加容易。</p>
+<p>最终，键值对将存储在哈希表数组的索引 1 位置。</p>
+<blockquote>
+<p>&#x2F;str1ewvagoc4qesr&gt;</p>
+</blockquote>
 
           
         
@@ -4895,7 +4623,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
   </nav>
 
 
@@ -4941,7 +4669,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">80</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
