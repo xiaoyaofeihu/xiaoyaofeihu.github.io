@@ -270,205 +270,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFfail-safe%E6%9C%BA%E5%88%B6%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFfail-safe%E6%9C%BA%E5%88%B6%EF%BC%9F/" itemprop="url">fail-safe机制</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
-                2024-11-18
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌什么是fail-safe机制？"><a href="#👌什么是fail-safe机制？" class="headerlink" title="👌什么是fail-safe机制？"></a>👌什么是fail-safe机制？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>fail-safe机制是与fail-fast机制相对的一种并发处理机制。在 Java 集合框架中，fail-safe迭代器在检测到集合在遍历过程中被修改时，不会抛出异常，而是允许这种修改继续进行。fail-safe迭代器通常是通过在遍历时使用集合的副本来实现的，这样即使原集合被修改，迭代器也不会受到影响。</p>
-<h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><p>fail-safe迭代器在遍历集合时，实际上是遍历集合的一个副本。因此，任何对原集合的修改都不会影响到迭代器正在遍历的副本。这种机制保证了遍历操作的安全性，但也意味着迭代器不能反映集合的实时变化。</p>
-<h2 id="代码-Demo"><a href="#代码-Demo" class="headerlink" title="代码 Demo"></a>代码 Demo</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">import java.util.concurrent.CopyOnWriteArrayList;</span><br><span class="line">import java.util.Iterator;</span><br><span class="line">public class FailSafeExample &#123;</span><br><span class="line">    publicstaticvoidmain(String[] args) &#123;</span><br><span class="line">        CopyOnWriteArrayList&lt;String&gt; list = new CopyOnWriteArrayList&lt;&gt;();</span><br><span class="line">        list.add(&quot;A&quot;);</span><br><span class="line">        list.add(&quot;B&quot;);</span><br><span class="line">        list.add(&quot;C&quot;);</span><br><span class="line"></span><br><span class="line">        Iterator&lt;String&gt; iterator = list.iterator();</span><br><span class="line">        while (iterator.hasNext()) &#123;</span><br><span class="line">            Stringelement= iterator.next();</span><br><span class="line">            System.out.println(element);</span><br><span class="line">            // 在迭代过程中修改集合</span><br><span class="line">            if (element.equals(&quot;B&quot;)) &#123;</span><br><span class="line">                list.add(&quot;D&quot;); // 不会引发 ConcurrentModificationException</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;After modification: &quot; + list);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在上面的代码中，使用CopyOnWriteArrayList作为集合。CopyOnWriteArrayList是一个典型的fail-safe集合类，它在每次修改时都会创建集合的一个副本，因此迭代器不会检测到并发修改，不会抛出ConcurrentModificationException。</p>
-<h2 id="主要特点"><a href="#主要特点" class="headerlink" title="主要特点"></a>主要特点</h2><ol>
-<li><strong>不抛异常</strong>：fail-safe迭代器在检测到集合被修改时，不会抛出ConcurrentModificationException异常。</li>
-<li><strong>副本遍历</strong>：fail-safe迭代器遍历的是集合的一个副本，而不是原集合。这意味着对原集合的修改不会影响迭代器的遍历。</li>
-<li><strong>线程安全</strong>：fail-safe集合类（如CopyOnWriteArrayList、ConcurrentHashMap等）通常是线程安全的，适用于并发环境。</li>
-</ol>
-<h2 id="常见的fail-safe集合类"><a href="#常见的fail-safe集合类" class="headerlink" title="常见的fail-safe集合类"></a>常见的fail-safe集合类</h2><p>CopyOnWriteArrayList，ConcurrentHashMap，ConcurrentLinkedQueue，ConcurrentSkipListMap，ConcurrentSkipListSet</p>
-<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
-<li><strong>性能开销</strong>：由于fail-safe机制通常需要创建集合的副本，因此在修改频繁的场景下，性能开销较大。适用于读多写少的场景。</li>
-<li><strong>一致性问题</strong>：由于迭代器遍历的是集合的副本，因此它不能反映集合的实时变化。如果需要实时一致性，fail-safe机制可能不适用。</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8BHashMap%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -516,8 +317,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
-                2024-11-18
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
+                2024-11-19
               </time>
             
           </span>
@@ -734,8 +535,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
-                2024-11-18
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
+                2024-11-19
               </time>
             
           </span>
@@ -928,8 +729,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
-                2024-11-18
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
+                2024-11-19
               </time>
             
           </span>
@@ -1125,8 +926,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
-                2024-11-18
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
+                2024-11-19
               </time>
             
           </span>
@@ -1325,8 +1126,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
-                2024-11-18
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
+                2024-11-19
               </time>
             
           </span>
@@ -1526,8 +1327,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
-                2024-11-18
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
+                2024-11-19
               </time>
             
           </span>
@@ -1722,8 +1523,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
-                2024-11-18
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
+                2024-11-19
               </time>
             
           </span>
@@ -1925,8 +1726,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
-                2024-11-18
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
+                2024-11-19
               </time>
             
           </span>
@@ -2127,8 +1928,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
-                2024-11-18
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
+                2024-11-19
               </time>
             
           </span>
@@ -2332,8 +2133,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
-                2024-11-18
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
+                2024-11-19
               </time>
             
           </span>
@@ -2537,8 +2338,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
-                2024-11-18
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
+                2024-11-19
               </time>
             
           </span>
@@ -2760,8 +2561,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
-                2024-11-18
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
+                2024-11-19
               </time>
             
           </span>
@@ -2964,8 +2765,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
-                2024-11-18
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
+                2024-11-19
               </time>
             
           </span>
@@ -3207,8 +3008,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
-                2024-11-18
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
+                2024-11-19
               </time>
             
           </span>
@@ -3434,8 +3235,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
-                2024-11-18
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
+                2024-11-19
               </time>
             
           </span>
@@ -3794,8 +3595,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
-                2024-11-18
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
+                2024-11-19
               </time>
             
           </span>
@@ -4017,8 +3818,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
-                2024-11-18
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
+                2024-11-19
               </time>
             
           </span>
@@ -4247,8 +4048,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
-                2024-11-18
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
+                2024-11-19
               </time>
             
           </span>
@@ -4467,8 +4268,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-18T08:48:47+00:00">
-                2024-11-18
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
+                2024-11-19
               </time>
             
           </span>
@@ -4597,6 +4398,234 @@
 </ol>
 <p><strong>三、总结</strong></p>
 <p>线程池是一种高效的并发处理机制，通过提前创建并保存一批线程，当有任务需要执行时，从线程池中选取一个线程来执行任务。这样可以避免频繁地创建和销毁线程，从而提高系统的效率和响应速度。Java中的线程池通过实现<code>ExecutorService</code>接口来提供线程池的功能，并提供了多种创建线程池的方法和参数配置选项。了解线程池的工作原理和实现机制对于编写高效、可扩展的并发程序具有重要意义。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/%E9%9B%86%E5%90%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/10/%E9%9B%86%E5%90%88/" itemprop="url">java中的集合</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-10T17:33:00+00:00">
+                2024-10-10
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
+                2024-11-19
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Java中的集合类有哪些？如何分类的？"><a href="#Java中的集合类有哪些？如何分类的？" class="headerlink" title="Java中的集合类有哪些？如何分类的？"></a>Java中的集合类有哪些？如何分类的？</h1><h2 id="Java的集合框架中主要包含以下几种数据结构："><a href="#Java的集合框架中主要包含以下几种数据结构：" class="headerlink" title="Java的集合框架中主要包含以下几种数据结构："></a>Java的集合框架中主要包含以下几种数据结构：</h2><ol>
+<li>List（列表）：有序集合，可以包含重复元素。常见的实现类有ArrayList（基于动态数组实现）和LinkedList（基于链表实现）。</li>
+<li>Set（集合）：无序集合，不包含重复元素。常见的实现类有HashSet（基于哈希表实现）和TreeSet（基于红黑树实现）。</li>
+<li>Queue（队列）：一种先进先出（FIFO）的数据结构。常见的实现类有LinkedList（也可以作为队列使用）、ArrayDeque（双端队列）和PriorityQueue（优先队列）。</li>
+<li>Stack（栈）：一种后进先出（LIFO）的数据结构。在Java中，Stack类继承自Vector类，但现在推荐使用Deque接口的实现类（如ArrayDeque）来代替Stack。</li>
+<li>Map（映射）：存储键值对（K-V对）的数据结构。常见的实现类有HashMap（基于哈希表实现）和TreeMap（基于红黑树实现）。</li>
+</ol>
+<p>从继承关系上讲，List、Set和Queue都是Collection接口的子接口，而Collection接口又继承了Iterable接口。这意味着这些集合都是可以遍历的。</p>
+<p>从功能上讲：</p>
+<ul>
+<li>List代表一个有序容器，元素可以重复。</li>
+<li>Set是无序的（除了TreeSet，它是有序的），并且元素不可重复。</li>
+<li>Map存储键值对，通过键来访问值。</li>
+</ul>
+<p>从实现上讲：</p>
+<ul>
+<li>List可以通过链表（如LinkedList）或数组（如ArrayList）实现。</li>
+<li>Queue可以有不同的实现，如优先队列（PriorityQueue）和双端队列（ArrayDeque）。</li>
+<li>Map的实现包括普通的HashMap和可以排序的TreeMap。</li>
+</ul>
+<p>知识扩展：</p>
+<p>Collection和Collections有什么区别？</p>
+<ol>
+<li>Collection是一个集合接口，提供了对集合对象进行基本操作的通用接口方法。它是List、Set等的父接口。</li>
+<li>Collections是一个包装类，包含各种有关集合操作的静态多态方法。它不能实例化，就像一个工具类，服务于Java的Collection框架。</li>
+</ol>
+<p>Java中的Collection如何遍历迭代？</p>
+<ol>
+<li>传统的for循环遍历，基于计数器。</li>
+<li>迭代器遍历，使用Iterator接口。</li>
+<li>foreach循环遍历，内部也是采用了Iterator的方式实现。</li>
+<li>迭代器遍历，使用Enumeration接口，这是Iterator的“古老版本”。</li>
+<li>Stream API，JDK 1.8中新增，使用一种类似用SQL语句从数据库查询数据的直观方式来提供一种对Java集合运算和表达的高阶抽象。</li>
+</ol>
+<p>Iterable和Iterator如何使用?</p>
+<ul>
+<li>Iterator接口代表迭代的方式，包含next和hasNext方法。</li>
+<li>Iterable接口代表的是是否可以迭代，如果可以迭代，会返回Iterator接口，即返回迭代方式。</li>
+</ul>
+<p>为什么不把Iterable和Iterator合成一个使用？</p>
+<ol>
+<li>Iterable和Iterator并不是同时出现的，Iterator先于Iterable出现，目的是为了代替Enumeration。</li>
+<li>将“是否可以迭代”和“迭代方式”抽出来，更符合单一职责原则，使得迭代方式可以被多个可迭代的集合复用，更符合面向对象的特点。</li>
+</ol>
 
           
         
