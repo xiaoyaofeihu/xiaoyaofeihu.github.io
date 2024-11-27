@@ -270,6 +270,639 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/Enumeration%E5%92%8CIterator%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/Enumeration%E5%92%8CIterator%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F/" itemprop="url">Enumeration和Iterator接口的区别</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌Enumeration和Iterator接口的区别？"><a href="#👌Enumeration和Iterator接口的区别？" class="headerlink" title="👌Enumeration和Iterator接口的区别？"></a>👌Enumeration和Iterator接口的区别？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>Enumeration和Iterator是 Java 中用于遍历集合的两个接口。虽然它们有相似的功能，但它们有不同的设计和使用方式。</p>
+<h2 id="Enumeration接口"><a href="#Enumeration接口" class="headerlink" title="Enumeration接口"></a>Enumeration接口</h2><p>Enumeration是一个较老的接口，存在于 Java 1.0 中。它主要用于遍历旧的集合类，如Vector和Hashtable。</p>
+<h3 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h3><p>boolean hasMoreElements(): 如果枚举中仍有更多元素，则返回true。</p>
+<p>Object nextElement(): 返回枚举中的下一个元素。</p>
+<h3 id="代码-Demo"><a href="#代码-Demo" class="headerlink" title="代码 Demo"></a>代码 Demo</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import java.util.*;</span><br><span class="line"></span><br><span class="line">public class EnumerationExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Vector&lt;String&gt; vector = new Vector&lt;&gt;();</span><br><span class="line">        vector.add(&quot;A&quot;);</span><br><span class="line">        vector.add(&quot;B&quot;);</span><br><span class="line">        vector.add(&quot;C&quot;);</span><br><span class="line"></span><br><span class="line">        Enumeration&lt;String&gt; enumeration = vector.elements();</span><br><span class="line">        while (enumeration.hasMoreElements()) &#123;</span><br><span class="line">            String element = enumeration.nextElement();</span><br><span class="line">            System.out.println(element);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Iterator接口"><a href="#Iterator接口" class="headerlink" title="Iterator接口"></a>Iterator接口</h2><p>Iterator是在 Java 2 (JDK 1.2) 中引入的。它是集合框架的一部分，适用于所有集合类（如ArrayList、HashSet、HashMap等）。Iterator提供了更灵活的遍历方法，并允许在遍历过程中安全地移除元素。</p>
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>boolean hasNext(): 如果迭代器中仍有更多元素，则返回true。</p>
+<p>E next(): 返回迭代器中的下一个元素。</p>
+<p>void remove(): 从集合中移除迭代器返回的最后一个元素（可选操作）。</p>
+<h3 id="代码-Demo-1"><a href="#代码-Demo-1" class="headerlink" title="代码 Demo"></a>代码 Demo</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">import java.util.*;</span><br><span class="line"></span><br><span class="line">public class IteratorExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        List&lt;String&gt; list = new ArrayList&lt;&gt;();</span><br><span class="line">        list.add(&quot;A&quot;);</span><br><span class="line">        list.add(&quot;B&quot;);</span><br><span class="line">        list.add(&quot;C&quot;);</span><br><span class="line"></span><br><span class="line">        Iterator&lt;String&gt; iterator = list.iterator();</span><br><span class="line">        while (iterator.hasNext()) &#123;</span><br><span class="line">            String element = iterator.next();</span><br><span class="line">            System.out.println(element);</span><br><span class="line">            if (element.equals(&quot;B&quot;)) &#123;</span><br><span class="line">                iterator.remove(); // 安全地移除元素</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;After removal: &quot; + list);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="主要区别"><a href="#主要区别" class="headerlink" title="主要区别"></a>主要区别</h2><p><strong>接口引入时间</strong>：</p>
+<p>Enumeration：引入于 Java 1.0。</p>
+<p>Iterator：引入于 Java 2 (JDK 1.2)。</p>
+<p><strong>方法名称和功能</strong>：</p>
+<p>Enumeration：使用hasMoreElements()和nextElement()方法。</p>
+<p>Iterator：使用hasNext()和next()方法，并增加了remove()方法。</p>
+<p><strong>元素移除</strong>：</p>
+<p>Enumeration：不支持在遍历过程中移除元素。</p>
+<p>Iterator：支持在遍历过程中安全地移除元素（通过remove()方法）。</p>
+<p><strong>适用范围</strong>：</p>
+<p>Enumeration：主要用于旧的集合类，如Vector和Hashtable。</p>
+<p>Iterator：适用于所有集合类，是集合框架的一部分。</p>
+<blockquote>
+<p>&#x2F;vk496pkev2ub6nh4&gt;</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/HashMap%E6%80%8E%E4%B9%88%E8%AE%A1%E7%AE%97hashCode%E7%9A%84%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/HashMap%E6%80%8E%E4%B9%88%E8%AE%A1%E7%AE%97hashCode%E7%9A%84%EF%BC%9F/" itemprop="url">HashMap怎么计算hashCode的？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌HashMap怎么计算hashCode的？"><a href="#👌HashMap怎么计算hashCode的？" class="headerlink" title="👌HashMap怎么计算hashCode的？"></a>👌HashMap怎么计算hashCode的？</h1><p>HashMap使用键的hashCode()方法来生成哈希值，并对其进行一些处理，以提高哈希表的性能和均匀分布。</p>
+<h2 id="调用键的hashCode-方法"><a href="#调用键的hashCode-方法" class="headerlink" title="调用键的hashCode()方法"></a>调用键的hashCode()方法</h2><p>首先，HashMap调用键对象的hashCode()方法来获取一个整数哈希码。这个哈希码是由键对象的类定义的，通常是通过某种算法基于对象的内部状态计算出来的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int hashCode= key.hashCode();</span><br></pre></td></tr></table></figure>
+
+<h2 id="扰动函数-Perturbation-Function"><a href="#扰动函数-Perturbation-Function" class="headerlink" title="扰动函数 (Perturbation Function)"></a>扰动函数 (Perturbation Function)</h2><p>为了减少哈希冲突并使哈希码更加均匀地分布，HashMap对原始哈希码进行了一些额外的处理。这种处理被称为扰动函数。Java 8 及以后的HashMap实现使用以下算法来计算最终的哈希值：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">static final int hash(Object key) &#123;</span><br><span class="line">    int h;</span><br><span class="line">    return (key == null) ? 0 : (h = key.hashCode()) ^ (h &gt;&gt;&gt; 16);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个算法的步骤如下：</p>
+<ol>
+<li><strong>获取键的哈希码</strong>：h &#x3D; key.hashCode()</li>
+<li><strong>右移 16 位</strong>：h &gt;&gt;&gt; 16</li>
+<li><strong>异或运算</strong>：h ^ (h &gt;&gt;&gt; 16)</li>
+</ol>
+<p>这种方法通过将高位和低位的哈希码混合在一起，减少了哈希冲突的概率，从而使得哈希码更加均匀地分布在哈希表的桶中。</p>
+<h2 id="计算数组索引"><a href="#计算数组索引" class="headerlink" title="计算数组索引"></a>计算数组索引</h2><p>计算出扰动后的哈希值后，HashMap使用这个值来确定键值对在哈希表中的位置。通常，HashMap使用哈希值对数组的长度取模（取余数）来计算索引：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int index = (n - 1) &amp; hash;</span><br></pre></td></tr></table></figure>
+
+<p>其中，n是哈希表数组的长度。n通常是 2 的幂，这样(n - 1)就是一个全 1 的二进制数，这使得按位与操作&amp;可以有效地替代取模操作%，从而提高性能。</p>
+<h1 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h1><p>假设我们有一个键对象，其hashCode()返回值为 123456。那么，计算哈希值的过程如下：</p>
+<ol>
+<li>调用hashCode()方法：int hashCode &#x3D; 123456;</li>
+<li>扰动函数计算：<ul>
+<li>h &#x3D; 123456</li>
+<li>h &gt;&gt;&gt; 16 &#x3D; 123456 &gt;&gt;&gt; 16 &#x3D; 1（右移 16 位）</li>
+<li>hash &#x3D; h ^ (h &gt;&gt;&gt; 16) &#x3D; 123456 ^ 1 &#x3D; 123457</li>
+</ul>
+</li>
+<li>计算数组索引（假设数组长度n为 16，即n - 1为 15）：<ul>
+<li>index &#x3D; (15) &amp; 123457 &#x3D; 15 &amp; 123457 &#x3D; 1</li>
+</ul>
+</li>
+</ol>
+<p>最终，键值对将存储在哈希表数组的索引 1 位置。</p>
+<blockquote>
+<p>&#x2F;str1ewvagoc4qesr&gt;</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/HashMap%E7%9A%84%E4%B8%BB%E8%A6%81%E5%8F%82%E6%95%B0%E9%83%BD%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/HashMap%E7%9A%84%E4%B8%BB%E8%A6%81%E5%8F%82%E6%95%B0%E9%83%BD%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F/" itemprop="url">HashMap的主要参数都有哪些</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌HashMap的主要参数都有哪些？"><a href="#👌HashMap的主要参数都有哪些？" class="headerlink" title="👌HashMap的主要参数都有哪些？"></a>👌HashMap的主要参数都有哪些？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="初始容量（Initial-Capacity）"><a href="#初始容量（Initial-Capacity）" class="headerlink" title="初始容量（Initial Capacity）"></a>初始容量（Initial Capacity）</h2><p>初始容量是HashMap在创建时分配的桶（bucket）数组的大小。默认初始容量是 16。可以在创建HashMap时通过构造函数指定初始容量。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HashMap&lt;K, V&gt; map = newHashMap&lt;&gt;(initialCapacity);</span><br></pre></td></tr></table></figure>
+
+<h2 id="负载因子（Load-Factor）"><a href="#负载因子（Load-Factor）" class="headerlink" title="负载因子（Load Factor）"></a>负载因子（Load Factor）</h2><p>负载因子是一个衡量HashMap何时需要调整大小（即扩容）的参数。默认负载因子是 0.75，这意味着当HashMap中的条目数达到当前容量的 75% 时，HashMap会进行扩容。负载因子越低，哈希表中的空闲空间越多，冲突越少，但空间利用率也越低。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HashMap&lt;K, V&gt; map = newHashMap&lt;&gt;(initialCapacity, loadFactor);</span><br></pre></td></tr></table></figure>
+
+<h2 id="阈值（Threshold）"><a href="#阈值（Threshold）" class="headerlink" title="阈值（Threshold）"></a>阈值（Threshold）</h2><p>阈值是HashMap需要扩容的临界点，计算方式为初始容量 * 负载因子。当实际存储的键值对数量超过这个阈值时，HashMap会进行扩容。</p>
+<h2 id="桶（Bucket）"><a href="#桶（Bucket）" class="headerlink" title="桶（Bucket）"></a>桶（Bucket）</h2><p>HashMap内部使用一个数组来存储链表或树（在 Java 8 及之后的版本中，当链表长度超过一定阈值时，会转化为树）。每个数组元素称为一个桶（bucket）。哈希值经过计算后决定了键值对存储在哪个桶中。</p>
+<h2 id="哈希函数（Hash-Function）"><a href="#哈希函数（Hash-Function）" class="headerlink" title="哈希函数（Hash Function）"></a>哈希函数（Hash Function）</h2><p>HashMap使用哈希函数将键的哈希码转换为数组索引。Java 的HashMap使用了扰动函数（perturbation function）来减少哈希冲突：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">static final int hash(Object key) &#123;</span><br><span class="line">    int h;</span><br><span class="line">    return (key == null) ? 0 : (h = key.hashCode()) ^ (h &gt;&gt;&gt; 16);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="链表和树（Linked-List-and-Tree）"><a href="#链表和树（Linked-List-and-Tree）" class="headerlink" title="链表和树（Linked List and Tree）"></a>链表和树（Linked List and Tree）</h2><p>在桶中的键值对存储方式上，HashMap使用链表来处理哈希冲突。在 Java 8 及之后的版本中，当链表的长度超过阈值（默认是 8）时，链表会转换为红黑树，以提高查找效率。</p>
+<h2 id="红黑树转换阈值（Treeify-Threshold）"><a href="#红黑树转换阈值（Treeify-Threshold）" class="headerlink" title="红黑树转换阈值（Treeify Threshold）"></a>红黑树转换阈值（Treeify Threshold）</h2><p>这是一个阈值，当单个桶中的链表长度超过这个值时，链表会转换为红黑树。默认值是 8。</p>
+<h2 id="最小树化容量（Minimum-Treeify-Capacity）"><a href="#最小树化容量（Minimum-Treeify-Capacity）" class="headerlink" title="最小树化容量（Minimum Treeify Capacity）"></a>最小树化容量（Minimum Treeify Capacity）</h2><p>这是一个阈值，当HashMap的容量小于这个值时，即使链表长度超过Treeify Threshold，也不会将链表转换为红黑树，而是会先进行扩容。默认值是 64。</p>
+<h2 id="扩容因子（Resize-Factor）"><a href="#扩容因子（Resize-Factor）" class="headerlink" title="扩容因子（Resize Factor）"></a>扩容因子（Resize Factor）</h2><p>当HashMap的大小超过阈值时，容量会加倍。即新的容量是旧容量的两倍。</p>
+<h2 id="迭代器（Iterators）"><a href="#迭代器（Iterators）" class="headerlink" title="迭代器（Iterators）"></a>迭代器（Iterators）</h2><p>HashMap提供了键、值和条目的迭代器，用于遍历HashMap中的元素。迭代器是快速失败的（fail-fast），即在迭代过程中，如果HashMap结构被修改（除了通过迭代器自身的remove方法），迭代器会抛出ConcurrentModificationException。</p>
+<h2 id="版本（ModCount）"><a href="#版本（ModCount）" class="headerlink" title="版本（ModCount）"></a>版本（ModCount）</h2><p>HashMap维护了一个内部版本号modCount，用于跟踪HashMap的结构修改次数。这在迭代器中用于检测并发修改。</p>
+<p>这些参数和属性共同决定了HashMap的性能和行为。理解这些参数可以帮助开发者更好地使用HashMap，并在需要时进行适当的调整以满足特定的性能需求。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/HashMap%E7%9A%84%E8%B4%9F%E8%BD%BD%E5%9B%A0%E5%AD%90%E5%88%9D%E5%A7%8B%E5%80%BC%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF0.75_/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +950,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
               </time>
             
           </span>
@@ -515,8 +1148,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
               </time>
             
           </span>
@@ -715,8 +1348,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
               </time>
             
           </span>
@@ -927,8 +1560,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
               </time>
             
           </span>
@@ -1131,8 +1764,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
               </time>
             
           </span>
@@ -1346,8 +1979,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
               </time>
             
           </span>
@@ -1562,8 +2195,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
               </time>
             
           </span>
@@ -1777,8 +2410,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
               </time>
             
           </span>
@@ -1995,8 +2628,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
               </time>
             
           </span>
@@ -2230,8 +2863,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
               </time>
             
           </span>
@@ -2429,8 +3062,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
               </time>
             
           </span>
@@ -2636,8 +3269,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
               </time>
             
           </span>
@@ -2827,8 +3460,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
               </time>
             
           </span>
@@ -3056,8 +3689,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
               </time>
             
           </span>
@@ -3261,8 +3894,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
               </time>
             
           </span>
@@ -3470,8 +4103,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
               </time>
             
           </span>
@@ -3666,8 +4299,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
               </time>
             
           </span>
@@ -3810,609 +4443,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFTreeMap%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFTreeMap%EF%BC%9F/" itemprop="url">什么是TreeMap</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌什么是TreeMap？"><a href="#👌什么是TreeMap？" class="headerlink" title="👌什么是TreeMap？"></a>👌什么是TreeMap？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="基本特点"><a href="#基本特点" class="headerlink" title="基本特点"></a>基本特点</h2><ol>
-<li><strong>有序性</strong>：TreeMap保证了键的自然顺序（通过Comparable接口）或通过提供的比较器（Comparator）的顺序。</li>
-<li><strong>红黑树</strong>：TreeMap内部使用红黑树数据结构来存储键值对，保证了插入、删除、查找等操作的时间复杂度为 O(log n)。</li>
-<li><strong>不允许<strong><strong>null</strong></strong>键</strong>：TreeMap不允许键为null，但允许值为null。</li>
-<li><strong>线程不安全</strong>：TreeMap不是线程安全的，如果需要在多线程环境中使用，需要通过外部同步机制来保证线程安全。</li>
-</ol>
-<h2 id="与其他集合类的比较"><a href="#与其他集合类的比较" class="headerlink" title="与其他集合类的比较"></a>与其他集合类的比较</h2><p><strong>TreeMap vs. HashMap</strong>：</p>
-<p>TreeMap保证键的有序性，而HashMap不保证顺序。</p>
-<p>TreeMap基于红黑树实现，操作的时间复杂度为 O(log n)，而HashMap基于哈希表实现，操作的平均时间复杂度为 O(1)。</p>
-<p>TreeMap不允许null键，而HashMap允许一个null键。</p>
-<p><strong>TreeMap vs. LinkedHashMap</strong>：</p>
-<p>TreeMap保证键的自然顺序或比较器的顺序，而LinkedHashMap保证插入顺序或访问顺序。</p>
-<p>TreeMap的操作时间复杂度为 O(log n)，而LinkedHashMap的操作时间复杂度为 O(1)。</p>
-<h2 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h2><p>TreeMap适用于需要按键排序存储键值对的场景，例如：</p>
-<p>实现基于范围的查询。</p>
-<p>需要按顺序遍历键值对。</p>
-<p>需要快速查找最小或最大键值对。</p>
-<blockquote>
-<p>&#x2F;angmwmt1ka8unn4o&gt;</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFfail-fast%E6%9C%BA%E5%88%B6%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFfail-fast%E6%9C%BA%E5%88%B6%EF%BC%9F/" itemprop="url">fail-fast机制</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌什么是fail-fast机制？"><a href="#👌什么是fail-fast机制？" class="headerlink" title="👌什么是fail-fast机制？"></a>👌什么是fail-fast机制？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>在Java集合框架中，fail-fast是一种机制，用于检测在遍历集合时的结构性修改，并立即抛出异常以防止不一致状态。fail-fast迭代器在检测到集合在迭代过程中被修改后，会抛出ConcurrentModificationException异常。</p>
-<h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><p>fail-fast迭代器通过在遍历集合时维护一个修改计数器（modification count）来工作。每当集合结构发生变化（如添加或删除元素）时，这个计数器就会增加。当创建迭代器时，它会保存当前的修改计数器值。在每次调用next()方法时，迭代器会检查当前的修改计数器值是否与保存的值一致。如果不一致，说明集合在迭代过程中被修改了，迭代器会立即抛出ConcurrentModificationException。</p>
-<h2 id="代码-Demo"><a href="#代码-Demo" class="headerlink" title="代码 Demo"></a>代码 Demo</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import java.util.*;</span><br><span class="line"></span><br><span class="line">public class FailFastExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        List&lt;String&gt; list = new ArrayList&lt;&gt;();</span><br><span class="line">        list.add(&quot;A&quot;);</span><br><span class="line">        list.add(&quot;B&quot;);</span><br><span class="line">        list.add(&quot;C&quot;);</span><br><span class="line"></span><br><span class="line">        Iterator&lt;String&gt; iterator = list.iterator();</span><br><span class="line">        while (iterator.hasNext()) &#123;</span><br><span class="line">            String element = iterator.next();</span><br><span class="line">            System.out.println(element);</span><br><span class="line">            // 在迭代过程中修改集合</span><br><span class="line">            if (element.equals(&quot;B&quot;)) &#123;</span><br><span class="line">                list.add(&quot;D&quot;); // 这将引发 ConcurrentModificationException</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在上面的代码中，当迭代器遍历到元素 “B” 时，集合被修改（添加了新元素 “D”），因此迭代器将抛出ConcurrentModificationException。</p>
-<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p><strong>快速失败并不保证</strong>：fail-fast机制并不能保证在所有情况下都能检测到并发修改。它是尽力而为的检测机制，不能依赖于它来实现并发安全。如果需要并发安全的集合，可以使用java.util.concurrent包中的并发集合类。</p>
-<p><strong>避免并发修改</strong>：在遍历集合时，避免在外部修改集合。可以使用迭代器的remove方法来安全地移除元素。</p>
-<h2 id="使用remove方法"><a href="#使用remove方法" class="headerlink" title="使用remove方法"></a>使用remove方法</h2><p>为了避免ConcurrentModificationException，可以使用迭代器的remove方法来移除元素：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">import java.util.*;</span><br><span class="line"></span><br><span class="line">public class SafeRemovalExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        List&lt;String&gt; list = new ArrayList&lt;&gt;();</span><br><span class="line">        list.add(&quot;A&quot;);</span><br><span class="line">        list.add(&quot;B&quot;);</span><br><span class="line">        list.add(&quot;C&quot;);</span><br><span class="line"></span><br><span class="line">        Iterator&lt;String&gt; iterator = list.iterator();</span><br><span class="line">        while (iterator.hasNext()) &#123;</span><br><span class="line">            String element = iterator.next();</span><br><span class="line">            System.out.println(element);</span><br><span class="line">            // 使用迭代器的 remove 方法安全地移除元素</span><br><span class="line">            if (element.equals(&quot;B&quot;)) &#123;</span><br><span class="line">                iterator.remove();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;After removal: &quot; + list);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在这个示例中，使用iterator.remove()方法安全地移除了元素 “B”。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFfail-safe%E6%9C%BA%E5%88%B6%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFfail-safe%E6%9C%BA%E5%88%B6%EF%BC%9F/" itemprop="url">fail-safe机制</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌什么是fail-safe机制？"><a href="#👌什么是fail-safe机制？" class="headerlink" title="👌什么是fail-safe机制？"></a>👌什么是fail-safe机制？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>fail-safe机制是与fail-fast机制相对的一种并发处理机制。在 Java 集合框架中，fail-safe迭代器在检测到集合在遍历过程中被修改时，不会抛出异常，而是允许这种修改继续进行。fail-safe迭代器通常是通过在遍历时使用集合的副本来实现的，这样即使原集合被修改，迭代器也不会受到影响。</p>
-<h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><p>fail-safe迭代器在遍历集合时，实际上是遍历集合的一个副本。因此，任何对原集合的修改都不会影响到迭代器正在遍历的副本。这种机制保证了遍历操作的安全性，但也意味着迭代器不能反映集合的实时变化。</p>
-<h2 id="代码-Demo"><a href="#代码-Demo" class="headerlink" title="代码 Demo"></a>代码 Demo</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">import java.util.concurrent.CopyOnWriteArrayList;</span><br><span class="line">import java.util.Iterator;</span><br><span class="line">public class FailSafeExample &#123;</span><br><span class="line">    publicstaticvoidmain(String[] args) &#123;</span><br><span class="line">        CopyOnWriteArrayList&lt;String&gt; list = new CopyOnWriteArrayList&lt;&gt;();</span><br><span class="line">        list.add(&quot;A&quot;);</span><br><span class="line">        list.add(&quot;B&quot;);</span><br><span class="line">        list.add(&quot;C&quot;);</span><br><span class="line"></span><br><span class="line">        Iterator&lt;String&gt; iterator = list.iterator();</span><br><span class="line">        while (iterator.hasNext()) &#123;</span><br><span class="line">            Stringelement= iterator.next();</span><br><span class="line">            System.out.println(element);</span><br><span class="line">            // 在迭代过程中修改集合</span><br><span class="line">            if (element.equals(&quot;B&quot;)) &#123;</span><br><span class="line">                list.add(&quot;D&quot;); // 不会引发 ConcurrentModificationException</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;After modification: &quot; + list);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在上面的代码中，使用CopyOnWriteArrayList作为集合。CopyOnWriteArrayList是一个典型的fail-safe集合类，它在每次修改时都会创建集合的一个副本，因此迭代器不会检测到并发修改，不会抛出ConcurrentModificationException。</p>
-<h2 id="主要特点"><a href="#主要特点" class="headerlink" title="主要特点"></a>主要特点</h2><ol>
-<li><strong>不抛异常</strong>：fail-safe迭代器在检测到集合被修改时，不会抛出ConcurrentModificationException异常。</li>
-<li><strong>副本遍历</strong>：fail-safe迭代器遍历的是集合的一个副本，而不是原集合。这意味着对原集合的修改不会影响迭代器的遍历。</li>
-<li><strong>线程安全</strong>：fail-safe集合类（如CopyOnWriteArrayList、ConcurrentHashMap等）通常是线程安全的，适用于并发环境。</li>
-</ol>
-<h2 id="常见的fail-safe集合类"><a href="#常见的fail-safe集合类" class="headerlink" title="常见的fail-safe集合类"></a>常见的fail-safe集合类</h2><p>CopyOnWriteArrayList，ConcurrentHashMap，ConcurrentLinkedQueue，ConcurrentSkipListMap，ConcurrentSkipListSet</p>
-<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
-<li><strong>性能开销</strong>：由于fail-safe机制通常需要创建集合的副本，因此在修改频繁的场景下，性能开销较大。适用于读多写少的场景。</li>
-<li><strong>一致性问题</strong>：由于迭代器遍历的是集合的副本，因此它不能反映集合的实时变化。如果需要实时一致性，fail-safe机制可能不适用。</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
+    <a class="extend prev" rel="prev" href="/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
   </nav>
 
 
@@ -4458,7 +4493,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">80</span>
+                <span class="site-state-item-count">83</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

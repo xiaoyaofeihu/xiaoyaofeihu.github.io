@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="1、隔离级别为什么mysql默认使用RR；  级别太高会影响并发度，太低会出现脏读现象；最重要的是主从同步的问题；当binlog的格式为statement时，binlog 里面记录的就是 SQL 语句的原文为了兼容历史上的那种statement格式的bin log。在RC情况下，主库因为隔离级别没有问题，但是从库会发生数据不一致的问题；在RR中不会出现这种问题，是因为在其中存在间隙锁和临建锁，确保">
+<meta property="og:type" content="article">
+<meta property="og:title" content="余声-个人博客">
+<meta property="og:url" content="https://xiaoyaofeihu.github.io/2024/11/27/Mysql%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="余声-个人博客">
+<meta property="og:description" content="1、隔离级别为什么mysql默认使用RR；  级别太高会影响并发度，太低会出现脏读现象；最重要的是主从同步的问题；当binlog的格式为statement时，binlog 里面记录的就是 SQL 语句的原文为了兼容历史上的那种statement格式的bin log。在RC情况下，主库因为隔离级别没有问题，但是从库会发生数据不一致的问题；在RR中不会出现这种问题，是因为在其中存在间隙锁和临建锁，确保">
+<meta property="og:locale">
+<meta property="article:published_time" content="2024-11-27T10:22:01.559Z">
+<meta property="article:modified_time" content="2024-11-27T10:22:01.559Z">
+<meta property="article:author" content="javayun">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '余声'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://xiaoyaofeihu.github.io/2024/11/27/Mysql笔记/"/>
+
+
+
+
+
+  <title> | 余声-个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">余声-个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/11/27/Mysql%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1、隔离级别"><a href="#1、隔离级别" class="headerlink" title="1、隔离级别"></a>1、隔离级别</h2><p>为什么mysql默认使用RR；</p>
+<blockquote>
+<p>级别太高会影响并发度，太低会出现脏读现象；<br>最重要的是主从同步的问题；<br>当binlog的格式为statement时，binlog 里面记录的就是 SQL 语句的原文<br>为了兼容历史上的那种statement格式的bin log。<br>在RC情况下，主库因为隔离级别没有问题，但是从库会发生数据不一致的问题；<br>在RR中不会出现这种问题，是因为在其中存在间隙锁和临建锁，确保一个事务提交以后才能执行下一个事务；</p>
+</blockquote>
+<h2 id="2、RR和RC区别"><a href="#2、RR和RC区别" class="headerlink" title="2、RR和RC区别"></a>2、RR和RC区别</h2><p>只有这两个才会使用快照读；<br>在 RC 中，每次读取都会重新生成一个快照，总是读取行的最新版本</p>
+<blockquote>
+<p>在数据库的 RC 这种隔离级别中，还支持”半一致读” ，一条update语句，如果 where 条件匹配到的记录已经加锁，那么InnoDB会返回记录最近提交的版本，由MySQL上层判断此是否需要真的加锁。</p>
+</blockquote>
+<p>在 RC 中，只会对索引增加Record Lock，不会添加Gap Lock和Next-Key Lock。<br>在 RR 中，为了解决幻读的问题，在支持Record Lock的同时，还支持Gap Lock和Next-Key Lock；<br>所以 RC并发更好，减少锁的问题；</p>
+<blockquote>
+<p>在RC 中 读取到别的事务修改的值其实问题不太大的，只要修改的时候的不基于错误数据就可以了，所以我们都是在核心表中增加乐观锁标记，更新的时候都要带上锁标记进行乐观锁更新</p>
+</blockquote>
+<h2 id="Innodb的RR到底有没有解决幻读？"><a href="#Innodb的RR到底有没有解决幻读？" class="headerlink" title="Innodb的RR到底有没有解决幻读？"></a>Innodb的RR到底有没有解决幻读？</h2><p>间隙锁解决了部分当前读的幻读问题；<br>MVCC解决了快照读的幻读问题；</p>
+<h2 id="MVCC"><a href="#MVCC" class="headerlink" title="MVCC"></a>MVCC</h2><ul>
+<li>时机<br>在 RC 中，每次读取都会重新生成一个快照，总是读取行的最新版本。<br>在 RR 中，快照会在事务中第一次SELECT语句执行时生成，只有在本事务中对数据进行更改才会更新快照。</li>
+</ul>
+<h2 id="在同一个事务里面，如果既有快照读，又有当前读，那是会产生幻读的"><a href="#在同一个事务里面，如果既有快照读，又有当前读，那是会产生幻读的" class="headerlink" title="在同一个事务里面，如果既有快照读，又有当前读，那是会产生幻读的"></a>在同一个事务里面，如果既有快照读，又有当前读，那是会产生幻读的</h2><p>MVCC只是解决了快照读中的欢度问题，但是对于当前读还是会有幻读的问题；<br><strong>在RR中，如果本事务中发生了数据的修改，那么就会更新快照，那么最后一次查询的结果也就发生了变化。</strong></p>
+<h2 id="间隙锁是导致死锁的一个重要原因"><a href="#间隙锁是导致死锁的一个重要原因" class="headerlink" title="间隙锁是导致死锁的一个重要原因"></a>间隙锁是导致死锁的一个重要原因</h2><h1 id="MVCC理解"><a href="#MVCC理解" class="headerlink" title="MVCC理解"></a>MVCC理解</h1><h3 id="并发问题：MVCC解决是读-写并发的问题；"><a href="#并发问题：MVCC解决是读-写并发的问题；" class="headerlink" title="并发问题：MVCC解决是读-写并发的问题；"></a>并发问题：MVCC解决是读-写并发的问题；</h3><h3 id="快照读是MVCC实现的基础，而当前读是悲观锁实现的基础。"><a href="#快照读是MVCC实现的基础，而当前读是悲观锁实现的基础。" class="headerlink" title="快照读是MVCC实现的基础，而当前读是悲观锁实现的基础。"></a>快照读是MVCC实现的基础，而当前读是悲观锁实现的基础。</h3><ul>
+<li>undo log是Mysql中比较重要的事务日志之一，顾名思义，undo log是一种用于回退的日志，在事务没提交之前，MySQL会先记录更新前的数据到 undo log日志文件里面，当事务回滚时或者数据库崩溃时，可以利用 undo log来进行回退。</li>
+<li>针对一条记录的多个快照，通过隐藏主键+回滚指针生成一个快照链表</li>
+<li>Read View 主要来帮我们解决可见性的问题的, 即他会来告诉我们本次事务应该看到哪个快照，不应该看到哪个快照。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="" alt=" wechat" style="width: 200px; max-width: 100%;"/>
+    <div>天生我才必有用</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2024/11/15/%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/" rel="next" title="学习笔记">
+                <i class="fa fa-chevron-left"></i> 学习笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/11.jpg"
+               alt="" />
+          <p class="site-author-name" itemprop="name"></p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">83</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="nav-number">1.</span> <span class="nav-text">1、隔离级别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81RR%E5%92%8CRC%E5%8C%BA%E5%88%AB"><span class="nav-number">2.</span> <span class="nav-text">2、RR和RC区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Innodb%E7%9A%84RR%E5%88%B0%E5%BA%95%E6%9C%89%E6%B2%A1%E6%9C%89%E8%A7%A3%E5%86%B3%E5%B9%BB%E8%AF%BB%EF%BC%9F"><span class="nav-number">3.</span> <span class="nav-text">Innodb的RR到底有没有解决幻读？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MVCC"><span class="nav-number">4.</span> <span class="nav-text">MVCC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E5%90%8C%E4%B8%80%E4%B8%AA%E4%BA%8B%E5%8A%A1%E9%87%8C%E9%9D%A2%EF%BC%8C%E5%A6%82%E6%9E%9C%E6%97%A2%E6%9C%89%E5%BF%AB%E7%85%A7%E8%AF%BB%EF%BC%8C%E5%8F%88%E6%9C%89%E5%BD%93%E5%89%8D%E8%AF%BB%EF%BC%8C%E9%82%A3%E6%98%AF%E4%BC%9A%E4%BA%A7%E7%94%9F%E5%B9%BB%E8%AF%BB%E7%9A%84"><span class="nav-number">5.</span> <span class="nav-text">在同一个事务里面，如果既有快照读，又有当前读，那是会产生幻读的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%B4%E9%9A%99%E9%94%81%E6%98%AF%E5%AF%BC%E8%87%B4%E6%AD%BB%E9%94%81%E7%9A%84%E4%B8%80%E4%B8%AA%E9%87%8D%E8%A6%81%E5%8E%9F%E5%9B%A0"><span class="nav-number">6.</span> <span class="nav-text">间隙锁是导致死锁的一个重要原因</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MVCC%E7%90%86%E8%A7%A3"><span class="nav-number"></span> <span class="nav-text">MVCC理解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98%EF%BC%9AMVCC%E8%A7%A3%E5%86%B3%E6%98%AF%E8%AF%BB-%E5%86%99%E5%B9%B6%E5%8F%91%E7%9A%84%E9%97%AE%E9%A2%98%EF%BC%9B"><span class="nav-number">0.1.</span> <span class="nav-text">并发问题：MVCC解决是读-写并发的问题；</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%AB%E7%85%A7%E8%AF%BB%E6%98%AFMVCC%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%9F%BA%E7%A1%80%EF%BC%8C%E8%80%8C%E5%BD%93%E5%89%8D%E8%AF%BB%E6%98%AF%E6%82%B2%E8%A7%82%E9%94%81%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%9F%BA%E7%A1%80%E3%80%82"><span class="nav-number">0.2.</span> <span class="nav-text">快照读是MVCC实现的基础，而当前读是悲观锁实现的基础。</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">javayun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Gemini
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

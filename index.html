@@ -270,6 +270,190 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/11/27/Mysql%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/11/27/Mysql%E7%AC%94%E8%AE%B0/" itemprop="url">未命名</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1、隔离级别"><a href="#1、隔离级别" class="headerlink" title="1、隔离级别"></a>1、隔离级别</h2><p>为什么mysql默认使用RR；</p>
+<blockquote>
+<p>级别太高会影响并发度，太低会出现脏读现象；<br>最重要的是主从同步的问题；<br>当binlog的格式为statement时，binlog 里面记录的就是 SQL 语句的原文<br>为了兼容历史上的那种statement格式的bin log。<br>在RC情况下，主库因为隔离级别没有问题，但是从库会发生数据不一致的问题；<br>在RR中不会出现这种问题，是因为在其中存在间隙锁和临建锁，确保一个事务提交以后才能执行下一个事务；</p>
+</blockquote>
+<h2 id="2、RR和RC区别"><a href="#2、RR和RC区别" class="headerlink" title="2、RR和RC区别"></a>2、RR和RC区别</h2><p>只有这两个才会使用快照读；<br>在 RC 中，每次读取都会重新生成一个快照，总是读取行的最新版本</p>
+<blockquote>
+<p>在数据库的 RC 这种隔离级别中，还支持”半一致读” ，一条update语句，如果 where 条件匹配到的记录已经加锁，那么InnoDB会返回记录最近提交的版本，由MySQL上层判断此是否需要真的加锁。</p>
+</blockquote>
+<p>在 RC 中，只会对索引增加Record Lock，不会添加Gap Lock和Next-Key Lock。<br>在 RR 中，为了解决幻读的问题，在支持Record Lock的同时，还支持Gap Lock和Next-Key Lock；<br>所以 RC并发更好，减少锁的问题；</p>
+<blockquote>
+<p>在RC 中 读取到别的事务修改的值其实问题不太大的，只要修改的时候的不基于错误数据就可以了，所以我们都是在核心表中增加乐观锁标记，更新的时候都要带上锁标记进行乐观锁更新</p>
+</blockquote>
+<h2 id="Innodb的RR到底有没有解决幻读？"><a href="#Innodb的RR到底有没有解决幻读？" class="headerlink" title="Innodb的RR到底有没有解决幻读？"></a>Innodb的RR到底有没有解决幻读？</h2><p>间隙锁解决了部分当前读的幻读问题；<br>MVCC解决了快照读的幻读问题；</p>
+<h2 id="MVCC"><a href="#MVCC" class="headerlink" title="MVCC"></a>MVCC</h2><ul>
+<li>时机<br>在 RC 中，每次读取都会重新生成一个快照，总是读取行的最新版本。<br>在 RR 中，快照会在事务中第一次SELECT语句执行时生成，只有在本事务中对数据进行更改才会更新快照。</li>
+</ul>
+<h2 id="在同一个事务里面，如果既有快照读，又有当前读，那是会产生幻读的"><a href="#在同一个事务里面，如果既有快照读，又有当前读，那是会产生幻读的" class="headerlink" title="在同一个事务里面，如果既有快照读，又有当前读，那是会产生幻读的"></a>在同一个事务里面，如果既有快照读，又有当前读，那是会产生幻读的</h2><p>MVCC只是解决了快照读中的欢度问题，但是对于当前读还是会有幻读的问题；<br><strong>在RR中，如果本事务中发生了数据的修改，那么就会更新快照，那么最后一次查询的结果也就发生了变化。</strong></p>
+<h2 id="间隙锁是导致死锁的一个重要原因"><a href="#间隙锁是导致死锁的一个重要原因" class="headerlink" title="间隙锁是导致死锁的一个重要原因"></a>间隙锁是导致死锁的一个重要原因</h2><h1 id="MVCC理解"><a href="#MVCC理解" class="headerlink" title="MVCC理解"></a>MVCC理解</h1><h3 id="并发问题：MVCC解决是读-写并发的问题；"><a href="#并发问题：MVCC解决是读-写并发的问题；" class="headerlink" title="并发问题：MVCC解决是读-写并发的问题；"></a>并发问题：MVCC解决是读-写并发的问题；</h3><h3 id="快照读是MVCC实现的基础，而当前读是悲观锁实现的基础。"><a href="#快照读是MVCC实现的基础，而当前读是悲观锁实现的基础。" class="headerlink" title="快照读是MVCC实现的基础，而当前读是悲观锁实现的基础。"></a>快照读是MVCC实现的基础，而当前读是悲观锁实现的基础。</h3><ul>
+<li>undo log是Mysql中比较重要的事务日志之一，顾名思义，undo log是一种用于回退的日志，在事务没提交之前，MySQL会先记录更新前的数据到 undo log日志文件里面，当事务回滚时或者数据库崩溃时，可以利用 undo log来进行回退。</li>
+<li>针对一条记录的多个快照，通过隐藏主键+回滚指针生成一个快照链表</li>
+<li>Read View 主要来帮我们解决可见性的问题的, 即他会来告诉我们本次事务应该看到哪个快照，不应该看到哪个快照。</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/11/15/%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +501,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
               </time>
             
           </span>
@@ -605,8 +789,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
               </time>
             
           </span>
@@ -797,8 +981,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
               </time>
             
           </span>
@@ -1029,8 +1213,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
               </time>
             
           </span>
@@ -1278,8 +1462,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
               </time>
             
           </span>
@@ -1449,6 +1633,442 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/11/12/%E9%9D%A2%E8%AF%95%E9%A2%98/AtomicInteger%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%9C%BA%E6%99%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/11/12/%E9%9D%A2%E8%AF%95%E9%A2%98/AtomicInteger%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%9C%BA%E6%99%AF/" itemprop="url">AtomicInteger的实现方式及场景</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-11-12T13:33:41+00:00">
+                2024-11-12
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌AtomicInteger的实现方式及场景"><a href="#👌AtomicInteger的实现方式及场景" class="headerlink" title="👌AtomicInteger的实现方式及场景"></a>👌AtomicInteger的实现方式及场景</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>AtomicInteger是 Java 中提供的一种用于在多线程环境下进行原子操作的类。它属于java.util.concurrent.atomic包，提供了一种无锁的线程安全方式来操作整数值。AtomicInteger基于底层的硬件原子操作（例如 CAS 操作）实现，确保在多线程环境中进行高效的数值更新。</p>
+<h2 id="AtomicInteger的实现方式"><a href="#AtomicInteger的实现方式" class="headerlink" title="AtomicInteger的实现方式"></a>AtomicInteger的实现方式</h2><p>AtomicInteger通过使用 CAS（Compare-And-Swap）操作来实现原子性。CAS 是一种硬件级别的原子操作，能够确保在多线程环境下对变量进行无锁的更新。</p>
+<ol>
+<li><strong>底层变量</strong>：使用volatile关键字声明一个int类型的变量，确保变量的可见性。</li>
+<li><strong>CAS 操作</strong>：通过Unsafe类提供的原子操作方法来实现无锁更新。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">import java.util.concurrent.atomic.AtomicInteger;</span><br><span class="line"></span><br><span class="line">public class AtomicIntegerExample &#123;</span><br><span class="line">    private final AtomicInteger atomicInteger = new AtomicInteger(0);</span><br><span class="line"></span><br><span class="line">    public void increment() &#123;</span><br><span class="line">        atomicInteger.incrementAndGet();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int getValue() &#123;</span><br><span class="line">        return atomicInteger.get();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        AtomicIntegerExample example = new AtomicIntegerExample();</span><br><span class="line"></span><br><span class="line">        Runnable task = () -&gt; &#123;</span><br><span class="line">            for (int i = 0; i &lt; 1000; i++) &#123;</span><br><span class="line">                example.increment();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        Thread t1 = new Thread(task);</span><br><span class="line">        Thread t2 = new Thread(task);</span><br><span class="line"></span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line"></span><br><span class="line">        try &#123;</span><br><span class="line">            t1.join();</span><br><span class="line">            t2.join();</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;Final value: &quot; + example.getValue());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个示例中，我们使用AtomicInteger实现了一个简单的计数器，并在两个线程中并发地对计数器进行自增操作。最终的结果是线程安全的。</p>
+<h2 id="AtomicInteger的主要方法"><a href="#AtomicInteger的主要方法" class="headerlink" title="AtomicInteger的主要方法"></a>AtomicInteger的主要方法</h2><p>get(): 获取当前值。</p>
+<p>set(int newValue): 设置当前值。</p>
+<p>getAndSet(int newValue): 获取当前值，并设置为新值。</p>
+<p>compareAndSet(int expect, int update): 如果当前值等于预期值，则将其设置为新值。</p>
+<p>getAndIncrement(): 获取当前值，并自增。</p>
+<p>incrementAndGet(): 自增，并获取自增后的值。</p>
+<p>getAndDecrement(): 获取当前值，并自减。</p>
+<p>decrementAndGet(): 自减，并获取自减后的值。</p>
+<p>getAndAdd(int delta): 获取当前值，并加上指定的值。</p>
+<p>addAndGet(int delta): 加上指定的值，并获取加后的值。</p>
+<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><ol>
+<li><strong>计数器</strong>：在多线程环境中用于计数，例如统计请求数、用户数等。</li>
+<li><strong>序列生成器</strong>：生成全局唯一的序列号。</li>
+<li><strong>并发控制</strong>：用于实现并发控制机制，如限流器、资源池等。</li>
+<li><strong>状态管理</strong>：用于管理多线程环境下的共享状态，确保状态更新的原子性。</li>
+<li><strong>锁的替代</strong>：在某些情况下，可以使用AtomicInteger来替代传统的锁机制，减少锁竞争，提高性能。</li>
+</ol>
+<h2 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h2><h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><ol>
+<li><strong>高效</strong>：基于硬件级别的原子操作，性能高于使用锁的方式。</li>
+<li><strong>无锁</strong>：避免了锁竞争和上下文切换，减少了开销。</li>
+<li><strong>简单易用</strong>：提供了丰富的方法，简化了并发编程。</li>
+</ol>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><ol>
+<li><strong>适用范围有限</strong>：适用于简单的数值更新操作，对于复杂的数据结构或操作，仍需要使用锁。</li>
+<li><strong>CAS 操作失败重试</strong>：在高并发情况下，CAS 操作可能会频繁失败，需要多次重试，影响性能。</li>
+</ol>
+<blockquote>
+<p>原文: <a target="_blank" rel="noopener" href="https://www.yuque.com/jingdianjichi/xyxdsi/vpbqzzcb5t0ur8hm">https://www.yuque.com/jingdianjichi/xyxdsi/vpbqzzcb5t0ur8hm</a></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/11/12/%E9%9D%A2%E8%AF%95%E9%A2%98/CAS%E4%B8%8ESynchronized%E7%9A%84%E4%BD%BF%E7%94%A8%E6%83%85%E6%99%AF_/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/11/12/%E9%9D%A2%E8%AF%95%E9%A2%98/CAS%E4%B8%8ESynchronized%E7%9A%84%E4%BD%BF%E7%94%A8%E6%83%85%E6%99%AF_/" itemprop="url">CAS与Synchronized的使用情景?</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-11-12T13:33:41+00:00">
+                2024-11-12
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌CAS与Synchronized的使用情景"><a href="#👌CAS与Synchronized的使用情景" class="headerlink" title="👌CAS与Synchronized的使用情景?"></a>👌CAS与Synchronized的使用情景?</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>CAS（Compare-And-Swap）和synchronized是两种不同的并发控制机制，适用于不同的使用情景。</p>
+<h2 id="CAS（Compare-And-Swap）"><a href="#CAS（Compare-And-Swap）" class="headerlink" title="CAS（Compare-And-Swap）"></a>CAS（Compare-And-Swap）</h2><h3 id="特点："><a href="#特点：" class="headerlink" title="特点："></a>特点：</h3><p><strong>无锁操作</strong>：CAS 是一种无锁的并发控制机制，不需要显式地获取锁。</p>
+<p><strong>高性能</strong>：由于不需要锁定资源，CAS 的性能通常比锁机制更高，尤其在高并发场景下。</p>
+<p><strong>乐观锁</strong>：CAS 基于乐观锁的思想，假设竞争不频繁，只有在检测到冲突时才会重试。</p>
+<p><strong>原子操作</strong>：CAS 操作是原子的，通常由硬件指令支持（如 x86 架构的cmpxchg指令）。</p>
+<h3 id="使用场景："><a href="#使用场景：" class="headerlink" title="使用场景："></a>使用场景：</h3><ol>
+<li><strong>高并发场景</strong>：适用于需要高并发访问的场景，如计数器、自旋锁、无锁队列等。</li>
+<li><strong>轻量级操作</strong>：适用于操作简单且执行时间短的场景，因为 CAS 操作本身是原子的，但如果操作复杂，可能会导致频繁重试。</li>
+<li><strong>避免锁竞争</strong>：在锁竞争激烈的场景下，CAS 可以避免线程阻塞，提高系统的吞吐量。</li>
+</ol>
+<h3 id="示例："><a href="#示例：" class="headerlink" title="示例："></a>示例：</h3><p>使用AtomicInteger类实现 CAS 的示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">import java.util.concurrent.atomic.AtomicInteger;</span><br><span class="line"></span><br><span class="line">public class CASExample &#123;</span><br><span class="line">    private AtomicInteger counter = new AtomicInteger(0);</span><br><span class="line"></span><br><span class="line">    public void increment() &#123;</span><br><span class="line">        int oldValue, newValue;</span><br><span class="line">        do &#123;</span><br><span class="line">            oldValue = counter.get();</span><br><span class="line">            newValue = oldValue + 1;</span><br><span class="line">        &#125; while (!counter.compareAndSet(oldValue, newValue));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int getCounter() &#123;</span><br><span class="line">        return counter.get();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        CASExample example = new CASExample();</span><br><span class="line">        example.increment();</span><br><span class="line">        System.out.println(example.getCounter()); // 输出: 1</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="synchronized"><a href="#synchronized" class="headerlink" title="synchronized"></a>synchronized</h2><h3 id="特点：-1"><a href="#特点：-1" class="headerlink" title="特点："></a>特点：</h3><p><strong>互斥锁</strong>：synchronized是一种互斥锁机制，确保同一时刻只有一个线程可以执行被锁定的代码块。</p>
+<p><strong>简单易用</strong>：synchronized是 Java 语言内置的关键字，使用简单，易于理解和维护。</p>
+<p><strong>阻塞操作</strong>：被锁定的线程会进入阻塞状态，直到获取到锁。</p>
+<p><strong>内存可见性</strong>：synchronized确保锁释放后，修改的变量对其他线程可见。</p>
+<h4 id="使用场景：-1"><a href="#使用场景：-1" class="headerlink" title="使用场景："></a>使用场景：</h4><ol>
+<li><strong>复杂操作</strong>：适用于需要对共享资源进行复杂操作的场景，确保操作的原子性和一致性。</li>
+<li><strong>低并发场景</strong>：适用于并发度不高的场景，因为synchronized会导致线程阻塞，进而影响性能。</li>
+<li><strong>需要内存可见性</strong>：适用于需要确保变量修改对其他线程立即可见的场景。</li>
+</ol>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public class SynchronizedExample &#123;</span><br><span class="line">    private int counter = 0;</span><br><span class="line"></span><br><span class="line">    public synchronized void increment() &#123;</span><br><span class="line">        counter++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public synchronized int getCounter() &#123;</span><br><span class="line">        return counter;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SynchronizedExample example = new SynchronizedExample();</span><br><span class="line">        example.increment();</span><br><span class="line">        System.out.println(example.getCounter()); // 输出: 1</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>CAS</strong>适用于高并发、轻量级操作和避免锁竞争的场景，具有高性能的优势，但可能会导致重试。<strong>synchronized</strong>适用于复杂操作、低并发场景和需要内存可见性的场景，使用简单，但会导致线程阻塞和性能下降。</p>
+<blockquote>
+<p>原文: <a target="_blank" rel="noopener" href="https://www.yuque.com/jingdianjichi/xyxdsi/ehiutd9peq73al3g">https://www.yuque.com/jingdianjichi/xyxdsi/ehiutd9peq73al3g</a></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/11/10/Mysql%E4%BA%8B%E5%8A%A1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1496,8 +2116,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
               </time>
             
           </span>
@@ -1731,8 +2351,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
               </time>
             
           </span>
@@ -1929,8 +2549,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
               </time>
             
           </span>
@@ -2156,8 +2776,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
               </time>
             
           </span>
@@ -2354,8 +2974,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
               </time>
             
           </span>
@@ -2555,8 +3175,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
               </time>
             
           </span>
@@ -2761,8 +3381,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
               </time>
             
           </span>
@@ -2975,8 +3595,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
               </time>
             
           </span>
@@ -3174,8 +3794,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
               </time>
             
           </span>
@@ -3400,8 +4020,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
               </time>
             
           </span>
@@ -3561,223 +4181,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ConcurrentHashMap%E7%9A%84%E5%8E%9F%E7%90%86%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ConcurrentHashMap%E7%9A%84%E5%8E%9F%E7%90%86%EF%BC%9F/" itemprop="url">ConcurrentHashMap的原理</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌ConcurrentHashMap的原理？"><a href="#👌ConcurrentHashMap的原理？" class="headerlink" title="👌ConcurrentHashMap的原理？"></a>👌ConcurrentHashMap的原理？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>ConcurrentHashMap 是 Java 中一种高效的线程安全哈希表，主要用于在多线程环境下进行高并发的读写操作。它的设计和实现使得在大多数情况下能够提供比其他同步哈希表（如 HashMap）更高的并发性能。以下是 ConcurrentHashMap 的主要原理和机制</p>
-<h2 id="分段锁机制"><a href="#分段锁机制" class="headerlink" title="分段锁机制"></a>分段锁机制</h2><p>在早期版本（Java 7及之前），ConcurrentHashMap 使用了分段锁机制（Segmented Locking）来实现高并发性。</p>
-<p><strong>分段锁</strong>：ConcurrentHashMap 将整个哈希表分成多个段（Segment），每个段维护一个独立的哈希表和锁。这样，在不同段上的操作可以并发进行，从而提高并发度。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 伪代码示例</span><br><span class="line">class ConcurrentHashMap&lt;K, V&gt; &#123;</span><br><span class="line">    Segment&lt;K, V&gt;[] segments;</span><br><span class="line">    </span><br><span class="line">    static class Segment&lt;K, V&gt; &#123;</span><br><span class="line">        final ReentrantLock lock = new ReentrantLock();</span><br><span class="line">        HashEntry&lt;K, V&gt;[] table;</span><br><span class="line">        // 其他字段和方法</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>锁粒度</strong>：由于每个段都有自己的锁，只有在操作同一个段时才需要竞争锁，这大大降低了锁竞争的几率，提高了并发性能。</p>
-<h2 id="CAS-操作和无锁机制"><a href="#CAS-操作和无锁机制" class="headerlink" title="CAS 操作和无锁机制"></a>CAS 操作和无锁机制</h2><p>在 Java 8 及之后，ConcurrentHashMap 进行了重构，摒弃了分段锁机制，转而采用了更加细粒度的锁和无锁机制（CAS 操作）。</p>
-<p><strong>CAS 操作</strong>：CAS（Compare-And-Swap）是一种无锁的原子操作，用于在不加锁的情况下实现线程安全。<code>ConcurrentHashMap</code>使用<code>Unsafe</code>类中的 CAS 方法来更新某些字段，从而避免了锁的开销。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 伪代码示例</span><br><span class="line">boolean casTabAt(Node&lt;K, V&gt;[] tab, int i, Node&lt;K, V&gt; c, Node&lt;K, V&gt; v) &#123;</span><br><span class="line">    return U.compareAndSwapObject(tab, ((long)i &lt;&lt; ASHIFT) + ABASE, c, v);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>细粒度锁</strong>：在 Java 8 中，<code>ConcurrentHashMap</code>使用了更加细粒度的锁（<code>synchronized</code>和<code>ReentrantLock</code>），只在必要时锁定特定的桶（bin）或节点，从而进一步提高并发性能。</p>
-<h2 id="红黑树"><a href="#红黑树" class="headerlink" title="红黑树"></a>红黑树</h2><p>为了应对哈希冲突，ConcurrentHashMap 在链表长度超过一定阈值（默认是8）时，将链表转换为红黑树，以提高查找效率。</p>
-<p><strong>链表</strong>：在哈希冲突较少时，使用链表存储冲突的键值对。</p>
-<p><strong>红黑树</strong>：当链表长度超过阈值时，转换为红黑树，以便在大量冲突时仍能保持较高的查找效率。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 伪代码示例</span><br><span class="line">if (binCount &gt;= TREEIFY_THRESHOLD) &#123;</span><br><span class="line">    treeifyBin(tab, hash);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="扩容机制（Rehashing）"><a href="#扩容机制（Rehashing）" class="headerlink" title="扩容机制（Rehashing）"></a>扩容机制（Rehashing）</h2><p>ConcurrentHashMap 采用了渐进式扩容机制来避免扩容过程中长时间的全表锁定。</p>
-<p><strong>渐进式扩容</strong>：在扩容过程中，<code>ConcurrentHashMap</code>并不会一次性将所有数据迁移到新的哈希表中，而是采用渐进式扩容的方式，在每次插入或删除操作时，逐步迁移部分数据。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 伪代码示例</span><br><span class="line">void transfer(Node&lt;K, V&gt;[] tab, Node&lt;K, V&gt;[] nextTab) &#123;</span><br><span class="line">    // 渐进式迁移数据</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="读写操作"><a href="#读写操作" class="headerlink" title="读写操作"></a>读写操作</h2><p><strong>读取操作</strong>：读取操作大部分情况下是无锁的，因为<code>ConcurrentHashMap</code>使用了<code>volatile</code>变量和 CAS 操作来保证读取的可见性和一致性。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// 伪代码示例</span><br><span class="line">V get(Object key) &#123;</span><br><span class="line">    Node&lt;K, V&gt;[] tab; Node&lt;K, V&gt; e, p; int n, eh; K ek;</span><br><span class="line">    int h = spread(key.hashCode());</span><br><span class="line">    if ((tab = table) != null &amp;&amp; (n = tab.length) &gt; 0 &amp;&amp;</span><br><span class="line">        (e = tabAt(tab, (n - 1) &amp; h)) != null) &#123;</span><br><span class="line">        if ((eh = e.hash) == h) &#123;</span><br><span class="line">            if ((ek = e.key) == key || (ek != null &amp;&amp; key.equals(ek)))</span><br><span class="line">                return e.val;</span><br><span class="line">        &#125;</span><br><span class="line">        // 其他读取逻辑</span><br><span class="line">    &#125;</span><br><span class="line">    return null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>写入操作</strong>：写入操作则需要在必要时使用锁或 CAS 操作来保证线程安全。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">// 伪代码示例</span><br><span class="line">V put(K key, V value) &#123;</span><br><span class="line">    return putVal(key, value, false);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">final V putVal(K key, V value, boolean onlyIfAbsent) &#123;</span><br><span class="line">    if (key == null || value == null) throw new NullPointerException();</span><br><span class="line">    int hash = spread(key.hashCode());</span><br><span class="line">    int binCount = 0;</span><br><span class="line">    for (Node&lt;K, V&gt;[] tab = table;;) &#123;</span><br><span class="line">        Node&lt;K, V&gt; f; int n, i, fh;</span><br><span class="line">        if (tab == null || (n = tab.length) == 0)</span><br><span class="line">            tab = initTable();</span><br><span class="line">        else if ((f = tabAt(tab, i = (n - 1) &amp; hash)) == null) &#123;</span><br><span class="line">            if (casTabAt(tab, i, null, new Node&lt;K, V&gt;(hash, key, value, null)))</span><br><span class="line">                break;                   // no lock when adding to empty bin</span><br><span class="line">        &#125;</span><br><span class="line">        else if ((fh = f.hash) == MOVED)</span><br><span class="line">            tab = helpTransfer(tab, f);</span><br><span class="line">        else &#123;</span><br><span class="line">            V oldVal = null;</span><br><span class="line">            synchronized (f) &#123;</span><br><span class="line">                if (tabAt(tab, i) == f) &#123;</span><br><span class="line">                    if (fh &gt;= 0) &#123;</span><br><span class="line">                        binCount = 1;</span><br><span class="line">                        for (Node&lt;K, V&gt; e = f;; ++binCount) &#123;</span><br><span class="line">                            K ek;</span><br><span class="line">                            if (e.hash == hash &amp;&amp;</span><br><span class="line">                                ((ek = e.key) == key || (ek != null &amp;&amp; key.equals(ek)))) &#123;</span><br><span class="line">                                oldVal = e.val;</span><br><span class="line">                                if (!onlyIfAbsent)</span><br><span class="line">                                    e.val = value;</span><br><span class="line">                                break;</span><br><span class="line">                            &#125;</span><br><span class="line">                            Node&lt;K, V&gt; pred = e;</span><br><span class="line">                            if ((e = e.next) == null) &#123;</span><br><span class="line">                                pred.next = new Node&lt;K, V&gt;(hash, key, value, null);</span><br><span class="line">                                break;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    else if (f instanceof TreeBin) &#123;</span><br><span class="line">                        Node&lt;K, V&gt; p;</span><br><span class="line">                        binCount = 2;</span><br><span class="line">                        if ((p = ((TreeBin&lt;K, V&gt;)f).putTreeVal(hash, key, value)) != null) &#123;</span><br><span class="line">                            oldVal = p.val;</span><br><span class="line">                            if (!onlyIfAbsent)</span><br><span class="line">                                p.val = value;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            if (binCount != 0) &#123;</span><br><span class="line">                if (binCount &gt;= TREEIFY_THRESHOLD)</span><br><span class="line">                    treeifyBin(tab, i);</span><br><span class="line">                if (oldVal != null)</span><br><span class="line">                    return oldVal;</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    addCount(1L, binCount);</span><br><span class="line">    return null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<blockquote>
-<p>&#x2F;gr29od28mo8ulrk5&gt;</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ConcurrentHashMap%E8%83%BD%E4%BF%9D%E8%AF%81%E5%A4%8D%E5%90%88%E6%93%8D%E4%BD%9C%E7%9A%84%E5%8E%9F%E5%AD%90%E6%80%A7%E5%90%97_/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -3825,8 +4228,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
               </time>
             
           </span>
@@ -3983,7 +4386,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/Enumeration%E5%92%8CIterator%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F/">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ConcurrentHashMap%E7%9A%84%E5%8E%9F%E7%90%86%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -4002,7 +4405,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/Enumeration%E5%92%8CIterator%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F/" itemprop="url">Enumeration和Iterator接口的区别</a></h1>
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ConcurrentHashMap%E7%9A%84%E5%8E%9F%E7%90%86%EF%BC%9F/" itemprop="url">ConcurrentHashMap的原理</a></h1>
         
 
         <div class="post-meta">
@@ -4030,8 +4433,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
+              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
+                2024-11-27
               </time>
             
           </span>
@@ -4119,455 +4522,39 @@
       
         
           
-            <h1 id="👌Enumeration和Iterator接口的区别？"><a href="#👌Enumeration和Iterator接口的区别？" class="headerlink" title="👌Enumeration和Iterator接口的区别？"></a>👌Enumeration和Iterator接口的区别？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>Enumeration和Iterator是 Java 中用于遍历集合的两个接口。虽然它们有相似的功能，但它们有不同的设计和使用方式。</p>
-<h2 id="Enumeration接口"><a href="#Enumeration接口" class="headerlink" title="Enumeration接口"></a>Enumeration接口</h2><p>Enumeration是一个较老的接口，存在于 Java 1.0 中。它主要用于遍历旧的集合类，如Vector和Hashtable。</p>
-<h3 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h3><p>boolean hasMoreElements(): 如果枚举中仍有更多元素，则返回true。</p>
-<p>Object nextElement(): 返回枚举中的下一个元素。</p>
-<h3 id="代码-Demo"><a href="#代码-Demo" class="headerlink" title="代码 Demo"></a>代码 Demo</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import java.util.*;</span><br><span class="line"></span><br><span class="line">public class EnumerationExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Vector&lt;String&gt; vector = new Vector&lt;&gt;();</span><br><span class="line">        vector.add(&quot;A&quot;);</span><br><span class="line">        vector.add(&quot;B&quot;);</span><br><span class="line">        vector.add(&quot;C&quot;);</span><br><span class="line"></span><br><span class="line">        Enumeration&lt;String&gt; enumeration = vector.elements();</span><br><span class="line">        while (enumeration.hasMoreElements()) &#123;</span><br><span class="line">            String element = enumeration.nextElement();</span><br><span class="line">            System.out.println(element);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            <h1 id="👌ConcurrentHashMap的原理？"><a href="#👌ConcurrentHashMap的原理？" class="headerlink" title="👌ConcurrentHashMap的原理？"></a>👌ConcurrentHashMap的原理？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>ConcurrentHashMap 是 Java 中一种高效的线程安全哈希表，主要用于在多线程环境下进行高并发的读写操作。它的设计和实现使得在大多数情况下能够提供比其他同步哈希表（如 HashMap）更高的并发性能。以下是 ConcurrentHashMap 的主要原理和机制</p>
+<h2 id="分段锁机制"><a href="#分段锁机制" class="headerlink" title="分段锁机制"></a>分段锁机制</h2><p>在早期版本（Java 7及之前），ConcurrentHashMap 使用了分段锁机制（Segmented Locking）来实现高并发性。</p>
+<p><strong>分段锁</strong>：ConcurrentHashMap 将整个哈希表分成多个段（Segment），每个段维护一个独立的哈希表和锁。这样，在不同段上的操作可以并发进行，从而提高并发度。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 伪代码示例</span><br><span class="line">class ConcurrentHashMap&lt;K, V&gt; &#123;</span><br><span class="line">    Segment&lt;K, V&gt;[] segments;</span><br><span class="line">    </span><br><span class="line">    static class Segment&lt;K, V&gt; &#123;</span><br><span class="line">        final ReentrantLock lock = new ReentrantLock();</span><br><span class="line">        HashEntry&lt;K, V&gt;[] table;</span><br><span class="line">        // 其他字段和方法</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="Iterator接口"><a href="#Iterator接口" class="headerlink" title="Iterator接口"></a>Iterator接口</h2><p>Iterator是在 Java 2 (JDK 1.2) 中引入的。它是集合框架的一部分，适用于所有集合类（如ArrayList、HashSet、HashMap等）。Iterator提供了更灵活的遍历方法，并允许在遍历过程中安全地移除元素。</p>
-<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>boolean hasNext(): 如果迭代器中仍有更多元素，则返回true。</p>
-<p>E next(): 返回迭代器中的下一个元素。</p>
-<p>void remove(): 从集合中移除迭代器返回的最后一个元素（可选操作）。</p>
-<h3 id="代码-Demo-1"><a href="#代码-Demo-1" class="headerlink" title="代码 Demo"></a>代码 Demo</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">import java.util.*;</span><br><span class="line"></span><br><span class="line">public class IteratorExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        List&lt;String&gt; list = new ArrayList&lt;&gt;();</span><br><span class="line">        list.add(&quot;A&quot;);</span><br><span class="line">        list.add(&quot;B&quot;);</span><br><span class="line">        list.add(&quot;C&quot;);</span><br><span class="line"></span><br><span class="line">        Iterator&lt;String&gt; iterator = list.iterator();</span><br><span class="line">        while (iterator.hasNext()) &#123;</span><br><span class="line">            String element = iterator.next();</span><br><span class="line">            System.out.println(element);</span><br><span class="line">            if (element.equals(&quot;B&quot;)) &#123;</span><br><span class="line">                iterator.remove(); // 安全地移除元素</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;After removal: &quot; + list);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>锁粒度</strong>：由于每个段都有自己的锁，只有在操作同一个段时才需要竞争锁，这大大降低了锁竞争的几率，提高了并发性能。</p>
+<h2 id="CAS-操作和无锁机制"><a href="#CAS-操作和无锁机制" class="headerlink" title="CAS 操作和无锁机制"></a>CAS 操作和无锁机制</h2><p>在 Java 8 及之后，ConcurrentHashMap 进行了重构，摒弃了分段锁机制，转而采用了更加细粒度的锁和无锁机制（CAS 操作）。</p>
+<p><strong>CAS 操作</strong>：CAS（Compare-And-Swap）是一种无锁的原子操作，用于在不加锁的情况下实现线程安全。<code>ConcurrentHashMap</code>使用<code>Unsafe</code>类中的 CAS 方法来更新某些字段，从而避免了锁的开销。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 伪代码示例</span><br><span class="line">boolean casTabAt(Node&lt;K, V&gt;[] tab, int i, Node&lt;K, V&gt; c, Node&lt;K, V&gt; v) &#123;</span><br><span class="line">    return U.compareAndSwapObject(tab, ((long)i &lt;&lt; ASHIFT) + ABASE, c, v);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="主要区别"><a href="#主要区别" class="headerlink" title="主要区别"></a>主要区别</h2><p><strong>接口引入时间</strong>：</p>
-<p>Enumeration：引入于 Java 1.0。</p>
-<p>Iterator：引入于 Java 2 (JDK 1.2)。</p>
-<p><strong>方法名称和功能</strong>：</p>
-<p>Enumeration：使用hasMoreElements()和nextElement()方法。</p>
-<p>Iterator：使用hasNext()和next()方法，并增加了remove()方法。</p>
-<p><strong>元素移除</strong>：</p>
-<p>Enumeration：不支持在遍历过程中移除元素。</p>
-<p>Iterator：支持在遍历过程中安全地移除元素（通过remove()方法）。</p>
-<p><strong>适用范围</strong>：</p>
-<p>Enumeration：主要用于旧的集合类，如Vector和Hashtable。</p>
-<p>Iterator：适用于所有集合类，是集合框架的一部分。</p>
+<p><strong>细粒度锁</strong>：在 Java 8 中，<code>ConcurrentHashMap</code>使用了更加细粒度的锁（<code>synchronized</code>和<code>ReentrantLock</code>），只在必要时锁定特定的桶（bin）或节点，从而进一步提高并发性能。</p>
+<h2 id="红黑树"><a href="#红黑树" class="headerlink" title="红黑树"></a>红黑树</h2><p>为了应对哈希冲突，ConcurrentHashMap 在链表长度超过一定阈值（默认是8）时，将链表转换为红黑树，以提高查找效率。</p>
+<p><strong>链表</strong>：在哈希冲突较少时，使用链表存储冲突的键值对。</p>
+<p><strong>红黑树</strong>：当链表长度超过阈值时，转换为红黑树，以便在大量冲突时仍能保持较高的查找效率。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 伪代码示例</span><br><span class="line">if (binCount &gt;= TREEIFY_THRESHOLD) &#123;</span><br><span class="line">    treeifyBin(tab, hash);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="扩容机制（Rehashing）"><a href="#扩容机制（Rehashing）" class="headerlink" title="扩容机制（Rehashing）"></a>扩容机制（Rehashing）</h2><p>ConcurrentHashMap 采用了渐进式扩容机制来避免扩容过程中长时间的全表锁定。</p>
+<p><strong>渐进式扩容</strong>：在扩容过程中，<code>ConcurrentHashMap</code>并不会一次性将所有数据迁移到新的哈希表中，而是采用渐进式扩容的方式，在每次插入或删除操作时，逐步迁移部分数据。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 伪代码示例</span><br><span class="line">void transfer(Node&lt;K, V&gt;[] tab, Node&lt;K, V&gt;[] nextTab) &#123;</span><br><span class="line">    // 渐进式迁移数据</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="读写操作"><a href="#读写操作" class="headerlink" title="读写操作"></a>读写操作</h2><p><strong>读取操作</strong>：读取操作大部分情况下是无锁的，因为<code>ConcurrentHashMap</code>使用了<code>volatile</code>变量和 CAS 操作来保证读取的可见性和一致性。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// 伪代码示例</span><br><span class="line">V get(Object key) &#123;</span><br><span class="line">    Node&lt;K, V&gt;[] tab; Node&lt;K, V&gt; e, p; int n, eh; K ek;</span><br><span class="line">    int h = spread(key.hashCode());</span><br><span class="line">    if ((tab = table) != null &amp;&amp; (n = tab.length) &gt; 0 &amp;&amp;</span><br><span class="line">        (e = tabAt(tab, (n - 1) &amp; h)) != null) &#123;</span><br><span class="line">        if ((eh = e.hash) == h) &#123;</span><br><span class="line">            if ((ek = e.key) == key || (ek != null &amp;&amp; key.equals(ek)))</span><br><span class="line">                return e.val;</span><br><span class="line">        &#125;</span><br><span class="line">        // 其他读取逻辑</span><br><span class="line">    &#125;</span><br><span class="line">    return null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>写入操作</strong>：写入操作则需要在必要时使用锁或 CAS 操作来保证线程安全。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">// 伪代码示例</span><br><span class="line">V put(K key, V value) &#123;</span><br><span class="line">    return putVal(key, value, false);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">final V putVal(K key, V value, boolean onlyIfAbsent) &#123;</span><br><span class="line">    if (key == null || value == null) throw new NullPointerException();</span><br><span class="line">    int hash = spread(key.hashCode());</span><br><span class="line">    int binCount = 0;</span><br><span class="line">    for (Node&lt;K, V&gt;[] tab = table;;) &#123;</span><br><span class="line">        Node&lt;K, V&gt; f; int n, i, fh;</span><br><span class="line">        if (tab == null || (n = tab.length) == 0)</span><br><span class="line">            tab = initTable();</span><br><span class="line">        else if ((f = tabAt(tab, i = (n - 1) &amp; hash)) == null) &#123;</span><br><span class="line">            if (casTabAt(tab, i, null, new Node&lt;K, V&gt;(hash, key, value, null)))</span><br><span class="line">                break;                   // no lock when adding to empty bin</span><br><span class="line">        &#125;</span><br><span class="line">        else if ((fh = f.hash) == MOVED)</span><br><span class="line">            tab = helpTransfer(tab, f);</span><br><span class="line">        else &#123;</span><br><span class="line">            V oldVal = null;</span><br><span class="line">            synchronized (f) &#123;</span><br><span class="line">                if (tabAt(tab, i) == f) &#123;</span><br><span class="line">                    if (fh &gt;= 0) &#123;</span><br><span class="line">                        binCount = 1;</span><br><span class="line">                        for (Node&lt;K, V&gt; e = f;; ++binCount) &#123;</span><br><span class="line">                            K ek;</span><br><span class="line">                            if (e.hash == hash &amp;&amp;</span><br><span class="line">                                ((ek = e.key) == key || (ek != null &amp;&amp; key.equals(ek)))) &#123;</span><br><span class="line">                                oldVal = e.val;</span><br><span class="line">                                if (!onlyIfAbsent)</span><br><span class="line">                                    e.val = value;</span><br><span class="line">                                break;</span><br><span class="line">                            &#125;</span><br><span class="line">                            Node&lt;K, V&gt; pred = e;</span><br><span class="line">                            if ((e = e.next) == null) &#123;</span><br><span class="line">                                pred.next = new Node&lt;K, V&gt;(hash, key, value, null);</span><br><span class="line">                                break;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    else if (f instanceof TreeBin) &#123;</span><br><span class="line">                        Node&lt;K, V&gt; p;</span><br><span class="line">                        binCount = 2;</span><br><span class="line">                        if ((p = ((TreeBin&lt;K, V&gt;)f).putTreeVal(hash, key, value)) != null) &#123;</span><br><span class="line">                            oldVal = p.val;</span><br><span class="line">                            if (!onlyIfAbsent)</span><br><span class="line">                                p.val = value;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            if (binCount != 0) &#123;</span><br><span class="line">                if (binCount &gt;= TREEIFY_THRESHOLD)</span><br><span class="line">                    treeifyBin(tab, i);</span><br><span class="line">                if (oldVal != null)</span><br><span class="line">                    return oldVal;</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    addCount(1L, binCount);</span><br><span class="line">    return null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
 <blockquote>
-<p>&#x2F;vk496pkev2ub6nh4&gt;</p>
+<p>&#x2F;gr29od28mo8ulrk5&gt;</p>
 </blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/HashMap%E6%80%8E%E4%B9%88%E8%AE%A1%E7%AE%97hashCode%E7%9A%84%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/HashMap%E6%80%8E%E4%B9%88%E8%AE%A1%E7%AE%97hashCode%E7%9A%84%EF%BC%9F/" itemprop="url">HashMap怎么计算hashCode的？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌HashMap怎么计算hashCode的？"><a href="#👌HashMap怎么计算hashCode的？" class="headerlink" title="👌HashMap怎么计算hashCode的？"></a>👌HashMap怎么计算hashCode的？</h1><p>HashMap使用键的hashCode()方法来生成哈希值，并对其进行一些处理，以提高哈希表的性能和均匀分布。</p>
-<h2 id="调用键的hashCode-方法"><a href="#调用键的hashCode-方法" class="headerlink" title="调用键的hashCode()方法"></a>调用键的hashCode()方法</h2><p>首先，HashMap调用键对象的hashCode()方法来获取一个整数哈希码。这个哈希码是由键对象的类定义的，通常是通过某种算法基于对象的内部状态计算出来的。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int hashCode= key.hashCode();</span><br></pre></td></tr></table></figure>
-
-<h2 id="扰动函数-Perturbation-Function"><a href="#扰动函数-Perturbation-Function" class="headerlink" title="扰动函数 (Perturbation Function)"></a>扰动函数 (Perturbation Function)</h2><p>为了减少哈希冲突并使哈希码更加均匀地分布，HashMap对原始哈希码进行了一些额外的处理。这种处理被称为扰动函数。Java 8 及以后的HashMap实现使用以下算法来计算最终的哈希值：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">static final int hash(Object key) &#123;</span><br><span class="line">    int h;</span><br><span class="line">    return (key == null) ? 0 : (h = key.hashCode()) ^ (h &gt;&gt;&gt; 16);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这个算法的步骤如下：</p>
-<ol>
-<li><strong>获取键的哈希码</strong>：h &#x3D; key.hashCode()</li>
-<li><strong>右移 16 位</strong>：h &gt;&gt;&gt; 16</li>
-<li><strong>异或运算</strong>：h ^ (h &gt;&gt;&gt; 16)</li>
-</ol>
-<p>这种方法通过将高位和低位的哈希码混合在一起，减少了哈希冲突的概率，从而使得哈希码更加均匀地分布在哈希表的桶中。</p>
-<h2 id="计算数组索引"><a href="#计算数组索引" class="headerlink" title="计算数组索引"></a>计算数组索引</h2><p>计算出扰动后的哈希值后，HashMap使用这个值来确定键值对在哈希表中的位置。通常，HashMap使用哈希值对数组的长度取模（取余数）来计算索引：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int index = (n - 1) &amp; hash;</span><br></pre></td></tr></table></figure>
-
-<p>其中，n是哈希表数组的长度。n通常是 2 的幂，这样(n - 1)就是一个全 1 的二进制数，这使得按位与操作&amp;可以有效地替代取模操作%，从而提高性能。</p>
-<h1 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h1><p>假设我们有一个键对象，其hashCode()返回值为 123456。那么，计算哈希值的过程如下：</p>
-<ol>
-<li>调用hashCode()方法：int hashCode &#x3D; 123456;</li>
-<li>扰动函数计算：<ul>
-<li>h &#x3D; 123456</li>
-<li>h &gt;&gt;&gt; 16 &#x3D; 123456 &gt;&gt;&gt; 16 &#x3D; 1（右移 16 位）</li>
-<li>hash &#x3D; h ^ (h &gt;&gt;&gt; 16) &#x3D; 123456 ^ 1 &#x3D; 123457</li>
-</ul>
-</li>
-<li>计算数组索引（假设数组长度n为 16，即n - 1为 15）：<ul>
-<li>index &#x3D; (15) &amp; 123457 &#x3D; 15 &amp; 123457 &#x3D; 1</li>
-</ul>
-</li>
-</ol>
-<p>最终，键值对将存储在哈希表数组的索引 1 位置。</p>
-<blockquote>
-<p>&#x2F;str1ewvagoc4qesr&gt;</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/HashMap%E7%9A%84%E4%B8%BB%E8%A6%81%E5%8F%82%E6%95%B0%E9%83%BD%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/HashMap%E7%9A%84%E4%B8%BB%E8%A6%81%E5%8F%82%E6%95%B0%E9%83%BD%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F/" itemprop="url">HashMap的主要参数都有哪些</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-19T08:59:24+00:00">
-                2024-11-19
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌HashMap的主要参数都有哪些？"><a href="#👌HashMap的主要参数都有哪些？" class="headerlink" title="👌HashMap的主要参数都有哪些？"></a>👌HashMap的主要参数都有哪些？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="初始容量（Initial-Capacity）"><a href="#初始容量（Initial-Capacity）" class="headerlink" title="初始容量（Initial Capacity）"></a>初始容量（Initial Capacity）</h2><p>初始容量是HashMap在创建时分配的桶（bucket）数组的大小。默认初始容量是 16。可以在创建HashMap时通过构造函数指定初始容量。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HashMap&lt;K, V&gt; map = newHashMap&lt;&gt;(initialCapacity);</span><br></pre></td></tr></table></figure>
-
-<h2 id="负载因子（Load-Factor）"><a href="#负载因子（Load-Factor）" class="headerlink" title="负载因子（Load Factor）"></a>负载因子（Load Factor）</h2><p>负载因子是一个衡量HashMap何时需要调整大小（即扩容）的参数。默认负载因子是 0.75，这意味着当HashMap中的条目数达到当前容量的 75% 时，HashMap会进行扩容。负载因子越低，哈希表中的空闲空间越多，冲突越少，但空间利用率也越低。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HashMap&lt;K, V&gt; map = newHashMap&lt;&gt;(initialCapacity, loadFactor);</span><br></pre></td></tr></table></figure>
-
-<h2 id="阈值（Threshold）"><a href="#阈值（Threshold）" class="headerlink" title="阈值（Threshold）"></a>阈值（Threshold）</h2><p>阈值是HashMap需要扩容的临界点，计算方式为初始容量 * 负载因子。当实际存储的键值对数量超过这个阈值时，HashMap会进行扩容。</p>
-<h2 id="桶（Bucket）"><a href="#桶（Bucket）" class="headerlink" title="桶（Bucket）"></a>桶（Bucket）</h2><p>HashMap内部使用一个数组来存储链表或树（在 Java 8 及之后的版本中，当链表长度超过一定阈值时，会转化为树）。每个数组元素称为一个桶（bucket）。哈希值经过计算后决定了键值对存储在哪个桶中。</p>
-<h2 id="哈希函数（Hash-Function）"><a href="#哈希函数（Hash-Function）" class="headerlink" title="哈希函数（Hash Function）"></a>哈希函数（Hash Function）</h2><p>HashMap使用哈希函数将键的哈希码转换为数组索引。Java 的HashMap使用了扰动函数（perturbation function）来减少哈希冲突：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">static final int hash(Object key) &#123;</span><br><span class="line">    int h;</span><br><span class="line">    return (key == null) ? 0 : (h = key.hashCode()) ^ (h &gt;&gt;&gt; 16);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="链表和树（Linked-List-and-Tree）"><a href="#链表和树（Linked-List-and-Tree）" class="headerlink" title="链表和树（Linked List and Tree）"></a>链表和树（Linked List and Tree）</h2><p>在桶中的键值对存储方式上，HashMap使用链表来处理哈希冲突。在 Java 8 及之后的版本中，当链表的长度超过阈值（默认是 8）时，链表会转换为红黑树，以提高查找效率。</p>
-<h2 id="红黑树转换阈值（Treeify-Threshold）"><a href="#红黑树转换阈值（Treeify-Threshold）" class="headerlink" title="红黑树转换阈值（Treeify Threshold）"></a>红黑树转换阈值（Treeify Threshold）</h2><p>这是一个阈值，当单个桶中的链表长度超过这个值时，链表会转换为红黑树。默认值是 8。</p>
-<h2 id="最小树化容量（Minimum-Treeify-Capacity）"><a href="#最小树化容量（Minimum-Treeify-Capacity）" class="headerlink" title="最小树化容量（Minimum Treeify Capacity）"></a>最小树化容量（Minimum Treeify Capacity）</h2><p>这是一个阈值，当HashMap的容量小于这个值时，即使链表长度超过Treeify Threshold，也不会将链表转换为红黑树，而是会先进行扩容。默认值是 64。</p>
-<h2 id="扩容因子（Resize-Factor）"><a href="#扩容因子（Resize-Factor）" class="headerlink" title="扩容因子（Resize Factor）"></a>扩容因子（Resize Factor）</h2><p>当HashMap的大小超过阈值时，容量会加倍。即新的容量是旧容量的两倍。</p>
-<h2 id="迭代器（Iterators）"><a href="#迭代器（Iterators）" class="headerlink" title="迭代器（Iterators）"></a>迭代器（Iterators）</h2><p>HashMap提供了键、值和条目的迭代器，用于遍历HashMap中的元素。迭代器是快速失败的（fail-fast），即在迭代过程中，如果HashMap结构被修改（除了通过迭代器自身的remove方法），迭代器会抛出ConcurrentModificationException。</p>
-<h2 id="版本（ModCount）"><a href="#版本（ModCount）" class="headerlink" title="版本（ModCount）"></a>版本（ModCount）</h2><p>HashMap维护了一个内部版本号modCount，用于跟踪HashMap的结构修改次数。这在迭代器中用于检测并发修改。</p>
-<p>这些参数和属性共同决定了HashMap的性能和行为。理解这些参数可以帮助开发者更好地使用HashMap，并在需要时进行适当的调整以满足特定的性能需求。</p>
 
           
         
@@ -4607,7 +4594,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
   </nav>
 
 
@@ -4653,7 +4640,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">80</span>
+                <span class="site-state-item-count">83</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
