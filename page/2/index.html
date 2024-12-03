@@ -270,6 +270,211 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ConcurrentHashMap%E8%83%BD%E4%BF%9D%E8%AF%81%E5%A4%8D%E5%90%88%E6%93%8D%E4%BD%9C%E7%9A%84%E5%8E%9F%E5%AD%90%E6%80%A7%E5%90%97_/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ConcurrentHashMap%E8%83%BD%E4%BF%9D%E8%AF%81%E5%A4%8D%E5%90%88%E6%93%8D%E4%BD%9C%E7%9A%84%E5%8E%9F%E5%AD%90%E6%80%A7%E5%90%97_/" itemprop="url">ConcurrentHashMap 能保证复合操作的原子性吗</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
+                2024-12-03
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="ConcurrentHashMap-能保证复合操作的原子性吗"><a href="#ConcurrentHashMap-能保证复合操作的原子性吗" class="headerlink" title="ConcurrentHashMap 能保证复合操作的原子性吗?"></a>ConcurrentHashMap 能保证复合操作的原子性吗?</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>不能，ConcurrentHashMap 是 Java 中用于处理并发访问的线程安全集合类。它通过分段锁机制来提高并发性能。然而，尽管 ConcurrentHashMap 能够保证单个操作的线程安全性，但它不能保证复合操作的原子性。</p>
+<h2 id="单个操作的线程安全性"><a href="#单个操作的线程安全性" class="headerlink" title="单个操作的线程安全性"></a>单个操作的线程安全性</h2><p>ConcurrentHashMap中的单个操作，如put(),get(),remove()，是线程安全的。这意味着多个线程可以同时执行这些操作而不会导致数据不一致或抛出异常。</p>
+<h2 id="复合操作的原子性"><a href="#复合操作的原子性" class="headerlink" title="复合操作的原子性"></a>复合操作的原子性</h2><p>复合操作是指多个基本操作的组合，例如“检查-然后-执行”模式（check-then-act），如：</p>
+<p>如果键不存在，则添加一个新的键值对。如果键存在，则更新其值。</p>
+<p>这些操作在ConcurrentHashMap中不是原子性的，因为在执行复合操作的过程中，可能会有其他线程对ConcurrentHashMap进行修改，导致数据不一致。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ConcurrentHashMap&lt;String, Integer&gt; map = new ConcurrentHashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">// 检查是否包含键，然后添加键值对</span><br><span class="line">if (!map.containsKey(&quot;key&quot;)) &#123;</span><br><span class="line">    map.put(&quot;key&quot;, 1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码片段不是线程安全的，因为在containsKey()和put()之间，另一个线程可能已经插入了相同的键。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>为了保证复合操作的原子性，可以使用ConcurrentHashMap提供的原子方法，如computeIfAbsent(),compute(),merge()等。这些方法允许在单个操作中执行复杂的计算，从而保证操作的原子性。</p>
+<h3 id="使用computeIfAbsent"><a href="#使用computeIfAbsent" class="headerlink" title="使用computeIfAbsent()"></a>使用<code>computeIfAbsent()</code></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">map.computeIfAbsent(&quot;key&quot;, k -&gt; 1);</span><br></pre></td></tr></table></figure>
+
+<p>如果键<code>&quot;key&quot;</code>不存在，则将其值设置为<code>1</code>。此操作是原子性的。</p>
+<h3 id="使用compute"><a href="#使用compute" class="headerlink" title="使用compute()"></a>使用<code>compute()</code></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">map.compute(&quot;key&quot;, (k, v) -&gt; (v == null) ? 1 : v + 1);</span><br></pre></td></tr></table></figure>
+
+<p>此方法允许对键进行计算，如果键不存在，则<code>v</code>为<code>null</code>，否则可以对其值进行更新。</p>
+<h3 id="使用merge"><a href="#使用merge" class="headerlink" title="使用merge()"></a>使用<code>merge()</code></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">map.merge(&quot;key&quot;, 1, Integer::sum);</span><br></pre></td></tr></table></figure>
+
+<p>如果键<code>&quot;key&quot;</code>存在，则将其值与<code>1</code>相加，否则将其值设置为<code>1</code>。此操作也是原子性的。</p>
+<blockquote>
+<p>&#x2F;bg29eue26kgthvqq&gt;</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/Enumeration%E5%92%8CIterator%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +522,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
-                2024-11-27
+              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
+                2024-12-03
               </time>
             
           </span>
@@ -528,8 +733,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
-                2024-11-27
+              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
+                2024-12-03
               </time>
             
           </span>
@@ -748,8 +953,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
-                2024-11-27
+              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
+                2024-12-03
               </time>
             
           </span>
@@ -950,8 +1155,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
-                2024-11-27
+              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
+                2024-12-03
               </time>
             
           </span>
@@ -1148,8 +1353,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
-                2024-11-27
+              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
+                2024-12-03
               </time>
             
           </span>
@@ -1348,8 +1553,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
-                2024-11-27
+              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
+                2024-12-03
               </time>
             
           </span>
@@ -1560,8 +1765,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
-                2024-11-27
+              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
+                2024-12-03
               </time>
             
           </span>
@@ -1764,8 +1969,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
-                2024-11-27
+              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
+                2024-12-03
               </time>
             
           </span>
@@ -1979,8 +2184,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
-                2024-11-27
+              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
+                2024-12-03
               </time>
             
           </span>
@@ -2195,8 +2400,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
-                2024-11-27
+              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
+                2024-12-03
               </time>
             
           </span>
@@ -2410,8 +2615,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
-                2024-11-27
+              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
+                2024-12-03
               </time>
             
           </span>
@@ -2628,8 +2833,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
-                2024-11-27
+              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
+                2024-12-03
               </time>
             
           </span>
@@ -2863,8 +3068,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
-                2024-11-27
+              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
+                2024-12-03
               </time>
             
           </span>
@@ -3062,8 +3267,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
-                2024-11-27
+              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
+                2024-12-03
               </time>
             
           </span>
@@ -3269,8 +3474,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
-                2024-11-27
+              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
+                2024-12-03
               </time>
             
           </span>
@@ -3460,8 +3665,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
-                2024-11-27
+              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
+                2024-12-03
               </time>
             
           </span>
@@ -3689,8 +3894,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
-                2024-11-27
+              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
+                2024-12-03
               </time>
             
           </span>
@@ -3894,8 +4099,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
-                2024-11-27
+              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
+                2024-12-03
               </time>
             
           </span>
@@ -4103,8 +4308,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
-                2024-11-27
+              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
+                2024-12-03
               </time>
             
           </span>
@@ -4239,210 +4444,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFLinkedHashMap_/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFLinkedHashMap_/" itemprop="url">什么是LinkedHashMap</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2024-11-27T10:22:01+00:00">
-                2024-11-27
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌什么是LinkedHashMap"><a href="#👌什么是LinkedHashMap" class="headerlink" title="👌什么是LinkedHashMap?"></a>👌什么是LinkedHashMap?</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>LinkedHashMap是 Java 集合框架中的一个类，它继承自HashMap，并且具有哈希表和链表的双重特性。LinkedHashMap通过维护一个双向链表来记录键值对的插入顺序或访问顺序，从而提供了一种有序的映射。</p>
-<h2 id="基本特点"><a href="#基本特点" class="headerlink" title="基本特点"></a>基本特点</h2><ol>
-<li><strong>有序性</strong>：LinkedHashMap保证了键值对的顺序，可以是插入顺序（默认）或访问顺序（可选）。</li>
-<li><strong>哈希表和链表结合</strong>：LinkedHashMap通过哈希表实现快速的键值对查找，同时通过双向链表维护顺序。</li>
-<li><strong>允许<strong><strong>null</strong></strong>键和值</strong>：LinkedHashMap允许一个null键和多个null值。</li>
-<li><strong>线程不安全</strong>：LinkedHashMap不是线程安全的，如果需要在多线程环境中使用，需要通过外部同步机制来保证线程安全。</li>
-</ol>
-<h2 id="与其他集合类的比较"><a href="#与其他集合类的比较" class="headerlink" title="与其他集合类的比较"></a>与其他集合类的比较</h2><p><strong>LinkedHashMap vs. HashMap</strong>：</p>
-<p>LinkedHashMap保证键值对的顺序（插入顺序或访问顺序），而HashMap不保证顺序。</p>
-<p>LinkedHashMap通过维护链表来记录顺序，因此在插入和删除操作上可能略慢于HashMap。</p>
-<p><strong>LinkedHashMap vs. TreeMap</strong>：</p>
-<p>LinkedHashMap保证插入顺序或访问顺序，而TreeMap保证键的自然顺序或比较器的顺序。</p>
-<p>LinkedHashMap基于哈希表实现，操作的平均时间复杂度为 O(1)，而TreeMap基于红黑树实现，操作的时间复杂度为 O(log n)。</p>
-<h2 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h2><p>LinkedHashMap适用于需要保持键值对的插入顺序或访问顺序的场景：</p>
-<p>实现 LRU（最近最少使用）缓存。</p>
-<p>需要按插入顺序遍历键值对。</p>
-<p>需要在保持顺序的同时快速查找键值对。</p>
-<blockquote>
-<p>&#x2F;ttdsl1h3wbwte5u4&gt;</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4493,7 +4494,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">83</span>
+                <span class="site-state-item-count">85</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
