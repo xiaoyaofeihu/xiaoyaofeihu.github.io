@@ -270,6 +270,229 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/%E6%8E%92%E5%BA%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/10/%E6%8E%92%E5%BA%8F/" itemprop="url">Java中几种集合的排序方式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-10T17:33:00+00:00">
+                2024-10-10
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li>包括实现Comparable接口、借助Comparator比较器进行排序，以及通过Stream API进行排序。同时还解释了Comparable和Comparator的区别、compareTo和equals的使用场景差异，以及Set集合的排序问题。</li>
+</ul>
+<ol>
+<li><strong>实现Comparable接口</strong>：<ul>
+<li>Java中的类可以通过实现Comparable接口来具备排序能力。</li>
+<li>实现Comparable接口的类需要重写compareTo方法，该方法定义了对象的排序规则。</li>
+<li>例如，学生类（Student）可以实现Comparable接口，并按照姓名和年龄进行排序。</li>
+</ul>
+</li>
+<li><strong>借助Comparator比较器进行排序</strong>：<ul>
+<li>当类本身没有实现Comparable接口，或者需要不同的排序规则时，可以使用Comparator接口。</li>
+<li>Comparator是一个函数式接口，可以独立于原类之外定义排序逻辑。</li>
+<li>例如，可以使用Comparator对学生对象按照姓名和年龄进行排序。</li>
+</ul>
+</li>
+<li><strong>通过Stream API进行排序</strong>：<ul>
+<li>Java 8引入了Stream API，可以方便地对集合进行排序操作。</li>
+<li>Stream API的sorted方法可以接受一个Comparator作为参数来进行排序。</li>
+<li>例如，使用Stream对学生列表进行排序，可以简化排序的代码。</li>
+</ul>
+</li>
+<li><strong>Comparable与Comparator的区别</strong>：<ul>
+<li>Comparable用于使类本身具备排序能力，通过实现compareTo方法实现。</li>
+<li>Comparator是一个独立的比较器，可以为不具备排序能力的类提供排序逻辑，或者提供不同的排序规则。</li>
+</ul>
+</li>
+<li><strong>compareTo与equals的使用场景</strong>：<ul>
+<li>compareTo主要用于排序和数值比较，如BigDecimal的比较。</li>
+<li>equals主要用于判断两个对象在业务语义上是否相同，如String的比较通常使用equals来判断字面意义是否相同。</li>
+</ul>
+</li>
+<li><strong>Set集合的排序问题</strong>：<ul>
+<li>Set集合本身是无序的，即元素的插入顺序不保证。</li>
+<li>但是，SortedSet接口可以保证元素的排序，通过要求元素实现Comparable接口来实现。</li>
+<li>LinkedHashSet类通过双向链表记录插入顺序，实现了插入有序的Set。</li>
+</ul>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/%E6%AD%BB%E9%94%81/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +540,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -547,8 +770,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -767,8 +990,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -992,8 +1215,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -1220,8 +1443,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -1414,8 +1637,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -1614,8 +1837,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -1832,8 +2055,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -2039,8 +2262,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -2265,8 +2488,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -2508,8 +2731,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -2709,8 +2932,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -2893,8 +3116,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -3082,8 +3305,8 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -3283,8 +3506,8 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -3479,8 +3702,8 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -3669,8 +3892,8 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -3855,8 +4078,8 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -4078,8 +4301,8 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -4225,193 +4448,6 @@ ReflectiveMethodInvocation类是joinpoint的实现类
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/springcloud%E4%B8%ADfeign%E8%B0%83%E7%94%A8%E6%97%B6token%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2022/07/31/springcloud%E4%B8%ADfeign%E8%B0%83%E7%94%A8%E6%97%B6token%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98/" itemprop="url">springcloud中feign调用时token丢失问题</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-07-31T13:33:41+00:00">
-                2022-07-31
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_39267497/article/details/119213250">https://blog.csdn.net/weixin_39267497/article/details/119213250</a></li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4462,7 +4498,7 @@ ReflectiveMethodInvocation类是joinpoint的实现类
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">85</span>
+                <span class="site-state-item-count">86</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -4526,7 +4562,7 @@ ReflectiveMethodInvocation类是joinpoint的实现类
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

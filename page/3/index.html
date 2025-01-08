@@ -270,6 +270,202 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFHashTable_/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFHashTable_/" itemprop="url">什么是HashTable</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌什么是HashTable"><a href="#👌什么是HashTable" class="headerlink" title="👌什么是HashTable?"></a>👌什么是HashTable?</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>Hashtable 是遗留类，很多映射的常用功能与 HashMap 类似，不同的是它承自 Dictionary 类，并且是线程安全的，任一时间只有一个线程能写 Hashtable，并发性不如 ConcurrentHashMap，因为 ConcurrentHashMap 引入了分段锁。Hashtable 不建议在新代码中使用，不需要线程安全的场合可以用 HashMap 替换，需要线程安全的场合可以用 ConcurrentHashMap 替换。</p>
+<h3 id="与其他集合类的比较"><a href="#与其他集合类的比较" class="headerlink" title="与其他集合类的比较"></a>与其他集合类的比较</h3><p><strong>Hashtable vs. HashMap</strong>：</p>
+<p>Hashtable是线程安全的，而HashMap不是。</p>
+<p>Hashtable不允许键或值为null，而HashMap允许一个null键和多个null值。</p>
+<p>在现代 Java 编程中，HashMap更常用，因为它在大多数情况下性能更好，并且可以通过外部同步来实现线程安全。</p>
+<p><strong>Hashtable vs. ConcurrentHashMap</strong>：</p>
+<p>ConcurrentHashMap是 Java 5 引入的一种改进的哈希表实现，专为高并发环境设计。</p>
+<p>ConcurrentHashMap提供了更细粒度的锁机制，允许更高的并发性和更好的性能。</p>
+<p>总的来说，Hashtable是一种较早的哈希表实现，适用于需要线程安全的简单场景。然而，在现代 Java 开发中，通常推荐使用ConcurrentHashMap或通过外部同步来使用HashMap，以获得更好的性能和灵活性。</p>
+<blockquote>
+<p>&#x2F;bgy4pz59q8ffzxwo&gt;</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFLinkedHashMap_/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +513,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -521,8 +717,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -725,8 +921,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -920,8 +1116,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -1119,8 +1315,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -1337,8 +1533,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -1531,8 +1727,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -1728,8 +1924,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -1928,8 +2124,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -2129,8 +2325,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -2325,8 +2521,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -2528,8 +2724,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -2730,8 +2926,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -2935,8 +3131,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -3140,8 +3336,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -3363,8 +3559,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -3567,8 +3763,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -3810,8 +4006,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -4037,8 +4233,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
+                2025-01-08
               </time>
             
           </span>
@@ -4337,229 +4533,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/%E6%8E%92%E5%BA%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/10/%E6%8E%92%E5%BA%8F/" itemprop="url">Java中几种集合的排序方式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-10T17:33:00+00:00">
-                2024-10-10
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2024-12-03T10:44:09+00:00">
-                2024-12-03
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li>包括实现Comparable接口、借助Comparator比较器进行排序，以及通过Stream API进行排序。同时还解释了Comparable和Comparator的区别、compareTo和equals的使用场景差异，以及Set集合的排序问题。</li>
-</ul>
-<ol>
-<li><strong>实现Comparable接口</strong>：<ul>
-<li>Java中的类可以通过实现Comparable接口来具备排序能力。</li>
-<li>实现Comparable接口的类需要重写compareTo方法，该方法定义了对象的排序规则。</li>
-<li>例如，学生类（Student）可以实现Comparable接口，并按照姓名和年龄进行排序。</li>
-</ul>
-</li>
-<li><strong>借助Comparator比较器进行排序</strong>：<ul>
-<li>当类本身没有实现Comparable接口，或者需要不同的排序规则时，可以使用Comparator接口。</li>
-<li>Comparator是一个函数式接口，可以独立于原类之外定义排序逻辑。</li>
-<li>例如，可以使用Comparator对学生对象按照姓名和年龄进行排序。</li>
-</ul>
-</li>
-<li><strong>通过Stream API进行排序</strong>：<ul>
-<li>Java 8引入了Stream API，可以方便地对集合进行排序操作。</li>
-<li>Stream API的sorted方法可以接受一个Comparator作为参数来进行排序。</li>
-<li>例如，使用Stream对学生列表进行排序，可以简化排序的代码。</li>
-</ul>
-</li>
-<li><strong>Comparable与Comparator的区别</strong>：<ul>
-<li>Comparable用于使类本身具备排序能力，通过实现compareTo方法实现。</li>
-<li>Comparator是一个独立的比较器，可以为不具备排序能力的类提供排序逻辑，或者提供不同的排序规则。</li>
-</ul>
-</li>
-<li><strong>compareTo与equals的使用场景</strong>：<ul>
-<li>compareTo主要用于排序和数值比较，如BigDecimal的比较。</li>
-<li>equals主要用于判断两个对象在业务语义上是否相同，如String的比较通常使用equals来判断字面意义是否相同。</li>
-</ul>
-</li>
-<li><strong>Set集合的排序问题</strong>：<ul>
-<li>Set集合本身是无序的，即元素的插入顺序不保证。</li>
-<li>但是，SortedSet接口可以保证元素的排序，通过要求元素实现Comparable接口来实现。</li>
-<li>LinkedHashSet类通过双向链表记录插入顺序，实现了插入有序的Set。</li>
-</ul>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4610,7 +4583,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">85</span>
+                <span class="site-state-item-count">86</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -4674,7 +4647,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
