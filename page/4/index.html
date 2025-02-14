@@ -270,6 +270,1491 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E8%AF%B4%E4%B8%80%E4%B8%8Bjava8%E5%AE%9E%E7%8E%B0%E7%9A%84concurrentHashMap%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E8%AF%B4%E4%B8%80%E4%B8%8Bjava8%E5%AE%9E%E7%8E%B0%E7%9A%84concurrentHashMap%EF%BC%9F/" itemprop="url">说一下java8实现的concurrentHashMap？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:23:51+00:00">
+                2025-02-14
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌说一下java8实现的concurrentHashMap？"><a href="#👌说一下java8实现的concurrentHashMap？" class="headerlink" title="👌说一下java8实现的concurrentHashMap？"></a>👌说一下java8实现的concurrentHashMap？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>Java 8 对ConcurrentHashMap进行了重新设计，取消了分段锁的机制，改用更细粒度的锁和无锁操作来提高并发性能。</p>
+<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><p><strong>Node</strong>：基本的链表节点，存储键值对和指向下一个节点的指针。</p>
+<p><strong>TreeNode</strong>：用于红黑树的节点，当链表长度超过一定阈值（默认是8）时，链表会转换为红黑树。</p>
+<p><strong>TreeBin</strong>：红黑树的容器，管理红黑树的操作。</p>
+<p><strong>ForwardingNode</strong>：在扩容过程中用于指示节点已经被移动。</p>
+<h2 id="主要操作"><a href="#主要操作" class="headerlink" title="主要操作"></a>主要操作</h2><p><strong>put 操作</strong>：通过 CAS 操作和细粒度的锁来实现高效的并发插入和更新。</p>
+<p><strong>get 操作</strong>：使用无锁的方式进行查找，性能更高。</p>
+<p><strong>扩容</strong>：通过逐步迁移节点和协作扩容机制，提高扩容效率。</p>
+<h2 id="细粒度的并发控制"><a href="#细粒度的并发控制" class="headerlink" title="细粒度的并发控制"></a>细粒度的并发控制</h2><p>Java 8 中的ConcurrentHashMap采用了更细粒度的并发控制，主要通过以下方式实现：</p>
+<p><strong>CAS 操作</strong>：使用 CAS 操作（Compare-And-Swap）进行无锁插入和更新，减少锁竞争。</p>
+<p><strong>synchronized 块</strong>：在必要时对单个桶（bin）进行加锁，而不是整个段，从而进一步提高并发性。</p>
+<p><strong>红黑树</strong>：当链表长度超过阈值时，转换为红黑树，降低查找时间复杂度，从 O(n) 降低到 O(log n)。</p>
+<h2 id="Java-8-相比-Java-7-的好处"><a href="#Java-8-相比-Java-7-的好处" class="headerlink" title="Java 8 相比 Java 7 的好处"></a>Java 8 相比 Java 7 的好处</h2><p><strong>更高的并发性</strong>：Java 7 使用段级别的锁，而 Java 8 使用更细粒度的锁和无锁操作，减少了锁竞争，提高了并发性。</p>
+<p><strong>更好的性能</strong>：Java 8 中的get操作是无锁的，性能更高。put操作使用 CAS 和细粒度的锁，提高了插入和更新的性能。</p>
+<p><strong>更高效的扩容</strong>：Java 8 通过逐步迁移节点和协作扩容机制，提高了扩容效率，减少了扩容过程中对性能的影响。</p>
+<p><strong>更高效的查找</strong>：当链表长度超过阈值时，转换为红黑树，降低了查找时间复杂度。</p>
+<blockquote>
+<p>&#x2F;kfgmeauv8z37pxgd&gt;</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E9%87%8D%E6%96%B0%E8%B0%83%E6%95%B4HashMap%E5%A4%A7%E5%B0%8F%E5%AD%98%E5%9C%A8%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%E5%90%97%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E9%87%8D%E6%96%B0%E8%B0%83%E6%95%B4HashMap%E5%A4%A7%E5%B0%8F%E5%AD%98%E5%9C%A8%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%E5%90%97%EF%BC%9F/" itemprop="url">重新调整HashMap大小存在什么问题吗？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:23:51+00:00">
+                2025-02-14
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌重新调整HashMap大小存在什么问题吗？"><a href="#👌重新调整HashMap大小存在什么问题吗？" class="headerlink" title="👌重新调整HashMap大小存在什么问题吗？"></a>👌重新调整HashMap大小存在什么问题吗？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="性能影响"><a href="#性能影响" class="headerlink" title="性能影响"></a>性能影响</h2><p><strong>时间复杂度</strong>：扩容是一个相对昂贵的操作，因为它需要重新计算所有现有键值对的哈希值，并将它们重新分配到新的桶数组中。这个过程的时间复杂度为 (O(n))，其中 (n) 是哈希表中元素的数量。因此，在扩容期间，可能会导致性能的短暂下降，尤其是在插入大量数据时。</p>
+<p><strong>阻塞操作</strong>：在单线程环境中，扩容会阻塞其他操作（如查找、插入、删除），直到扩容完成。在多线程环境中，如果没有适当的同步机制，扩容可能会导致数据不一致或其他并发问题。</p>
+<h2 id="内存使用"><a href="#内存使用" class="headerlink" title="内存使用"></a>内存使用</h2><p><strong>临时内存消耗</strong>：扩容期间，HashMap需要分配一个新的桶数组，同时保留旧的桶数组，直到重新哈希完成。这会导致临时的内存消耗增加。如果哈希表非常大，可能会导致内存不足的问题。</p>
+<p><strong>内存碎片</strong>：频繁的扩容和缩容可能导致内存碎片化，降低内存利用效率。</p>
+<h2 id="并发问题"><a href="#并发问题" class="headerlink" title="并发问题"></a>并发问题</h2><p><strong>线程安全</strong>：默认的HashMap不是线程安全的。在多线程环境中，如果一个线程在进行扩容操作，而另一个线程在进行插入或删除操作，可能会导致数据不一致或程序崩溃。为了解决这个问题，可以使用ConcurrentHashMap或在外部进行同步。</p>
+<p><strong>扩容期间的数据一致性</strong>：在扩容过程中，如果有其他线程在进行读写操作，可能会导致数据不一致。因此，在多线程环境中，必须确保扩容操作是原子的，或者使用并发安全的数据结构。</p>
+<h2 id="重新哈希的成本"><a href="#重新哈希的成本" class="headerlink" title="重新哈希的成本"></a>重新哈希的成本</h2><p><strong>哈希函数的复杂性</strong>：重新哈希所有键值对需要调用哈希函数。如果哈希函数较为复杂，重新哈希的成本也会增加。</p>
+<p><strong>哈希冲突的处理</strong>：在扩容过程中，哈希冲突的处理（如链地址法中的链表或红黑树）也会增加额外的开销。</p>
+<h2 id="应用层面的影响"><a href="#应用层面的影响" class="headerlink" title="应用层面的影响"></a>应用层面的影响</h2><p><strong>实时性要求</strong>：在某些实时性要求较高的应用中，扩容操作可能导致短暂的性能下降，影响系统的响应时间。</p>
+<p><strong>数据一致性要求</strong>：在某些应用中，数据的一致性要求较高，扩容过程中可能会导致短暂的数据不一致，需要额外的机制来保证一致性。</p>
+<h2 id="解决方案和优化"><a href="#解决方案和优化" class="headerlink" title="解决方案和优化"></a>解决方案和优化</h2><ol>
+<li><strong>预估初始容量</strong>：如果可以预估数据量，尽量在创建HashMap时设置合适的初始容量，减少扩容次数。</li>
+<li><strong>使用并发数据结构</strong>：在多线程环境中，使用ConcurrentHashMap代替HashMap，它采用了分段锁机制，减少了扩容带来的并发问题。</li>
+<li><strong>动态调整负载因子</strong>：根据应用需求，动态调整负载因子以适应数据量的变化。</li>
+</ol>
+<blockquote>
+<p>&#x2F;gifnny9n0u67fo68&gt;</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E9%98%BB%E5%A1%9E%E9%98%9F%E5%88%97%E5%8E%9F%E7%90%86%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E9%98%BB%E5%A1%9E%E9%98%9F%E5%88%97%E5%8E%9F%E7%90%86%EF%BC%9F/" itemprop="url">阻塞队列原理？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:23:51+00:00">
+                2025-02-14
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌阻塞队列原理？"><a href="#👌阻塞队列原理？" class="headerlink" title="👌阻塞队列原理？"></a>👌阻塞队列原理？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>阻塞队列是一种线程安全的队列，它在插入和删除操作上可以阻塞线程，以实现生产者-消费者模式等并发编程需求。阻塞队列的核心原理包括锁机制和条件变量。</p>
+<h2 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h2><h3 id="锁机制"><a href="#锁机制" class="headerlink" title="锁机制"></a>锁机制</h3><p>阻塞队列使用锁（如ReentrantLock）来确保线程安全。锁保证了同一时间只有一个线程可以执行插入或删除操作，从而避免并发问题。</p>
+<h3 id="条件变量"><a href="#条件变量" class="headerlink" title="条件变量"></a>条件变量</h3><p>阻塞队列使用条件变量（Condition）来管理线程的等待和通知。条件变量是与锁关联的，可以在特定条件下阻塞线程并在条件满足时唤醒线程。例如，notEmpty和notFull是常见的条件变量，分别用于表示队列是否为空和是否已满。</p>
+<h3 id="等待和通知机制："><a href="#等待和通知机制：" class="headerlink" title="等待和通知机制："></a>等待和通知机制：</h3><p>当线程试图执行插入操作而队列已满时，它会在notFull条件变量上等待，直到队列中有空闲空间。</p>
+<p>当线程试图执行删除操作而队列为空时，它会在notEmpty条件变量上等待，直到队列中有可用的元素。</p>
+<p>当插入或删除操作成功后，相应的条件变量会被通知（唤醒），以便其他等待的线程可以继续执行。</p>
+<h2 id="具体实现-Demo"><a href="#具体实现-Demo" class="headerlink" title="具体实现 Demo"></a>具体实现 Demo</h2><p>LinkedBlockingQueue是一个基于链表实现的可选有界阻塞队列。它的基本原理如下：</p>
+<p><strong>内部结构</strong>：使用一个链表来存储元素。使用两个锁：takeLock和putLock，分别用于控制删除和插入操作。使用两个条件变量：notEmpty和notFull，分别用于表示队列是否为空和是否已满。</p>
+<p><strong>插入操作（put）</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public void put(E e) throws InterruptedException &#123;</span><br><span class="line">    if (e == null) throw new NullPointerException();</span><br><span class="line">    int c = -1;</span><br><span class="line">    Node&lt;E&gt; node = new Node&lt;E&gt;(e);</span><br><span class="line">    final ReentrantLock putLock = this.putLock;</span><br><span class="line">    final AtomicInteger count = this.count;</span><br><span class="line">    putLock.lockInterruptibly();</span><br><span class="line">    try &#123;</span><br><span class="line">        while (count.get() == capacity) &#123;</span><br><span class="line">            notFull.await();</span><br><span class="line">        &#125;</span><br><span class="line">        enqueue(node);</span><br><span class="line">        c = count.getAndIncrement();</span><br><span class="line">        if (c + 1 &lt; capacity) &#123;</span><br><span class="line">            notFull.signal();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; finally &#123;</span><br><span class="line">        putLock.unlock();</span><br><span class="line">    &#125;</span><br><span class="line">    if (c == 0) &#123;</span><br><span class="line">        signalNotEmpty();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>删除操作（take）</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public E take() throws InterruptedException &#123;</span><br><span class="line">    E x;</span><br><span class="line">    int c = -1;</span><br><span class="line">    final AtomicInteger count = this.count;</span><br><span class="line">    final ReentrantLock takeLock = this.takeLock;</span><br><span class="line">    takeLock.lockInterruptibly();</span><br><span class="line">    try &#123;</span><br><span class="line">        while (count.get() == 0) &#123;</span><br><span class="line">            notEmpty.await();</span><br><span class="line">        &#125;</span><br><span class="line">        x = dequeue();</span><br><span class="line">        c = count.getAndDecrement();</span><br><span class="line">        if (c &gt; 1) &#123;</span><br><span class="line">            notEmpty.signal();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; finally &#123;</span><br><span class="line">        takeLock.unlock();</span><br><span class="line">    &#125;</span><br><span class="line">    if (c == capacity) &#123;</span><br><span class="line">        signalNotFull();</span><br><span class="line">    &#125;</span><br><span class="line">    return x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>等待和通知</strong>：</p>
+<p>在插入操作中，如果队列已满，线程会在notFull条件变量上等待。</p>
+<p>在删除操作中，如果队列为空，线程会在notEmpty条件变量上等待。</p>
+<p>插入或删除操作成功后，会相应地通知等待的线程。</p>
+<h3 id><a href="#" class="headerlink" title></a></h3><blockquote>
+<p>&#x2F;rizcvgg0mxqp9iv7&gt;</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/HashMap/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/10/HashMap/" itemprop="url">HashMap底层</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-10T17:33:00+00:00">
+                2024-10-10
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:23:51+00:00">
+                2025-02-14
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="HashMap是Java中一种非常重要的数据结构，它基于哈希表的原理，实现了对键值对（key-value-pair）的快速存储和访问。下面详细解释HashMap的数据结构以及其在JDK-1-8中的变化。"><a href="#HashMap是Java中一种非常重要的数据结构，它基于哈希表的原理，实现了对键值对（key-value-pair）的快速存储和访问。下面详细解释HashMap的数据结构以及其在JDK-1-8中的变化。" class="headerlink" title="HashMap是Java中一种非常重要的数据结构，它基于哈希表的原理，实现了对键值对（key-value pair）的快速存储和访问。下面详细解释HashMap的数据结构以及其在JDK 1.8中的变化。"></a>HashMap是Java中一种非常重要的数据结构，它基于哈希表的原理，实现了对键值对（key-value pair）的快速存储和访问。下面详细解释HashMap的数据结构以及其在JDK 1.8中的变化。</h2><h3 id="HashMap的基本数据结构"><a href="#HashMap的基本数据结构" class="headerlink" title="HashMap的基本数据结构"></a>HashMap的基本数据结构</h3><p>在HashMap中，数据是通过“数组+链表”的方式存储的，这种结构也被称为“链表的数组”。具体来说：</p>
+<ol>
+<li><p><strong>数组</strong>：HashMap内部维护了一个Entry数组（在JDK 1.8及以后版本中，Entry被Node类替代，但功能相同），数组的每个元素都是一个桶（Bucket），桶中存放的是指向链表节点的引用。</p>
+</li>
+<li><p><strong>链表</strong>：当发生哈希冲突（即不同的key通过哈希函数计算得到的下标相同）时，这些key-value对会被存储在同一桶中的链表中。链表中的每个节点都包含key、value、next等字段，用于存储数据和指向下一个节点的引用。</p>
+</li>
+</ol>
+<h3 id="哈希函数与冲突解决"><a href="#哈希函数与冲突解决" class="headerlink" title="哈希函数与冲突解决"></a>哈希函数与冲突解决</h3><ol>
+<li><p><strong>哈希函数</strong>：HashMap通过哈希函数（hash()方法）将key转换为数组的下标。这个哈希函数的目标是尽量均匀地分布元素，以减少哈希冲突的发生。</p>
+</li>
+<li><p><strong>冲突解决</strong>：当发生哈希冲突时，HashMap采用链地址法（也称为拉链法）来解决。即在同一桶中维护一个链表，将冲突的元素依次添加到链表中。</p>
+</li>
+</ol>
+<h3 id="JDK-1-8中的优化"><a href="#JDK-1-8中的优化" class="headerlink" title="JDK 1.8中的优化"></a>JDK 1.8中的优化</h3><p>在JDK 1.8中，HashMap进行了重要的优化，引入了红黑树来进一步减少哈希冲突对性能的影响。具体来说：</p>
+<ol>
+<li><p><strong>链表转红黑树</strong>：当桶中的链表长度超过一定阈值（默认为8）时，HashMap会将这个链表转换为红黑树。红黑树是一种平衡二叉搜索树，具有更高的查找效率（O(log n)），从而提高了HashMap的性能。</p>
+</li>
+<li><p><strong>阈值调整</strong>：在JDK 1.8中，HashMap还引入了一个新的参数<code>treeifyThreshold</code>来控制链表转换为红黑树的阈值，以及<code>untreeifyThreshold</code>来控制红黑树转换为链表的阈值（当链表长度小于等于6时）。此外，还有一个<code>minTreeifyCapacity</code>参数，用于确保在链表转换为红黑树之前，HashMap的容量至少达到一定的阈值（默认为64），以避免频繁的树化操作。</p>
+</li>
+</ol>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>HashMap的数据结构是基于“数组+链表”的，通过哈希函数将key映射到数组的下标，并通过链表解决哈希冲突。在JDK 1.8中，HashMap引入了红黑树来优化性能，当链表长度超过一定阈值时，会将链表转换为红黑树以提高查找效率。这些优化使得HashMap在处理大量数据时具有更高的性能和更好的稳定性。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/HashMap%E5%92%8CHashTable%E7%9A%84%E6%AF%94%E8%BE%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/10/HashMap%E5%92%8CHashTable%E7%9A%84%E6%AF%94%E8%BE%83/" itemprop="url">HashMap、Hashtable和ConcurrentHashMap</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-10T17:33:00+00:00">
+                2024-10-10
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:23:51+00:00">
+                2025-02-14
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在Java中，<code>HashMap</code>、<code>Hashtable</code>和<code>ConcurrentHashMap</code>都是用于存储键值对的数据结构，但它们在使用场景和内部实现上有显著的区别。下面是对这些区别的详细解释：</p>
+<h3 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h3><ol>
+<li><p><strong>HashMap</strong>：</p>
+<ul>
+<li><strong>非线程安全</strong>：<code>HashMap</code>没有考虑线程安全问题，如果在多线程环境下不加同步地使用<code>HashMap</code>，可能会导致数据不一致的问题，如死锁、数据丢失或覆盖。</li>
+</ul>
+</li>
+<li><p><strong>Hashtable</strong>：</p>
+<ul>
+<li><strong>线程安全</strong>：<code>Hashtable</code>是线程安全的，它的所有方法都是同步的。这意味着在多线程环境中，同时访问和修改<code>Hashtable</code>不会导致数据不一致。但是，由于每个方法都使用同步，这可能导致在高并发环境下性能较低。</li>
+</ul>
+</li>
+<li><p><strong>ConcurrentHashMap</strong>：</p>
+<ul>
+<li><strong>线程安全且高效</strong>：<code>ConcurrentHashMap</code>是为了解决在高并发环境下<code>HashMap</code>的性能问题和<code>Hashtable</code>的同步性能瓶颈而设计的。</li>
+<li><strong>JDK 1.7及之前</strong>：使用分段锁（Segment Lock）机制，将整个哈希表分为多个段（Segment），每个段本质上是一个小的哈希表，并且有自己的锁。这样，在高并发情况下，只要多个线程访问的是不同的段，就可以并行处理，提高了并发性能。</li>
+<li><strong>JDK 1.8及之后</strong>：取消了分段锁，而是采用了CAS（Compare-And-Swap）操作和<code>synchronized</code>关键字来实现更细粒度的锁。每个桶（Node）的锁控制更加精确，只有在必要时才锁定相关的桶，进一步提高了并发性能。</li>
+</ul>
+</li>
+</ol>
+<h3 id="继承关系"><a href="#继承关系" class="headerlink" title="继承关系"></a>继承关系</h3><ol>
+<li><p><strong>Hashtable</strong>：</p>
+<ul>
+<li>继承自<code>java.util.Dictionary</code>类，这是一个抽象类，提供了基本的键值对存储功能。<code>Hashtable</code>是最早的键值对存储实现之一，因此在Java早期版本中广泛使用。</li>
+</ul>
+</li>
+<li><p><strong>HashMap</strong>和<strong>ConcurrentHashMap</strong>：</p>
+<ul>
+<li>都继承自<code>java.util.AbstractMap</code>抽象类，并实现了<code>java.util.Map</code>接口。<code>AbstractMap</code>提供了Map接口的部分实现，以减少子类实现的工作量。</li>
+<li><code>HashMap</code>和<code>ConcurrentHashMap</code>都提供了Map接口的所有功能，但在实现上有所不同，以适应不同的使用场景。</li>
+</ul>
+</li>
+</ol>
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><ul>
+<li><strong>HashMap</strong>：适用于单线程环境或不需要考虑线程安全的情况，因为它提供了最好的性能。</li>
+<li><strong>Hashtable</strong>：适用于多线程环境，但需要同步（即线程安全）的键值对存储。然而，由于性能原因，现在通常推荐使用<code>ConcurrentHashMap</code>。</li>
+<li><strong>ConcurrentHashMap</strong>：适用于高并发环境，提供了线程安全的键值对存储，并且性能优于<code>Hashtable</code>。</li>
+</ul>
+<p>总之，选择哪种Map实现取决于应用程序的具体需求，包括是否需要线程安全以及并发性能的要求。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/List%E7%9A%84%E9%81%8D%E5%8E%86%E6%96%B9%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/10/List%E7%9A%84%E9%81%8D%E5%8E%86%E6%96%B9%E5%BC%8F/" itemprop="url">List中的遍历方式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-10T17:33:00+00:00">
+                2024-10-10
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:23:51+00:00">
+                2025-02-14
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li>在Java中，遍历并修改一个List集合是一个常见的操作，但如果不小心处理，可能会遇到<code>ConcurrentModificationException</code>异常，这通常是因为在遍历过程中直接修改了集合的结构（如添加、删除元素）。下面是你提到的几种处理方案及其详细解释：</li>
+</ul>
+<ol>
+<li><p><strong>通过普通的for循环（不建议，可能会漏删）</strong>：<br>使用普通的for循环遍历List，并通过索引直接修改或删除元素。这种方法的问题是，如果删除元素后没有相应地调整索引（例如，连续删除元素时），可能会导致跳过某些元素的检查或索引越界异常。</p>
+</li>
+<li><p><strong>通过普通的for循环进行倒序遍历</strong>：<br>倒序遍历可以避免因删除元素而导致的索引调整问题，因为即使删除了元素，后面的元素索引也不会改变（相对于当前遍历方向）。这种方法可以有效避免漏删的问题。</p>
+</li>
+<li><p><strong>使用迭代器循环</strong>：<br>迭代器提供了一种安全的方式来遍历并修改集合。使用迭代器的<code>remove</code>方法可以安全地删除当前元素，而不会触发<code>ConcurrentModificationException</code>。注意，不能使用集合的<code>remove</code>方法，而应该使用迭代器的<code>remove</code>方法。</p>
+</li>
+<li><p><strong>复制列表</strong>：<br>创建一个原始列表的副本，遍历原始列表，同时在副本上进行删除操作。这种方法是fail-safe的，因为遍历和修改发生在不同的列表上。但这种方法相对复杂，且需要额外的内存来存储副本。此外，如果列表中的元素是复杂对象，可能需要正确地实现<code>equals</code>和<code>hashCode</code>方法以确保正确的删除。</p>
+</li>
+<li><p><strong>使用并发安全的集合类</strong>：<br>使用如<code>CopyOnWriteArrayList</code>这样的线程安全的集合类。这种集合类在修改时创建集合的副本，因此遍历和修改可以安全地进行，但这也可能导致在大量修改时性能下降，因为每次修改都需要复制整个集合。</p>
+</li>
+<li><p><strong>使用Stream的过滤方法</strong>：<br>Java 8引入的Stream API提供了一种声明性的方式来处理集合。通过<code>filter</code>方法，可以创建一个新的Stream，只包含满足特定条件的元素。然后，可以使用<code>collect</code>方法将结果收集到一个新的列表中。这种方法简单高效，因为它避免了在遍历过程中直接修改原始集合。</p>
+</li>
+<li><p><strong>通过<code>removeIf</code>方法</strong>：<br>Java 8的<code>List</code>接口引入了<code>removeIf</code>方法，它接受一个谓词（Predicate），并删除所有满足该谓词的元素。这是一个非常简洁和高效的方法，用于根据条件删除元素。</p>
+</li>
+</ol>
+<p>综上所述，每种方法都有其适用的场景和优缺点。在选择方法时，应考虑集合的大小、修改的频率、内存使用以及对性能的要求。对于大多数情况，使用<code>removeIf</code>或Stream的<code>filter</code>方法是推荐的做法，因为它们既简单又高效。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/ThreadLocal/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/10/ThreadLocal/" itemprop="url">ThreadLocal的实现原理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-10T17:33:00+00:00">
+                2024-10-10
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:23:51+00:00">
+                2025-02-14
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="ThreadLocal是Java中用于解决多线程环境下数据隔离问题的一个类。它提供了一种方式，使得每个线程都可以拥有其独立的变量副本，这样每个线程都可以独立地改变自己的副本，而不会影响其他线程的副本。这种机制在多线程编程中非常有用，特别是当需要在多个线程之间共享某些数据，但又不希望这些数据因为并发访问而引发问题时。"><a href="#ThreadLocal是Java中用于解决多线程环境下数据隔离问题的一个类。它提供了一种方式，使得每个线程都可以拥有其独立的变量副本，这样每个线程都可以独立地改变自己的副本，而不会影响其他线程的副本。这种机制在多线程编程中非常有用，特别是当需要在多个线程之间共享某些数据，但又不希望这些数据因为并发访问而引发问题时。" class="headerlink" title="ThreadLocal是Java中用于解决多线程环境下数据隔离问题的一个类。它提供了一种方式，使得每个线程都可以拥有其独立的变量副本，这样每个线程都可以独立地改变自己的副本，而不会影响其他线程的副本。这种机制在多线程编程中非常有用，特别是当需要在多个线程之间共享某些数据，但又不希望这些数据因为并发访问而引发问题时。"></a>ThreadLocal是Java中用于解决多线程环境下数据隔离问题的一个类。它提供了一种方式，使得每个线程都可以拥有其独立的变量副本，这样每个线程都可以独立地改变自己的副本，而不会影响其他线程的副本。这种机制在多线程编程中非常有用，特别是当需要在多个线程之间共享某些数据，但又不希望这些数据因为并发访问而引发问题时。</h2><h3 id="ThreadLocal的实现原理"><a href="#ThreadLocal的实现原理" class="headerlink" title="ThreadLocal的实现原理"></a>ThreadLocal的实现原理</h3><p>ThreadLocal的实现主要依赖于一个内部类ThreadLocalMap。这个Map以ThreadLocal对象为键，以线程独有的变量为值。每个线程都维护着一个ThreadLocalMap的引用，这样线程就可以通过ThreadLocal对象作为键，在其自己的ThreadLocalMap中查找或设置值。</p>
+<ol>
+<li><p><strong>ThreadLocalMap的结构</strong>：</p>
+<ul>
+<li>ThreadLocalMap是一个哈希表，它的键（Key）是ThreadLocal对象本身的一个弱引用（WeakReference），而值（Value）则是线程独有的变量。</li>
+<li>使用弱引用作为键的好处是，当ThreadLocal对象被垃圾回收时，不会因为ThreadLocalMap中的引用而阻止其被回收。但这也带来了一个问题，即如果ThreadLocal对象被回收了，而ThreadLocalMap中的Entry还存在（且Value还未被回收），那么就会出现键为null的情况，这需要在ThreadLocalMap的操作中特别处理。</li>
+</ul>
+</li>
+<li><p><strong>ThreadLocal的方法</strong>：</p>
+<ul>
+<li><code>initialValue()</code>：返回此线程局部变量的初始值。</li>
+<li><code>get()</code>：返回此线程局部变量的当前线程副本中的值。如果这是线程第一次调用该方法，则通过调用<code>initialValue()</code>方法创建并初始化此副本。</li>
+<li><code>set(T value)</code>：将此线程局部变量的当前线程副本中的值设置为指定值。</li>
+<li><code>remove()</code>：移除此线程局部变量的值。这是一个清理操作，有助于避免内存泄漏，特别是在使用线程池时。</li>
+</ul>
+</li>
+<li><p><strong>ThreadLocalMap的扩容和清理</strong>：</p>
+<ul>
+<li>ThreadLocalMap的扩容机制与HashMap类似，当元素数量超过阈值时，会进行扩容。</li>
+<li>由于ThreadLocalMap的键是弱引用，当没有强引用指向ThreadLocal对象时，ThreadLocal对象可以被垃圾回收。但是，如果ThreadLocal对象被回收了，而对应的Value对象还有强引用存在（即还没有被线程显式地调用<code>remove()</code>方法移除），那么这些Value对象就变成了“孤儿对象”，可能会导致内存泄漏。因此，在使用ThreadLocal时，建议显式地调用<code>remove()</code>方法来清理不再需要的线程局部变量。</li>
+</ul>
+</li>
+</ol>
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><p>ThreadLocal的典型使用场景包括：</p>
+<ul>
+<li>在多线程环境中，每个线程需要维护一个独立的、不与其他线程共享的状态或数据。</li>
+<li>在处理用户请求时，将用户相关的信息（如用户ID、会话信息等）保存在ThreadLocal中，以便在同一个请求处理流程中方便地访问这些信息，而不需要通过参数传递。</li>
+</ul>
+<h3 id="内存泄漏与内存溢出的区别"><a href="#内存泄漏与内存溢出的区别" class="headerlink" title="内存泄漏与内存溢出的区别"></a>内存泄漏与内存溢出的区别</h3><ul>
+<li><strong>内存泄漏</strong>：指的是程序中分配的内存在不再需要时没有被正确释放或回收的情况。随着时间的推移，可用内存逐渐减少，最终可能导致程序性能下降或崩溃。</li>
+<li><strong>内存溢出</strong>（OOM, Out of Memory）：当程序运行时，如果请求的内存超出了可用内存的限制，就会抛出内存溢出异常。内存泄漏如果不及时解决，最终可能导致内存溢出。</li>
+</ul>
+<h3 id="ThreadLocal内存泄漏问题"><a href="#ThreadLocal内存泄漏问题" class="headerlink" title="ThreadLocal内存泄漏问题"></a>ThreadLocal内存泄漏问题</h3><p>ThreadLocal是一个用于创建线程本地变量的类。每个线程都拥有自己独立的、初始化为null的变量副本，这些变量对其他线程是不可见的。然而，ThreadLocal的内存泄漏问题是一个比较典型的问题。</p>
+<h4 id="ThreadLocal内存泄漏的来源"><a href="#ThreadLocal内存泄漏的来源" class="headerlink" title="ThreadLocal内存泄漏的来源"></a>ThreadLocal内存泄漏的来源</h4><ol>
+<li><p><strong>ThreadLocal对象在堆上存储的ThreadLocalMap</strong>：</p>
+<ul>
+<li>ThreadLocalMap是ThreadLocal的内部类，用于存储线程局部变量。</li>
+<li>ThreadLocalMap的key是ThreadLocal对象，value是线程变量的值。</li>
+</ul>
+</li>
+<li><p><strong>ThreadLocal的引用链</strong>：</p>
+<ul>
+<li>ThreadLocal对象有两个引用源：一个是栈上的ThreadLocal引用（方法内创建），一个是ThreadLocalMap中的key对它的引用。</li>
+<li>如果栈上的ThreadLocal引用不再使用（方法结束），但ThreadLocal对象因为还有ThreadLocalMap中的key引用而无法被回收，就会导致内存泄漏。</li>
+</ul>
+</li>
+<li><p><strong>线程对象被重复使用</strong>：</p>
+<ul>
+<li>在线程池场景中，线程对象会被重复使用。如果线程中的ThreadLocalMap没有及时清理，就会导致内存泄漏。</li>
+</ul>
+</li>
+</ol>
+<h4 id="弱引用解决部分内存泄漏问题"><a href="#弱引用解决部分内存泄漏问题" class="headerlink" title="弱引用解决部分内存泄漏问题"></a>弱引用解决部分内存泄漏问题</h4><p>为了解决ThreadLocal对象因为ThreadLocalMap中的key引用而无法被回收的问题，ThreadLocalMap使用了弱引用。</p>
+<ul>
+<li><strong>弱引用</strong>：如果一个对象只具有弱引用，那么这个对象就会在下次垃圾回收时被回收。</li>
+<li>在ThreadLocalMap中，key（ThreadLocal对象）是弱引用。这意味着，当栈上的ThreadLocal引用不再使用时，ThreadLocal对象可以被垃圾回收器回收，从而避免了因为ThreadLocal对象无法被回收而导致的内存泄漏。</li>
+</ul>
+<p>然而，即使使用了弱引用，ThreadLocal的内存泄漏问题并没有完全解决。因为value（线程变量的值）还是强引用，如果线程对象被重复使用（如在线程池中），并且ThreadLocalMap没有及时清理，那么value所占用的内存仍然无法被回收。因此，开发者还需要在使用完ThreadLocal后，显式地调用<code>remove()</code>方法来清理ThreadLocalMap中的entry，以避免内存泄漏。</p>
+<p>综上所述，ThreadLocal的内存泄漏问题是一个复杂的问题，需要开发者和JDK共同解决。JDK通过使用弱引用来解决了一部分问题，但开发者还需要在使用完ThreadLocal后显式地调用<code>remove()</code>方法来避免内存泄漏。<br>总之，ThreadLocal是一个强大的工具，它可以帮助我们在多线程环境中实现数据的隔离和线程安全。但是，使用时也需要注意其潜在的内存泄漏问题，特别是在使用线程池时。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%96%B9%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,7 +1802,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:23:51+00:00">
                 2025-02-14
               </time>
             
@@ -544,7 +2029,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:23:51+00:00">
                 2025-02-14
               </time>
             
@@ -904,7 +2389,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:23:51+00:00">
                 2025-02-14
               </time>
             
@@ -1127,7 +2612,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:23:51+00:00">
                 2025-02-14
               </time>
             
@@ -1357,7 +2842,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:23:51+00:00">
                 2025-02-14
               </time>
             
@@ -1577,7 +3062,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:23:51+00:00">
                 2025-02-14
               </time>
             
@@ -1802,7 +3287,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:23:51+00:00">
                 2025-02-14
               </time>
             
@@ -2030,7 +3515,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:23:51+00:00">
                 2025-02-14
               </time>
             
@@ -2224,7 +3709,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:23:51+00:00">
                 2025-02-14
               </time>
             
@@ -2428,7 +3913,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:23:51+00:00">
                 2025-02-14
               </time>
             
@@ -2599,213 +4084,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/09/10/Stream/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/09/10/Stream/" itemprop="url">Stream</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-09-10T17:33:00+00:00">
-                2024-09-10
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
-                2025-02-14
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Stream"><a href="#Stream" class="headerlink" title="Stream"></a>Stream</h1><h3 id="Stream-API的深入理解"><a href="#Stream-API的深入理解" class="headerlink" title="Stream API的深入理解"></a>Stream API的深入理解</h3><p>Stream API是Java 8中引入的一个关键抽象概念，它允许你以声明性方式处理数据集合（包括数组等）。Stream通过一系列的操作（如筛选、转换、聚合等）来构建复杂的数据处理流水线。</p>
-<h4 id="特性及优点详解"><a href="#特性及优点详解" class="headerlink" title="特性及优点详解"></a>特性及优点详解</h4><ol>
-<li><p><strong>无存储</strong>：Stream本身不存储数据，它只是数据源的一个视图。这意味着你可以对原始数据集合进行多次Stream操作，而不会改变原始数据。</p>
-</li>
-<li><p><strong>为函数式编程而生</strong>：Stream API的设计符合函数式编程的范式，它鼓励使用不可变的数据和纯函数（即没有副作用的函数）。这使得代码更加简洁、易于理解和维护。</p>
-</li>
-<li><p><strong>惰式执行</strong>：Stream上的操作是惰式执行的，这意味着只有在需要结果时才会执行操作。这有助于优化性能，因为它允许Stream API在可能的情况下延迟计算，直到真正需要结果为止。</p>
-</li>
-<li><p><strong>可消费性</strong>：Stream只能被消费一次，一旦遍历过就会失效。这是为了保持流的不可变性，并防止在多个线程中同时修改流。</p>
-</li>
-</ol>
-<h4 id="关键性操作"><a href="#关键性操作" class="headerlink" title="关键性操作"></a>关键性操作</h4><ul>
-<li><p><strong>流的创建</strong>：可以通过集合的<code>stream()</code>或<code>parallelStream()</code>方法、<code>Stream.of()</code>方法或<code>Stream.Builder</code>来创建流。</p>
-</li>
-<li><p><strong>中间操作</strong>：这些操作会返回一个新的流，并允许你进行链式调用。常见的中间操作包括<code>filter()</code>（筛选）、<code>map()</code>（转换）、<code>flatMap()</code>（扁平化映射）、<code>sorted()</code>（排序）、<code>distinct()</code>（去重）等。</p>
-</li>
-<li><p><strong>最终操作</strong>：这些操作会触发流的计算，并返回一个结果或副作用。常见的最终操作包括<code>forEach()</code>（遍历）、<code>collect()</code>（收集到集合）、<code>reduce()</code>（归约）、<code>count()</code>（计数）等。</p>
-</li>
-</ul>
-<h4 id="示例分析"><a href="#示例分析" class="headerlink" title="示例分析"></a>示例分析</h4><p>你给出的示例很好地展示了Stream API的使用场景。在这个示例中，你首先通过<code>filter()</code>筛选出非红色的球，然后通过<code>map()</code>将它们融化成随机的三角形，再通过另一个<code>filter()</code>筛选出非小的三角形，最后通过某种方式计算出剩余图形的周长。</p>
-<p>这个示例展示了如何使用Stream API来构建一个复杂的数据处理流水线，并通过链式调用中间操作和最终操作来得到最终结果。</p>
-<h3 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h3><p>Stream API在实际应用中非常有用，特别是在处理大型数据集时。它允许你以声明性方式编写代码，而不需要关心底层实现细节。此外，Stream API还支持并行处理，这使得它能够在多核处理器上更有效地利用计算资源。</p>
-<p>总之，Stream API是Java 8中一个非常重要的特性，它极大地提高了Java程序员的生产力，并使得编写高效、简洁和易于维护的代码变得更加容易。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/09/10/Stream%E7%9A%84%E5%B9%B6%E8%A1%8C%E6%B5%81%E6%98%AF%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%9A%84/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2853,7 +4131,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:23:51+00:00">
                 2025-02-14
               </time>
             
@@ -3032,6 +4310,213 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/09/10/Stream/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/09/10/Stream/" itemprop="url">Stream</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-09-10T17:33:00+00:00">
+                2024-09-10
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:23:51+00:00">
+                2025-02-14
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Stream"><a href="#Stream" class="headerlink" title="Stream"></a>Stream</h1><h3 id="Stream-API的深入理解"><a href="#Stream-API的深入理解" class="headerlink" title="Stream API的深入理解"></a>Stream API的深入理解</h3><p>Stream API是Java 8中引入的一个关键抽象概念，它允许你以声明性方式处理数据集合（包括数组等）。Stream通过一系列的操作（如筛选、转换、聚合等）来构建复杂的数据处理流水线。</p>
+<h4 id="特性及优点详解"><a href="#特性及优点详解" class="headerlink" title="特性及优点详解"></a>特性及优点详解</h4><ol>
+<li><p><strong>无存储</strong>：Stream本身不存储数据，它只是数据源的一个视图。这意味着你可以对原始数据集合进行多次Stream操作，而不会改变原始数据。</p>
+</li>
+<li><p><strong>为函数式编程而生</strong>：Stream API的设计符合函数式编程的范式，它鼓励使用不可变的数据和纯函数（即没有副作用的函数）。这使得代码更加简洁、易于理解和维护。</p>
+</li>
+<li><p><strong>惰式执行</strong>：Stream上的操作是惰式执行的，这意味着只有在需要结果时才会执行操作。这有助于优化性能，因为它允许Stream API在可能的情况下延迟计算，直到真正需要结果为止。</p>
+</li>
+<li><p><strong>可消费性</strong>：Stream只能被消费一次，一旦遍历过就会失效。这是为了保持流的不可变性，并防止在多个线程中同时修改流。</p>
+</li>
+</ol>
+<h4 id="关键性操作"><a href="#关键性操作" class="headerlink" title="关键性操作"></a>关键性操作</h4><ul>
+<li><p><strong>流的创建</strong>：可以通过集合的<code>stream()</code>或<code>parallelStream()</code>方法、<code>Stream.of()</code>方法或<code>Stream.Builder</code>来创建流。</p>
+</li>
+<li><p><strong>中间操作</strong>：这些操作会返回一个新的流，并允许你进行链式调用。常见的中间操作包括<code>filter()</code>（筛选）、<code>map()</code>（转换）、<code>flatMap()</code>（扁平化映射）、<code>sorted()</code>（排序）、<code>distinct()</code>（去重）等。</p>
+</li>
+<li><p><strong>最终操作</strong>：这些操作会触发流的计算，并返回一个结果或副作用。常见的最终操作包括<code>forEach()</code>（遍历）、<code>collect()</code>（收集到集合）、<code>reduce()</code>（归约）、<code>count()</code>（计数）等。</p>
+</li>
+</ul>
+<h4 id="示例分析"><a href="#示例分析" class="headerlink" title="示例分析"></a>示例分析</h4><p>你给出的示例很好地展示了Stream API的使用场景。在这个示例中，你首先通过<code>filter()</code>筛选出非红色的球，然后通过<code>map()</code>将它们融化成随机的三角形，再通过另一个<code>filter()</code>筛选出非小的三角形，最后通过某种方式计算出剩余图形的周长。</p>
+<p>这个示例展示了如何使用Stream API来构建一个复杂的数据处理流水线，并通过链式调用中间操作和最终操作来得到最终结果。</p>
+<h3 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h3><p>Stream API在实际应用中非常有用，特别是在处理大型数据集时。它允许你以声明性方式编写代码，而不需要关心底层实现细节。此外，Stream API还支持并行处理，这使得它能够在多核处理器上更有效地利用计算资源。</p>
+<p>总之，Stream API是Java 8中一个非常重要的特性，它极大地提高了Java程序员的生产力，并使得编写高效、简洁和易于维护的代码变得更加容易。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/09/10/synchronized/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -3079,7 +4564,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:23:51+00:00">
                 2025-02-14
               </time>
             
@@ -3262,1353 +4747,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/09/01/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/09/01/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/" itemprop="url">微服务教程笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-09-01T13:33:41+00:00">
-                2024-09-01
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
-                2025-02-14
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="CouponType-枚举类"><a href="#CouponType-枚举类" class="headerlink" title="CouponType 枚举类"></a>CouponType 枚举类</h1><pre><code>public static CouponType convert(String code) &#123;
-    return Stream.of(values())
-    .filter(bean -&gt; bean.code.equalsIgnoreCase(code))
-    .findFirst()
-    .orElse(UNKNOWN);
-&#125;
-</code></pre>
-<ul>
-<li><p>使用Long表示金额，金额通常以分为单位，比如100代表100分，比使用Double转 BigDecimal 有效</p>
-</li>
-<li><p>JPA支持一对多、多对多的级联关系，但是过深的级联层级带来的DB层压力可能在洪峰流量下太大，所以尽量减少级联配置，用单表查询取代；如果一个查询需要join多张表，最好的做法是通过重构业务逻辑来简化DB查询的复杂度；</p>
-</li>
-</ul>
-<p>思考：java动态更新枚举类；</p>
-<ul>
-<li>stream 根据门店分组计算每个门店下商品价格（key&#x3D;shopId，value&#x3D;门店商品总价）<br>  public Map&lt;String,Long&gt; getTotal(List<Product> products){<br>  Map&lt;String, Long&gt; collect &#x3D; products.stream()<br>          .collect(Collectors.groupingBy(x -&gt; x.getProductId(),<br>                  Collectors.summingLong(x -&gt; x.getPrice() * x.getCount()))<br>          );<br>  return collect;<br>  }</Product></li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/Date%E8%8E%B7%E5%8F%967%E5%A4%A9%E5%90%8E%E7%9A%84%E6%97%A5%E6%9C%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2022/07/31/Date%E8%8E%B7%E5%8F%967%E5%A4%A9%E5%90%8E%E7%9A%84%E6%97%A5%E6%9C%9F/" itemprop="url">Date获取7天后的日期</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-07-31T13:33:41+00:00">
-                2022-07-31
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
-                2025-02-14
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1、 DateUtils.addDays();</span><br><span class="line">2、 private static Date getAfterDay(Date date, int diff) &#123;</span><br><span class="line">        Calendar calendar = Calendar.getInstance();</span><br><span class="line">        calendar.setTime(date == null ? new Date() : date);</span><br><span class="line">        calendar.add(Calendar.DATE, diff);</span><br><span class="line">        return calendar.getTime();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/SpringSecurity+%20oauth2%E5%AE%9E%E7%8E%B0%E5%90%8C%E8%B4%A6%E5%8F%B7%E5%A4%9A%E7%AB%AF%E5%90%8C%E6%97%B6%E7%99%BB%E5%BD%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2022/07/31/SpringSecurity+%20oauth2%E5%AE%9E%E7%8E%B0%E5%90%8C%E8%B4%A6%E5%8F%B7%E5%A4%9A%E7%AB%AF%E5%90%8C%E6%97%B6%E7%99%BB%E5%BD%95/" itemprop="url">SpringSecurity+ oauth2实现同账号多端同时登录</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-07-31T13:33:41+00:00">
-                2022-07-31
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
-                2025-02-14
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="SpringSecurity-oauth2实现同账号多端同时登录"><a href="#SpringSecurity-oauth2实现同账号多端同时登录" class="headerlink" title="SpringSecurity+ oauth2实现同账号多端同时登录"></a>SpringSecurity+ oauth2实现同账号多端同时登录</h1><p>参考链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_67391377/article/details/126509478">https://blog.csdn.net/m0_67391377/article/details/126509478</a><br>    单点登录：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/DGFFPl93kZxS5G_DSFTBDA">https://mp.weixin.qq.com/s/DGFFPl93kZxS5G_DSFTBDA</a><br>    多端登录：<a target="_blank" rel="noopener" href="https://blog.csdn.net/zhourenfei17/article/details/88826911">https://blog.csdn.net/zhourenfei17/article/details/88826911</a></p>
-<h1 id="shiro中的Realm如何使用"><a href="#shiro中的Realm如何使用" class="headerlink" title="shiro中的Realm如何使用"></a>shiro中的Realm如何使用</h1><p>参考链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_54849873/article/details/124345270">https://blog.csdn.net/m0_54849873/article/details/124345270</a></p>
-<h1 id="shiro域（安全数据源）"><a href="#shiro域（安全数据源）" class="headerlink" title="shiro域（安全数据源）"></a>shiro域（安全数据源）</h1><pre><code>shiro从Realm获取安全的数据（例如用户，角色，权限等）
-SecurityManager需要进行身份验证就必须从Realm中获取到一个合法的用户身份，从而比较用户身份是否合法，同时在SecurityManager获取身份的同时Realm也需要维护一套用户身份用来判断用户是否能执行某项操作
-</code></pre>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/cookie%E5%92%8Csession%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%88%E5%89%8D%E5%90%8E%E7%AB%AF%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2022/07/31/cookie%E5%92%8Csession%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%88%E5%89%8D%E5%90%8E%E7%AB%AF%EF%BC%89/" itemprop="url">cookie和session的区别</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-07-31T13:33:41+00:00">
-                2022-07-31
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
-                2025-02-14
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="cookie-和-session-的区别"><a href="#cookie-和-session-的区别" class="headerlink" title="cookie 和 session 的区别"></a>cookie 和 session 的区别</h1><h1 id="localstorage-和cookie-的区别"><a href="#localstorage-和cookie-的区别" class="headerlink" title="localstorage 和cookie 的区别"></a>localstorage 和cookie 的区别</h1><ul>
-<li>都可以用来做本地存储，实现数据的持久化,区别如下<ul>
-<li>localstroage存储的内容会多一点，5M；cookie存储的只有4k；</li>
-<li>有效时间不一样；cookie 的有效时间可以自行设置，local可以一直生效；</li>
-<li>请求时cookie可以被携带，同源的cookie信息会自动作为请求头的一部分发给服务端；local不会，一直存储在浏览器端</li>
-</ul>
-</li>
-</ul>
-<h1 id="localstroage-和sessionstroage-的区别"><a href="#localstroage-和sessionstroage-的区别" class="headerlink" title="localstroage 和sessionstroage 的区别"></a>localstroage 和sessionstroage 的区别</h1><ul>
-<li>都是前端的本地存储（保存在客户端，不与服务器进行交互通信，存储数据的大小一样，只能存储字符串类型的数据）<ul>
-<li>生命周期不同，local是永久的，除非主动删除；session的生命周期仅在当前会话下有效，在同源的窗口中始终存在的数据（只要浏览器的窗口没有关闭，即使刷新页面或者进入同源的另一个页面数据依旧存在，但在关闭浏览器窗口就会被销毁）</li>
-</ul>
-</li>
-</ul>
-<h1 id="session-和sessionStroage-的区别"><a href="#session-和sessionStroage-的区别" class="headerlink" title="session 和sessionStroage 的区别"></a>session 和sessionStroage 的区别</h1><ul>
-<li>session主要的作用是维持会话状态的key，sessionStroage则是存储会话期间的数据</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/dependencyManagement%E4%B8%8Edependencies%E7%9A%84%E5%8C%BA%E5%88%AB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2022/07/31/dependencyManagement%E4%B8%8Edependencies%E7%9A%84%E5%8C%BA%E5%88%AB/" itemprop="url">dependencyManagement与dependencies的区别</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-07-31T13:33:41+00:00">
-                2022-07-31
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
-                2025-02-14
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li>dependencyManagement<ul>
-<li>用于父类的管理，一般写在顶层父类的pom.xml中</li>
-<li>只是做声明依赖，不做具体引入，只有在子项目中使用到是才会实现依赖</li>
-<li>子类声明了version，就用子类自己的，否则都继承父类的version和scope</li>
-</ul>
-</li>
-<li>dependencies<ul>
-<li>默认被子类全部继承</li>
-</ul>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/ftp%E9%97%AE%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2022/07/31/ftp%E9%97%AE%E9%A2%98/" itemprop="url">ftp问题</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-07-31T13:33:41+00:00">
-                2022-07-31
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
-                2025-02-14
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li><p>问题 ：FTP上传storefile一直返回false的解决，报500<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/LiHuiJUNMate/article/details/124257181">https://blog.csdn.net/LiHuiJUNMate/article/details/124257181</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44901564/article/details/108062627">https://blog.csdn.net/weixin_44901564/article/details/108062627</a></p>
-</li>
-<li><p>553 550<br><a target="_blank" rel="noopener" href="http://www.zzvips.com/article/226409.html+%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E9%97%AE%E9%A2%98">http://www.zzvips.com/article/226409.html+用户权限问题</a></p>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/javacv%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2022/07/31/javacv%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url">javacv学习笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-07-31T13:33:41+00:00">
-                2022-07-31
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
-                2025-02-14
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="java版opencv之Javacv各种场景使用案例"><a href="#java版opencv之Javacv各种场景使用案例" class="headerlink" title="java版opencv之Javacv各种场景使用案例"></a>java版opencv之Javacv各种场景使用案例</h1><p>————————————————<br>版权声明：本文为CSDN博主「jwolf2」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_39506978/article/details/133251234">https://blog.csdn.net/qq_39506978/article/details/133251234</a></p>
-<h1 id="java-opencv-基本操作6"><a href="#java-opencv-基本操作6" class="headerlink" title="java opencv 基本操作6"></a>java opencv 基本操作6</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/kan_Feng/article/details/126456760">https://blog.csdn.net/kan_Feng/article/details/126456760</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4659,7 +4797,7 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">88</span>
+                <span class="site-state-item-count">95</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
