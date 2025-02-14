@@ -270,6 +270,593 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%96%B9%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/10/%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%96%B9%E5%BC%8F/" itemprop="url">创建线程的方式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-10T17:33:00+00:00">
+                2024-10-10
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
+                2025-02-14
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ol>
+<li><p><strong>继承<code>Thread</code>类创建线程</strong>：</p>
+<ul>
+<li>这种方式是通过创建一个新的类，该类继承自<code>Thread</code>类，并重写<code>run</code>方法。然后，通过创建该类的实例并调用其<code>start</code>方法来启动线程。</li>
+<li>优点：代码简单，易于理解。</li>
+<li>缺点：由于Java是单继承的，继承<code>Thread</code>类后就不能再继承其他类了，这在一定程度上限制了类的扩展性。</li>
+</ul>
+</li>
+<li><p><strong>实现<code>Runnable</code>接口创建线程</strong>：</p>
+<ul>
+<li>这种方式是通过创建一个实现了<code>Runnable</code>接口的类，并实现其<code>run</code>方法。然后，将该类的实例作为参数传递给<code>Thread</code>类的构造器，创建<code>Thread</code>对象并调用其<code>start</code>方法来启动线程。</li>
+<li>优点：由于Java支持接口的多实现，因此这种方式更具灵活性，可以继承其他类并实现<code>Runnable</code>接口。</li>
+<li>缺点：相对于继承<code>Thread</code>类，代码稍显复杂。</li>
+</ul>
+</li>
+<li><p><strong>通过<code>Callable</code>和<code>FutureTask</code>创建线程</strong>：</p>
+<ul>
+<li><code>Callable</code>接口类似于<code>Runnable</code>接口，但它可以返回结果并且可以抛出受检异常（checked exception）。</li>
+<li><code>FutureTask</code>是<code>Future</code>接口的一个实现，它包装了一个<code>Callable</code>对象，可以提交给<code>Executor</code>（如线程池）来执行。</li>
+<li>这种方式通常用于需要获取线程执行结果或处理受检异常的场景。</li>
+</ul>
+</li>
+<li><p><strong>通过线程池创建线程</strong>：</p>
+<ul>
+<li>线程池是提前创建好一批线程，并保存在池中。当有任务需要执行时，从池中取出一个线程来执行任务。这种方式可以显著提高资源的利用率和性能。</li>
+<li>Java中的<code>ExecutorService</code>接口提供了管理线程池的方法，如<code>newFixedThreadPool</code>、<code>newCachedThreadPool</code>等。</li>
+<li>优点：提高资源利用率、性能；简化线程管理。</li>
+<li>缺点：增加了代码的复杂性；需要合理配置线程池的大小以避免资源耗尽或性能下降。</li>
+</ul>
+</li>
+</ol>
+<p>关于<code>Runnable</code>和<code>Callable</code>的区别：</p>
+<ul>
+<li><code>Runnable</code>的<code>run</code>方法无返回值，而<code>Callable</code>的<code>call</code>方法有返回值。</li>
+<li><code>Callable</code>中可以抛出受检异常，而<code>Runnable</code>不可以。</li>
+<li><code>Callable</code>和<code>Runnable</code>都可以应用于<code>executors</code>（执行器），但<code>Thread</code>类只支持<code>Runnable</code>。</li>
+</ul>
+<p>关于<code>Future</code>和<code>FutureTask</code>：</p>
+<ul>
+<li><code>Future</code>是一个接口，代表了一个异步执行的结果。它提供了检查执行是否完成、等待完成和获取执行结果的方法。</li>
+<li><code>FutureTask</code>是<code>Future</code>接口的一个实现，它实现了一个可以提交给<code>Executor</code>执行的任务，并且可以用来检查任务的执行状态和获取任务的执行结果。</li>
+</ul>
+<p>最后，线程池是池化技术的一种典型实现，用于提高资源的利用率和性能。在编程中，线程池通常用于管理大量并发任务的执行。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/%E5%B9%B6%E5%8F%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/10/%E5%B9%B6%E5%8F%91/" itemprop="url">并发笔记</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-10T17:33:00+00:00">
+                2024-10-10
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
+                2025-02-14
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h1><h2 id="synchronized"><a href="#synchronized" class="headerlink" title="synchronized"></a>synchronized</h2><h3 id="同一时刻只能一个线程执行代码块"><a href="#同一时刻只能一个线程执行代码块" class="headerlink" title="同一时刻只能一个线程执行代码块"></a>同一时刻只能一个线程执行代码块</h3><h3 id="可以修饰方法和代码块"><a href="#可以修饰方法和代码块" class="headerlink" title="可以修饰方法和代码块"></a>可以修饰方法和代码块</h3><h3 id="如何实现可见性问题"><a href="#如何实现可见性问题" class="headerlink" title="如何实现可见性问题"></a>如何实现可见性问题</h3><ul>
+<li><p>实现可见性的过程</p>
+<ul>
+<li><p>获取互斥锁</p>
+</li>
+<li><p>清空本地代码，将主内存中的最新拷贝到本地内存</p>
+</li>
+<li><p>将更改后共享变量值刷新到主内存</p>
+</li>
+<li><p>释放互斥锁</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="如何实现同步"><a href="#如何实现同步" class="headerlink" title="如何实现同步"></a>如何实现同步</h3><ul>
+<li><p>都是使用mointorenter和monitorexit两个JVM指令实现</p>
+</li>
+<li><p>什么是管程</p>
+<ul>
+<li><p>管理共享变量以及对共享变量操作过程，使得支持并发</p>
+</li>
+<li><p>线程可以对monitor执行lock和unlock操作进行加锁和释放锁</p>
+</li>
+<li><p>解决互斥问题的思路：将共享变量及对共享变量的操作统一封装起来</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="锁优化"><a href="#锁优化" class="headerlink" title="锁优化"></a>锁优化</h3><ul>
+<li><p>同步锁的四种状态：无锁、偏向锁、轻量级锁、重量级锁</p>
+</li>
+<li><p>偏向锁：一个线程加锁</p>
+</li>
+<li><p>轻量级锁：两个线程交替自旋</p>
+</li>
+<li><p>同步锁锁定资源是对象</p>
+</li>
+</ul>
+<h2 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h2><h3 id="可见性：对变量的修改对所有线程可见"><a href="#可见性：对变量的修改对所有线程可见" class="headerlink" title="可见性：对变量的修改对所有线程可见"></a>可见性：对变量的修改对所有线程可见</h3><ul>
+<li><p>可见性</p>
+<ul>
+<li>volatile在写操作的时候，JVM会发一条lock前缀的指令，将这个缓存的变量会写到系统主存中；其他的使用的时候会从主存读取最新的数据。所以可见</li>
+</ul>
+</li>
+</ul>
+<h3 id="内存屏障（Memory-Barrier）是CPU的一种指令，用于控制特定条件下的重排序和内存可见性问题。"><a href="#内存屏障（Memory-Barrier）是CPU的一种指令，用于控制特定条件下的重排序和内存可见性问题。" class="headerlink" title="内存屏障（Memory Barrier）是CPU的一种指令，用于控制特定条件下的重排序和内存可见性问题。"></a>内存屏障（Memory Barrier）是CPU的一种指令，用于控制特定条件下的重排序和内存可见性问题。</h3><p>Java编译器会根据内存屏障的规则禁止重排序</p>
+<ul>
+<li><p>为了保障volatile变量的可见性和禁止指令重排序，java在字节码中插入内存屏障实现</p>
+<ul>
+<li><p>内存屏障解决指令重排</p>
+<ul>
+<li></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="有序性：禁止指令重排，遵循happens-before原则"><a href="#有序性：禁止指令重排，遵循happens-before原则" class="headerlink" title="有序性：禁止指令重排，遵循happens-before原则"></a>有序性：禁止指令重排，遵循happens-before原则</h3><h3 id="双重检验锁必须加volatile，因为内存屏障"><a href="#双重检验锁必须加volatile，因为内存屏障" class="headerlink" title="双重检验锁必须加volatile，因为内存屏障"></a>双重检验锁必须加volatile，因为内存屏障</h3><ul>
+<li><p>双重校验锁实现一个单例</p>
+</li>
+<li><p>否则会出现空指针</p>
+</li>
+</ul>
+<h3 id="存在问题"><a href="#存在问题" class="headerlink" title="存在问题"></a>存在问题</h3><ul>
+<li><p>不满足原子性</p>
+<ul>
+<li><p>解决方法</p>
+<ul>
+<li><p>使用syn</p>
+</li>
+<li><p>使用可重入锁</p>
+</li>
+<li><p>使用原子类</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="与syn的区别"><a href="#与syn的区别" class="headerlink" title="与syn的区别"></a>与syn的区别</h3><ul>
+<li><p>volatile不需要加锁，不会阻塞线程</p>
+</li>
+<li><p>volatile是一种简单的同步机制</p>
+</li>
+</ul>
+<h2 id="JUC"><a href="#JUC" class="headerlink" title="JUC"></a>JUC</h2><h3 id="锁的分类"><a href="#锁的分类" class="headerlink" title="锁的分类"></a>锁的分类</h3><h3 id="CAS：一条CPU的原子指令，可以保证共享变量修改的原子性"><a href="#CAS：一条CPU的原子指令，可以保证共享变量修改的原子性" class="headerlink" title="CAS：一条CPU的原子指令，可以保证共享变量修改的原子性"></a>CAS：一条CPU的原子指令，可以保证共享变量修改的原子性</h3><ul>
+<li><p>使用unsafe类实现，其中都是native方法</p>
+</li>
+<li><p>根据内存偏移量找到待更新的原值的准确内存地址，使用compareAndSwaplant将待更新的值和预期值进行比较</p>
+</li>
+<li><p>CAS缺陷</p>
+<ul>
+<li><p>循环时间太长</p>
+</li>
+<li><p>只能保证一个共享变量原子操作</p>
+</li>
+<li><p>ABA问题</p>
+<ul>
+<li>解决方案：AtomicStampedReference（加个时间作为版本号）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="问题：Thread-的join方法"><a href="#问题：Thread-的join方法" class="headerlink" title="问题：Thread 的join方法"></a>问题：Thread 的join方法</h3><h3 id="与syn的比较"><a href="#与syn的比较" class="headerlink" title="与syn的比较"></a>与syn的比较</h3><ul>
+<li><p>syn在以下情况下释放锁</p>
+<ul>
+<li><p>线程执行完释放</p>
+</li>
+<li><p>线程执行时发生异常，JVM会自动释放</p>
+</li>
+<li><p>锁方法执行了wait方法，进行释放锁</p>
+</li>
+</ul>
+</li>
+<li><p>syn的问题</p>
+<ul>
+<li><p>无法控制阻塞时长——&gt;JUC trylock()解决</p>
+</li>
+<li><p>阻塞不可中断——&gt;lockInterruptibly解决</p>
+</li>
+<li><p>syn不支持读写锁分离——&gt;JUC的ReentrantReadWriteLock锁</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="AQS"><a href="#AQS" class="headerlink" title="AQS"></a>AQS</h3><ul>
+<li><p>先进先出队列+CAS+volatile</p>
+<ul>
+<li>维护一个volatile的int类型的state变量，state&#x3D;1是获取到锁；state的值变化是由CAS完成的</li>
+</ul>
+</li>
+<li><p>实现</p>
+<ul>
+<li><p>CAS操作提供原子性避免锁</p>
+</li>
+<li><p>volatile确保修改的可见性和内存操作的有序性</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h2><h3 id="解决并发问题，在线程中传递数据"><a href="#解决并发问题，在线程中传递数据" class="headerlink" title="解决并发问题，在线程中传递数据"></a>解决并发问题，在线程中传递数据</h3><h3 id="通过为每一个线程创建一份共享变量的副本保证各个线程之间的变量访问和修改互不影响"><a href="#通过为每一个线程创建一份共享变量的副本保证各个线程之间的变量访问和修改互不影响" class="headerlink" title="通过为每一个线程创建一份共享变量的副本保证各个线程之间的变量访问和修改互不影响"></a>通过为每一个线程创建一份共享变量的副本保证各个线程之间的变量访问和修改互不影响</h3><h3 id="内存泄漏问题"><a href="#内存泄漏问题" class="headerlink" title="内存泄漏问题"></a>内存泄漏问题</h3><ul>
+<li><p>为什么</p>
+<ul>
+<li><p>key ThreadLocal的引用缘</p>
+<ul>
+<li><p>栈上的ThreadLocal引用</p>
+</li>
+<li><p>ThreadLocalMap中的key对他的引用</p>
+</li>
+</ul>
+</li>
+<li><p>value</p>
+<ul>
+<li>引用只有一条，从Thread过来的引用</li>
+</ul>
+</li>
+<li><p>出现的问题</p>
+<ul>
+<li><p>ThreadLocal栈上的引用不见了，但是Threadlocal对象因为还有一个引用，索引无法回收</p>
+<ul>
+<li>解决方法：ThreadLocal的key改成弱引用</li>
+</ul>
+</li>
+<li><p>Thread对象一直被使用，无法释放</p>
+<ul>
+<li>解决方法：对于value，Thread一直没有释放，只有在一个ThreadLocal用完的时候，手动调用一下remove方法</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>解决</p>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/%E6%8E%92%E5%BA%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +904,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
-                2025-01-08
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
+                2025-02-14
               </time>
             
           </span>
@@ -540,8 +1127,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
-                2025-01-08
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
+                2025-02-14
               </time>
             
           </span>
@@ -770,8 +1357,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
-                2025-01-08
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
+                2025-02-14
               </time>
             
           </span>
@@ -990,8 +1577,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
-                2025-01-08
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
+                2025-02-14
               </time>
             
           </span>
@@ -1215,8 +1802,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
-                2025-01-08
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
+                2025-02-14
               </time>
             
           </span>
@@ -1443,8 +2030,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
-                2025-01-08
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
+                2025-02-14
               </time>
             
           </span>
@@ -1637,8 +2224,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
-                2025-01-08
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
+                2025-02-14
               </time>
             
           </span>
@@ -1742,6 +2329,10 @@
 <p>执行顺序分析<br>优化后的 SQL 调整了条件位置：</p>
 <p>WHERE 先执行：WHERE product_id &#x3D; 101 在 GROUP BY 之前过滤掉了不符合条件的行，减少了参与分组的记录数量。<br>减少分组和聚合运算的负担：GROUP BY 和 SUM 只需处理过滤后的数据。<br>HAVING 用于聚合结果过滤：HAVING total_amount &gt; 500 只对已经分组后的结果应用。<br>效果：大幅减少了分组和聚合运算的记录数，提升了性能。</p>
 <p>区别：WHERE：在分组之前过滤数据，作用于行。<br>HAVING：在分组之后过滤数据，作用于聚合结果。</p>
+<h2 id="mysql索引失效的场景"><a href="#mysql索引失效的场景" class="headerlink" title="mysql索引失效的场景"></a>mysql索引失效的场景</h2><ul>
+<li>建立联合索引，id-name-create_time-account_date(入账时间)<br>建立了id-name索引，但是查询条件中有create_time 没有使用索引下推，需要建立一个id-name-create_time索引，会走索引下推；</li>
+<li>其中order by 两个时间的排序方式不一致。索引失效</li>
+</ul>
 
           
         
@@ -1837,8 +2428,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
-                2025-01-08
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
+                2025-02-14
               </time>
             
           </span>
@@ -2055,8 +2646,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
-                2025-01-08
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
+                2025-02-14
               </time>
             
           </span>
@@ -2262,8 +2853,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
-                2025-01-08
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
+                2025-02-14
               </time>
             
           </span>
@@ -2488,8 +3079,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
-                2025-01-08
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
+                2025-02-14
               </time>
             
           </span>
@@ -2731,8 +3322,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
-                2025-01-08
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
+                2025-02-14
               </time>
             
           </span>
@@ -2932,8 +3523,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
-                2025-01-08
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
+                2025-02-14
               </time>
             
           </span>
@@ -3116,8 +3707,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
-                2025-01-08
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
+                2025-02-14
               </time>
             
           </span>
@@ -3305,8 +3896,8 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
-                2025-01-08
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
+                2025-02-14
               </time>
             
           </span>
@@ -3506,8 +4097,8 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
-                2025-01-08
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
+                2025-02-14
               </time>
             
           </span>
@@ -3702,8 +4293,8 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
-                2025-01-08
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
+                2025-02-14
               </time>
             
           </span>
@@ -3892,8 +4483,8 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
-                2025-01-08
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:13:16+00:00">
+                2025-02-14
               </time>
             
           </span>
@@ -4018,436 +4609,6 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/js%E8%BF%90%E8%A1%8C%E8%BF%9B%E5%88%B6%E7%9A%84%E6%A2%B3%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2022/07/31/js%E8%BF%90%E8%A1%8C%E8%BF%9B%E5%88%B6%E7%9A%84%E6%A2%B3%E7%90%86/" itemprop="url">js运行进制的梳理</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-07-31T13:33:41+00:00">
-                2022-07-31
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
-                2025-01-08
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>参考连接：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/0tLxTybwJ7NCLBPtQClXoA">https://mp.weixin.qq.com/s/0tLxTybwJ7NCLBPtQClXoA</a></p>
-<h1 id="js运行进制的梳理"><a href="#js运行进制的梳理" class="headerlink" title="js运行进制的梳理"></a>js运行进制的梳理</h1><h2 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h2><ul>
-<li>两者区别<ul>
-<li>简单来讲，能看到的就是进程，例如：资源管理器中的进程列表；看不到的就是线程；</li>
-<li>进程是cpu资源分配的最小单元（系统会给他分配资源，能拥有资源和独立运行的最小单位）；</li>
-<li>线程是cpu调度的最小单位（线程是建立在进程的基础上的一次程序运行单位）；</li>
-</ul>
-</li>
-</ul>
-<h2 id="浏览器是多线程的，它包括哪些进程"><a href="#浏览器是多线程的，它包括哪些进程" class="headerlink" title="浏览器是多线程的，它包括哪些进程"></a>浏览器是多线程的，它包括哪些进程</h2><ul>
-<li>Browser线程：浏览器的主线程，只有一个</li>
-<li>第三方的插件进程：每个类型的插件对应一个进程，使用时才会创建</li>
-<li>GPU进程（最多一个，用于3D绘制等）</li>
-<li>浏览器渲染进程（浏览器内核） Renderer进程，每个tab页面一个进程：用于页面渲染、脚本执行、事件处理</li>
-</ul>
-<h2 id="为什么浏览器是多线程的"><a href="#为什么浏览器是多线程的" class="headerlink" title="为什么浏览器是多线程的"></a>为什么浏览器是多线程的</h2><pre><code>如果是单线程的，某个tab页面崩溃或者插件崩溃，就会影响到整个的浏览器
-</code></pre>
-<h3 id="浏览器内核（渲染进程）多线程的"><a href="#浏览器内核（渲染进程）多线程的" class="headerlink" title="浏览器内核（渲染进程）多线程的"></a>浏览器内核（渲染进程）多线程的</h3><ul>
-<li>GUI渲染线程（渲染页面，解析html、css）</li>
-<li>js引擎线程（js内核，处理js脚本程序，一个tab页面只有一个js线程来运行js程序）</li>
-<li>GUI渲染线程和js线程是互斥的</li>
-<li>事件触发归属于浏览器，用于控制事件循环；js是单线程，事件队列中的任务都是排队等待js引擎处理</li>
-<li>定时触发器线程</li>
-<li>异步http请求线程</li>
-</ul>
-<h3 id="Browser进程和浏览器内核（Renderer进程）的通信过程"><a href="#Browser进程和浏览器内核（Renderer进程）的通信过程" class="headerlink" title="Browser进程和浏览器内核（Renderer进程）的通信过程"></a>Browser进程和浏览器内核（Renderer进程）的通信过程</h3><ul>
-<li>B进程收到用户请求，需要获取页面内容，随后将该任务通过RendererHost接口传递给Renderer进程；<br>Renderer接口收到信息后，交给渲染线程（加载网页开始渲染网页，可能会使用到Brwerer进程获取资源或者GPU进程来帮助渲染-可能会有js线程操作DOM-最后Renderer进程将结果传递给Browser进程），Browser进程收到结果并绘制出来</li>
-</ul>
-<h3 id="浏览器内核线程之间的关系"><a href="#浏览器内核线程之间的关系" class="headerlink" title="浏览器内核线程之间的关系"></a>浏览器内核线程之间的关系</h3><ul>
-<li>GUI渲染线程和js引擎线程互斥<ul>
-<li>js是可以操作DOM的，如果在修改这个元素属性的同时渲染界面，那渲染线程前后获取的元素数据就不一样了；</li>
-</ul>
-</li>
-<li>js阻塞页面加载<ul>
-<li>避免js执行实践过长，这样会造成页面的渲染不连贯，导致渲染加载阻塞，用户体验不佳</li>
-</ul>
-</li>
-<li>WebWorker，js的多线程？</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/shiro%20%E6%B3%A8%E8%A7%A3@RequiresPermissions/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2022/07/31/shiro%20%E6%B3%A8%E8%A7%A3@RequiresPermissions/" itemprop="url">Spring Joinpoint类注解</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-07-31T13:33:41+00:00">
-                2022-07-31
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-01-08T03:03:58+00:00">
-                2025-01-08
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Spring-Joinpoint类注解"><a href="#Spring-Joinpoint类注解" class="headerlink" title="Spring Joinpoint类注解"></a>Spring Joinpoint类注解</h1><pre><code>joinpoint是AOP 的连接点（一个连接点代表一个被代理的方法）
-    静态连接点就是被代理的方法本身，可以直接通过getStaticPart方法调用，动态连接点就是对静态方法之外的增强方法；
-    动态连接点从静态连接点的拦截器上获取静态部分，并进行加强，形成动态连接点；
-    proceed() 方法得作用是：转到链的下一个拦截器上；
-    getStaticPart() 方法的作用是：返回连接点的静态部分；静态部分是一个拥有连接器链的对象；（这个静态方法都要被谁拦截使用，可以通过该方法返回）
-
-ReflectiveMethodInvocation类是joinpoint的实现类
-
-    至此，proceed()方法解析完毕。我们来总结一下。
-    首先要明确的一点就是一个连接点代表着一个对象里的一个方法。一个对象里的多个方法，就是多个连接点。每个连接点对象中，都存着一个拦截器链，proceed方法就是遍历拦截器链，如果和连接点所代表的方法一致，则执行MethodInterceptor的invoke方法，进行方法的代理，如果拦截器和代理方法不匹配，则进入下一个拦截器。直到都不匹配，则执行原始方法。
-
-    代理对象的所有方法，都会形成一个连接点对象；
-
-    由此可知，我们定义的方法，最终会封装为相应的MethodInterceptor对象，在连接点的proceed中被调用；而在连接点的拦截器中，已经封装好了连接点所代理方法MethodInterceptor;连接点直接使用拦截器进行方法的调用；
-
-综合所述，连接点就是AOP中的最小单元，连接点里存放了代理对象的目标类，目标方法，方法拦截器；进行代理的时候，调用拦截器MethodInterceptor的加强方法，执行代理方法；
-</code></pre>
-<p>参考链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq1309664161/article/details/120159606">https://blog.csdn.net/qq1309664161/article/details/120159606</a></p>
-<h1 id="Shiro之-RequiresPermissions注解原理详解"><a href="#Shiro之-RequiresPermissions注解原理详解" class="headerlink" title="Shiro之@RequiresPermissions注解原理详解"></a>Shiro之@RequiresPermissions注解原理详解</h1><pre><code>原理：使用了AOP进行了增强，来判断当前用户是否有该权限标识；
-从proceed()方法进来，然后发送请求，进入断点，加强链上的AopAllianceAnnotationsAuthorizingMethodInterceptor元素就是加强@RequiresPermissions而生成的元素，该类实现了MethodInterceptor 接口，其中invoke方法就是对原对象方法的增强，进入方法，执行到了assertAuthorized()方法，调用其中的getMethodInterceptors()方法获取注解，若有则调用相应的注解Handler去处理相应的逻辑（就是调用Realm中定义的权限获取方法）；
-这样就对注解@RequiresPermissions的方法进行了增强
-</code></pre>
-<p>参考链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq1309664161/article/details/123181245">https://blog.csdn.net/qq1309664161/article/details/123181245</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4498,7 +4659,7 @@ ReflectiveMethodInvocation类是joinpoint的实现类
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">86</span>
+                <span class="site-state-item-count">88</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -4520,7 +4681,7 @@ ReflectiveMethodInvocation类是joinpoint的实现类
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
