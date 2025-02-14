@@ -94,3 +94,8 @@ HAVING 用于聚合结果过滤：HAVING total_amount > 500 只对已经分组�
 
 区别：WHERE：在分组之前过滤数据，作用于行。
 HAVING：在分组之后过滤数据，作用于聚合结果。
+
+## mysql索引失效的场景
++ 建立联合索引，id-name-create_time-account_date(入账时间) 
+建立了id-name索引，但是查询条件中有create_time 没有使用索引下推，需要建立一个id-name-create_time索引，会走索引下推；
++ 其中order by 两个时间的排序方式不一致。索引失效
