@@ -270,6 +270,1104 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/09/16/%E9%9D%A2%E8%AF%95%E9%A2%98/Mysql%E4%BC%98%E5%8C%96%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/09/16/%E9%9D%A2%E8%AF%95%E9%A2%98/Mysql%E4%BC%98%E5%8C%96%E7%AC%94%E8%AE%B0/" itemprop="url">在 SQL 查询中，WHERE 和 HAVING 都可以用来过滤数据</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-09-16T13:33:41+00:00">
+                2024-09-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
+                2025-02-18
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在 SQL 查询中，WHERE 和 HAVING 都可以用来过滤数据，但它们的工作机制不同：</p>
+<p>WHERE：在分组（GROUP BY）之前过滤数据，属于预过滤。<br>HAVING：在分组（GROUP BY）之后过滤数据，属于后过滤。<br>将适合放在 WHERE 条件的过滤写在 HAVING 中，可能导致大量不必要的数据参与分组运算，从而增加查询的时间和资源消耗。</p>
+<p>示例<br>原始表<br>假设有一个销售记录表 sales：</p>
+<p>sql<br>复制代码<br>CREATE TABLE sales (<br>    id INT PRIMARY KEY,<br>    product_id INT,<br>    sale_date DATE,<br>    amount DECIMAL(10, 2)<br>);<br>数据样例：</p>
+<p>id	product_id	sale_date	amount<br>1	101	2024-01-01	100.00<br>2	102	2024-01-02	200.00<br>3	101	2024-01-03	300.00<br>4	103	2024-01-04	400.00<br>5	101	2024-01-05	500.00<br>查询需求<br>我们需要统计每个产品的总销售金额大于 500 的记录。</p>
+<p>错误示例：使用 HAVING<br>sql<br>复制代码<br>SELECT product_id, SUM(amount) AS total_amount<br>FROM sales<br>GROUP BY product_id<br>HAVING product_id &#x3D; 101 AND total_amount &gt; 500;<br>问题：</p>
+<p>HAVING product_id &#x3D; 101 是一个简单的等值条件，但它放在 HAVING 中，会导致所有数据都参与 GROUP BY 和 SUM 运算。<br>这增加了计算负担，尤其是当数据量很大时。<br>优化：使用 WHERE<br>sql<br>复制代码</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> product_id, <span class="built_in">SUM</span>(amount) <span class="keyword">AS</span> total_amount</span><br><span class="line"><span class="keyword">FROM</span> sales</span><br><span class="line"><span class="keyword">WHERE</span> product_id <span class="operator">=</span> <span class="number">101</span></span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> product_id</span><br><span class="line"><span class="keyword">HAVING</span> total_amount <span class="operator">&gt;</span> <span class="number">500</span>;</span><br></pre></td></tr></table></figure>
+<p>改进：</p>
+<p>在 WHERE 中预先过滤出 product_id &#x3D; 101 的数据，减少了参与 GROUP BY 和 SUM 运算的数据量。<br>查询效率显著提升。<br>性能对比<br>在数据量较大时，比如有 1,000,000 条记录：</p>
+<p>HAVING 方式：所有记录都会参与分组计算，资源消耗高，时间长。<br>WHERE 方式：只有满足 product_id &#x3D; 101 的数据参与分组，减少了无用的计算。<br>优化后，查询时间可能降低 30%-50% 或更多，具体视数据量和索引情况而定。</p>
+<p>SQL 查询执行顺序<br>SQL 的逻辑执行顺序与书写顺序不同，逻辑执行顺序如下：</p>
+<p>FROM：从数据源（表、视图等）加载数据。<br>ON：应用 JOIN 条件（仅适用于多表查询）。<br>JOIN：将符合 ON 条件的表进行连接。<br>WHERE：过滤不符合条件的行（行级过滤）。<br>GROUP BY：将数据分组。<br>HAVING：对分组后的结果进行过滤（基于聚合条件）。<br>SELECT：选择所需的列或表达式。<br>DISTINCT：去重。<br>ORDER BY：对结果集排序。<br>LIMIT：返回指定数量的行。</p>
+<p>执行顺序分析<br>优化后的 SQL 调整了条件位置：</p>
+<p>WHERE 先执行：WHERE product_id &#x3D; 101 在 GROUP BY 之前过滤掉了不符合条件的行，减少了参与分组的记录数量。<br>减少分组和聚合运算的负担：GROUP BY 和 SUM 只需处理过滤后的数据。<br>HAVING 用于聚合结果过滤：HAVING total_amount &gt; 500 只对已经分组后的结果应用。<br>效果：大幅减少了分组和聚合运算的记录数，提升了性能。</p>
+<p>区别：WHERE：在分组之前过滤数据，作用于行。<br>HAVING：在分组之后过滤数据，作用于聚合结果。</p>
+<h2 id="mysql索引失效的场景"><a href="#mysql索引失效的场景" class="headerlink" title="mysql索引失效的场景"></a>mysql索引失效的场景</h2><ul>
+<li>建立联合索引，id-name-create_time-account_date(入账时间)<br>建立了id-name索引，但是查询条件中有create_time 没有使用索引下推，需要建立一个id-name-create_time索引，会走索引下推；</li>
+<li>其中order by 两个时间的排序方式不一致。索引失效</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/09/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E8%A7%A3%E5%86%B3hash%E7%A2%B0%E6%92%9E%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/09/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E8%A7%A3%E5%86%B3hash%E7%A2%B0%E6%92%9E%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%9F/" itemprop="url">解决hash碰撞的方法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-09-16T13:33:41+00:00">
+                2024-09-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
+                2025-02-18
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="解决hash碰撞的方法？"><a href="#解决hash碰撞的方法？" class="headerlink" title="解决hash碰撞的方法？"></a>解决hash碰撞的方法？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="链地址法（Chaining）"><a href="#链地址法（Chaining）" class="headerlink" title="链地址法（Chaining）"></a>链地址法（Chaining）</h2><p>链地址法是最常见的解决哈希碰撞的方法之一。在这种方法中，每个桶（bucket）包含一个链表（或树结构，Java 8 及以上版本）。当发生哈希碰撞时，新的键值对被添加到相应桶的链表中。</p>
+<p><strong>优点：</strong></p>
+<p>简单易实现。</p>
+<p>动态调整链表长度，不需要提前知道元素数量。</p>
+<p><strong>缺点：</strong></p>
+<p>当链表长度增加时，查找效率下降。</p>
+<p>需要额外的存储空间来存储指针。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class HashMapNode&lt;K, V&gt; &#123;</span><br><span class="line">    K key;</span><br><span class="line">    V value;</span><br><span class="line">    HashMapNode&lt;K, V&gt; next;</span><br><span class="line"></span><br><span class="line">    HashMapNode(K key, V value) &#123;</span><br><span class="line">        this.key = key;</span><br><span class="line">        this.value = value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="开放地址法（Open-Addressing）"><a href="#开放地址法（Open-Addressing）" class="headerlink" title="开放地址法（Open Addressing）"></a>开放地址法（Open Addressing）</h2><p>开放地址法不使用链表，而是在哈希表本身寻找空闲位置来存储碰撞的元素。常见的开放地址法有以下几种：</p>
+<h3 id="线性探测（Linear-Probing）"><a href="#线性探测（Linear-Probing）" class="headerlink" title="线性探测（Linear Probing）"></a>线性探测（Linear Probing）</h3><p>当发生哈希碰撞时，线性探测法在哈希表中向后依次查找下一个空闲位置。</p>
+<p>优点：实现简单，不需要额外的存储空间。</p>
+<p>缺点：当哈希表接近满时，查找效率急剧下降（称为“主群集”问题）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int hash = key.hashCode() % table.length;</span><br><span class="line">while (table[hash] != null) &#123;</span><br><span class="line">    hash = (hash + 1) % table.length;</span><br><span class="line">&#125;</span><br><span class="line">table[hash] = new Entry(key, value);</span><br></pre></td></tr></table></figure>
+
+<h3 id="二次探测（Quadratic-Probing）"><a href="#二次探测（Quadratic-Probing）" class="headerlink" title="二次探测（Quadratic Probing）"></a>二次探测（Quadratic Probing）</h3><p>二次探测法在发生哈希碰撞时，按照平方序列查找空闲位置（如 1, 4, 9, 16, …）。</p>
+<p>优点：减少主群集问题。</p>
+<p>缺点：实现较复杂，可能会导致二次群集问题。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">int hash = key.hashCode() % table.length;</span><br><span class="line">int i = 1;</span><br><span class="line">while (table[hash] != null) &#123;</span><br><span class="line">    hash = (hash + i * i) % table.length;</span><br><span class="line">    i++;</span><br><span class="line">&#125;</span><br><span class="line">table[hash] = new Entry(key, value);</span><br></pre></td></tr></table></figure>
+
+<h3 id="双重散列（Double-Hashing）"><a href="#双重散列（Double-Hashing）" class="headerlink" title="双重散列（Double Hashing）"></a>双重散列（Double Hashing）</h3><p>双重散列法使用两个不同的哈希函数。当第一个哈希函数发生碰撞时，使用第二个哈希函数计算新的索引。</p>
+<p>优点：减少群集问题。较好的查找性能。</p>
+<p>缺点：实现复杂。需要设计两个有效的哈希函数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int hash1 = key.hashCode() % table.length;</span><br><span class="line">int hash2 = 1 + (key.hashCode() % (table.length - 1));</span><br><span class="line">while (table[hash1] != null) &#123;</span><br><span class="line">    hash1 = (hash1 + hash2) % table.length;</span><br><span class="line">&#125;</span><br><span class="line">table[hash1] = new Entry(key, value);</span><br></pre></td></tr></table></figure>
+
+<h3 id="再哈希法（Rehashing）"><a href="#再哈希法（Rehashing）" class="headerlink" title="再哈希法（Rehashing）"></a>再哈希法（Rehashing）</h3><p>再哈希法在发生碰撞时，使用不同的哈希函数重新计算哈希值，直到找到空闲位置。</p>
+<p>优点：减少群集问题。</p>
+<p>缺点：实现复杂。需要设计多个有效的哈希函数。</p>
+<h3 id="分离链接法"><a href="#分离链接法" class="headerlink" title="分离链接法"></a>分离链接法</h3><p>在 Java 8 及以上版本中，当链表长度超过一定阈值（默认是 8）时，链表会转换为红黑树，以提高查找效率。</p>
+<p>优点：在高冲突情况下性能较好，动态调整链表和树的长度。</p>
+<p>缺点：实现复杂，需要额外的存储空间。</p>
+<h2 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h2><p><strong>Cuckoo Hashing</strong>：使用两个哈希表和两个哈希函数，如果插入时发生冲突，将原来的元素“踢出”并重新插入到另一个哈希表中。</p>
+<p><strong>Hopscotch Hashing</strong>：类似于线性探测，但在插入时会调整元素的位置，使得查找路径更短。</p>
+<p>链地址法是最常见的解决哈希碰撞的方法，适用于大多数情况。开放地址法在空间利用率上有优势，但在高负载情况下性能可能下降。再哈希法和其他高级方法适用于特定的高性能需求场景。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/09/10/Stream/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/09/10/Stream/" itemprop="url">Stream</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-09-10T17:33:00+00:00">
+                2024-09-10
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
+                2025-02-18
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Stream"><a href="#Stream" class="headerlink" title="Stream"></a>Stream</h1><h3 id="Stream-API的深入理解"><a href="#Stream-API的深入理解" class="headerlink" title="Stream API的深入理解"></a>Stream API的深入理解</h3><p>Stream API是Java 8中引入的一个关键抽象概念，它允许你以声明性方式处理数据集合（包括数组等）。Stream通过一系列的操作（如筛选、转换、聚合等）来构建复杂的数据处理流水线。</p>
+<h4 id="特性及优点详解"><a href="#特性及优点详解" class="headerlink" title="特性及优点详解"></a>特性及优点详解</h4><ol>
+<li><p><strong>无存储</strong>：Stream本身不存储数据，它只是数据源的一个视图。这意味着你可以对原始数据集合进行多次Stream操作，而不会改变原始数据。</p>
+</li>
+<li><p><strong>为函数式编程而生</strong>：Stream API的设计符合函数式编程的范式，它鼓励使用不可变的数据和纯函数（即没有副作用的函数）。这使得代码更加简洁、易于理解和维护。</p>
+</li>
+<li><p><strong>惰式执行</strong>：Stream上的操作是惰式执行的，这意味着只有在需要结果时才会执行操作。这有助于优化性能，因为它允许Stream API在可能的情况下延迟计算，直到真正需要结果为止。</p>
+</li>
+<li><p><strong>可消费性</strong>：Stream只能被消费一次，一旦遍历过就会失效。这是为了保持流的不可变性，并防止在多个线程中同时修改流。</p>
+</li>
+</ol>
+<h4 id="关键性操作"><a href="#关键性操作" class="headerlink" title="关键性操作"></a>关键性操作</h4><ul>
+<li><p><strong>流的创建</strong>：可以通过集合的<code>stream()</code>或<code>parallelStream()</code>方法、<code>Stream.of()</code>方法或<code>Stream.Builder</code>来创建流。</p>
+</li>
+<li><p><strong>中间操作</strong>：这些操作会返回一个新的流，并允许你进行链式调用。常见的中间操作包括<code>filter()</code>（筛选）、<code>map()</code>（转换）、<code>flatMap()</code>（扁平化映射）、<code>sorted()</code>（排序）、<code>distinct()</code>（去重）等。</p>
+</li>
+<li><p><strong>最终操作</strong>：这些操作会触发流的计算，并返回一个结果或副作用。常见的最终操作包括<code>forEach()</code>（遍历）、<code>collect()</code>（收集到集合）、<code>reduce()</code>（归约）、<code>count()</code>（计数）等。</p>
+</li>
+</ul>
+<h4 id="示例分析"><a href="#示例分析" class="headerlink" title="示例分析"></a>示例分析</h4><p>你给出的示例很好地展示了Stream API的使用场景。在这个示例中，你首先通过<code>filter()</code>筛选出非红色的球，然后通过<code>map()</code>将它们融化成随机的三角形，再通过另一个<code>filter()</code>筛选出非小的三角形，最后通过某种方式计算出剩余图形的周长。</p>
+<p>这个示例展示了如何使用Stream API来构建一个复杂的数据处理流水线，并通过链式调用中间操作和最终操作来得到最终结果。</p>
+<h3 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h3><p>Stream API在实际应用中非常有用，特别是在处理大型数据集时。它允许你以声明性方式编写代码，而不需要关心底层实现细节。此外，Stream API还支持并行处理，这使得它能够在多核处理器上更有效地利用计算资源。</p>
+<p>总之，Stream API是Java 8中一个非常重要的特性，它极大地提高了Java程序员的生产力，并使得编写高效、简洁和易于维护的代码变得更加容易。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/09/10/Stream%E7%9A%84%E5%B9%B6%E8%A1%8C%E6%B5%81%E6%98%AF%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%9A%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/09/10/Stream%E7%9A%84%E5%B9%B6%E8%A1%8C%E6%B5%81%E6%98%AF%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%9A%84/" itemprop="url">Stream</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-09-10T17:33:00+00:00">
+                2024-09-10
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
+                2025-02-18
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Stream的并行流是如何实现的"><a href="#Stream的并行流是如何实现的" class="headerlink" title="Stream的并行流是如何实现的"></a>Stream的并行流是如何实现的</h1><h3 id="Stream的并行流是如何实现的？"><a href="#Stream的并行流是如何实现的？" class="headerlink" title="Stream的并行流是如何实现的？"></a>Stream的并行流是如何实现的？</h3><p>在Java中，Stream API提供了一种高效且声明式的方式来处理数据集合。并行流（parallel stream）是Stream API中的一个重要特性，它允许开发者利用多核处理器的并行处理能力来提高数据处理的效率。</p>
+<ol>
+<li><p><strong>获取并行流</strong>：</p>
+<ul>
+<li>使用<code>Collection</code>接口的<code>parallelStream</code>方法，或者通过<code>Stream</code>接口的<code>parallel</code>方法将顺序流转换为并行流。</li>
+</ul>
+</li>
+<li><p><strong>底层实现</strong>：</p>
+<ul>
+<li>并行流底层使用了Java 7中引入的Fork&#x2F;Join框架。</li>
+<li>Fork&#x2F;Join框架旨在将一个大任务分割（fork）成多个小任务，这些小任务可以并行执行，然后再将这些小任务的结果合并（join）成最终结果。</li>
+<li>这种分治策略非常适合处理可以递归分解的大规模计算任务。</li>
+</ul>
+</li>
+<li><p><strong>执行方式</strong>：</p>
+<ul>
+<li>并行流通过并发运行的方式执行流的迭代及操作，从而充分利用多核处理器的性能。</li>
+</ul>
+</li>
+</ol>
+<h3 id="ForkJoinPool和ThreadPoolExecutor的区别"><a href="#ForkJoinPool和ThreadPoolExecutor的区别" class="headerlink" title="ForkJoinPool和ThreadPoolExecutor的区别"></a>ForkJoinPool和ThreadPoolExecutor的区别</h3><p>ForkJoinPool和ThreadPoolExecutor都是Java中用于管理线程和并行任务的工具，但它们在实现方式和适用场景上有所不同。</p>
+<ol>
+<li><p><strong>实现方式</strong>：</p>
+<ul>
+<li><strong>ForkJoinPool</strong>：基于工作窃取（Work-Stealing）算法实现的线程池。它适用于处理可以递归分解的大规模计算任务。每个线程都有自己的双端队列（deque）来存储任务，当某个线程的任务队列为空时，它会从其他线程的队列中窃取任务来执行。</li>
+<li><strong>ThreadPoolExecutor</strong>：基于任务队列和线程池的实现。它适用于处理不同类型的任务，包括计算密集型、IO密集型和混合型任务。ThreadPoolExecutor允许更灵活的任务调度和线程管理。</li>
+</ul>
+</li>
+<li><p><strong>适用场景</strong>：</p>
+<ul>
+<li><strong>ForkJoinPool</strong>：更适合处理可以递归分解的大规模计算任务，如排序、归并、搜索等。</li>
+<li><strong>ThreadPoolExecutor</strong>：适用于更广泛的场景，包括异步执行、定时执行和周期性执行等。</li>
+</ul>
+</li>
+<li><p><strong>性能</strong>：</p>
+<ul>
+<li>ForkJoinPool通过工作窃取算法来减少线程之间的空闲时间，提高CPU利用率，但在任务划分不均衡时可能导致线程饥饿。</li>
+<li>ThreadPoolExecutor的性能取决于任务类型、线程数量和任务队列的配置。</li>
+</ul>
+</li>
+</ol>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Stream的并行流是Java中处理大规模数据集合的高效工具，它底层使用了Fork&#x2F;Join框架来实现并行处理。而ForkJoinPool和ThreadPoolExecutor则是Java中用于管理线程和并行任务的两种不同实现方式，它们在实现方式、适用场景和性能上有所不同。开发者应根据具体的应用场景和需求选择合适的工具来优化程序的性能。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/09/10/synchronized/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/09/10/synchronized/" itemprop="url">synchronized</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-09-10T17:33:00+00:00">
+                2024-09-10
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
+                2025-02-18
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="synchronized"><a href="#synchronized" class="headerlink" title="synchronized"></a>synchronized</h2><h3 id="1-synchronized-的使用方法"><a href="#1-synchronized-的使用方法" class="headerlink" title="1. synchronized 的使用方法"></a>1. synchronized 的使用方法</h3><ul>
+<li><strong>同步方法</strong>：在方法声明时加上 <code>synchronized</code> 关键字，这样当某个线程调用这个方法时，会先获取到该方法的锁（通常是该方法所属对象的锁），其他线程必须等待锁被释放后才能调用这个方法。</li>
+<li><strong>同步代码块</strong>：使用 <code>synchronized(对象)</code> 来定义一个同步代码块，这里的对象就是锁对象。当线程进入这个代码块时，会先尝试获取这个对象的锁，获取到锁后才能执行代码块中的代码。</li>
+</ul>
+<h3 id="2-synchronized-的实现机制"><a href="#2-synchronized-的实现机制" class="headerlink" title="2. synchronized 的实现机制"></a>2. synchronized 的实现机制</h3><ul>
+<li><strong>方法级同步</strong>：对于同步方法，JVM 在方法的常量池中添加一个 <code>ACC_SYNCHRONIZED</code> 标志。当线程调用这个方法时，会检查这个标志，如果设置了该标志，则需要先获取到方法的锁（通常是该方法所属对象的监视器锁），然后开始执行方法，方法执行完毕后再释放锁。</li>
+<li><strong>代码块级同步</strong>：对于同步代码块，JVM 使用 <code>monitorenter</code> 和 <code>monitorexit</code> 两条字节码指令来实现同步。<code>monitorenter</code> 指令用于获取锁，<code>monitorexit</code> 指令用于释放锁。每个对象都有一个监视器锁（monitor），当线程执行到 <code>monitorenter</code> 指令时，会尝试获取对象的监视器锁，如果获取成功，则计数器加一；当线程执行到 <code>monitorexit</code> 指令时，计数器减一。当计数器为 0 时，表示锁已经被释放，其他线程可以获取锁。</li>
+</ul>
+<h3 id="3-Monitor（监视器）"><a href="#3-Monitor（监视器）" class="headerlink" title="3. Monitor（监视器）"></a>3. Monitor（监视器）</h3><ul>
+<li>Monitor 是 Java 中用于实现同步的一种机制，它可以看作是一个特殊的对象，这个对象包含了一个特殊的房间（Entry Set）和一个等待房间（Wait Set）。</li>
+<li>当线程尝试获取对象的锁时，它会在 Entry Set 中等待，直到锁被释放。</li>
+<li>如果线程在持有锁的过程中因为某些原因被挂起（比如调用了 <code>wait()</code> 方法），那么它会被移到 Wait Set 中，等待其他线程唤醒它（比如调用 <code>notify()</code> 或 <code>notifyAll()</code> 方法）。</li>
+<li>Monitor 保证了同一时间只有一个线程可以访问被保护的数据和代码。</li>
+</ul>
+<h3 id="4-synchronized-的特性"><a href="#4-synchronized-的特性" class="headerlink" title="4. synchronized 的特性"></a>4. synchronized 的特性</h3><ul>
+<li><strong>互斥性</strong>：同一时间点，只有一个线程可以获得锁，获得锁的线程才能处理被 <code>synchronized</code> 修饰的代码片段。</li>
+<li><strong>阻塞性</strong>：只有获得锁的线程才能执行被 <code>synchronized</code> 修饰的代码片段，未获得锁的线程只能阻塞，等待锁释放。</li>
+<li><strong>可重入性</strong>：如果一个线程已经获得锁，在锁未释放之前，再次请求锁的时候，是必然可以获得锁的。这是因为 JVM 会维护一个锁计数器，当同一个线程多次获取锁时，计数器会递增；当释放锁时，计数器会递减，直到计数器为 0 时，锁才会被真正释放。</li>
+</ul>
+<p>综上所述，<code>synchronized</code> 通过在方法或代码块级别添加同步机制，利用对象的监视器锁来保证线程安全。它是 Java 中实现线程同步的一种简单而有效的手段。</p>
+<p><code>synchronized</code> 是 Java 中用于保证线程安全的关键字，它通过一系列的机制来保证原子性、可见性和有序性。下面是对这三个方面的详细解释：</p>
+<h2 id="synchronized特性"><a href="#synchronized特性" class="headerlink" title="synchronized特性"></a>synchronized特性</h2><h3 id="1-原子性"><a href="#1-原子性" class="headerlink" title="1. 原子性"></a>1. 原子性</h3><p>原子性是指一个操作是不可中断的，即该操作要么全部执行，要么全部不执行。在并发编程中，原子性用于保证某个操作在执行过程中不会被其他线程打断。</p>
+<p>在 Java 中，<code>synchronized</code> 通过 <code>monitorenter</code> 和 <code>monitorexit</code> 这两个字节码指令来保证原子性。当一个线程进入 <code>synchronized</code> 修饰的方法或代码块时，它会先尝试获取锁（通过 <code>monitorenter</code> 指令）。如果获取成功，则继续执行后续的代码；如果获取失败（因为锁已被其他线程持有），则该线程会被阻塞，直到锁被释放（通过 <code>monitorexit</code> 指令）为止。</p>
+<p>由于 <code>synchronized</code> 保证了同一时间只有一个线程能够持有锁并执行相应的代码，因此它也就保证了这段代码在执行过程中的原子性。即使由于时间片耗尽或其他原因导致线程被中断，只要锁还没有被释放，该线程在下一次获得时间片时仍然会继续执行剩余的代码，直到完成。</p>
+<h3 id="2-可见性"><a href="#2-可见性" class="headerlink" title="2. 可见性"></a>2. 可见性</h3><p>可见性是指当多个线程访问同一个变量时，一个线程修改了这个变量的值，其他线程能够立即看到修改后的值。</p>
+<p>Java 内存模型（JMM）规定了所有的变量都存储在主内存中，而每个线程都有自己的工作内存（也称为线程本地存储）。线程对变量的所有操作都必须在自己的工作内存中进行，而不能直接读写主内存。这可能导致线程1修改了某个变量的值，但线程2由于还没有从主内存中刷新该变量的副本，因此看不到修改后的值。</p>
+<p><code>synchronized</code> 关键字通过确保在进入同步块或同步方法时获取锁，并在退出时释放锁，来实现对变量的可见性保证。具体来说，当一个线程持有锁并执行同步代码块时，它会将自己工作内存中的变量副本更新到主内存中（在写操作时）。当其他线程尝试进入该同步代码块时，它们会先获取锁，并在获取锁后从主内存中读取最新的变量值到自己的工作内存中（在读操作时）。这样，就保证了线程之间对共享变量的可见性。</p>
+<h3 id="3-有序性"><a href="#3-有序性" class="headerlink" title="3. 有序性"></a>3. 有序性</h3><p>有序性是指程序执行的顺序按照代码的先后顺序执行。然而，由于硬件和编译器的优化，指令可能会被重排序以提高性能。这种重排序在单线程环境下通常不会改变程序的执行结果，但在多线程环境下可能会导致问题。</p>
+<p>Java 提供了 <code>as-if-serial</code> 语义来确保单线程程序的有序性。该语义要求编译器和处理器在优化时不能改变单线程程序的执行结果。然而，在多线程环境下，<code>as-if-serial</code> 语义并不能完全保证有序性。</p>
+<p>为了解决这个问题，<code>synchronized</code> 关键字通过确保同一时间只有一个线程能够执行同步代码块来提供有序性保证。由于同步代码块在同一时间只能被一个线程执行，因此可以认为该代码块内的指令是按照它们在代码中出现的顺序执行的。这避免了由于指令重排序而导致的多线程问题。</p>
+<p>总结来说，<code>synchronized</code> 通过确保同一时间只有一个线程能够执行同步代码块来提供原子性、可见性和有序性保证。这些特性使得 <code>synchronized</code> 成为 Java 中实现线程安全的一种重要手段。</p>
+<h2 id="锁升级"><a href="#锁升级" class="headerlink" title="锁升级"></a>锁升级</h2><p>这篇文章的核心内容是介绍了Java中synchronized关键字的锁升级过程，主要包括无锁、偏向锁、轻量级锁和重量级锁四种状态。以下是对这些核心内容的简要概述：</p>
+<h3 id="1-无锁状态："><a href="#1-无锁状态：" class="headerlink" title="1.无锁状态："></a>1.无锁状态：</h3><ul>
+<li>当一个线程第一次访问一个对象的同步块时，JVM会在对象头中设置该线程的Thread ID，并将对象头的状态位设置为“偏向锁”。</li>
+</ul>
+<h3 id="2-偏向锁："><a href="#2-偏向锁：" class="headerlink" title="2.偏向锁："></a>2.偏向锁：</h3><ul>
+<li>当一个synchronized块被线程首次进入时，锁对象会进入偏向模式。</li>
+<li>偏向锁模式下，锁会偏向于第一个获取它的线程，JVM会在对象头中记录该线程的ID作为偏向锁的持有者。</li>
+<li>如果其他线程访问该对象，会先检查该对象的偏向锁标识，如果和自己的线程ID相同，则直接获取锁。如果不同，则该对象的锁状态就会升级到轻量级锁状态。</li>
+<li>触发条件：首次进入synchronized块时自动开启，假设JVM启动参数没有禁用偏向锁。</li>
+<li>注意：在JDK 15中，偏向锁已被废除。</li>
+</ul>
+<h3 id="3-轻量级锁："><a href="#3-轻量级锁：" class="headerlink" title="3.轻量级锁："></a>3.轻量级锁：</h3><ul>
+<li>当有另一个线程尝试获取已被偏向的锁时，偏向锁会被撤销，锁会升级为轻量级锁。</li>
+<li>在轻量级锁状态中，JVM为对象头中的Mark Word预留了一部分空间，用于存储指向线程栈中锁记录的指针。</li>
+<li>当一个线程尝试获取轻量级锁时，JVM会：<ol>
+<li>将对象头中的Mark Word复制到线程栈中的锁记录（Lock Record）。</li>
+<li>尝试通过CAS操作更新对象头的Mark Word。</li>
+</ol>
+</li>
+<li>如果替换成功，则该线程获取锁成功；如果失败，则表示已经有其他线程获取了锁，则该锁状态就会升级到重量级锁状态。</li>
+<li>触发条件：当有另一个线程尝试获取已被偏向的锁时，偏向锁会升级为轻量级锁。</li>
+</ul>
+<h3 id="4-重量级锁："><a href="#4-重量级锁：" class="headerlink" title="4.重量级锁："></a>4.重量级锁：</h3><ul>
+<li>当轻量级锁的CAS操作失败，即出现了实际的竞争，锁会进一步升级为重量级锁。</li>
+<li>当锁状态升级到重量级锁状态时，JVM会将该对象的锁变成一个重量级锁，并在对象头中记录指向等待队列的指针。</li>
+<li>如果一个线程想要获取该对象的锁（当前对象已被其他线程锁定时），则需要先进入等待队列，等待该锁被释放。当锁被释放时，JVM会从等待队列中选择一个线程唤醒，并将该线程的状态设置为“就绪”状态，然后等待该线程重新获取该对象的锁。</li>
+<li>触发条件：当轻量级锁的CAS操作失败，轻量级锁升级为重量级锁。</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/09/01/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +1415,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:23:51+00:00">
-                2025-02-14
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
+                2025-02-18
               </time>
             
           </span>
@@ -518,8 +1616,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:23:51+00:00">
-                2025-02-14
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
+                2025-02-18
               </time>
             
           </span>
@@ -702,8 +1800,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:23:51+00:00">
-                2025-02-14
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
+                2025-02-18
               </time>
             
           </span>
@@ -844,6 +1942,202 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/dependencyManagement%E4%B8%8Edependencies%E7%9A%84%E5%8C%BA%E5%88%AB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2022/07/31/dependencyManagement%E4%B8%8Edependencies%E7%9A%84%E5%8C%BA%E5%88%AB/" itemprop="url">dependencyManagement与dependencies的区别</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-07-31T13:33:41+00:00">
+                2022-07-31
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
+                2025-02-18
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li>dependencyManagement<ul>
+<li>用于父类的管理，一般写在顶层父类的pom.xml中</li>
+<li>只是做声明依赖，不做具体引入，只有在子项目中使用到是才会实现依赖</li>
+<li>子类声明了version，就用子类自己的，否则都继承父类的version和scope</li>
+</ul>
+</li>
+<li>dependencies<ul>
+<li>默认被子类全部继承</li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/cookie%E5%92%8Csession%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%88%E5%89%8D%E5%90%8E%E7%AB%AF%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -891,8 +2185,8 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:23:51+00:00">
-                2025-02-14
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
+                2025-02-18
               </time>
             
           </span>
@@ -1045,202 +2339,6 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/dependencyManagement%E4%B8%8Edependencies%E7%9A%84%E5%8C%BA%E5%88%AB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2022/07/31/dependencyManagement%E4%B8%8Edependencies%E7%9A%84%E5%8C%BA%E5%88%AB/" itemprop="url">dependencyManagement与dependencies的区别</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-07-31T13:33:41+00:00">
-                2022-07-31
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:23:51+00:00">
-                2025-02-14
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li>dependencyManagement<ul>
-<li>用于父类的管理，一般写在顶层父类的pom.xml中</li>
-<li>只是做声明依赖，不做具体引入，只有在子项目中使用到是才会实现依赖</li>
-<li>子类声明了version，就用子类自己的，否则都继承父类的version和scope</li>
-</ul>
-</li>
-<li>dependencies<ul>
-<li>默认被子类全部继承</li>
-</ul>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/ftp%E9%97%AE%E9%A2%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1288,8 +2386,8 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:23:51+00:00">
-                2025-02-14
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
+                2025-02-18
               </time>
             
           </span>
@@ -1478,8 +2576,8 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:23:51+00:00">
-                2025-02-14
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
+                2025-02-18
               </time>
             
           </span>
@@ -1664,8 +2762,8 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:23:51+00:00">
-                2025-02-14
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
+                2025-02-18
               </time>
             
           </span>
@@ -1840,6 +2938,193 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/springcloud%E4%B8%ADfeign%E8%B0%83%E7%94%A8%E6%97%B6token%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2022/07/31/springcloud%E4%B8%ADfeign%E8%B0%83%E7%94%A8%E6%97%B6token%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98/" itemprop="url">springcloud中feign调用时token丢失问题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-07-31T13:33:41+00:00">
+                2022-07-31
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
+                2025-02-18
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_39267497/article/details/119213250">https://blog.csdn.net/weixin_39267497/article/details/119213250</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/shiro%20%E6%B3%A8%E8%A7%A3@RequiresPermissions/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1887,8 +3172,8 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:23:51+00:00">
-                2025-02-14
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
+                2025-02-18
               </time>
             
           </span>
@@ -2047,193 +3332,6 @@ ReflectiveMethodInvocation类是joinpoint的实现类
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/springcloud%E4%B8%ADfeign%E8%B0%83%E7%94%A8%E6%97%B6token%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2022/07/31/springcloud%E4%B8%ADfeign%E8%B0%83%E7%94%A8%E6%97%B6token%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98/" itemprop="url">springcloud中feign调用时token丢失问题</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-07-31T13:33:41+00:00">
-                2022-07-31
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:23:51+00:00">
-                2025-02-14
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_39267497/article/details/119213250">https://blog.csdn.net/weixin_39267497/article/details/119213250</a></li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2281,8 +3379,8 @@ ReflectiveMethodInvocation类是joinpoint的实现类
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:23:51+00:00">
-                2025-02-14
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
+                2025-02-18
               </time>
             
           </span>
@@ -2470,8 +3568,8 @@ ReflectiveMethodInvocation类是joinpoint的实现类
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:23:51+00:00">
-                2025-02-14
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
+                2025-02-18
               </time>
             
           </span>
@@ -2666,8 +3764,8 @@ ReflectiveMethodInvocation类是joinpoint的实现类
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:23:51+00:00">
-                2025-02-14
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
+                2025-02-18
               </time>
             
           </span>
@@ -2853,8 +3951,8 @@ ReflectiveMethodInvocation类是joinpoint的实现类
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:23:51+00:00">
-                2025-02-14
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
+                2025-02-18
               </time>
             
           </span>
@@ -3037,8 +4135,8 @@ ReflectiveMethodInvocation类是joinpoint的实现类
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-14T06:23:51+00:00">
-                2025-02-14
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
+                2025-02-18
               </time>
             
           </span>
@@ -3212,7 +4310,7 @@ ReflectiveMethodInvocation类是joinpoint的实现类
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">95</span>
+                <span class="site-state-item-count">100</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -3234,7 +4332,7 @@ ReflectiveMethodInvocation类是joinpoint的实现类
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
