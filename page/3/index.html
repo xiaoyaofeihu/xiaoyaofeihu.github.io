@@ -270,6 +270,826 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/HashMap%E6%80%8E%E4%B9%88%E8%AE%A1%E7%AE%97hashCode%E7%9A%84%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/HashMap%E6%80%8E%E4%B9%88%E8%AE%A1%E7%AE%97hashCode%E7%9A%84%EF%BC%9F/" itemprop="url">HashMap怎么计算hashCode的？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-20T02:00:35+00:00">
+                2025-02-20
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌HashMap怎么计算hashCode的？"><a href="#👌HashMap怎么计算hashCode的？" class="headerlink" title="👌HashMap怎么计算hashCode的？"></a>👌HashMap怎么计算hashCode的？</h1><p>HashMap使用键的hashCode()方法来生成哈希值，并对其进行一些处理，以提高哈希表的性能和均匀分布。</p>
+<h2 id="调用键的hashCode-方法"><a href="#调用键的hashCode-方法" class="headerlink" title="调用键的hashCode()方法"></a>调用键的hashCode()方法</h2><p>首先，HashMap调用键对象的hashCode()方法来获取一个整数哈希码。这个哈希码是由键对象的类定义的，通常是通过某种算法基于对象的内部状态计算出来的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int hashCode= key.hashCode();</span><br></pre></td></tr></table></figure>
+
+<h2 id="扰动函数-Perturbation-Function"><a href="#扰动函数-Perturbation-Function" class="headerlink" title="扰动函数 (Perturbation Function)"></a>扰动函数 (Perturbation Function)</h2><p>为了减少哈希冲突并使哈希码更加均匀地分布，HashMap对原始哈希码进行了一些额外的处理。这种处理被称为扰动函数。Java 8 及以后的HashMap实现使用以下算法来计算最终的哈希值：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">static final int hash(Object key) &#123;</span><br><span class="line">    int h;</span><br><span class="line">    return (key == null) ? 0 : (h = key.hashCode()) ^ (h &gt;&gt;&gt; 16);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个算法的步骤如下：</p>
+<ol>
+<li><strong>获取键的哈希码</strong>：h &#x3D; key.hashCode()</li>
+<li><strong>右移 16 位</strong>：h &gt;&gt;&gt; 16</li>
+<li><strong>异或运算</strong>：h ^ (h &gt;&gt;&gt; 16)</li>
+</ol>
+<p>这种方法通过将高位和低位的哈希码混合在一起，减少了哈希冲突的概率，从而使得哈希码更加均匀地分布在哈希表的桶中。</p>
+<h2 id="计算数组索引"><a href="#计算数组索引" class="headerlink" title="计算数组索引"></a>计算数组索引</h2><p>计算出扰动后的哈希值后，HashMap使用这个值来确定键值对在哈希表中的位置。通常，HashMap使用哈希值对数组的长度取模（取余数）来计算索引：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int index = (n - 1) &amp; hash;</span><br></pre></td></tr></table></figure>
+
+<p>其中，n是哈希表数组的长度。n通常是 2 的幂，这样(n - 1)就是一个全 1 的二进制数，这使得按位与操作&amp;可以有效地替代取模操作%，从而提高性能。</p>
+<h1 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h1><p>假设我们有一个键对象，其hashCode()返回值为 123456。那么，计算哈希值的过程如下：</p>
+<ol>
+<li>调用hashCode()方法：int hashCode &#x3D; 123456;</li>
+<li>扰动函数计算：<ul>
+<li>h &#x3D; 123456</li>
+<li>h &gt;&gt;&gt; 16 &#x3D; 123456 &gt;&gt;&gt; 16 &#x3D; 1（右移 16 位）</li>
+<li>hash &#x3D; h ^ (h &gt;&gt;&gt; 16) &#x3D; 123456 ^ 1 &#x3D; 123457</li>
+</ul>
+</li>
+<li>计算数组索引（假设数组长度n为 16，即n - 1为 15）：<ul>
+<li>index &#x3D; (15) &amp; 123457 &#x3D; 15 &amp; 123457 &#x3D; 1</li>
+</ul>
+</li>
+</ol>
+<p>最终，键值对将存储在哈希表数组的索引 1 位置。</p>
+<blockquote>
+<p>&#x2F;str1ewvagoc4qesr&gt;</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/HashMap%E7%9A%84%E4%B8%BB%E8%A6%81%E5%8F%82%E6%95%B0%E9%83%BD%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/HashMap%E7%9A%84%E4%B8%BB%E8%A6%81%E5%8F%82%E6%95%B0%E9%83%BD%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F/" itemprop="url">HashMap的主要参数都有哪些</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-20T02:00:35+00:00">
+                2025-02-20
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌HashMap的主要参数都有哪些？"><a href="#👌HashMap的主要参数都有哪些？" class="headerlink" title="👌HashMap的主要参数都有哪些？"></a>👌HashMap的主要参数都有哪些？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="初始容量（Initial-Capacity）"><a href="#初始容量（Initial-Capacity）" class="headerlink" title="初始容量（Initial Capacity）"></a>初始容量（Initial Capacity）</h2><p>初始容量是HashMap在创建时分配的桶（bucket）数组的大小。默认初始容量是 16。可以在创建HashMap时通过构造函数指定初始容量。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HashMap&lt;K, V&gt; map = newHashMap&lt;&gt;(initialCapacity);</span><br></pre></td></tr></table></figure>
+
+<h2 id="负载因子（Load-Factor）"><a href="#负载因子（Load-Factor）" class="headerlink" title="负载因子（Load Factor）"></a>负载因子（Load Factor）</h2><p>负载因子是一个衡量HashMap何时需要调整大小（即扩容）的参数。默认负载因子是 0.75，这意味着当HashMap中的条目数达到当前容量的 75% 时，HashMap会进行扩容。负载因子越低，哈希表中的空闲空间越多，冲突越少，但空间利用率也越低。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HashMap&lt;K, V&gt; map = newHashMap&lt;&gt;(initialCapacity, loadFactor);</span><br></pre></td></tr></table></figure>
+
+<h2 id="阈值（Threshold）"><a href="#阈值（Threshold）" class="headerlink" title="阈值（Threshold）"></a>阈值（Threshold）</h2><p>阈值是HashMap需要扩容的临界点，计算方式为初始容量 * 负载因子。当实际存储的键值对数量超过这个阈值时，HashMap会进行扩容。</p>
+<h2 id="桶（Bucket）"><a href="#桶（Bucket）" class="headerlink" title="桶（Bucket）"></a>桶（Bucket）</h2><p>HashMap内部使用一个数组来存储链表或树（在 Java 8 及之后的版本中，当链表长度超过一定阈值时，会转化为树）。每个数组元素称为一个桶（bucket）。哈希值经过计算后决定了键值对存储在哪个桶中。</p>
+<h2 id="哈希函数（Hash-Function）"><a href="#哈希函数（Hash-Function）" class="headerlink" title="哈希函数（Hash Function）"></a>哈希函数（Hash Function）</h2><p>HashMap使用哈希函数将键的哈希码转换为数组索引。Java 的HashMap使用了扰动函数（perturbation function）来减少哈希冲突：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">static final int hash(Object key) &#123;</span><br><span class="line">    int h;</span><br><span class="line">    return (key == null) ? 0 : (h = key.hashCode()) ^ (h &gt;&gt;&gt; 16);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="链表和树（Linked-List-and-Tree）"><a href="#链表和树（Linked-List-and-Tree）" class="headerlink" title="链表和树（Linked List and Tree）"></a>链表和树（Linked List and Tree）</h2><p>在桶中的键值对存储方式上，HashMap使用链表来处理哈希冲突。在 Java 8 及之后的版本中，当链表的长度超过阈值（默认是 8）时，链表会转换为红黑树，以提高查找效率。</p>
+<h2 id="红黑树转换阈值（Treeify-Threshold）"><a href="#红黑树转换阈值（Treeify-Threshold）" class="headerlink" title="红黑树转换阈值（Treeify Threshold）"></a>红黑树转换阈值（Treeify Threshold）</h2><p>这是一个阈值，当单个桶中的链表长度超过这个值时，链表会转换为红黑树。默认值是 8。</p>
+<h2 id="最小树化容量（Minimum-Treeify-Capacity）"><a href="#最小树化容量（Minimum-Treeify-Capacity）" class="headerlink" title="最小树化容量（Minimum Treeify Capacity）"></a>最小树化容量（Minimum Treeify Capacity）</h2><p>这是一个阈值，当HashMap的容量小于这个值时，即使链表长度超过Treeify Threshold，也不会将链表转换为红黑树，而是会先进行扩容。默认值是 64。</p>
+<h2 id="扩容因子（Resize-Factor）"><a href="#扩容因子（Resize-Factor）" class="headerlink" title="扩容因子（Resize Factor）"></a>扩容因子（Resize Factor）</h2><p>当HashMap的大小超过阈值时，容量会加倍。即新的容量是旧容量的两倍。</p>
+<h2 id="迭代器（Iterators）"><a href="#迭代器（Iterators）" class="headerlink" title="迭代器（Iterators）"></a>迭代器（Iterators）</h2><p>HashMap提供了键、值和条目的迭代器，用于遍历HashMap中的元素。迭代器是快速失败的（fail-fast），即在迭代过程中，如果HashMap结构被修改（除了通过迭代器自身的remove方法），迭代器会抛出ConcurrentModificationException。</p>
+<h2 id="版本（ModCount）"><a href="#版本（ModCount）" class="headerlink" title="版本（ModCount）"></a>版本（ModCount）</h2><p>HashMap维护了一个内部版本号modCount，用于跟踪HashMap的结构修改次数。这在迭代器中用于检测并发修改。</p>
+<p>这些参数和属性共同决定了HashMap的性能和行为。理解这些参数可以帮助开发者更好地使用HashMap，并在需要时进行适当的调整以满足特定的性能需求。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/HashMap%E7%9A%84%E8%B4%9F%E8%BD%BD%E5%9B%A0%E5%AD%90%E5%88%9D%E5%A7%8B%E5%80%BC%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF0.75_/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/HashMap%E7%9A%84%E8%B4%9F%E8%BD%BD%E5%9B%A0%E5%AD%90%E5%88%9D%E5%A7%8B%E5%80%BC%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF0.75_/" itemprop="url">HashMap的负载因子初始值为什么是0.75</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-20T02:00:35+00:00">
+                2025-02-20
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌HashMap的负载因子初始值为什么是0-75"><a href="#👌HashMap的负载因子初始值为什么是0-75" class="headerlink" title="👌HashMap的负载因子初始值为什么是0.75?"></a>👌HashMap的负载因子初始值为什么是0.75?</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>HashMap的负载因子（load factor）初始值设为 0.75 是一个经过权衡的结果，主要考虑了性能和内存使用之间的平衡。</p>
+<h2 id="性能与内存使用的平衡"><a href="#性能与内存使用的平衡" class="headerlink" title="性能与内存使用的平衡"></a>性能与内存使用的平衡</h2><p><strong>查找性能</strong>：在HashMap中，查找操作的时间复杂度接近 (O(1))。然而，当哈希表中的元素过多时，链地址法中的链表会变长，查找时间会增加。负载因子为 0.75 意味着在表达到 75% 满时进行扩容，这样可以保持链表的长度较短，从而保证查找操作的高效性。</p>
+<p><strong>内存使用</strong>：如果负载因子设置得太低（例如 0.5），HashMap会更频繁地扩容，需要更多的内存来存储未使用的桶。负载因子为 0.75 是一个较为合理的设置，可以在保证查找性能的同时，节约内存。</p>
+<h2 id="扩容频率"><a href="#扩容频率" class="headerlink" title="扩容频率"></a>扩容频率</h2><p>较高的负载因子（如 1.0）会减少扩容的频率，但会导致较长的链表或更多的哈希碰撞，从而影响查找性能。较低的负载因子（如 0.5）会增加扩容的频率，虽然可以减少碰撞，但会导致更多的空间浪费。</p>
+<p>0.75 是一个折中的选择，它既能保证较少的哈希碰撞，又不会频繁地进行扩容，从而在性能和内存使用之间取得平衡。</p>
+<h2 id="实际应用中的经验"><a href="#实际应用中的经验" class="headerlink" title="实际应用中的经验"></a>实际应用中的经验</h2><p>在实际应用中，0.75 被证明是一个有效的默认值。它在大多数情况下提供了良好的性能和较为合理的内存使用。尽管特定应用可能有不同的需求，但对于通用场景，这个默认值是经过大量实践验证的。</p>
+<h2 id="负载因子的灵活性"><a href="#负载因子的灵活性" class="headerlink" title="负载因子的灵活性"></a>负载因子的灵活性</h2><p>虽然 0.75 是默认值，开发者在创建HashMap时可以根据具体需求指定不同的负载因子。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;Integer, String&gt; map = newHashMap&lt;&gt;(initialCapacity, 0.5f);</span><br></pre></td></tr></table></figure>
+
+<p>在上述代码中，HashMap的负载因子被设置为 0.5，这可能适用于需要更高查找性能但内存使用不是主要考虑因素的场景。</p>
+<p>HashMap默认负载因子为 0.75 是一个经过深思熟虑的选择，旨在平衡查找性能和内存使用。它在大多数情况下提供了良好的性能表现，同时避免了频繁扩容和过多的内存浪费。开发者可以根据具体需求调整负载因子，以适应不同的应用场景。</p>
+<blockquote>
+<p>&#x2F;nokyemihqmhdvppw&gt;</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/HashMap%EF%BC%8C%E6%89%A9%E5%AE%B9%E8%BF%87%E7%A8%8B%EF%BC%8C%E6%80%8E%E4%B9%88%E8%A7%A3%E5%86%B3%E5%93%88%E5%B8%8C%E5%86%B2%E7%AA%81%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/HashMap%EF%BC%8C%E6%89%A9%E5%AE%B9%E8%BF%87%E7%A8%8B%EF%BC%8C%E6%80%8E%E4%B9%88%E8%A7%A3%E5%86%B3%E5%93%88%E5%B8%8C%E5%86%B2%E7%AA%81%EF%BC%9F/" itemprop="url">HashMap，扩容过程，怎么解决哈希冲突</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-20T02:00:35+00:00">
+                2025-02-20
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌HashMap，扩容过程，怎么解决哈希冲突？"><a href="#👌HashMap，扩容过程，怎么解决哈希冲突？" class="headerlink" title="👌HashMap，扩容过程，怎么解决哈希冲突？"></a>👌HashMap，扩容过程，怎么解决哈希冲突？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="HashMap-扩容过程"><a href="#HashMap-扩容过程" class="headerlink" title="HashMap 扩容过程"></a>HashMap 扩容过程</h2><p>Hashmap 的扩容（rehashing）主要发生在以下两种情况下：</p>
+<ol>
+<li><strong>当添加元素时，如果当前数组为空，会进行初始化</strong>：默认情况下，会创建一个长度为 16 的数组，并且加载因子（load factor）默认为 0.75。</li>
+<li><strong>当数组中的元素数量大于或等于数组长度与加载因子的乘积时</strong>：例如，当数组长度为 16，加载因子为 0.75，并且元素数量达到 12 时（16 * 0.75 &#x3D; 12），会触发扩容。扩容时，数组长度会翻倍（通常是 2 的幂），并重新哈希所有元素到新的数组中。</li>
+</ol>
+<p>在扩容过程中，hashmap 会重新计算每个元素的哈希值，并根据新的数组长度重新定位其索引位置。由于数组长度翻倍，哈希值的位运算结果可能会改变，导致元素在新数组中的位置与旧数组不同。</p>
+<h2 id="哈希冲突解决"><a href="#哈希冲突解决" class="headerlink" title="哈希冲突解决"></a>哈希冲突解决</h2><p>哈希冲突（hash collision）是指不同的键计算出相同的哈希值，从而在哈希表中映射到同一个位置。HashMap 通过以下策略来解决哈希冲突：</p>
+<ol>
+<li><strong>链表法（链表或红黑树）</strong>：在 HashMap 中，每个位置（索引）可以存储一个链表（或红黑树，当链表长度超过一定阈值时）。当发生哈希冲突时，新的元素会被添加到对应的链表中。在 Java 8 及之后的版本中，当链表长度达到 8 且数组长度大于 64 时，链表会转换为红黑树以优化性能。</li>
+<li><strong>哈希函数</strong>：为了降低哈希冲突的概率，HashMap 使用了一个精心设计的哈希函数来计算键的哈希值。这个哈希函数考虑了键对象的哈希码（hashCode）以及键在数组中的索引位置，通过一些位运算得到最终的哈希值。这样可以确保哈希值的分布尽可能均匀，减少冲突的可能性。</li>
+<li><strong>初始容量和加载因子</strong>：初始容量和加载因子也会影响哈希冲突的概率。较大的初始容量和较小的加载因子可以降低哈希冲突的概率，但也会增加空间开销。因此，在选择这些参数时需要根据具体需求进行权衡。</li>
+</ol>
+<p>总的来说，HashMap 通过链表法（或红黑树）和精心设计的哈希函数来解决哈希冲突，并通过扩容和重新哈希来保持哈希表的性能和效率。</p>
+<blockquote>
+<p>&#x2F;nduaqs2uds8td4tw&gt;</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/HashSet%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +1137,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
-                2025-02-18
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-20T02:00:35+00:00">
+                2025-02-20
               </time>
             
           </span>
@@ -482,206 +1302,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/HashMap%EF%BC%8C%E6%89%A9%E5%AE%B9%E8%BF%87%E7%A8%8B%EF%BC%8C%E6%80%8E%E4%B9%88%E8%A7%A3%E5%86%B3%E5%93%88%E5%B8%8C%E5%86%B2%E7%AA%81%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/HashMap%EF%BC%8C%E6%89%A9%E5%AE%B9%E8%BF%87%E7%A8%8B%EF%BC%8C%E6%80%8E%E4%B9%88%E8%A7%A3%E5%86%B3%E5%93%88%E5%B8%8C%E5%86%B2%E7%AA%81%EF%BC%9F/" itemprop="url">HashMap，扩容过程，怎么解决哈希冲突</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
-                2025-02-18
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌HashMap，扩容过程，怎么解决哈希冲突？"><a href="#👌HashMap，扩容过程，怎么解决哈希冲突？" class="headerlink" title="👌HashMap，扩容过程，怎么解决哈希冲突？"></a>👌HashMap，扩容过程，怎么解决哈希冲突？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="HashMap-扩容过程"><a href="#HashMap-扩容过程" class="headerlink" title="HashMap 扩容过程"></a>HashMap 扩容过程</h2><p>Hashmap 的扩容（rehashing）主要发生在以下两种情况下：</p>
-<ol>
-<li><strong>当添加元素时，如果当前数组为空，会进行初始化</strong>：默认情况下，会创建一个长度为 16 的数组，并且加载因子（load factor）默认为 0.75。</li>
-<li><strong>当数组中的元素数量大于或等于数组长度与加载因子的乘积时</strong>：例如，当数组长度为 16，加载因子为 0.75，并且元素数量达到 12 时（16 * 0.75 &#x3D; 12），会触发扩容。扩容时，数组长度会翻倍（通常是 2 的幂），并重新哈希所有元素到新的数组中。</li>
-</ol>
-<p>在扩容过程中，hashmap 会重新计算每个元素的哈希值，并根据新的数组长度重新定位其索引位置。由于数组长度翻倍，哈希值的位运算结果可能会改变，导致元素在新数组中的位置与旧数组不同。</p>
-<h2 id="哈希冲突解决"><a href="#哈希冲突解决" class="headerlink" title="哈希冲突解决"></a>哈希冲突解决</h2><p>哈希冲突（hash collision）是指不同的键计算出相同的哈希值，从而在哈希表中映射到同一个位置。HashMap 通过以下策略来解决哈希冲突：</p>
-<ol>
-<li><strong>链表法（链表或红黑树）</strong>：在 HashMap 中，每个位置（索引）可以存储一个链表（或红黑树，当链表长度超过一定阈值时）。当发生哈希冲突时，新的元素会被添加到对应的链表中。在 Java 8 及之后的版本中，当链表长度达到 8 且数组长度大于 64 时，链表会转换为红黑树以优化性能。</li>
-<li><strong>哈希函数</strong>：为了降低哈希冲突的概率，HashMap 使用了一个精心设计的哈希函数来计算键的哈希值。这个哈希函数考虑了键对象的哈希码（hashCode）以及键在数组中的索引位置，通过一些位运算得到最终的哈希值。这样可以确保哈希值的分布尽可能均匀，减少冲突的可能性。</li>
-<li><strong>初始容量和加载因子</strong>：初始容量和加载因子也会影响哈希冲突的概率。较大的初始容量和较小的加载因子可以降低哈希冲突的概率，但也会增加空间开销。因此，在选择这些参数时需要根据具体需求进行权衡。</li>
-</ol>
-<p>总的来说，HashMap 通过链表法（或红黑树）和精心设计的哈希函数来解决哈希冲突，并通过扩容和重新哈希来保持哈希表的性能和效率。</p>
-<blockquote>
-<p>&#x2F;nduaqs2uds8td4tw&gt;</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/Hashset%E7%9A%84%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -729,8 +1349,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
-                2025-02-18
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-20T02:00:35+00:00">
+                2025-02-20
               </time>
             
           </span>
@@ -933,8 +1553,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
-                2025-02-18
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-20T02:00:35+00:00">
+                2025-02-20
               </time>
             
           </span>
@@ -1148,8 +1768,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
-                2025-02-18
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-20T02:00:35+00:00">
+                2025-02-20
               </time>
             
           </span>
@@ -1364,8 +1984,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
-                2025-02-18
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-20T02:00:35+00:00">
+                2025-02-20
               </time>
             
           </span>
@@ -1579,8 +2199,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
-                2025-02-18
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-20T02:00:35+00:00">
+                2025-02-20
               </time>
             
           </span>
@@ -1797,8 +2417,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
-                2025-02-18
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-20T02:00:35+00:00">
+                2025-02-20
               </time>
             
           </span>
@@ -2032,8 +2652,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
-                2025-02-18
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-20T02:00:35+00:00">
+                2025-02-20
               </time>
             
           </span>
@@ -2231,8 +2851,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
-                2025-02-18
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-20T02:00:35+00:00">
+                2025-02-20
               </time>
             
           </span>
@@ -2391,6 +3011,197 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%B8%BA%E4%BB%80%E4%B9%88String,Interger%E8%BF%99%E6%A0%B7%E7%9A%84wrapper%E7%B1%BB%E9%80%82%E5%90%88%E4%BD%9C%E4%B8%BA%E9%94%AE%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%B8%BA%E4%BB%80%E4%B9%88String,Interger%E8%BF%99%E6%A0%B7%E7%9A%84wrapper%E7%B1%BB%E9%80%82%E5%90%88%E4%BD%9C%E4%B8%BA%E9%94%AE%EF%BC%9F/" itemprop="url">为什么String, Interger这样的wrapper类适合作为键</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-20T02:00:35+00:00">
+                2025-02-20
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌为什么String-Interger这样的wrapper类适合作为键？"><a href="#👌为什么String-Interger这样的wrapper类适合作为键？" class="headerlink" title="👌为什么String, Interger这样的wrapper类适合作为键？"></a>👌为什么String, Interger这样的wrapper类适合作为键？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="不可变性"><a href="#不可变性" class="headerlink" title="不可变性"></a>不可变性</h2><p>String和Integer等包装类都是不可变的对象。一旦创建，这些对象的状态就不能被改变。不可变性是一个重要的特性，因为它保证了对象在其生命周期内的哈希码（hash code）不会改变。</p>
+<p>如果一个对象在作为键的过程中其哈希码发生了改变，那么在哈希表中查找该键时将无法找到正确的位置，导致数据结构无法正常工作。不可变对象避免了这一问题。</p>
+<h2 id="合理的hashCode-实现"><a href="#合理的hashCode-实现" class="headerlink" title="合理的hashCode()实现"></a>合理的hashCode()实现</h2><p>String和Integer类都提供了高质量的hashCode()方法，这些方法能够有效地分布哈希值，减少哈希冲突。具体来说：</p>
+<p><strong>String</strong>的hashCode()方法是基于字符串内容计算的，使用了一个高效的算法。</p>
+<p><strong>Integer</strong>的hashCode()方法直接返回其内部存储的整数值。</p>
+<h2 id="合理的equals-实现"><a href="#合理的equals-实现" class="headerlink" title="合理的equals()实现"></a>合理的equals()实现</h2><p>String和Integer类都提供了正确且高效的equals()方法，这些方法能够准确地比较两个对象的内容是否相等。这对于哈希表等数据结构来说是至关重要的，因为在哈希表中查找键时需要依赖equals()方法来判断两个键是否相等。</p>
+<h2 id="内存效率"><a href="#内存效率" class="headerlink" title="内存效率"></a>内存效率</h2><p>虽然包装类相对于原始类型有一些额外的内存开销，但这些类通常经过了优化，能够在大多数情况下提供足够的性能和内存效率。例如，Integer类使用了对象池来缓存常用的整数值（-128 到 127），从而减少了内存消耗和对象创建的开销。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%B8%BA%E4%BB%80%E4%B9%88hashMap%E7%9A%84%E5%AE%B9%E9%87%8F%E6%89%A9%E5%AE%B9%E6%97%B6%E4%B8%80%E5%AE%9A%E6%98%AF2%E7%9A%84%E5%B9%82%E6%AC%A1_/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2438,8 +3249,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
-                2025-02-18
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-20T02:00:35+00:00">
+                2025-02-20
               </time>
             
           </span>
@@ -2620,197 +3431,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%B8%BA%E4%BB%80%E4%B9%88String,Interger%E8%BF%99%E6%A0%B7%E7%9A%84wrapper%E7%B1%BB%E9%80%82%E5%90%88%E4%BD%9C%E4%B8%BA%E9%94%AE%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%B8%BA%E4%BB%80%E4%B9%88String,Interger%E8%BF%99%E6%A0%B7%E7%9A%84wrapper%E7%B1%BB%E9%80%82%E5%90%88%E4%BD%9C%E4%B8%BA%E9%94%AE%EF%BC%9F/" itemprop="url">为什么String, Interger这样的wrapper类适合作为键</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
-                2025-02-18
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌为什么String-Interger这样的wrapper类适合作为键？"><a href="#👌为什么String-Interger这样的wrapper类适合作为键？" class="headerlink" title="👌为什么String, Interger这样的wrapper类适合作为键？"></a>👌为什么String, Interger这样的wrapper类适合作为键？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="不可变性"><a href="#不可变性" class="headerlink" title="不可变性"></a>不可变性</h2><p>String和Integer等包装类都是不可变的对象。一旦创建，这些对象的状态就不能被改变。不可变性是一个重要的特性，因为它保证了对象在其生命周期内的哈希码（hash code）不会改变。</p>
-<p>如果一个对象在作为键的过程中其哈希码发生了改变，那么在哈希表中查找该键时将无法找到正确的位置，导致数据结构无法正常工作。不可变对象避免了这一问题。</p>
-<h2 id="合理的hashCode-实现"><a href="#合理的hashCode-实现" class="headerlink" title="合理的hashCode()实现"></a>合理的hashCode()实现</h2><p>String和Integer类都提供了高质量的hashCode()方法，这些方法能够有效地分布哈希值，减少哈希冲突。具体来说：</p>
-<p><strong>String</strong>的hashCode()方法是基于字符串内容计算的，使用了一个高效的算法。</p>
-<p><strong>Integer</strong>的hashCode()方法直接返回其内部存储的整数值。</p>
-<h2 id="合理的equals-实现"><a href="#合理的equals-实现" class="headerlink" title="合理的equals()实现"></a>合理的equals()实现</h2><p>String和Integer类都提供了正确且高效的equals()方法，这些方法能够准确地比较两个对象的内容是否相等。这对于哈希表等数据结构来说是至关重要的，因为在哈希表中查找键时需要依赖equals()方法来判断两个键是否相等。</p>
-<h2 id="内存效率"><a href="#内存效率" class="headerlink" title="内存效率"></a>内存效率</h2><p>虽然包装类相对于原始类型有一些额外的内存开销，但这些类通常经过了优化，能够在大多数情况下提供足够的性能和内存效率。例如，Integer类使用了对象池来缓存常用的整数值（-128 到 127），从而减少了内存消耗和对象创建的开销。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%B8%BA%E4%BB%80%E4%B9%88hashmap%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%BC%9A%E8%BF%9B%E5%85%A5%E6%AD%BB%E5%BE%AA%E7%8E%AF%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2858,8 +3478,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
-                2025-02-18
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-20T02:00:35+00:00">
+                2025-02-20
               </time>
             
           </span>
@@ -3063,8 +3683,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
-                2025-02-18
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-20T02:00:35+00:00">
+                2025-02-20
               </time>
             
           </span>
@@ -3272,8 +3892,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
-                2025-02-18
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-20T02:00:35+00:00">
+                2025-02-20
               </time>
             
           </span>
@@ -3468,8 +4088,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
-                2025-02-18
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-20T02:00:35+00:00">
+                2025-02-20
               </time>
             
           </span>
@@ -3672,8 +4292,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
-                2025-02-18
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-20T02:00:35+00:00">
+                2025-02-20
               </time>
             
           </span>
@@ -3816,623 +4436,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFfail-fast%E6%9C%BA%E5%88%B6%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFfail-fast%E6%9C%BA%E5%88%B6%EF%BC%9F/" itemprop="url">fail-fast机制</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
-                2025-02-18
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌什么是fail-fast机制？"><a href="#👌什么是fail-fast机制？" class="headerlink" title="👌什么是fail-fast机制？"></a>👌什么是fail-fast机制？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>在Java集合框架中，fail-fast是一种机制，用于检测在遍历集合时的结构性修改，并立即抛出异常以防止不一致状态。fail-fast迭代器在检测到集合在迭代过程中被修改后，会抛出ConcurrentModificationException异常。</p>
-<h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><p>fail-fast迭代器通过在遍历集合时维护一个修改计数器（modification count）来工作。每当集合结构发生变化（如添加或删除元素）时，这个计数器就会增加。当创建迭代器时，它会保存当前的修改计数器值。在每次调用next()方法时，迭代器会检查当前的修改计数器值是否与保存的值一致。如果不一致，说明集合在迭代过程中被修改了，迭代器会立即抛出ConcurrentModificationException。</p>
-<h2 id="代码-Demo"><a href="#代码-Demo" class="headerlink" title="代码 Demo"></a>代码 Demo</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import java.util.*;</span><br><span class="line"></span><br><span class="line">public class FailFastExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        List&lt;String&gt; list = new ArrayList&lt;&gt;();</span><br><span class="line">        list.add(&quot;A&quot;);</span><br><span class="line">        list.add(&quot;B&quot;);</span><br><span class="line">        list.add(&quot;C&quot;);</span><br><span class="line"></span><br><span class="line">        Iterator&lt;String&gt; iterator = list.iterator();</span><br><span class="line">        while (iterator.hasNext()) &#123;</span><br><span class="line">            String element = iterator.next();</span><br><span class="line">            System.out.println(element);</span><br><span class="line">            // 在迭代过程中修改集合</span><br><span class="line">            if (element.equals(&quot;B&quot;)) &#123;</span><br><span class="line">                list.add(&quot;D&quot;); // 这将引发 ConcurrentModificationException</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在上面的代码中，当迭代器遍历到元素 “B” 时，集合被修改（添加了新元素 “D”），因此迭代器将抛出ConcurrentModificationException。</p>
-<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p><strong>快速失败并不保证</strong>：fail-fast机制并不能保证在所有情况下都能检测到并发修改。它是尽力而为的检测机制，不能依赖于它来实现并发安全。如果需要并发安全的集合，可以使用java.util.concurrent包中的并发集合类。</p>
-<p><strong>避免并发修改</strong>：在遍历集合时，避免在外部修改集合。可以使用迭代器的remove方法来安全地移除元素。</p>
-<h2 id="使用remove方法"><a href="#使用remove方法" class="headerlink" title="使用remove方法"></a>使用remove方法</h2><p>为了避免ConcurrentModificationException，可以使用迭代器的remove方法来移除元素：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">import java.util.*;</span><br><span class="line"></span><br><span class="line">public class SafeRemovalExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        List&lt;String&gt; list = new ArrayList&lt;&gt;();</span><br><span class="line">        list.add(&quot;A&quot;);</span><br><span class="line">        list.add(&quot;B&quot;);</span><br><span class="line">        list.add(&quot;C&quot;);</span><br><span class="line"></span><br><span class="line">        Iterator&lt;String&gt; iterator = list.iterator();</span><br><span class="line">        while (iterator.hasNext()) &#123;</span><br><span class="line">            String element = iterator.next();</span><br><span class="line">            System.out.println(element);</span><br><span class="line">            // 使用迭代器的 remove 方法安全地移除元素</span><br><span class="line">            if (element.equals(&quot;B&quot;)) &#123;</span><br><span class="line">                iterator.remove();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;After removal: &quot; + list);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在这个示例中，使用iterator.remove()方法安全地移除了元素 “B”。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFfail-safe%E6%9C%BA%E5%88%B6%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFfail-safe%E6%9C%BA%E5%88%B6%EF%BC%9F/" itemprop="url">fail-safe机制</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
-                2025-02-18
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌什么是fail-safe机制？"><a href="#👌什么是fail-safe机制？" class="headerlink" title="👌什么是fail-safe机制？"></a>👌什么是fail-safe机制？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>fail-safe机制是与fail-fast机制相对的一种并发处理机制。在 Java 集合框架中，fail-safe迭代器在检测到集合在遍历过程中被修改时，不会抛出异常，而是允许这种修改继续进行。fail-safe迭代器通常是通过在遍历时使用集合的副本来实现的，这样即使原集合被修改，迭代器也不会受到影响。</p>
-<h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><p>fail-safe迭代器在遍历集合时，实际上是遍历集合的一个副本。因此，任何对原集合的修改都不会影响到迭代器正在遍历的副本。这种机制保证了遍历操作的安全性，但也意味着迭代器不能反映集合的实时变化。</p>
-<h2 id="代码-Demo"><a href="#代码-Demo" class="headerlink" title="代码 Demo"></a>代码 Demo</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">import java.util.concurrent.CopyOnWriteArrayList;</span><br><span class="line">import java.util.Iterator;</span><br><span class="line">public class FailSafeExample &#123;</span><br><span class="line">    publicstaticvoidmain(String[] args) &#123;</span><br><span class="line">        CopyOnWriteArrayList&lt;String&gt; list = new CopyOnWriteArrayList&lt;&gt;();</span><br><span class="line">        list.add(&quot;A&quot;);</span><br><span class="line">        list.add(&quot;B&quot;);</span><br><span class="line">        list.add(&quot;C&quot;);</span><br><span class="line"></span><br><span class="line">        Iterator&lt;String&gt; iterator = list.iterator();</span><br><span class="line">        while (iterator.hasNext()) &#123;</span><br><span class="line">            Stringelement= iterator.next();</span><br><span class="line">            System.out.println(element);</span><br><span class="line">            // 在迭代过程中修改集合</span><br><span class="line">            if (element.equals(&quot;B&quot;)) &#123;</span><br><span class="line">                list.add(&quot;D&quot;); // 不会引发 ConcurrentModificationException</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;After modification: &quot; + list);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在上面的代码中，使用CopyOnWriteArrayList作为集合。CopyOnWriteArrayList是一个典型的fail-safe集合类，它在每次修改时都会创建集合的一个副本，因此迭代器不会检测到并发修改，不会抛出ConcurrentModificationException。</p>
-<h2 id="主要特点"><a href="#主要特点" class="headerlink" title="主要特点"></a>主要特点</h2><ol>
-<li><strong>不抛异常</strong>：fail-safe迭代器在检测到集合被修改时，不会抛出ConcurrentModificationException异常。</li>
-<li><strong>副本遍历</strong>：fail-safe迭代器遍历的是集合的一个副本，而不是原集合。这意味着对原集合的修改不会影响迭代器的遍历。</li>
-<li><strong>线程安全</strong>：fail-safe集合类（如CopyOnWriteArrayList、ConcurrentHashMap等）通常是线程安全的，适用于并发环境。</li>
-</ol>
-<h2 id="常见的fail-safe集合类"><a href="#常见的fail-safe集合类" class="headerlink" title="常见的fail-safe集合类"></a>常见的fail-safe集合类</h2><p>CopyOnWriteArrayList，ConcurrentHashMap，ConcurrentLinkedQueue，ConcurrentSkipListMap，ConcurrentSkipListSet</p>
-<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
-<li><strong>性能开销</strong>：由于fail-safe机制通常需要创建集合的副本，因此在修改频繁的场景下，性能开销较大。适用于读多写少的场景。</li>
-<li><strong>一致性问题</strong>：由于迭代器遍历的是集合的副本，因此它不能反映集合的实时变化。如果需要实时一致性，fail-safe机制可能不适用。</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8BHashMap%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8BHashMap%EF%BC%9F/" itemprop="url">介绍一下HashMap？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-18T01:30:46+00:00">
-                2025-02-18
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌介绍一下HashMap？"><a href="#👌介绍一下HashMap？" class="headerlink" title="👌介绍一下HashMap？"></a>👌介绍一下HashMap？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>HashMap主要是用于存储键值对。它是基于哈希表实现的，提供了快速的插入、删除和查找操作。从安全角度，HashMap不是线程安全的。如果多个线程同时访问一个HashMap并且至少有一个线程修改了它，则必须手动同步。</p>
-<p>HashMap允许一个 null 键和多个 null 值。</p>
-<p>HashMap不保证映射的顺序，特别是它不保证顺序会随着时间的推移保持不变。</p>
-<p>HashMap提供了 O(1) 时间复杂度的基本操作（如 get 和 put），前提是哈希函数的分布良好且冲突较少。</p>
-<h2 id="HashMap主要方法"><a href="#HashMap主要方法" class="headerlink" title="HashMap主要方法"></a>HashMap主要方法</h2><p>**put(K key, V value)**：将指定的值与该映射中的指定键关联。如果映射以前包含一个该键的映射，则旧值将被替换。</p>
-<p>**get(Object key)**：返回指定键所映射的值；如果此映射不包含该键的映射，则返回 null。</p>
-<p>**remove(Object key)**：如果存在一个键的映射，则将其从映射中移除。</p>
-<p>**containsKey(Object key)**：如果此映射包含指定键的映射，则返回 true。</p>
-<p>**containsValue(Object value)**：如果此映射将一个或多个键映射到指定值，则返回 true。</p>
-<p>**size()**：返回此映射中的键值映射关系的数量。</p>
-<p>**isEmpty()**：如果此映射不包含键值映射关系，则返回 true。</p>
-<p>**clear()**：从此映射中移除所有键值映射关系。</p>
-<h2 id="代码-Demo"><a href="#代码-Demo" class="headerlink" title="代码 Demo"></a>代码 Demo</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">import java.util.HashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line"></span><br><span class="line">public class HashMapExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        // 创建一个 HashMap 实例</span><br><span class="line">        Map&lt;String, Integer&gt; map = new HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        // 添加键值对</span><br><span class="line">        map.put(&quot;apple&quot;, 1);</span><br><span class="line">        map.put(&quot;banana&quot;, 2);</span><br><span class="line">        map.put(&quot;orange&quot;, 3);</span><br><span class="line"></span><br><span class="line">        // 访问元素</span><br><span class="line">        System.out.println(&quot;Value for key &#x27;apple&#x27;: &quot; + map.get(&quot;apple&quot;));</span><br><span class="line"></span><br><span class="line">        // 检查是否包含某个键或值</span><br><span class="line">        System.out.println(&quot;Contains key &#x27;banana&#x27;: &quot; + map.containsKey(&quot;banana&quot;));</span><br><span class="line">        System.out.println(&quot;Contains value 3: &quot; + map.containsValue(3));</span><br><span class="line"></span><br><span class="line">        // 移除元素</span><br><span class="line">        map.remove(&quot;orange&quot;);</span><br><span class="line"></span><br><span class="line">        // 遍历 HashMap</span><br><span class="line">        for (Map.Entry&lt;String, Integer&gt; entry : map.entrySet()) &#123;</span><br><span class="line">            System.out.println(&quot;Key: &quot; + entry.getKey() + &quot;, Value: &quot; + entry.getValue());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 获取大小</span><br><span class="line">        System.out.println(&quot;Size of map: &quot; + map.size());</span><br><span class="line"></span><br><span class="line">        // 清空 HashMap</span><br><span class="line">        map.clear();</span><br><span class="line">        System.out.println(&quot;Is map empty: &quot; + map.isEmpty());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="内部工作原理"><a href="#内部工作原理" class="headerlink" title="内部工作原理"></a>内部工作原理</h2><p>HashMap使用哈希表来存储数据。哈希表是基于数组和链表的组合结构。</p>
-<ol>
-<li><strong>哈希函数</strong>：HashMap使用键的hashCode()方法来计算哈希值，然后将哈希值映射到数组的索引位置。</li>
-<li><strong>数组和链表</strong>：HashMap使用一个数组来存储链表或树结构（Java 8 及以后）。每个数组位置被称为一个“桶”，每个桶存储链表或树。</li>
-<li><strong>冲突处理</strong>：当两个键的哈希值相同时，它们会被存储在同一个桶中，形成一个链表（或树）。这种情况称为哈希冲突。</li>
-<li><strong>再哈希</strong>：当HashMap中的元素数量超过容量的负载因子（默认 0.75）时，HashMap会进行再哈希，将所有元素重新分配到一个更大的数组中。</li>
-</ol>
-<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p><strong>初始容量和负载因子</strong>：可以通过构造函数设置HashMap的初始容量和负载因子，以优化性能。初始容量越大，减少再哈希的次数；负载因子越小，减少冲突的概率，但会增加空间开销。</p>
-<p><strong>哈希函数的质量</strong>：哈希函数的质量直接影响HashMap的性能。理想的哈希函数应尽可能均匀地分布键。</p>
-<h2 id="线程安全性"><a href="#线程安全性" class="headerlink" title="线程安全性"></a>线程安全性</h2><p>如前所述，HashMap不是线程安全的。如果需要线程安全的映射，可以使用Collections.synchronizedMap来包装HashMap，或者使用ConcurrentHashMap，后者在高并发环境下性能更好。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, Integer&gt; synchronizedMap = Collections.synchronizedMap(newHashMap&lt;&gt;());</span><br></pre></td></tr></table></figure>
-
-<p>或者使用ConcurrentHashMap：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, Integer&gt; concurrentMap = newConcurrentHashMap&lt;&gt;();</span><br></pre></td></tr></table></figure>
-
-
-
-<blockquote>
-<p>&#x2F;iwe6pgyi65omsy8l&gt;</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
+    <a class="extend prev" rel="prev" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
   </nav>
 
 
@@ -4478,7 +4486,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">100</span>
+                <span class="site-state-item-count">103</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -4489,7 +4497,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -4500,7 +4508,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">19</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
