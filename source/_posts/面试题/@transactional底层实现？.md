@@ -53,7 +53,3 @@ Spring使用代理模式来实现声明式事务管理。代理对象会拦截�
 
 ### 7. 事务上下文（Transaction Context）
 事务上下文包含了当前事务的状态信息，如事务是否已经开始、是否需要回滚等。Spring会在事务开始时创建事务上下文，并在事务结束时清理它。
-
-
-
-> 原文: <https://www.yuque.com/jingdianjichi/xyxdsi/usaz64xl3ecbziyo>
