@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Linux," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="👌Linux中断机制是什么？Linux中断机制是操作系统处理硬件和软件事件的一种重要方式。中断可以使操作系统及时响应各种事件，如硬件设备的输入输出操作、定时器事件等。 中断的基本概念1.中断类型 硬件中断：由硬件设备（如键盘、网卡、硬盘等）发出的信号，引起CPU中断当前执行的程序，转而执行中断处理程序。 软件中断：由软件指令（如系统调用、异常等）引发的中断。  2.中断向量表中断向量表（Inte">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux中断机制是什么？">
+<meta property="og:url" content="https://xiaoyaofeihu.github.io/2025/02/20/%E9%9D%A2%E8%AF%95%E9%A2%98/Linux%E4%B8%AD%E6%96%AD%E6%9C%BA%E5%88%B6%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/index.html">
+<meta property="og:site_name" content="余声-个人博客">
+<meta property="og:description" content="👌Linux中断机制是什么？Linux中断机制是操作系统处理硬件和软件事件的一种重要方式。中断可以使操作系统及时响应各种事件，如硬件设备的输入输出操作、定时器事件等。 中断的基本概念1.中断类型 硬件中断：由硬件设备（如键盘、网卡、硬盘等）发出的信号，引起CPU中断当前执行的程序，转而执行中断处理程序。 软件中断：由软件指令（如系统调用、异常等）引发的中断。  2.中断向量表中断向量表（Inte">
+<meta property="og:locale">
+<meta property="article:published_time" content="2025-02-20T13:33:41.000Z">
+<meta property="article:modified_time" content="2025-02-21T02:38:54.477Z">
+<meta property="article:author" content="javayun">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '余声'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://xiaoyaofeihu.github.io/2025/02/20/面试题/Linux中断机制是什么？/"/>
+
+
+
+
+
+  <title>Linux中断机制是什么？ | 余声-个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">余声-个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/20/%E9%9D%A2%E8%AF%95%E9%A2%98/Linux%E4%B8%AD%E6%96%AD%E6%9C%BA%E5%88%B6%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux中断机制是什么？</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-02-20T13:33:41+00:00">
+                2025-02-20
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-21T02:38:54+00:00">
+                2025-02-21
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="👌Linux中断机制是什么？"><a href="#👌Linux中断机制是什么？" class="headerlink" title="👌Linux中断机制是什么？"></a>👌Linux中断机制是什么？</h1><p>Linux中断机制是操作系统处理硬件和软件事件的一种重要方式。中断可以使操作系统及时响应各种事件，如硬件设备的输入输出操作、定时器事件等。</p>
+<h3 id="中断的基本概念"><a href="#中断的基本概念" class="headerlink" title="中断的基本概念"></a>中断的基本概念</h3><h4 id="1-中断类型"><a href="#1-中断类型" class="headerlink" title="1.中断类型"></a>1.<strong>中断类型</strong></h4><ul>
+<li><strong>硬件中断</strong>：由硬件设备（如键盘、网卡、硬盘等）发出的信号，引起CPU中断当前执行的程序，转而执行中断处理程序。</li>
+<li><strong>软件中断</strong>：由软件指令（如系统调用、异常等）引发的中断。</li>
+</ul>
+<h4 id="2-中断向量表"><a href="#2-中断向量表" class="headerlink" title="2.中断向量表"></a>2.<strong>中断向量表</strong></h4><p>中断向量表（Interrupt Vector Table, IVT）是一个包含中断服务程序地址的表。当中断发生时，CPU通过中断向量表找到相应的中断服务程序并执行。</p>
+<h3 id="中断处理流程"><a href="#中断处理流程" class="headerlink" title="中断处理流程"></a>中断处理流程</h3><ol>
+<li><strong>中断发生</strong>：硬件设备或软件事件发出中断信号。</li>
+<li><strong>中断响应</strong>：CPU停止当前执行的程序，保存当前的上下文（如程序计数器、寄存器等），并根据中断向量表找到对应的中断服务程序。</li>
+<li><strong>中断处理</strong>：执行中断服务程序，处理中断事件。</li>
+<li><strong>中断返回</strong>：中断处理完成后，恢复保存的上下文，继续执行被中断的程序。</li>
+</ol>
+<h3 id="中断处理的关键组件"><a href="#中断处理的关键组件" class="headerlink" title="中断处理的关键组件"></a>中断处理的关键组件</h3><h4 id="1-中断控制器"><a href="#1-中断控制器" class="headerlink" title="1.中断控制器"></a>1.<strong>中断控制器</strong></h4><p>中断控制器（如PIC、APIC）负责管理和分配中断请求。它可以屏蔽不需要的中断，并确定中断的优先级。</p>
+<h4 id="2-中断处理程序"><a href="#2-中断处理程序" class="headerlink" title="2.中断处理程序"></a>2.<strong>中断处理程序</strong></h4><p>中断处理程序（Interrupt Service Routine, ISR）是处理特定中断事件的函数。它通常分为顶半部（Top Half）和底半部（Bottom Half）：</p>
+<ul>
+<li><strong>顶半部</strong>：快速响应中断，执行紧急的处理任务。</li>
+<li><strong>底半部</strong>：延迟执行较长时间的任务，以减少顶半部的执行时间，避免阻塞其他中断。</li>
+</ul>
+<h4 id="3-中断上下文"><a href="#3-中断上下文" class="headerlink" title="3.中断上下文"></a>3.<strong>中断上下文</strong></h4><p>中断上下文是指中断发生时CPU的状态，包括程序计数器、寄存器等。保存和恢复中断上下文是中断处理的关键步骤。</p>
+<h3 id="中断处理的实现"><a href="#中断处理的实现" class="headerlink" title="中断处理的实现"></a>中断处理的实现</h3><h4 id="1-注册中断处理程序"><a href="#1-注册中断处理程序" class="headerlink" title="1.注册中断处理程序"></a>1.<strong>注册中断处理程序</strong></h4><p>在Linux内核中，可以使用<code>request_irq</code>函数注册中断处理程序：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;linux/interrupt.h&gt;</span><br><span class="line"></span><br><span class="line">int request_irq(unsigned int irq, irq_handler_t handler, unsigned long flags, const char *name, void *dev);</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-中断处理程序示例"><a href="#2-中断处理程序示例" class="headerlink" title="2.中断处理程序示例"></a>2.<strong>中断处理程序示例</strong></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;linux/module.h&gt;</span><br><span class="line">#include &lt;linux/kernel.h&gt;</span><br><span class="line">#include &lt;linux/interrupt.h&gt;</span><br><span class="line"></span><br><span class="line">static irqreturn_t my_interrupt_handler(int irq, void *dev_id) &#123;</span><br><span class="line">    printk(KERN_INFO &quot;Interrupt occurred!\n&quot;);</span><br><span class="line">    // 中断处理逻辑</span><br><span class="line">    return IRQ_HANDLED;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static int __init my_module_init(void) &#123;</span><br><span class="line">    int irq = 1; // 假设中断号为1</span><br><span class="line">    int result = request_irq(irq, my_interrupt_handler, IRQF_SHARED, &quot;my_interrupt&quot;, NULL);</span><br><span class="line">    if (result) &#123;</span><br><span class="line">        printk(KERN_ERR &quot;Failed to request IRQ\n&quot;);</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static void __exit my_module_exit(void) &#123;</span><br><span class="line">    int irq = 1; // 假设中断号为1</span><br><span class="line">    free_irq(irq, NULL);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">module_init(my_module_init);</span><br><span class="line">module_exit(my_module_exit);</span><br><span class="line"></span><br><span class="line">MODULE_LICENSE(&quot;GPL&quot;);</span><br><span class="line">MODULE_DESCRIPTION(&quot;A simple interrupt handler module&quot;);</span><br><span class="line">MODULE_AUTHOR(&quot;Your Name&quot;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-顶半部和底半部"><a href="#3-顶半部和底半部" class="headerlink" title="3.顶半部和底半部"></a>3.<strong>顶半部和底半部</strong></h4><ul>
+<li><strong>顶半部</strong>：快速处理中断的关键部分。</li>
+<li><strong>底半部</strong>：使用任务队列、工作队列或软中断机制延迟处理较长时间的任务。</li>
+</ul>
+<h3 id="中断的优先级和屏蔽"><a href="#中断的优先级和屏蔽" class="headerlink" title="中断的优先级和屏蔽"></a>中断的优先级和屏蔽</h3><p>中断控制器可以设置中断的优先级和屏蔽某些中断，以确保重要的中断优先得到处理。APIC（Advanced Programmable Interrupt Controller）提供了更高级的中断管理功能，如多级中断优先级和分布式中断处理。</p>
+<h3 id="中断的嵌套和重入"><a href="#中断的嵌套和重入" class="headerlink" title="中断的嵌套和重入"></a>中断的嵌套和重入</h3><p>中断处理程序应尽量短小精悍，以减少中断嵌套的层数。中断处理程序应避免使用可能导致阻塞的操作，如长时间的I&#x2F;O操作和锁定操作。</p>
+<blockquote>
+<p>原文: <a target="_blank" rel="noopener" href="https://www.yuque.com/jsyun/vwxwc6">https://www.yuque.com/jsyun/vwxwc6</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="" alt=" wechat" style="width: 200px; max-width: 100%;"/>
+    <div>天生我才必有用</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2025/02/20/%E9%9D%A2%E8%AF%95%E9%A2%98/Linux%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E7%A3%81%E7%9B%98%E5%8D%A0%E7%94%A8%E6%83%85%E5%86%B5%EF%BC%9F/" rel="next" title="Linux查看文件磁盘占用情况">
+                <i class="fa fa-chevron-left"></i> Linux查看文件磁盘占用情况
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2025/02/21/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BC%98%E6%83%A0%E5%88%B8%E7%A7%92%E6%9D%80/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/11.jpg"
+               alt="" />
+          <p class="site-author-name" itemprop="name"></p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">108</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%91%8CLinux%E4%B8%AD%E6%96%AD%E6%9C%BA%E5%88%B6%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">👌Linux中断机制是什么？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E6%96%AD%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.0.1.</span> <span class="nav-text">中断的基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E4%B8%AD%E6%96%AD%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">1.中断类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E4%B8%AD%E6%96%AD%E5%90%91%E9%87%8F%E8%A1%A8"><span class="nav-number">1.0.1.2.</span> <span class="nav-text">2.中断向量表</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E6%96%AD%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B"><span class="nav-number">1.0.2.</span> <span class="nav-text">中断处理流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E6%96%AD%E5%A4%84%E7%90%86%E7%9A%84%E5%85%B3%E9%94%AE%E7%BB%84%E4%BB%B6"><span class="nav-number">1.0.3.</span> <span class="nav-text">中断处理的关键组件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E4%B8%AD%E6%96%AD%E6%8E%A7%E5%88%B6%E5%99%A8"><span class="nav-number">1.0.3.1.</span> <span class="nav-text">1.中断控制器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E4%B8%AD%E6%96%AD%E5%A4%84%E7%90%86%E7%A8%8B%E5%BA%8F"><span class="nav-number">1.0.3.2.</span> <span class="nav-text">2.中断处理程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E4%B8%AD%E6%96%AD%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="nav-number">1.0.3.3.</span> <span class="nav-text">3.中断上下文</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E6%96%AD%E5%A4%84%E7%90%86%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.0.4.</span> <span class="nav-text">中断处理的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E6%B3%A8%E5%86%8C%E4%B8%AD%E6%96%AD%E5%A4%84%E7%90%86%E7%A8%8B%E5%BA%8F"><span class="nav-number">1.0.4.1.</span> <span class="nav-text">1.注册中断处理程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E4%B8%AD%E6%96%AD%E5%A4%84%E7%90%86%E7%A8%8B%E5%BA%8F%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.0.4.2.</span> <span class="nav-text">2.中断处理程序示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E9%A1%B6%E5%8D%8A%E9%83%A8%E5%92%8C%E5%BA%95%E5%8D%8A%E9%83%A8"><span class="nav-number">1.0.4.3.</span> <span class="nav-text">3.顶半部和底半部</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E6%96%AD%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7%E5%92%8C%E5%B1%8F%E8%94%BD"><span class="nav-number">1.0.5.</span> <span class="nav-text">中断的优先级和屏蔽</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E6%96%AD%E7%9A%84%E5%B5%8C%E5%A5%97%E5%92%8C%E9%87%8D%E5%85%A5"><span class="nav-number">1.0.6.</span> <span class="nav-text">中断的嵌套和重入</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">javayun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Gemini
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
