@@ -270,6 +270,440 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%B8%BA%E4%BB%80%E4%B9%88hashMap%E7%9A%84%E5%AE%B9%E9%87%8F%E6%89%A9%E5%AE%B9%E6%97%B6%E4%B8%80%E5%AE%9A%E6%98%AF2%E7%9A%84%E5%B9%82%E6%AC%A1_/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%B8%BA%E4%BB%80%E4%B9%88hashMap%E7%9A%84%E5%AE%B9%E9%87%8F%E6%89%A9%E5%AE%B9%E6%97%B6%E4%B8%80%E5%AE%9A%E6%98%AF2%E7%9A%84%E5%B9%82%E6%AC%A1_/" itemprop="url">为什么hashMap的容量扩容时一定是2的幂次</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-26T03:05:09+00:00">
+                2025-02-26
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌为什么hashMap的容量扩容时一定是2的幂次"><a href="#👌为什么hashMap的容量扩容时一定是2的幂次" class="headerlink" title="👌为什么hashMap的容量扩容时一定是2的幂次?"></a>👌为什么hashMap的容量扩容时一定是2的幂次?</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>在HashMap中，初始化设置长度时，容量自动转成 2 的幂次长度，这样设计有几个重要原因，主要是为了优化性能和简化计算。</p>
+<h2 id="高效计算索引"><a href="#高效计算索引" class="headerlink" title="高效计算索引"></a>高效计算索引</h2><p>HashMap使用哈希值来确定键值对在哈希表中的位置。为了计算数组索引，HashMap使用按位与操作代替取模运算。具体来说，HashMap通过以下方式计算索引：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int index= (n - 1) &amp; hash;</span><br></pre></td></tr></table></figure>
+
+<p>其中n是哈希表数组的长度。假设n是 2 的幂次，比如 16（2^4），则n - 1是 15（1111 二进制）。这样，(n - 1) &amp; hash操作可以快速地对哈希值进行取模运算，而不需要使用性能较低的取模操作%。</p>
+<p>例如，如果n是 16（2^4）：</p>
+<ul>
+<li>n - 1是 15（1111 二进制）</li>
+<li>按位与操作(n - 1) &amp; hash只保留哈希值的低 4 位，这相当于对 16 取模。</li>
+</ul>
+<p>这种方式不仅计算快速，而且代码简洁。</p>
+<h2 id="减少哈希冲突"><a href="#减少哈希冲突" class="headerlink" title="减少哈希冲突"></a>减少哈希冲突</h2><p>在哈希表中，哈希冲突是一个主要问题。哈希冲突发生时，不同的键计算出的索引相同，导致它们被存储在同一个桶中。通过将容量设置为 2 的幂次，哈希表能够更均匀地分布哈希值，减少冲突。</p>
+<p>具体来说，当容量是 2 的幂次时，哈希值的低位和高位都能均匀地影响最终索引。这是因为扰动函数hash &#x3D; h ^ (h &gt;&gt;&gt; 16)将高位和低位混合在一起，使得哈希值的分布更均匀。</p>
+<p>假设我们有一个HashMap，其容量为 10（不是 2 的幂次），并且我们有一组键，它们的哈希值分别为：</p>
+<ul>
+<li>键 A 的哈希值：35</li>
+<li>键 B 的哈希值：45</li>
+<li>键 C 的哈希值：55</li>
+</ul>
+<p>（1）使用非 2 的幂次容量</p>
+<p>如果容量为 10，我们计算索引的方法是取模运算：</p>
+<ul>
+<li>键 A 的索引：35 % 10 &#x3D; 5</li>
+<li>键 B 的索引：45 % 10 &#x3D; 5</li>
+<li>键 C 的索引：55 % 10 &#x3D; 5</li>
+</ul>
+<p>可以看到，这些不同的键在取模运算后都映射到同一个索引 5，导致了哈希冲突。</p>
+<p>（2）使用 2 的幂次容量</p>
+<p>现在假设我们将容量设置为 16（2^4），并使用按位与操作来计算索引：</p>
+<ul>
+<li>键 A 的索引：35 &amp; (16 - 1) &#x3D; 35 &amp; 15 &#x3D; 3</li>
+<li>键 B 的索引：45 &amp; (16 - 1) &#x3D; 45 &amp; 15 &#x3D; 13</li>
+<li>键 C 的索引：55 &amp; (16 - 1) &#x3D; 55 &amp; 15 &#x3D; 7</li>
+</ul>
+<p>在这种情况下，这些键映射到不同的索引（3、13 和 7），没有发生哈希冲突。</p>
+<h2 id="简化扩容"><a href="#简化扩容" class="headerlink" title="简化扩容"></a>简化扩容</h2><p>HashMap在需要扩容时，通常会将容量加倍。如果容量总是 2 的幂次，那么加倍后的容量仍然是 2 的幂次，这样可以简化扩容过程中的计算和重新哈希操作。</p>
+<h2 id="内存对齐和效率"><a href="#内存对齐和效率" class="headerlink" title="内存对齐和效率"></a>内存对齐和效率</h2><p>计算机内存分配通常更高效地处理 2 的幂次大小的内存块。使用 2 的幂次长度可以更好地利用内存对齐，提高内存访问效率。</p>
+<h2 id="实现细节"><a href="#实现细节" class="headerlink" title="实现细节"></a>实现细节</h2><p>当你初始化HashMap时，指定的初始容量会被调整为大于或等于该值的最小的 2 的幂次。例如，如果你指定的初始容量是 10，HashMap会将其调整为 16（2^4）。</p>
+<p>具体实现如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">static final int tableSizeFor(int cap) &#123;</span><br><span class="line">    int n = cap - 1;</span><br><span class="line">    n |= n &gt;&gt;&gt; 1;</span><br><span class="line">    n |= n &gt;&gt;&gt; 2;</span><br><span class="line">    n |= n &gt;&gt;&gt; 4;</span><br><span class="line">    n |= n &gt;&gt;&gt; 8;</span><br><span class="line">    n |= n &gt;&gt;&gt; 16;</span><br><span class="line">    return (n &lt; 0) ? 1 : (n &gt;= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个方法通过一系列的位移和按位或操作，将任意整数调整为大于或等于它的最小 2 的幂次。但是还有一种特殊情况套用以上公式不行，这些数字就是2的幂自身。如果数字4 套用公式的话。得到的会是 8 ，为了解决这个问题，JDK的工程师把所有用户传进来的数在进行计算之前先-1。</p>
+<blockquote>
+<p>&#x2F;yfxseowdd8g5hm0e&gt;</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%B8%BA%E4%BB%80%E4%B9%88hashmap%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%BC%9A%E8%BF%9B%E5%85%A5%E6%AD%BB%E5%BE%AA%E7%8E%AF%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%B8%BA%E4%BB%80%E4%B9%88hashmap%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%BC%9A%E8%BF%9B%E5%85%A5%E6%AD%BB%E5%BE%AA%E7%8E%AF%EF%BC%9F/" itemprop="url">为什么hashmap多线程会进入死循环？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-26T03:05:09+00:00">
+                2025-02-26
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌为什么hashmap多线程会进入死循环？"><a href="#👌为什么hashmap多线程会进入死循环？" class="headerlink" title="👌为什么hashmap多线程会进入死循环？"></a>👌为什么hashmap多线程会进入死循环？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>HashMap在多线程环境中可能会进入死循环，主要是由于其非线程安全的设计导致的。</p>
+<h2 id="并发修改导致的链表环"><a href="#并发修改导致的链表环" class="headerlink" title="并发修改导致的链表环"></a>并发修改导致的链表环</h2><p>在HashMap中，当发生哈希冲突时，使用链地址法（链表）来存储冲突的键值对。如果多个线程同时对HashMap进行修改（例如插入或删除操作），可能会导致链表结构被破坏，形成环形链表。这种情况下，当遍历链表时，会陷入死循环。</p>
+<h4 id="原因分析"><a href="#原因分析" class="headerlink" title="原因分析"></a>原因分析</h4><p>当两个或多个线程同时修改HashMap，例如在同一个桶中插入元素，可能会导致链表的指针被错误地更新。例如，一个线程正在将一个新的节点插入链表中，而另一个线程正在重新排列链表的顺序。这种竞争条件可能导致链表中出现环形结构。</p>
+<h4 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">import java.util.HashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line"></span><br><span class="line">public class HashMapInfiniteLoop &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        final Map&lt;Integer, Integer&gt; map = new HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        // 创建两个线程同时对 HashMap 进行插入操作</span><br><span class="line">        Thread t1 = new Thread(() -&gt; &#123;</span><br><span class="line">            for (int i = 0; i &lt; 10000; i++) &#123;</span><br><span class="line">                map.put(i, i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        Thread t2 = new Thread(() -&gt; &#123;</span><br><span class="line">            for (int i = 10000; i &lt; 20000; i++) &#123;</span><br><span class="line">                map.put(i, i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line"></span><br><span class="line">        try &#123;</span><br><span class="line">            t1.join();</span><br><span class="line">            t2.join();</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 遍历 HashMap，可能会陷入死循环</span><br><span class="line">        for (Map.Entry&lt;Integer, Integer&gt; entry : map.entrySet()) &#123;</span><br><span class="line">            System.out.println(entry.getKey() + &quot; : &quot; + entry.getValue());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上述代码中，两个线程同时对HashMap进行插入操作，可能会导致链表结构被破坏，形成环形链表，从而在遍历时陷入死循环。</p>
+<h2 id="扩容导致的并发问题"><a href="#扩容导致的并发问题" class="headerlink" title="扩容导致的并发问题"></a>扩容导致的并发问题</h2><p>HashMap在容量达到一定阈值时会进行扩容（rehash），即重新分配桶数组，并重新哈希所有键值对。如果在扩容过程中，有其他线程同时进行插入操作，可能会导致重新哈希过程中的数据不一致，进而引发死循环。</p>
+<h4 id="原因分析-1"><a href="#原因分析-1" class="headerlink" title="原因分析"></a>原因分析</h4><p>扩容过程中，HashMap会创建一个新的、更大的桶数组，并将所有旧的键值对重新哈希并放入新的桶中。如果在这个过程中有其他线程插入新的键值对，可能会导致旧桶和新桶的数据结构不一致，进而引起死循环。</p>
+<h4 id="示例代码-1"><a href="#示例代码-1" class="headerlink" title="示例代码"></a>示例代码</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">import java.util.HashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line"></span><br><span class="line">public class HashMapResizeInfiniteLoop &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        final Map&lt;Integer, Integer&gt; map = new HashMap&lt;&gt;(2);</span><br><span class="line"></span><br><span class="line">        // 创建两个线程同时对 HashMap 进行插入操作</span><br><span class="line">        Thread t1 = new Thread(() -&gt; &#123;</span><br><span class="line">            for (int i = 0; i &lt; 10000; i++) &#123;</span><br><span class="line">                map.put(i, i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        Thread t2 = new Thread(() -&gt; &#123;</span><br><span class="line">            for (int i = 10000; i &lt; 20000; i++) &#123;</span><br><span class="line">                map.put(i, i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line"></span><br><span class="line">        try &#123;</span><br><span class="line">            t1.join();</span><br><span class="line">            t2.join();</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 遍历 HashMap，可能会陷入死循环</span><br><span class="line">        for (Map.Entry&lt;Integer, Integer&gt; entry : map.entrySet()) &#123;</span><br><span class="line">            System.out.println(entry.getKey() + &quot; : &quot; + entry.getValue());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上述代码中，HashMap初始容量设置为 2，两个线程同时插入大量元素，可能会导致扩容过程中数据不一致，从而引发死循环。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h3 id="使用线程安全的数据结构"><a href="#使用线程安全的数据结构" class="headerlink" title="使用线程安全的数据结构"></a>使用线程安全的数据结构</h3><p>在多线程环境中，使用ConcurrentHashMap代替HashMap。ConcurrentHashMap通过分段锁机制来保证线程安全，并发性能更好。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">import java.util.concurrent.ConcurrentHashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line"></span><br><span class="line">public class ConcurrentHashMapExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        final Map&lt;Integer, Integer&gt; map = new ConcurrentHashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        Thread t1 = new Thread(() -&gt; &#123;</span><br><span class="line">            for (int i = 0; i &lt; 10000; i++) &#123;</span><br><span class="line">                map.put(i, i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        Thread t2 = new Thread(() -&gt; &#123;</span><br><span class="line">            for (int i = 10000; i &lt; 20000; i++) &#123;</span><br><span class="line">                map.put(i, i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line"></span><br><span class="line">        try &#123;</span><br><span class="line">            t1.join();</span><br><span class="line">            t2.join();</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        for (Map.Entry&lt;Integer, Integer&gt; entry : map.entrySet()) &#123;</span><br><span class="line">            System.out.println(entry.getKey() + &quot; : &quot; + entry.getValue());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="外部同步"><a href="#外部同步" class="headerlink" title="外部同步"></a>外部同步</h3><p>如果必须使用HashMap，可以在外部进行同步，确保同时只有一个线程对HashMap进行修改。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">import java.util.HashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line"></span><br><span class="line">public class SynchronizedHashMapExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        final Map&lt;Integer, Integer&gt; map = new HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        Thread t1 = new Thread(() -&gt; &#123;</span><br><span class="line">            synchronized (map) &#123;</span><br><span class="line">                for (int i = 0; i &lt; 10000; i++) &#123;</span><br><span class="line">                    map.put(i, i);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        Thread t2 = new Thread(() -&gt; &#123;</span><br><span class="line">            synchronized (map) &#123;</span><br><span class="line">                for (int i = 10000; i &lt; 20000; i++) &#123;</span><br><span class="line">                    map.put(i, i);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line"></span><br><span class="line">        try &#123;</span><br><span class="line">            t1.join();</span><br><span class="line">            t2.join();</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        synchronized (map) &#123;</span><br><span class="line">            for (Map.Entry&lt;Integer, Integer&gt; entry : map.entrySet()) &#123;</span><br><span class="line">                System.out.println(entry.getKey() + &quot; : &quot; + entry.getValue());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过使用ConcurrentHashMap或外部同步，可以避免HashMap在多线程环境中出现死循环的问题。</p>
+<blockquote>
+<p>&#x2F;dhuaw13mlcgfpa9k&gt;</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E6%89%B0%E5%8A%A8%E5%87%BD%E6%95%B0%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +751,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-24T07:08:05+00:00">
-                2025-02-24
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-26T03:05:09+00:00">
+                2025-02-26
               </time>
             
           </span>
@@ -526,8 +960,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-24T07:08:05+00:00">
-                2025-02-24
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-26T03:05:09+00:00">
+                2025-02-26
               </time>
             
           </span>
@@ -675,415 +1109,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%B8%BA%E4%BB%80%E4%B9%88hashmap%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%BC%9A%E8%BF%9B%E5%85%A5%E6%AD%BB%E5%BE%AA%E7%8E%AF%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%B8%BA%E4%BB%80%E4%B9%88hashmap%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%BC%9A%E8%BF%9B%E5%85%A5%E6%AD%BB%E5%BE%AA%E7%8E%AF%EF%BC%9F/" itemprop="url">为什么hashmap多线程会进入死循环？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-24T07:08:05+00:00">
-                2025-02-24
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌为什么hashmap多线程会进入死循环？"><a href="#👌为什么hashmap多线程会进入死循环？" class="headerlink" title="👌为什么hashmap多线程会进入死循环？"></a>👌为什么hashmap多线程会进入死循环？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>HashMap在多线程环境中可能会进入死循环，主要是由于其非线程安全的设计导致的。</p>
-<h2 id="并发修改导致的链表环"><a href="#并发修改导致的链表环" class="headerlink" title="并发修改导致的链表环"></a>并发修改导致的链表环</h2><p>在HashMap中，当发生哈希冲突时，使用链地址法（链表）来存储冲突的键值对。如果多个线程同时对HashMap进行修改（例如插入或删除操作），可能会导致链表结构被破坏，形成环形链表。这种情况下，当遍历链表时，会陷入死循环。</p>
-<h4 id="原因分析"><a href="#原因分析" class="headerlink" title="原因分析"></a>原因分析</h4><p>当两个或多个线程同时修改HashMap，例如在同一个桶中插入元素，可能会导致链表的指针被错误地更新。例如，一个线程正在将一个新的节点插入链表中，而另一个线程正在重新排列链表的顺序。这种竞争条件可能导致链表中出现环形结构。</p>
-<h4 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">import java.util.HashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line"></span><br><span class="line">public class HashMapInfiniteLoop &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        final Map&lt;Integer, Integer&gt; map = new HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        // 创建两个线程同时对 HashMap 进行插入操作</span><br><span class="line">        Thread t1 = new Thread(() -&gt; &#123;</span><br><span class="line">            for (int i = 0; i &lt; 10000; i++) &#123;</span><br><span class="line">                map.put(i, i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        Thread t2 = new Thread(() -&gt; &#123;</span><br><span class="line">            for (int i = 10000; i &lt; 20000; i++) &#123;</span><br><span class="line">                map.put(i, i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line"></span><br><span class="line">        try &#123;</span><br><span class="line">            t1.join();</span><br><span class="line">            t2.join();</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 遍历 HashMap，可能会陷入死循环</span><br><span class="line">        for (Map.Entry&lt;Integer, Integer&gt; entry : map.entrySet()) &#123;</span><br><span class="line">            System.out.println(entry.getKey() + &quot; : &quot; + entry.getValue());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在上述代码中，两个线程同时对HashMap进行插入操作，可能会导致链表结构被破坏，形成环形链表，从而在遍历时陷入死循环。</p>
-<h2 id="扩容导致的并发问题"><a href="#扩容导致的并发问题" class="headerlink" title="扩容导致的并发问题"></a>扩容导致的并发问题</h2><p>HashMap在容量达到一定阈值时会进行扩容（rehash），即重新分配桶数组，并重新哈希所有键值对。如果在扩容过程中，有其他线程同时进行插入操作，可能会导致重新哈希过程中的数据不一致，进而引发死循环。</p>
-<h4 id="原因分析-1"><a href="#原因分析-1" class="headerlink" title="原因分析"></a>原因分析</h4><p>扩容过程中，HashMap会创建一个新的、更大的桶数组，并将所有旧的键值对重新哈希并放入新的桶中。如果在这个过程中有其他线程插入新的键值对，可能会导致旧桶和新桶的数据结构不一致，进而引起死循环。</p>
-<h4 id="示例代码-1"><a href="#示例代码-1" class="headerlink" title="示例代码"></a>示例代码</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">import java.util.HashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line"></span><br><span class="line">public class HashMapResizeInfiniteLoop &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        final Map&lt;Integer, Integer&gt; map = new HashMap&lt;&gt;(2);</span><br><span class="line"></span><br><span class="line">        // 创建两个线程同时对 HashMap 进行插入操作</span><br><span class="line">        Thread t1 = new Thread(() -&gt; &#123;</span><br><span class="line">            for (int i = 0; i &lt; 10000; i++) &#123;</span><br><span class="line">                map.put(i, i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        Thread t2 = new Thread(() -&gt; &#123;</span><br><span class="line">            for (int i = 10000; i &lt; 20000; i++) &#123;</span><br><span class="line">                map.put(i, i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line"></span><br><span class="line">        try &#123;</span><br><span class="line">            t1.join();</span><br><span class="line">            t2.join();</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 遍历 HashMap，可能会陷入死循环</span><br><span class="line">        for (Map.Entry&lt;Integer, Integer&gt; entry : map.entrySet()) &#123;</span><br><span class="line">            System.out.println(entry.getKey() + &quot; : &quot; + entry.getValue());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在上述代码中，HashMap初始容量设置为 2，两个线程同时插入大量元素，可能会导致扩容过程中数据不一致，从而引发死循环。</p>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h3 id="使用线程安全的数据结构"><a href="#使用线程安全的数据结构" class="headerlink" title="使用线程安全的数据结构"></a>使用线程安全的数据结构</h3><p>在多线程环境中，使用ConcurrentHashMap代替HashMap。ConcurrentHashMap通过分段锁机制来保证线程安全，并发性能更好。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">import java.util.concurrent.ConcurrentHashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line"></span><br><span class="line">public class ConcurrentHashMapExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        final Map&lt;Integer, Integer&gt; map = new ConcurrentHashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        Thread t1 = new Thread(() -&gt; &#123;</span><br><span class="line">            for (int i = 0; i &lt; 10000; i++) &#123;</span><br><span class="line">                map.put(i, i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        Thread t2 = new Thread(() -&gt; &#123;</span><br><span class="line">            for (int i = 10000; i &lt; 20000; i++) &#123;</span><br><span class="line">                map.put(i, i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line"></span><br><span class="line">        try &#123;</span><br><span class="line">            t1.join();</span><br><span class="line">            t2.join();</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        for (Map.Entry&lt;Integer, Integer&gt; entry : map.entrySet()) &#123;</span><br><span class="line">            System.out.println(entry.getKey() + &quot; : &quot; + entry.getValue());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="外部同步"><a href="#外部同步" class="headerlink" title="外部同步"></a>外部同步</h3><p>如果必须使用HashMap，可以在外部进行同步，确保同时只有一个线程对HashMap进行修改。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">import java.util.HashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line"></span><br><span class="line">public class SynchronizedHashMapExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        final Map&lt;Integer, Integer&gt; map = new HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        Thread t1 = new Thread(() -&gt; &#123;</span><br><span class="line">            synchronized (map) &#123;</span><br><span class="line">                for (int i = 0; i &lt; 10000; i++) &#123;</span><br><span class="line">                    map.put(i, i);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        Thread t2 = new Thread(() -&gt; &#123;</span><br><span class="line">            synchronized (map) &#123;</span><br><span class="line">                for (int i = 10000; i &lt; 20000; i++) &#123;</span><br><span class="line">                    map.put(i, i);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line"></span><br><span class="line">        try &#123;</span><br><span class="line">            t1.join();</span><br><span class="line">            t2.join();</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        synchronized (map) &#123;</span><br><span class="line">            for (Map.Entry&lt;Integer, Integer&gt; entry : map.entrySet()) &#123;</span><br><span class="line">                System.out.println(entry.getKey() + &quot; : &quot; + entry.getValue());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>通过使用ConcurrentHashMap或外部同步，可以避免HashMap在多线程环境中出现死循环的问题。</p>
-<blockquote>
-<p>&#x2F;dhuaw13mlcgfpa9k&gt;</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFLinkedHashMap_/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFLinkedHashMap_/" itemprop="url">什么是LinkedHashMap</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-24T07:08:05+00:00">
-                2025-02-24
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌什么是LinkedHashMap"><a href="#👌什么是LinkedHashMap" class="headerlink" title="👌什么是LinkedHashMap?"></a>👌什么是LinkedHashMap?</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>LinkedHashMap是 Java 集合框架中的一个类，它继承自HashMap，并且具有哈希表和链表的双重特性。LinkedHashMap通过维护一个双向链表来记录键值对的插入顺序或访问顺序，从而提供了一种有序的映射。</p>
-<h2 id="基本特点"><a href="#基本特点" class="headerlink" title="基本特点"></a>基本特点</h2><ol>
-<li><strong>有序性</strong>：LinkedHashMap保证了键值对的顺序，可以是插入顺序（默认）或访问顺序（可选）。</li>
-<li><strong>哈希表和链表结合</strong>：LinkedHashMap通过哈希表实现快速的键值对查找，同时通过双向链表维护顺序。</li>
-<li><strong>允许<strong><strong>null</strong></strong>键和值</strong>：LinkedHashMap允许一个null键和多个null值。</li>
-<li><strong>线程不安全</strong>：LinkedHashMap不是线程安全的，如果需要在多线程环境中使用，需要通过外部同步机制来保证线程安全。</li>
-</ol>
-<h2 id="与其他集合类的比较"><a href="#与其他集合类的比较" class="headerlink" title="与其他集合类的比较"></a>与其他集合类的比较</h2><p><strong>LinkedHashMap vs. HashMap</strong>：</p>
-<p>LinkedHashMap保证键值对的顺序（插入顺序或访问顺序），而HashMap不保证顺序。</p>
-<p>LinkedHashMap通过维护链表来记录顺序，因此在插入和删除操作上可能略慢于HashMap。</p>
-<p><strong>LinkedHashMap vs. TreeMap</strong>：</p>
-<p>LinkedHashMap保证插入顺序或访问顺序，而TreeMap保证键的自然顺序或比较器的顺序。</p>
-<p>LinkedHashMap基于哈希表实现，操作的平均时间复杂度为 O(1)，而TreeMap基于红黑树实现，操作的时间复杂度为 O(log n)。</p>
-<h2 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h2><p>LinkedHashMap适用于需要保持键值对的插入顺序或访问顺序的场景：</p>
-<p>实现 LRU（最近最少使用）缓存。</p>
-<p>需要按插入顺序遍历键值对。</p>
-<p>需要在保持顺序的同时快速查找键值对。</p>
-<blockquote>
-<p>&#x2F;ttdsl1h3wbwte5u4&gt;</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFTreeMap%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1131,8 +1156,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-24T07:08:05+00:00">
-                2025-02-24
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-26T03:05:09+00:00">
+                2025-02-26
               </time>
             
           </span>
@@ -1288,6 +1313,210 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFLinkedHashMap_/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFLinkedHashMap_/" itemprop="url">什么是LinkedHashMap</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-26T03:05:09+00:00">
+                2025-02-26
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌什么是LinkedHashMap"><a href="#👌什么是LinkedHashMap" class="headerlink" title="👌什么是LinkedHashMap?"></a>👌什么是LinkedHashMap?</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>LinkedHashMap是 Java 集合框架中的一个类，它继承自HashMap，并且具有哈希表和链表的双重特性。LinkedHashMap通过维护一个双向链表来记录键值对的插入顺序或访问顺序，从而提供了一种有序的映射。</p>
+<h2 id="基本特点"><a href="#基本特点" class="headerlink" title="基本特点"></a>基本特点</h2><ol>
+<li><strong>有序性</strong>：LinkedHashMap保证了键值对的顺序，可以是插入顺序（默认）或访问顺序（可选）。</li>
+<li><strong>哈希表和链表结合</strong>：LinkedHashMap通过哈希表实现快速的键值对查找，同时通过双向链表维护顺序。</li>
+<li><strong>允许<strong><strong>null</strong></strong>键和值</strong>：LinkedHashMap允许一个null键和多个null值。</li>
+<li><strong>线程不安全</strong>：LinkedHashMap不是线程安全的，如果需要在多线程环境中使用，需要通过外部同步机制来保证线程安全。</li>
+</ol>
+<h2 id="与其他集合类的比较"><a href="#与其他集合类的比较" class="headerlink" title="与其他集合类的比较"></a>与其他集合类的比较</h2><p><strong>LinkedHashMap vs. HashMap</strong>：</p>
+<p>LinkedHashMap保证键值对的顺序（插入顺序或访问顺序），而HashMap不保证顺序。</p>
+<p>LinkedHashMap通过维护链表来记录顺序，因此在插入和删除操作上可能略慢于HashMap。</p>
+<p><strong>LinkedHashMap vs. TreeMap</strong>：</p>
+<p>LinkedHashMap保证插入顺序或访问顺序，而TreeMap保证键的自然顺序或比较器的顺序。</p>
+<p>LinkedHashMap基于哈希表实现，操作的平均时间复杂度为 O(1)，而TreeMap基于红黑树实现，操作的时间复杂度为 O(log n)。</p>
+<h2 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h2><p>LinkedHashMap适用于需要保持键值对的插入顺序或访问顺序的场景：</p>
+<p>实现 LRU（最近最少使用）缓存。</p>
+<p>需要按插入顺序遍历键值对。</p>
+<p>需要在保持顺序的同时快速查找键值对。</p>
+<blockquote>
+<p>&#x2F;ttdsl1h3wbwte5u4&gt;</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFfail-fast%E6%9C%BA%E5%88%B6%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1335,8 +1564,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-24T07:08:05+00:00">
-                2025-02-24
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-26T03:05:09+00:00">
+                2025-02-26
               </time>
             
           </span>
@@ -1530,8 +1759,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-24T07:08:05+00:00">
-                2025-02-24
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-26T03:05:09+00:00">
+                2025-02-26
               </time>
             
           </span>
@@ -1729,8 +1958,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-24T07:08:05+00:00">
-                2025-02-24
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-26T03:05:09+00:00">
+                2025-02-26
               </time>
             
           </span>
@@ -1947,8 +2176,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-24T07:08:05+00:00">
-                2025-02-24
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-26T03:05:09+00:00">
+                2025-02-26
               </time>
             
           </span>
@@ -2141,8 +2370,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-24T07:08:05+00:00">
-                2025-02-24
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-26T03:05:09+00:00">
+                2025-02-26
               </time>
             
           </span>
@@ -2338,8 +2567,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-24T07:08:05+00:00">
-                2025-02-24
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-26T03:05:09+00:00">
+                2025-02-26
               </time>
             
           </span>
@@ -2538,8 +2767,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-24T07:08:05+00:00">
-                2025-02-24
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-26T03:05:09+00:00">
+                2025-02-26
               </time>
             
           </span>
@@ -2739,8 +2968,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-24T07:08:05+00:00">
-                2025-02-24
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-26T03:05:09+00:00">
+                2025-02-26
               </time>
             
           </span>
@@ -2888,209 +3117,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E8%AF%B4%E4%B8%80%E4%B8%8Bjava8%E5%AE%9E%E7%8E%B0%E7%9A%84concurrentHashMap%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E8%AF%B4%E4%B8%80%E4%B8%8Bjava8%E5%AE%9E%E7%8E%B0%E7%9A%84concurrentHashMap%EF%BC%9F/" itemprop="url">说一下java8实现的concurrentHashMap？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-24T07:08:05+00:00">
-                2025-02-24
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌说一下java8实现的concurrentHashMap？"><a href="#👌说一下java8实现的concurrentHashMap？" class="headerlink" title="👌说一下java8实现的concurrentHashMap？"></a>👌说一下java8实现的concurrentHashMap？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>Java 8 对ConcurrentHashMap进行了重新设计，取消了分段锁的机制，改用更细粒度的锁和无锁操作来提高并发性能。</p>
-<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><p><strong>Node</strong>：基本的链表节点，存储键值对和指向下一个节点的指针。</p>
-<p><strong>TreeNode</strong>：用于红黑树的节点，当链表长度超过一定阈值（默认是8）时，链表会转换为红黑树。</p>
-<p><strong>TreeBin</strong>：红黑树的容器，管理红黑树的操作。</p>
-<p><strong>ForwardingNode</strong>：在扩容过程中用于指示节点已经被移动。</p>
-<h2 id="主要操作"><a href="#主要操作" class="headerlink" title="主要操作"></a>主要操作</h2><p><strong>put 操作</strong>：通过 CAS 操作和细粒度的锁来实现高效的并发插入和更新。</p>
-<p><strong>get 操作</strong>：使用无锁的方式进行查找，性能更高。</p>
-<p><strong>扩容</strong>：通过逐步迁移节点和协作扩容机制，提高扩容效率。</p>
-<h2 id="细粒度的并发控制"><a href="#细粒度的并发控制" class="headerlink" title="细粒度的并发控制"></a>细粒度的并发控制</h2><p>Java 8 中的ConcurrentHashMap采用了更细粒度的并发控制，主要通过以下方式实现：</p>
-<p><strong>CAS 操作</strong>：使用 CAS 操作（Compare-And-Swap）进行无锁插入和更新，减少锁竞争。</p>
-<p><strong>synchronized 块</strong>：在必要时对单个桶（bin）进行加锁，而不是整个段，从而进一步提高并发性。</p>
-<p><strong>红黑树</strong>：当链表长度超过阈值时，转换为红黑树，降低查找时间复杂度，从 O(n) 降低到 O(log n)。</p>
-<h2 id="Java-8-相比-Java-7-的好处"><a href="#Java-8-相比-Java-7-的好处" class="headerlink" title="Java 8 相比 Java 7 的好处"></a>Java 8 相比 Java 7 的好处</h2><p><strong>更高的并发性</strong>：Java 7 使用段级别的锁，而 Java 8 使用更细粒度的锁和无锁操作，减少了锁竞争，提高了并发性。</p>
-<p><strong>更好的性能</strong>：Java 8 中的get操作是无锁的，性能更高。put操作使用 CAS 和细粒度的锁，提高了插入和更新的性能。</p>
-<p><strong>更高效的扩容</strong>：Java 8 通过逐步迁移节点和协作扩容机制，提高了扩容效率，减少了扩容过程中对性能的影响。</p>
-<p><strong>更高效的查找</strong>：当链表长度超过阈值时，转换为红黑树，降低了查找时间复杂度。</p>
-<blockquote>
-<p>&#x2F;kfgmeauv8z37pxgd&gt;</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E9%87%8D%E6%96%B0%E8%B0%83%E6%95%B4HashMap%E5%A4%A7%E5%B0%8F%E5%AD%98%E5%9C%A8%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%E5%90%97%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -3138,8 +3164,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-24T07:08:05+00:00">
-                2025-02-24
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-26T03:05:09+00:00">
+                2025-02-26
               </time>
             
           </span>
@@ -3340,8 +3366,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-24T07:08:05+00:00">
-                2025-02-24
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-26T03:05:09+00:00">
+                2025-02-26
               </time>
             
           </span>
@@ -3498,6 +3524,209 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E8%AF%B4%E4%B8%80%E4%B8%8Bjava8%E5%AE%9E%E7%8E%B0%E7%9A%84concurrentHashMap%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E8%AF%B4%E4%B8%80%E4%B8%8Bjava8%E5%AE%9E%E7%8E%B0%E7%9A%84concurrentHashMap%EF%BC%9F/" itemprop="url">说一下java8实现的concurrentHashMap？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-26T03:05:09+00:00">
+                2025-02-26
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌说一下java8实现的concurrentHashMap？"><a href="#👌说一下java8实现的concurrentHashMap？" class="headerlink" title="👌说一下java8实现的concurrentHashMap？"></a>👌说一下java8实现的concurrentHashMap？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>Java 8 对ConcurrentHashMap进行了重新设计，取消了分段锁的机制，改用更细粒度的锁和无锁操作来提高并发性能。</p>
+<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><p><strong>Node</strong>：基本的链表节点，存储键值对和指向下一个节点的指针。</p>
+<p><strong>TreeNode</strong>：用于红黑树的节点，当链表长度超过一定阈值（默认是8）时，链表会转换为红黑树。</p>
+<p><strong>TreeBin</strong>：红黑树的容器，管理红黑树的操作。</p>
+<p><strong>ForwardingNode</strong>：在扩容过程中用于指示节点已经被移动。</p>
+<h2 id="主要操作"><a href="#主要操作" class="headerlink" title="主要操作"></a>主要操作</h2><p><strong>put 操作</strong>：通过 CAS 操作和细粒度的锁来实现高效的并发插入和更新。</p>
+<p><strong>get 操作</strong>：使用无锁的方式进行查找，性能更高。</p>
+<p><strong>扩容</strong>：通过逐步迁移节点和协作扩容机制，提高扩容效率。</p>
+<h2 id="细粒度的并发控制"><a href="#细粒度的并发控制" class="headerlink" title="细粒度的并发控制"></a>细粒度的并发控制</h2><p>Java 8 中的ConcurrentHashMap采用了更细粒度的并发控制，主要通过以下方式实现：</p>
+<p><strong>CAS 操作</strong>：使用 CAS 操作（Compare-And-Swap）进行无锁插入和更新，减少锁竞争。</p>
+<p><strong>synchronized 块</strong>：在必要时对单个桶（bin）进行加锁，而不是整个段，从而进一步提高并发性。</p>
+<p><strong>红黑树</strong>：当链表长度超过阈值时，转换为红黑树，降低查找时间复杂度，从 O(n) 降低到 O(log n)。</p>
+<h2 id="Java-8-相比-Java-7-的好处"><a href="#Java-8-相比-Java-7-的好处" class="headerlink" title="Java 8 相比 Java 7 的好处"></a>Java 8 相比 Java 7 的好处</h2><p><strong>更高的并发性</strong>：Java 7 使用段级别的锁，而 Java 8 使用更细粒度的锁和无锁操作，减少了锁竞争，提高了并发性。</p>
+<p><strong>更好的性能</strong>：Java 8 中的get操作是无锁的，性能更高。put操作使用 CAS 和细粒度的锁，提高了插入和更新的性能。</p>
+<p><strong>更高效的扩容</strong>：Java 8 通过逐步迁移节点和协作扩容机制，提高了扩容效率，减少了扩容过程中对性能的影响。</p>
+<p><strong>更高效的查找</strong>：当链表长度超过阈值时，转换为红黑树，降低了查找时间复杂度。</p>
+<blockquote>
+<p>&#x2F;kfgmeauv8z37pxgd&gt;</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/HashMap/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -3545,8 +3774,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-24T07:08:05+00:00">
-                2025-02-24
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-26T03:05:09+00:00">
+                2025-02-26
               </time>
             
           </span>
@@ -3750,8 +3979,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-24T07:08:05+00:00">
-                2025-02-24
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-26T03:05:09+00:00">
+                2025-02-26
               </time>
             
           </span>
@@ -3973,8 +4202,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-24T07:08:05+00:00">
-                2025-02-24
+              <time title="更新于" itemprop="dateModified" datetime="2025-02-26T03:05:09+00:00">
+                2025-02-26
               </time>
             
           </span>
@@ -4117,249 +4346,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/ThreadLocal/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/10/ThreadLocal/" itemprop="url">ThreadLocal的实现原理</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-10T17:33:00+00:00">
-                2024-10-10
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-02-24T07:08:05+00:00">
-                2025-02-24
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="ThreadLocal是Java中用于解决多线程环境下数据隔离问题的一个类。它提供了一种方式，使得每个线程都可以拥有其独立的变量副本，这样每个线程都可以独立地改变自己的副本，而不会影响其他线程的副本。这种机制在多线程编程中非常有用，特别是当需要在多个线程之间共享某些数据，但又不希望这些数据因为并发访问而引发问题时。"><a href="#ThreadLocal是Java中用于解决多线程环境下数据隔离问题的一个类。它提供了一种方式，使得每个线程都可以拥有其独立的变量副本，这样每个线程都可以独立地改变自己的副本，而不会影响其他线程的副本。这种机制在多线程编程中非常有用，特别是当需要在多个线程之间共享某些数据，但又不希望这些数据因为并发访问而引发问题时。" class="headerlink" title="ThreadLocal是Java中用于解决多线程环境下数据隔离问题的一个类。它提供了一种方式，使得每个线程都可以拥有其独立的变量副本，这样每个线程都可以独立地改变自己的副本，而不会影响其他线程的副本。这种机制在多线程编程中非常有用，特别是当需要在多个线程之间共享某些数据，但又不希望这些数据因为并发访问而引发问题时。"></a>ThreadLocal是Java中用于解决多线程环境下数据隔离问题的一个类。它提供了一种方式，使得每个线程都可以拥有其独立的变量副本，这样每个线程都可以独立地改变自己的副本，而不会影响其他线程的副本。这种机制在多线程编程中非常有用，特别是当需要在多个线程之间共享某些数据，但又不希望这些数据因为并发访问而引发问题时。</h2><h3 id="ThreadLocal的实现原理"><a href="#ThreadLocal的实现原理" class="headerlink" title="ThreadLocal的实现原理"></a>ThreadLocal的实现原理</h3><p>ThreadLocal的实现主要依赖于一个内部类ThreadLocalMap。这个Map以ThreadLocal对象为键，以线程独有的变量为值。每个线程都维护着一个ThreadLocalMap的引用，这样线程就可以通过ThreadLocal对象作为键，在其自己的ThreadLocalMap中查找或设置值。</p>
-<ol>
-<li><p><strong>ThreadLocalMap的结构</strong>：</p>
-<ul>
-<li>ThreadLocalMap是一个哈希表，它的键（Key）是ThreadLocal对象本身的一个弱引用（WeakReference），而值（Value）则是线程独有的变量。</li>
-<li>使用弱引用作为键的好处是，当ThreadLocal对象被垃圾回收时，不会因为ThreadLocalMap中的引用而阻止其被回收。但这也带来了一个问题，即如果ThreadLocal对象被回收了，而ThreadLocalMap中的Entry还存在（且Value还未被回收），那么就会出现键为null的情况，这需要在ThreadLocalMap的操作中特别处理。</li>
-</ul>
-</li>
-<li><p><strong>ThreadLocal的方法</strong>：</p>
-<ul>
-<li><code>initialValue()</code>：返回此线程局部变量的初始值。</li>
-<li><code>get()</code>：返回此线程局部变量的当前线程副本中的值。如果这是线程第一次调用该方法，则通过调用<code>initialValue()</code>方法创建并初始化此副本。</li>
-<li><code>set(T value)</code>：将此线程局部变量的当前线程副本中的值设置为指定值。</li>
-<li><code>remove()</code>：移除此线程局部变量的值。这是一个清理操作，有助于避免内存泄漏，特别是在使用线程池时。</li>
-</ul>
-</li>
-<li><p><strong>ThreadLocalMap的扩容和清理</strong>：</p>
-<ul>
-<li>ThreadLocalMap的扩容机制与HashMap类似，当元素数量超过阈值时，会进行扩容。</li>
-<li>由于ThreadLocalMap的键是弱引用，当没有强引用指向ThreadLocal对象时，ThreadLocal对象可以被垃圾回收。但是，如果ThreadLocal对象被回收了，而对应的Value对象还有强引用存在（即还没有被线程显式地调用<code>remove()</code>方法移除），那么这些Value对象就变成了“孤儿对象”，可能会导致内存泄漏。因此，在使用ThreadLocal时，建议显式地调用<code>remove()</code>方法来清理不再需要的线程局部变量。</li>
-</ul>
-</li>
-</ol>
-<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><p>ThreadLocal的典型使用场景包括：</p>
-<ul>
-<li>在多线程环境中，每个线程需要维护一个独立的、不与其他线程共享的状态或数据。</li>
-<li>在处理用户请求时，将用户相关的信息（如用户ID、会话信息等）保存在ThreadLocal中，以便在同一个请求处理流程中方便地访问这些信息，而不需要通过参数传递。</li>
-</ul>
-<h3 id="内存泄漏与内存溢出的区别"><a href="#内存泄漏与内存溢出的区别" class="headerlink" title="内存泄漏与内存溢出的区别"></a>内存泄漏与内存溢出的区别</h3><ul>
-<li><strong>内存泄漏</strong>：指的是程序中分配的内存在不再需要时没有被正确释放或回收的情况。随着时间的推移，可用内存逐渐减少，最终可能导致程序性能下降或崩溃。</li>
-<li><strong>内存溢出</strong>（OOM, Out of Memory）：当程序运行时，如果请求的内存超出了可用内存的限制，就会抛出内存溢出异常。内存泄漏如果不及时解决，最终可能导致内存溢出。</li>
-</ul>
-<h3 id="ThreadLocal内存泄漏问题"><a href="#ThreadLocal内存泄漏问题" class="headerlink" title="ThreadLocal内存泄漏问题"></a>ThreadLocal内存泄漏问题</h3><p>ThreadLocal是一个用于创建线程本地变量的类。每个线程都拥有自己独立的、初始化为null的变量副本，这些变量对其他线程是不可见的。然而，ThreadLocal的内存泄漏问题是一个比较典型的问题。</p>
-<h4 id="ThreadLocal内存泄漏的来源"><a href="#ThreadLocal内存泄漏的来源" class="headerlink" title="ThreadLocal内存泄漏的来源"></a>ThreadLocal内存泄漏的来源</h4><ol>
-<li><p><strong>ThreadLocal对象在堆上存储的ThreadLocalMap</strong>：</p>
-<ul>
-<li>ThreadLocalMap是ThreadLocal的内部类，用于存储线程局部变量。</li>
-<li>ThreadLocalMap的key是ThreadLocal对象，value是线程变量的值。</li>
-</ul>
-</li>
-<li><p><strong>ThreadLocal的引用链</strong>：</p>
-<ul>
-<li>ThreadLocal对象有两个引用源：一个是栈上的ThreadLocal引用（方法内创建），一个是ThreadLocalMap中的key对它的引用。</li>
-<li>如果栈上的ThreadLocal引用不再使用（方法结束），但ThreadLocal对象因为还有ThreadLocalMap中的key引用而无法被回收，就会导致内存泄漏。</li>
-</ul>
-</li>
-<li><p><strong>线程对象被重复使用</strong>：</p>
-<ul>
-<li>在线程池场景中，线程对象会被重复使用。如果线程中的ThreadLocalMap没有及时清理，就会导致内存泄漏。</li>
-</ul>
-</li>
-</ol>
-<h4 id="弱引用解决部分内存泄漏问题"><a href="#弱引用解决部分内存泄漏问题" class="headerlink" title="弱引用解决部分内存泄漏问题"></a>弱引用解决部分内存泄漏问题</h4><p>为了解决ThreadLocal对象因为ThreadLocalMap中的key引用而无法被回收的问题，ThreadLocalMap使用了弱引用。</p>
-<ul>
-<li><strong>弱引用</strong>：如果一个对象只具有弱引用，那么这个对象就会在下次垃圾回收时被回收。</li>
-<li>在ThreadLocalMap中，key（ThreadLocal对象）是弱引用。这意味着，当栈上的ThreadLocal引用不再使用时，ThreadLocal对象可以被垃圾回收器回收，从而避免了因为ThreadLocal对象无法被回收而导致的内存泄漏。</li>
-</ul>
-<p>然而，即使使用了弱引用，ThreadLocal的内存泄漏问题并没有完全解决。因为value（线程变量的值）还是强引用，如果线程对象被重复使用（如在线程池中），并且ThreadLocalMap没有及时清理，那么value所占用的内存仍然无法被回收。因此，开发者还需要在使用完ThreadLocal后，显式地调用<code>remove()</code>方法来清理ThreadLocalMap中的entry，以避免内存泄漏。</p>
-<p>综上所述，ThreadLocal的内存泄漏问题是一个复杂的问题，需要开发者和JDK共同解决。JDK通过使用弱引用来解决了一部分问题，但开发者还需要在使用完ThreadLocal后显式地调用<code>remove()</code>方法来避免内存泄漏。<br>总之，ThreadLocal是一个强大的工具，它可以帮助我们在多线程环境中实现数据的隔离和线程安全。但是，使用时也需要注意其潜在的内存泄漏问题，特别是在使用线程池时。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4410,7 +4396,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-count">111</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -4421,7 +4407,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -4432,7 +4418,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
