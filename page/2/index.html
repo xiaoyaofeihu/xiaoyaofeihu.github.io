@@ -270,7 +270,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E5%B8%B8%E8%A7%81%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98%E5%92%8C%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88_/">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/15/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E4%BB%80%E4%B9%88%E6%83%85%E5%86%B5%E4%BC%9A%E5%8F%98%E6%85%A2_/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -289,7 +289,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E5%B8%B8%E8%A7%81%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98%E5%92%8C%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88_/" itemprop="url">redis 常见性能问题和解决方案</a></h1>
+                <a class="post-title-link" href="/2025/02/15/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E4%BB%80%E4%B9%88%E6%83%85%E5%86%B5%E4%BC%9A%E5%8F%98%E6%85%A2_/" itemprop="url">redis什么情况下会变慢</a></h1>
         
 
         <div class="post-meta">
@@ -301,8 +301,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-02-11T13:33:41+00:00">
-                2025-02-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-02-15T13:33:41+00:00">
+                2025-02-15
               </time>
             
 
@@ -317,8 +317,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-03T07:47:36+00:00">
-                2025-03-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-06T01:24:58+00:00">
+                2025-03-06
               </time>
             
           </span>
@@ -406,39 +406,890 @@
       
         
           
-            <h1 id="👌redis常见性能问题和解决方案"><a href="#👌redis常见性能问题和解决方案" class="headerlink" title="👌redis常见性能问题和解决方案?"></a>👌redis常见性能问题和解决方案?</h1><h1 id="口语化回答"><a href="#口语化回答" class="headerlink" title="口语化回答"></a>口语化回答</h1><p>好的，面试官，redis 常见性能问题主要有内存空间不足，大 key 问题，阻塞操作等等。像内存空间问题，主要发生在大规模的数据量下产生，针对这种我们可以采取数据结构层面的优化，或者集群模式的水平扩。大 key 问题一般就是最初设计的时候，没有考虑清楚，导致业务日积月累，一个小的 key 变成了大 key。会导致我们的性能下降，耗时增加，这种需要从根上进行业务的梳理和处理拆分。还有就是阻塞，如果执行一些 keys 命令会大致阻塞，生产要避免进行这些操作。以上</p>
-<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>这道题大家主要是从以下的几个问题中，选取常见的 3 个即可。建议大家选择空间不足，大 key 和阻塞，这三点比较好回答，也好解释和扩展。</p>
-<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>内存不足，大 key，阻塞，网络延迟，慢查询，持久化性能</p>
-<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="问题一、redis-内存空间不足"><a href="#问题一、redis-内存空间不足" class="headerlink" title="问题一、redis 内存空间不足"></a>问题一、redis 内存空间不足</h2><p>****由于Redis的数据存储在内存中，当数据量增大时，可能会出现内存不足的情况，导致性能下降或服务不可用。</p>
-<p><strong>解决方案</strong>：</p>
-<p><strong>内存优化</strong>：使用更高效的数据结构（如哈希表、压缩列表）来存储数据，减少内存占用。</p>
-<p><strong>水平扩展</strong>：使用Redis集群模式，将数据分片存储在多个节点上，扩展内存容量。</p>
-<h2 id="问题二、redis-的大-key"><a href="#问题二、redis-的大-key" class="headerlink" title="问题二、redis 的大 key"></a>问题二、redis 的大 key</h2><p>****某些键可能存储了大量数据（如大列表、大哈希表），操作这些大键可能导致阻塞，影响性能。</p>
-<p><strong>解决方案</strong>：</p>
-<p><strong>拆分大键</strong>：将大键拆分成多个小键，减少单个键的操作时间。</p>
-<p><strong>分批处理</strong>：对于需要迭代处理的大键，使用SCAN、SSCAN、HSCAN、ZSCAN等命令进行分批处理，避免单次操作时间过长。</p>
-<p><strong>监控和预警</strong>：定期监控Redis中的大键，及时发现并处理。</p>
-<h2 id="问题三、阻塞操作"><a href="#问题三、阻塞操作" class="headerlink" title="问题三、阻塞操作"></a>问题三、阻塞操作</h2><p>某些Redis命令（如KEYS、FLUSHALL、SAVE等）会阻塞服务器，导致其他操作无法执行。</p>
-<p><strong>解决方案</strong>：</p>
-<p><strong>避免阻塞命令</strong>：尽量避免使用阻塞命令，使用非阻塞的替代命令（如SCAN代替KEYS）。</p>
-<p><strong>异步操作</strong>：对于需要执行的阻塞操作，尽量使用异步方式（如FLUSHALL ASYNC）。</p>
-<h2 id="问题四、网络延迟"><a href="#问题四、网络延迟" class="headerlink" title="问题四、网络延迟"></a>问题四、网络延迟</h2><p>Redis是基于TCP协议的网络服务，高网络延迟会影响Redis的性能。</p>
-<p><strong>解决方案</strong>：</p>
-<p><strong>本地部署</strong>：尽量将Redis服务器部署在与应用服务器同一内网，减少网络延迟。</p>
-<p><strong>连接池</strong>：使用连接池来复用Redis连接，减少连接建立和关闭的开销。</p>
-<h2 id="问题五、慢查询"><a href="#问题五、慢查询" class="headerlink" title="问题五、慢查询"></a>问题五、慢查询</h2><p>****某些复杂的查询或数据操作可能会导致Redis响应变慢，影响整体性能。</p>
-<p><strong>解决方案</strong>：</p>
-<p><strong>慢查询日志</strong>：启用Redis的慢查询日志功能，定期检查慢查询并优化。</p>
-<p><strong>索引优化</strong>：合理使用Redis的数据结构和索引，优化查询性能。</p>
-<h2 id="问题六、主从复制延迟"><a href="#问题六、主从复制延迟" class="headerlink" title="问题六、主从复制延迟"></a>问题六、主从复制延迟</h2><p>****在主从复制架构中，从服务器可能会因为网络或负载问题导致复制延迟，影响数据一致性。</p>
-<p><strong>解决方案</strong>：</p>
-<p><strong>优化网络</strong>：确保主从服务器之间的网络连接稳定，带宽充足。</p>
-<p><strong>调整复制参数</strong>：优化Redis的复制参数（如repl-backlog-size、repl-timeout等），减少复制延迟。</p>
-<p><strong>监控复制状态</strong>：定期监控主从复制状态，及时发现并处理延迟问题。</p>
-<h2 id="问题七、持久化性能问题"><a href="#问题七、持久化性能问题" class="headerlink" title="问题七、持久化性能问题"></a>问题七、持久化性能问题</h2><p>****Redis的持久化操作（如RDB快照和AOF日志）可能会影响性能，尤其是在大数据量或高并发情况下。</p>
-<p><strong>解决方案</strong>：</p>
-<p><strong>合理配置持久化策略</strong>：根据业务需求配置合理的持久化策略，平衡性能和数据安全性。</p>
-<p><strong>异步持久化</strong>：使用异步持久化方式（如AOF的fsync策略），减少对主线程的影响。</p>
+            <h1 id="👌redis什么情况会变慢"><a href="#👌redis什么情况会变慢" class="headerlink" title="👌redis什么情况会变慢?"></a>👌redis什么情况会变慢?</h1><h3 id="1-内存不足"><a href="#1-内存不足" class="headerlink" title="1. 内存不足"></a>1. 内存不足</h3><h4 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h4><ul>
+<li>Redis 是一个内存数据库，当数据量超过可用内存时，系统可能会开始交换内存到磁盘，这会显著降低性能。</li>
+</ul>
+<h4 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h4><ul>
+<li>确保系统有足够的内存。</li>
+<li>使用 Redis 的内存淘汰策略（如 LRU、LFU）来管理内存。</li>
+<li>考虑使用 Redis 集群来分散内存负载。</li>
+</ul>
+<h3 id="2-大量慢查询"><a href="#2-大量慢查询" class="headerlink" title="2. 大量慢查询"></a>2. 大量慢查询</h3><h4 id="原因-1"><a href="#原因-1" class="headerlink" title="原因"></a>原因</h4><ul>
+<li>慢查询会阻塞 Redis 的事件循环，导致其他请求变慢。</li>
+</ul>
+<h4 id="解决方法-1"><a href="#解决方法-1" class="headerlink" title="解决方法"></a>解决方法</h4><ul>
+<li>使用<code>SLOWLOG</code>命令监控和优化慢查询。</li>
+<li>尽量避免在 Redis 中执行复杂的查询操作。</li>
+</ul>
+<h3 id="3-网络延迟"><a href="#3-网络延迟" class="headerlink" title="3. 网络延迟"></a>3. 网络延迟</h3><h4 id="原因-2"><a href="#原因-2" class="headerlink" title="原因"></a>原因</h4><ul>
+<li>网络延迟会增加请求和响应之间的时间，导致整体性能下降。</li>
+</ul>
+<h4 id="解决方法-2"><a href="#解决方法-2" class="headerlink" title="解决方法"></a>解决方法</h4><ul>
+<li>确保 Redis 服务器和客户端之间的网络连接稳定。</li>
+<li>使用本地缓存减少网络请求。</li>
+</ul>
+<h3 id="4-大批量操作"><a href="#4-大批量操作" class="headerlink" title="4. 大批量操作"></a>4. 大批量操作</h3><h4 id="原因-3"><a href="#原因-3" class="headerlink" title="原因"></a>原因</h4><ul>
+<li>大批量的操作如<code>MSET</code>、<code>MGET</code>、<code>LRANGE</code>等会占用大量的 CPU 和内存资源。</li>
+</ul>
+<h4 id="解决方法-3"><a href="#解决方法-3" class="headerlink" title="解决方法"></a>解决方法</h4><ul>
+<li>将大批量操作拆分成小批量操作。</li>
+<li>使用管道（pipeline）来批量发送命令，减少网络往返次数。</li>
+</ul>
+<h3 id="5-持久化操作"><a href="#5-持久化操作" class="headerlink" title="5. 持久化操作"></a>5. 持久化操作</h3><h4 id="原因-4"><a href="#原因-4" class="headerlink" title="原因"></a>原因</h4><ul>
+<li>Redis 提供 RDB 和 AOF 两种持久化方式，持久化操作会占用 CPU 和 I&#x2F;O 资源，影响性能。</li>
+</ul>
+<h4 id="解决方法-4"><a href="#解决方法-4" class="headerlink" title="解决方法"></a>解决方法</h4><ul>
+<li>调整 RDB 和 AOF 的配置参数，减少持久化操作的频率。</li>
+<li>使用异步持久化操作，避免阻塞主线程。</li>
+</ul>
+<h3 id="6-大键值对（Big-Keys）"><a href="#6-大键值对（Big-Keys）" class="headerlink" title="6. 大键值对（Big Keys）"></a>6. 大键值对（Big Keys）</h3><h4 id="原因-5"><a href="#原因-5" class="headerlink" title="原因"></a>原因</h4><ul>
+<li>存储和操作大键值对（如大字符串、大列表、大集合等）会占用大量内存和 CPU 资源。</li>
+</ul>
+<h4 id="解决方法-5"><a href="#解决方法-5" class="headerlink" title="解决方法"></a>解决方法</h4><ul>
+<li>尽量避免存储大键值对。</li>
+<li>将大键值对拆分成多个小键值对。</li>
+</ul>
+<h3 id="7-CPU-瓶颈"><a href="#7-CPU-瓶颈" class="headerlink" title="7. CPU 瓶颈"></a>7. CPU 瓶颈</h3><h4 id="原因-6"><a href="#原因-6" class="headerlink" title="原因"></a>原因</h4><ul>
+<li>Redis 是单线程的，CPU 使用率高时会影响性能。</li>
+</ul>
+<h4 id="解决方法-6"><a href="#解决方法-6" class="headerlink" title="解决方法"></a>解决方法</h4><ul>
+<li>优化 Redis 的配置和使用，减少 CPU 负载。</li>
+<li>使用 Redis 集群或分片（sharding）来分散负载。</li>
+</ul>
+<h3 id="8-不合理的配置"><a href="#8-不合理的配置" class="headerlink" title="8. 不合理的配置"></a>8. 不合理的配置</h3><h4 id="原因-7"><a href="#原因-7" class="headerlink" title="原因"></a>原因</h4><ul>
+<li>不合理的配置参数（如最大客户端连接数、最大内存限制等）会影响 Redis 的性能。</li>
+</ul>
+<h4 id="解决方法-7"><a href="#解决方法-7" class="headerlink" title="解决方法"></a>解决方法</h4><ul>
+<li>根据实际需求调整 Redis 的配置参数。</li>
+<li>参考 Redis 官方文档和最佳实践进行配置。</li>
+</ul>
+<h3 id="9-客户端连接过多"><a href="#9-客户端连接过多" class="headerlink" title="9. 客户端连接过多"></a>9. 客户端连接过多</h3><h4 id="原因-8"><a href="#原因-8" class="headerlink" title="原因"></a>原因</h4><ul>
+<li>过多的客户端连接会占用 Redis 的文件描述符资源，影响性能。</li>
+</ul>
+<h4 id="解决方法-8"><a href="#解决方法-8" class="headerlink" title="解决方法"></a>解决方法</h4><ul>
+<li>限制客户端连接数。</li>
+<li>使用连接池来管理客户端连接。</li>
+</ul>
+<h3 id="10-数据结构选择不当"><a href="#10-数据结构选择不当" class="headerlink" title="10. 数据结构选择不当"></a>10. 数据结构选择不当</h3><h4 id="原因-9"><a href="#原因-9" class="headerlink" title="原因"></a>原因</h4><ul>
+<li>不合理的数据结构选择会影响 Redis 的性能。</li>
+</ul>
+<h4 id="解决方法-9"><a href="#解决方法-9" class="headerlink" title="解决方法"></a>解决方法</h4><ul>
+<li>根据实际需求选择合适的数据结构。</li>
+<li>参考 Redis 官方文档了解各数据结构的性能特性。</li>
+</ul>
+<blockquote>
+<p>原文: <a target="_blank" rel="noopener" href="https://www.yuque.com/jingdianjichi/xyxdsi/wruq3nw7xph7ascq">https://www.yuque.com/jingdianjichi/xyxdsi/wruq3nw7xph7ascq</a></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/12/%E9%9D%A2%E8%AF%95%E9%A2%98/jedis%E4%B8%8Eredisson%E5%AF%B9%E6%AF%94%E6%9C%89%E4%BB%80%E4%B9%88%E4%BC%98%E7%BC%BA%E7%82%B9%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/02/12/%E9%9D%A2%E8%AF%95%E9%A2%98/jedis%E4%B8%8Eredisson%E5%AF%B9%E6%AF%94%E6%9C%89%E4%BB%80%E4%B9%88%E4%BC%98%E7%BC%BA%E7%82%B9%EF%BC%9F/" itemprop="url">jedis与redisson对比有什么优缺点</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-02-12T13:33:41+00:00">
+                2025-02-12
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-06T01:24:58+00:00">
+                2025-03-06
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="jedis与redisson对比有什么优缺点？"><a href="#jedis与redisson对比有什么优缺点？" class="headerlink" title="jedis与redisson对比有什么优缺点？"></a>jedis与redisson对比有什么优缺点？</h1><h1 id="口语化回答"><a href="#口语化回答" class="headerlink" title="口语化回答"></a>口语化回答</h1><p>好的，面试官。jedis 是一个轻量级的 redis 客户端，比较容易集成和使用。redisson 是后面的升级版框架，在分布式方面增加了很多的处理。最大的区别在于线程安全和分布式上面，jedis 需要一些操作来保证安全性，redission 则天然支持，内部封装了很多处理。还有就是集群方面 jedis 如果使用集群非常的麻烦，需要配置很多东西，redisson 则非常容易，天然支持。redisson 还提供了很多现成的功能，分布式锁，限流等等这些，不需要再从头编写。如果业务比较简单，jedis 就够了。复杂的话大型项目还是建议使用 redisson。以上。</p>
+<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>这道题真不常考，也可以说几乎不考。不是重点，大家了解一下即可。别到时候人家说这两个名词，不知道是什么就行。</p>
+<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>线程安全，集群支持，api 功能扩展</p>
+<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>Jedis和Redisson是两种常用的Java Redis客户端。Jedis是一个轻量级的Redis客户端，易于集成和使用。Redisson是一个在Redis的基础上实现的Java驻内存数据网格。它不仅提供了一系列的分布式的Java常用对象，还提供了许多分布式服务。</p>
+<p>二者相比主要是以下的优点和缺点：</p>
+<h3 id="Jedis"><a href="#Jedis" class="headerlink" title="Jedis"></a>Jedis</h3><h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><p><strong>直观的API</strong>：提供了直接且简单的API，便于操作Redis的各种数据结构和命令。</p>
+<p><strong>性能高</strong>：由于其轻量级特性，Jedis在单线程操作中性能较高。</p>
+<p><strong>广泛使用</strong>：Jedis是较早的Java Redis客户端之一，有着广泛的社区支持和文档资源。</p>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><p><strong>线程安全性</strong>：Jedis实例不是线程安全的，需要通过连接池（JedisPool）来管理连接，增加了复杂性。</p>
+<p><strong>功能有限</strong>：Jedis主要提供了对Redis命令的直接封装，缺乏高级特性，如分布式锁、限流器等。</p>
+<p><strong>集群支持</strong>：虽然Jedis支持Redis集群，但配置和使用相对复杂，且在某些场景下性能不如Redisson。</p>
+<h3 id="Redisson"><a href="#Redisson" class="headerlink" title="Redisson"></a>Redisson</h3><h4 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h4><p><strong>线程安全</strong>：Redisson的所有对象都是线程安全的，简化了多线程环境下的使用。</p>
+<p><strong>高级特性</strong>：提供了许多高级特性，如分布式锁、分布式集合、分布式队列、分布式缓存、限流器等，适合复杂的分布式系统。</p>
+<p><strong>易用性</strong>：Redisson的API设计更加面向对象，提供了丰富的分布式数据结构和并发工具，使开发更加简便。</p>
+<p><strong>集群支持</strong>：Redisson对Redis集群的支持更加友好和高效，配置和使用相对简单。</p>
+<h4 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h4><p><strong>重量级</strong>：Redisson的功能丰富，但也带来了较大的依赖包和内存占用，相比Jedis更为重量级。</p>
+<p><strong>性能开销</strong>：由于提供了许多高级特性，Redisson在某些场景下的性能可能不如Jedis。</p>
+<p><strong>学习曲线</strong>：Redisson的API和功能较多，学习和掌握所有特性需要一定的时间。</p>
+<h3 id="选择建议"><a href="#选择建议" class="headerlink" title="选择建议"></a>选择建议</h3><p>1、 如果你的应用场景比较简单，只需要基本的Redis操作，并且对性能有较高要求，Jedis是一个不错的选择。</p>
+<p>2、复杂分布式系统：如果你的应用需要使用Redis的高级特性，如分布式锁、限流器、分布式集合等，或者需要在多线程环境中使用Redis，Redisson会更合适。</p>
+<p>3、 集群支持：如果需要使用Redis集群，Redisson的配置和使用相对简单、性能较好，更加推荐使用。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/rediskey%E7%9A%84%E8%BF%87%E6%9C%9F%E6%97%B6%E9%97%B4%E5%92%8C%E6%B0%B8%E4%B9%85%E6%9C%89%E6%95%88%E5%88%86%E5%88%AB%E6%80%8E%E4%B9%88%E8%AE%BE%E7%BD%AE_/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/rediskey%E7%9A%84%E8%BF%87%E6%9C%9F%E6%97%B6%E9%97%B4%E5%92%8C%E6%B0%B8%E4%B9%85%E6%9C%89%E6%95%88%E5%88%86%E5%88%AB%E6%80%8E%E4%B9%88%E8%AE%BE%E7%BD%AE_/" itemprop="url">redis key的过期时间和永久有效分别怎么设置</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-02-11T13:33:41+00:00">
+                2025-02-11
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-06T01:24:58+00:00">
+                2025-03-06
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="redis-key的过期时间和永久有效分别怎么设置"><a href="#redis-key的过期时间和永久有效分别怎么设置" class="headerlink" title="redis key的过期时间和永久有效分别怎么设置?"></a>redis key的过期时间和永久有效分别怎么设置?</h1><h1 id="在Redis中，你可以使用多种命令来设置键的过期时间或将键设置为永久有效。"><a href="#在Redis中，你可以使用多种命令来设置键的过期时间或将键设置为永久有效。" class="headerlink" title="在Redis中，你可以使用多种命令来设置键的过期时间或将键设置为永久有效。"></a>在Redis中，你可以使用多种命令来设置键的过期时间或将键设置为永久有效。</h1><ol>
+<li><strong>使用<strong><strong>EXPIRE</strong></strong>命令，</strong>EXPIRE命令用于设置键的过期时间，以秒为单位。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">EXPIRE key seconds</span><br><span class="line">例如：</span><br><span class="line">EXPIRE mykey 60  # 设置 mykey 的过期时间为60秒</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><strong>使用<strong><strong>PEXPIRE</strong></strong>命令，</strong>PEXPIRE命令用于设置键的过期时间，以毫秒为单位。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PEXPIRE key milliseconds</span><br><span class="line">例如：</span><br><span class="line">PEXPIRE mykey 60000  # 设置 mykey 的过期时间为60000毫秒（即60秒）</span><br></pre></td></tr></table></figure>
+
+<p>以上的两个区别就是秒级和毫秒级的区别。</p>
+<ol start="3">
+<li><strong>使用<strong><strong>EXPIREAT</strong></strong>命令，</strong>EXPIREAT命令用于设置键的过期时间为指定的 Unix 时间戳，以秒为单位。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">EXPIREAT key timestamp</span><br><span class="line">例如：</span><br><span class="line">EXPIREAT mykey 1672531199  # 设置 mykey 的过期时间为指定的 Unix 时间戳</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><strong>使用<strong><strong>PEXPIREAT</strong></strong>命令，</strong>PEXPIREAT命令用于设置键的过期时间为指定的 Unix 时间戳，以毫秒为单位。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PEXPIREAT key milliseconds-timestamp</span><br><span class="line">例如：</span><br><span class="line">PEXPIREAT mykey 1672531199000  # 设置 mykey 的过期时间为指定的 Unix 时间戳（毫秒）</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li><strong>使用<strong><strong>SET</strong></strong>命令带选项，</strong>SET命令可以在设置键值的同时指定过期时间。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SET key value EX seconds</span><br><span class="line">SET key value PX milliseconds</span><br><span class="line">例如：</span><br><span class="line">SET mykey &quot;value&quot; EX 60  # 设置 mykey 的值为 &quot;value&quot; 并使其在60秒后过期</span><br><span class="line">SET mykey &quot;value&quot; PX 60000  # 设置 mykey 的值为 &quot;value&quot; 并使其在60000毫秒（即60秒）后过期</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="设置键为永久有效"><a href="#设置键为永久有效" class="headerlink" title="设置键为永久有效"></a>设置键为永久有效</h3><ol>
+<li><strong>使用<strong><strong>PERSIST</strong></strong>命令，</strong>PERSIST命令用于移除键的过期时间，使其变为永久有效。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PERSIST key</span><br><span class="line">例如：</span><br><span class="line">PERSIST mykey  # 移除 mykey 的过期时间，使其变为永久有效</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E5%9B%9E%E6%94%B6%E8%BF%9B%E7%A8%8B%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84_/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E5%9B%9E%E6%94%B6%E8%BF%9B%E7%A8%8B%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84_/" itemprop="url">redis 回收进程如何工作</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-02-11T13:33:41+00:00">
+                2025-02-11
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-06T01:24:58+00:00">
+                2025-03-06
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌redis回收进程如何工作的"><a href="#👌redis回收进程如何工作的" class="headerlink" title="👌redis回收进程如何工作的?"></a>👌redis回收进程如何工作的?</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>Redis的回收进程负责定期扫描和删除过期键。服务器运行时自动执行。主要就是定期回收和惰性回收，其实也可以看之前的 redis 过期策略。来进行合二为一，其实二者答案差不多，就是内容有一定区别。</p>
+<h2 id="定期回收任务"><a href="#定期回收任务" class="headerlink" title="定期回收任务"></a>定期回收任务</h2><p>Redis回收进程的核心是一个定期任务，这个任务在Redis的事件循环中执行。</p>
+<p><strong>事件循环</strong>：Redis使用一个单线程的事件循环模型来处理所有的客户端请求和后台任务。</p>
+<p><strong>定期任务</strong>：在事件循环中，Redis会定期触发一个函数来执行过期键的检查和删除操作。这个函数默认每100毫秒运行一次。</p>
+<p>实现步骤如下：</p>
+<ol>
+<li><strong>选择数据库</strong>：每次执行定期任务时，Redis会遍历所有的数据库（默认16个）。</li>
+<li><strong>随机抽样</strong>：对于每个数据库，Redis会随机选择一部分带有过期时间的键进行检查（默认20个）。</li>
+<li><strong>检查过期键</strong>：检查这些键是否已经过期，如果过期则删除。</li>
+<li><strong>重复检查</strong>：如果发现超过一定比例的键是过期的（默认25%），则继续进行更多次的检查和删除，直到过期键的比例下降到合理范围内。</li>
+</ol>
+<h2 id="惰性回收"><a href="#惰性回收" class="headerlink" title="惰性回收"></a>惰性回收</h2><p>惰性回收不是一个独立的进程，而是每次客户端访问键时触发的检查机制。它的工作原理如下：</p>
+<ol>
+<li><strong>访问键</strong>：每当客户端访问一个键时，Redis会检查该键是否设置了过期时间。</li>
+<li><strong>检查过期</strong>：如果该键已经过期，Redis会立即删除该键，并返回空结果或相应的错误信息。</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%BB%B6%E6%97%B6%E9%98%9F%E5%88%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%BB%B6%E6%97%B6%E9%98%9F%E5%88%97/" itemprop="url">redis 如何实现延迟队列</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-02-11T13:33:41+00:00">
+                2025-02-11
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-06T01:24:58+00:00">
+                2025-03-06
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌redis如何实现延时队列"><a href="#👌redis如何实现延时队列" class="headerlink" title="👌redis如何实现延时队列"></a>👌redis如何实现延时队列</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>可以使用有序集合（Sorted Set）来实现延时队列。有序集合中的每个元素有一个关联的分数，可以用来表示任务的执行时间戳。具体的步骤如下，非常简单</p>
+<h2 id="添加任务到延时队列"><a href="#添加任务到延时队列" class="headerlink" title="添加任务到延时队列"></a>添加任务到延时队列</h2><p>将任务添加到有序集合中，使用任务的执行时间作为分数（score）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 示例代码：添加任务到延时队列</span><br><span class="line">String queueName = &quot;delay_queue&quot;;</span><br><span class="line">String taskId=&quot;task_1&quot;;</span><br><span class="line">long delay=5000; // 延迟时间（毫秒）</span><br><span class="line">long executionTime= System.currentTimeMillis() + delay;</span><br><span class="line">Jedis jedis = newJedis(&quot;localhost&quot;);</span><br><span class="line">jedis.zadd(queueName, executionTime, taskId);</span><br><span class="line">jedis.close();</span><br></pre></td></tr></table></figure>
+
+<h2 id="轮询延时队列并执行任务"><a href="#轮询延时队列并执行任务" class="headerlink" title="轮询延时队列并执行任务"></a>轮询延时队列并执行任务</h2><p>定期检查有序集合中的任务，找到那些执行时间已经到达或超过当前时间的任务，并执行这些任务。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">// 示例代码：轮询延时队列并执行任务</span><br><span class="line">String queueName = &quot;delay_queue&quot;;</span><br><span class="line">Jedis jedis=new Jedis(&quot;localhost&quot;);</span><br><span class="line">while (true) &#123;</span><br><span class="line">    long currentTime= System.currentTimeMillis();</span><br><span class="line">    Set&lt;Tuple&gt; tasks = jedis.zrangeByScoreWithScores(queueName, 0, currentTime, 0, 1);</span><br><span class="line"></span><br><span class="line">    if (tasks.isEmpty()) &#123;</span><br><span class="line">        // 没有任务需要执行，休眠一段时间</span><br><span class="line">        Thread.sleep(1000);</span><br><span class="line">        continue;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    for (Tuple task : tasks) &#123;</span><br><span class="line">        StringtaskId= task.getElement();</span><br><span class="line">        // 执行任务</span><br><span class="line">        executeTask(taskId);</span><br><span class="line"></span><br><span class="line">        // 从队列中移除已执行的任务</span><br><span class="line">        jedis.zrem(queueName, taskId);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">jedis.close();</span><br><span class="line">private static void executeTask(String taskId) &#123;</span><br><span class="line">    // 实现任务执行逻辑</span><br><span class="line">    System.out.println(&quot;Executing task: &quot; + taskId);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
           
         
@@ -534,8 +1385,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-03T07:47:36+00:00">
-                2025-03-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-06T01:24:58+00:00">
+                2025-03-06
               </time>
             
           </span>
@@ -708,6 +1559,223 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E5%B8%B8%E8%A7%81%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98%E5%92%8C%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88_/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E5%B8%B8%E8%A7%81%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98%E5%92%8C%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88_/" itemprop="url">redis 常见性能问题和解决方案</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-02-11T13:33:41+00:00">
+                2025-02-11
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-06T01:24:58+00:00">
+                2025-03-06
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌redis常见性能问题和解决方案"><a href="#👌redis常见性能问题和解决方案" class="headerlink" title="👌redis常见性能问题和解决方案?"></a>👌redis常见性能问题和解决方案?</h1><h1 id="口语化回答"><a href="#口语化回答" class="headerlink" title="口语化回答"></a>口语化回答</h1><p>好的，面试官，redis 常见性能问题主要有内存空间不足，大 key 问题，阻塞操作等等。像内存空间问题，主要发生在大规模的数据量下产生，针对这种我们可以采取数据结构层面的优化，或者集群模式的水平扩。大 key 问题一般就是最初设计的时候，没有考虑清楚，导致业务日积月累，一个小的 key 变成了大 key。会导致我们的性能下降，耗时增加，这种需要从根上进行业务的梳理和处理拆分。还有就是阻塞，如果执行一些 keys 命令会大致阻塞，生产要避免进行这些操作。以上</p>
+<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>这道题大家主要是从以下的几个问题中，选取常见的 3 个即可。建议大家选择空间不足，大 key 和阻塞，这三点比较好回答，也好解释和扩展。</p>
+<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>内存不足，大 key，阻塞，网络延迟，慢查询，持久化性能</p>
+<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="问题一、redis-内存空间不足"><a href="#问题一、redis-内存空间不足" class="headerlink" title="问题一、redis 内存空间不足"></a>问题一、redis 内存空间不足</h2><p>****由于Redis的数据存储在内存中，当数据量增大时，可能会出现内存不足的情况，导致性能下降或服务不可用。</p>
+<p><strong>解决方案</strong>：</p>
+<p><strong>内存优化</strong>：使用更高效的数据结构（如哈希表、压缩列表）来存储数据，减少内存占用。</p>
+<p><strong>水平扩展</strong>：使用Redis集群模式，将数据分片存储在多个节点上，扩展内存容量。</p>
+<h2 id="问题二、redis-的大-key"><a href="#问题二、redis-的大-key" class="headerlink" title="问题二、redis 的大 key"></a>问题二、redis 的大 key</h2><p>****某些键可能存储了大量数据（如大列表、大哈希表），操作这些大键可能导致阻塞，影响性能。</p>
+<p><strong>解决方案</strong>：</p>
+<p><strong>拆分大键</strong>：将大键拆分成多个小键，减少单个键的操作时间。</p>
+<p><strong>分批处理</strong>：对于需要迭代处理的大键，使用SCAN、SSCAN、HSCAN、ZSCAN等命令进行分批处理，避免单次操作时间过长。</p>
+<p><strong>监控和预警</strong>：定期监控Redis中的大键，及时发现并处理。</p>
+<h2 id="问题三、阻塞操作"><a href="#问题三、阻塞操作" class="headerlink" title="问题三、阻塞操作"></a>问题三、阻塞操作</h2><p>某些Redis命令（如KEYS、FLUSHALL、SAVE等）会阻塞服务器，导致其他操作无法执行。</p>
+<p><strong>解决方案</strong>：</p>
+<p><strong>避免阻塞命令</strong>：尽量避免使用阻塞命令，使用非阻塞的替代命令（如SCAN代替KEYS）。</p>
+<p><strong>异步操作</strong>：对于需要执行的阻塞操作，尽量使用异步方式（如FLUSHALL ASYNC）。</p>
+<h2 id="问题四、网络延迟"><a href="#问题四、网络延迟" class="headerlink" title="问题四、网络延迟"></a>问题四、网络延迟</h2><p>Redis是基于TCP协议的网络服务，高网络延迟会影响Redis的性能。</p>
+<p><strong>解决方案</strong>：</p>
+<p><strong>本地部署</strong>：尽量将Redis服务器部署在与应用服务器同一内网，减少网络延迟。</p>
+<p><strong>连接池</strong>：使用连接池来复用Redis连接，减少连接建立和关闭的开销。</p>
+<h2 id="问题五、慢查询"><a href="#问题五、慢查询" class="headerlink" title="问题五、慢查询"></a>问题五、慢查询</h2><p>****某些复杂的查询或数据操作可能会导致Redis响应变慢，影响整体性能。</p>
+<p><strong>解决方案</strong>：</p>
+<p><strong>慢查询日志</strong>：启用Redis的慢查询日志功能，定期检查慢查询并优化。</p>
+<p><strong>索引优化</strong>：合理使用Redis的数据结构和索引，优化查询性能。</p>
+<h2 id="问题六、主从复制延迟"><a href="#问题六、主从复制延迟" class="headerlink" title="问题六、主从复制延迟"></a>问题六、主从复制延迟</h2><p>****在主从复制架构中，从服务器可能会因为网络或负载问题导致复制延迟，影响数据一致性。</p>
+<p><strong>解决方案</strong>：</p>
+<p><strong>优化网络</strong>：确保主从服务器之间的网络连接稳定，带宽充足。</p>
+<p><strong>调整复制参数</strong>：优化Redis的复制参数（如repl-backlog-size、repl-timeout等），减少复制延迟。</p>
+<p><strong>监控复制状态</strong>：定期监控主从复制状态，及时发现并处理延迟问题。</p>
+<h2 id="问题七、持久化性能问题"><a href="#问题七、持久化性能问题" class="headerlink" title="问题七、持久化性能问题"></a>问题七、持久化性能问题</h2><p>****Redis的持久化操作（如RDB快照和AOF日志）可能会影响性能，尤其是在大数据量或高并发情况下。</p>
+<p><strong>解决方案</strong>：</p>
+<p><strong>合理配置持久化策略</strong>：根据业务需求配置合理的持久化策略，平衡性能和数据安全性。</p>
+<p><strong>异步持久化</strong>：使用异步持久化方式（如AOF的fsync策略），减少对主线程的影响。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E7%9A%84%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6%E6%98%AF%E4%BB%80%E4%B9%88_/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -755,8 +1823,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-03T07:47:36+00:00">
-                2025-03-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-06T01:24:58+00:00">
+                2025-03-06
               </time>
             
           </span>
@@ -910,209 +1978,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E8%BF%87%E6%9C%9F%E7%AD%96%E7%95%A5%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E8%BF%87%E6%9C%9F%E7%AD%96%E7%95%A5%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F/" itemprop="url">redis 过期策略有哪些</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-02-11T13:33:41+00:00">
-                2025-02-11
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-03T07:47:36+00:00">
-                2025-03-03
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌redis过期策略有哪些？"><a href="#👌redis过期策略有哪些？" class="headerlink" title="👌redis过期策略有哪些？"></a>👌redis过期策略有哪些？</h1><h1 id="口语化回答"><a href="#口语化回答" class="headerlink" title="口语化回答"></a>口语化回答</h1><p>好的，面试官，过期策略主要分为主动和被动，主动又分为定时、定期，被动就是常说的惰性清理。先说结论，redis 采取的方案是定期+惰性配合的方式来进行实现。定期策略主要是通过周期性执行的函数来扫描即将过期的键，立马将其进行失效操作。这种方式比较消耗 cpu。于是产生了定期操作，没隔多少 ms 来进行执行，这种减少了 cpu 的消耗。也能比较准时的删除过期的键。算是定时的一种优化，比较难的点就是寻求平衡。最后就是拖性删除，所有的 key 即使过期了也不会立马删除，当这个键过期之后，下一次访问的时候，才会被删除，容易造成内存泄漏的问题。最后 oom 就会触发内存淘汰策略了，优点就是大大减轻了 cpu 的压力。以上两种方式配合，能达到一个平衡。</p>
-<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>常考题，很多人把过期策略和淘汰策略混在一起。二者既不同，当惰性删除的时候，又有联系。大家要注意多层面来回答，注意辩证 cpu 性能的问题处理。</p>
-<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>定期删除，定时删除，惰性删除，主动于被动</p>
-<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>从行为上，我们可以把过期策略分为两大点。主动删除，被动删除。主动删除又分为定时删除和定期删除。</p>
-<h2 id="主动删除"><a href="#主动删除" class="headerlink" title="主动删除"></a>主动删除</h2><h3 id="定时删除"><a href="#定时删除" class="headerlink" title="定时删除"></a><strong>定时删除</strong></h3><p>当设置键的过期时间时，Redis会为该键创建一个定时器，当过期时间到达时自动删除该键。redis.c 下的 activeExpireCycle 函数实现了定期删除粗略，配合 Redis的服务器的 serverCron函数，在服务器周期执行serverCron 的时候，activeExpireCycle函数就会被调用，在一定的时间内，分多次遍历 redis 中的数据库，从数据库的expires字典中检查一部分键的过期时间，此操作是随机性的，然后删除其中的过期键。</p>
-<p>优点：删除操作会在数据到期时立即进行，确保内存及时释放。</p>
-<p>缺点：定时器的管理会消耗系统资源，特别是在大量键设置过期时间的情况下，删除 key 会对响应时间和吞吐量产生影响。</p>
-<h3 id="定期删除"><a href="#定期删除" class="headerlink" title="定期删除"></a><strong>定期删除</strong></h3><p>Redis会定期扫描数据库中的键，并删除其中已过期的键。通过随机抽取一定数量的键，并检查它们是否过期，如果过期就删除，Redis默认每隔100ms（可以通过配置文件中的hz参数进行调整）就执行一次过期扫描任务。</p>
-<blockquote>
-<p>配置redis.conf的hz选项，默认为10，1s刷新的频率。即1秒执行10次，相当于100ms执行一次，hz值越大，说明刷新频率越快，Redis性能损耗也越大</p>
-</blockquote>
-<p>优点：通过限制删除操作执行的时长和频率来减少删除操作对CPU的影响，同时能有效释放过期键占用的内存。</p>
-<p>缺点：难以确定删除操作执行的时长和频率，如果执行的太频繁，会对CPU造成负担，就变成了定时删除；如果执行的太少，则过期键长时间占用的内存没有及时释放，造成内存浪费。</p>
-<h3 id="内存不足"><a href="#内存不足" class="headerlink" title="内存不足"></a>内存不足</h3><p>当Redis的内存达到最大限制时，还会触发内存淘汰策略，策略不同决定哪些数据会被删除以腾出空间。<br>no eviction：禁止淘汰，达到内存限制时拒绝新的写请求。<br>allkeys-lru：从所有键中淘汰最近最少使用的键。<br>volatile-lru：从设置了过期时间的键中驱逐最近最少使用的键。<br>allkeys-random：从所有键中随机驱逐键。<br>volatile-random：从设置了过期时间的键中随机驱逐键。<br>volatile-ttl：从设置了过期时间的键中驱逐剩余时间最短的键。</p>
-<h2 id="被动删除"><a href="#被动删除" class="headerlink" title="被动删除"></a>被动删除</h2><h3 id="惰性删除"><a href="#惰性删除" class="headerlink" title="惰性删除"></a><strong>惰性删除</strong></h3><p>Redis不会在键过期时立即删除它，而是在下一次访问这个键时检查其是否过期，然后删除过期的键。假设这个键已经过期，但是后面一直没有被访问，则会永远存在。不会被删除，这就是惰性删除。</p>
-<p>惰性删除策略由db.c&#x2F;expireIfNeeded函数实现，所有读写数据库的Redis命令在执行之前都会调用expireIfNeeded函数对输入键进行检查。如果输入键已经过期，那么expireIfNeeded函数将输入键从数据库中删除；如果输入键未过期，那么expireIfNeeded函数不做动作。</p>
-<p>优点：惰性删除不会增加额外的系统开销，不浪费 cpu，只在访问时进行检查。</p>
-<p>缺点：如果某个键永远不会被访问，即使设置了过期时间，它也不会被自动删除，造成内存泄漏问题。</p>
-<p>Redis 实际使用的是定期删除+惰性删除的方式！定期删除减少 cpu 消耗和浪费，配合惰性删除，二次检查保险。</p>
-<h3 id><a href="#" class="headerlink" title></a></h3>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E7%9A%84%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1160,8 +2025,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-03T07:47:36+00:00">
-                2025-03-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-06T01:24:58+00:00">
+                2025-03-06
               </time>
             
           </span>
@@ -1387,6 +2252,209 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E8%BF%87%E6%9C%9F%E7%AD%96%E7%95%A5%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E8%BF%87%E6%9C%9F%E7%AD%96%E7%95%A5%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F/" itemprop="url">redis 过期策略有哪些</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-02-11T13:33:41+00:00">
+                2025-02-11
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-06T01:24:58+00:00">
+                2025-03-06
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌redis过期策略有哪些？"><a href="#👌redis过期策略有哪些？" class="headerlink" title="👌redis过期策略有哪些？"></a>👌redis过期策略有哪些？</h1><h1 id="口语化回答"><a href="#口语化回答" class="headerlink" title="口语化回答"></a>口语化回答</h1><p>好的，面试官，过期策略主要分为主动和被动，主动又分为定时、定期，被动就是常说的惰性清理。先说结论，redis 采取的方案是定期+惰性配合的方式来进行实现。定期策略主要是通过周期性执行的函数来扫描即将过期的键，立马将其进行失效操作。这种方式比较消耗 cpu。于是产生了定期操作，没隔多少 ms 来进行执行，这种减少了 cpu 的消耗。也能比较准时的删除过期的键。算是定时的一种优化，比较难的点就是寻求平衡。最后就是拖性删除，所有的 key 即使过期了也不会立马删除，当这个键过期之后，下一次访问的时候，才会被删除，容易造成内存泄漏的问题。最后 oom 就会触发内存淘汰策略了，优点就是大大减轻了 cpu 的压力。以上两种方式配合，能达到一个平衡。</p>
+<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>常考题，很多人把过期策略和淘汰策略混在一起。二者既不同，当惰性删除的时候，又有联系。大家要注意多层面来回答，注意辩证 cpu 性能的问题处理。</p>
+<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>定期删除，定时删除，惰性删除，主动于被动</p>
+<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>从行为上，我们可以把过期策略分为两大点。主动删除，被动删除。主动删除又分为定时删除和定期删除。</p>
+<h2 id="主动删除"><a href="#主动删除" class="headerlink" title="主动删除"></a>主动删除</h2><h3 id="定时删除"><a href="#定时删除" class="headerlink" title="定时删除"></a><strong>定时删除</strong></h3><p>当设置键的过期时间时，Redis会为该键创建一个定时器，当过期时间到达时自动删除该键。redis.c 下的 activeExpireCycle 函数实现了定期删除粗略，配合 Redis的服务器的 serverCron函数，在服务器周期执行serverCron 的时候，activeExpireCycle函数就会被调用，在一定的时间内，分多次遍历 redis 中的数据库，从数据库的expires字典中检查一部分键的过期时间，此操作是随机性的，然后删除其中的过期键。</p>
+<p>优点：删除操作会在数据到期时立即进行，确保内存及时释放。</p>
+<p>缺点：定时器的管理会消耗系统资源，特别是在大量键设置过期时间的情况下，删除 key 会对响应时间和吞吐量产生影响。</p>
+<h3 id="定期删除"><a href="#定期删除" class="headerlink" title="定期删除"></a><strong>定期删除</strong></h3><p>Redis会定期扫描数据库中的键，并删除其中已过期的键。通过随机抽取一定数量的键，并检查它们是否过期，如果过期就删除，Redis默认每隔100ms（可以通过配置文件中的hz参数进行调整）就执行一次过期扫描任务。</p>
+<blockquote>
+<p>配置redis.conf的hz选项，默认为10，1s刷新的频率。即1秒执行10次，相当于100ms执行一次，hz值越大，说明刷新频率越快，Redis性能损耗也越大</p>
+</blockquote>
+<p>优点：通过限制删除操作执行的时长和频率来减少删除操作对CPU的影响，同时能有效释放过期键占用的内存。</p>
+<p>缺点：难以确定删除操作执行的时长和频率，如果执行的太频繁，会对CPU造成负担，就变成了定时删除；如果执行的太少，则过期键长时间占用的内存没有及时释放，造成内存浪费。</p>
+<h3 id="内存不足"><a href="#内存不足" class="headerlink" title="内存不足"></a>内存不足</h3><p>当Redis的内存达到最大限制时，还会触发内存淘汰策略，策略不同决定哪些数据会被删除以腾出空间。<br>no eviction：禁止淘汰，达到内存限制时拒绝新的写请求。<br>allkeys-lru：从所有键中淘汰最近最少使用的键。<br>volatile-lru：从设置了过期时间的键中驱逐最近最少使用的键。<br>allkeys-random：从所有键中随机驱逐键。<br>volatile-random：从设置了过期时间的键中随机驱逐键。<br>volatile-ttl：从设置了过期时间的键中驱逐剩余时间最短的键。</p>
+<h2 id="被动删除"><a href="#被动删除" class="headerlink" title="被动删除"></a>被动删除</h2><h3 id="惰性删除"><a href="#惰性删除" class="headerlink" title="惰性删除"></a><strong>惰性删除</strong></h3><p>Redis不会在键过期时立即删除它，而是在下一次访问这个键时检查其是否过期，然后删除过期的键。假设这个键已经过期，但是后面一直没有被访问，则会永远存在。不会被删除，这就是惰性删除。</p>
+<p>惰性删除策略由db.c&#x2F;expireIfNeeded函数实现，所有读写数据库的Redis命令在执行之前都会调用expireIfNeeded函数对输入键进行检查。如果输入键已经过期，那么expireIfNeeded函数将输入键从数据库中删除；如果输入键未过期，那么expireIfNeeded函数不做动作。</p>
+<p>优点：惰性删除不会增加额外的系统开销，不浪费 cpu，只在访问时进行检查。</p>
+<p>缺点：如果某个键永远不会被访问，即使设置了过期时间，它也不会被自动删除，造成内存泄漏问题。</p>
+<p>Redis 实际使用的是定期删除+惰性删除的方式！定期删除减少 cpu 消耗和浪费，配合惰性删除，二次检查保险。</p>
+<h3 id><a href="#" class="headerlink" title></a></h3>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/11/20/%E9%9D%A2%E8%AF%95%E9%A2%98/%E7%B4%A2%E5%BC%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1434,8 +2502,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-03T07:47:36+00:00">
-                2025-03-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-06T01:24:58+00:00">
+                2025-03-06
               </time>
             
           </span>
@@ -1628,8 +2696,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-03T07:47:36+00:00">
-                2025-03-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-06T01:24:58+00:00">
+                2025-03-06
               </time>
             
           </span>
@@ -1916,8 +2984,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-03T07:47:36+00:00">
-                2025-03-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-06T01:24:58+00:00">
+                2025-03-06
               </time>
             
           </span>
@@ -2108,8 +3176,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-03T07:47:36+00:00">
-                2025-03-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-06T01:24:58+00:00">
+                2025-03-06
               </time>
             
           </span>
@@ -2314,8 +3382,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-03T07:47:36+00:00">
-                2025-03-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-06T01:24:58+00:00">
+                2025-03-06
               </time>
             
           </span>
@@ -2546,8 +3614,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-03T07:47:36+00:00">
-                2025-03-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-06T01:24:58+00:00">
+                2025-03-06
               </time>
             
           </span>
@@ -2795,8 +3863,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-03T07:47:36+00:00">
-                2025-03-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-06T01:24:58+00:00">
+                2025-03-06
               </time>
             
           </span>
@@ -3013,8 +4081,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-03T07:47:36+00:00">
-                2025-03-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-06T01:24:58+00:00">
+                2025-03-06
               </time>
             
           </span>
@@ -3235,8 +4303,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-03T07:47:36+00:00">
-                2025-03-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-06T01:24:58+00:00">
+                2025-03-06
               </time>
             
           </span>
@@ -3449,8 +4517,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-03T07:47:36+00:00">
-                2025-03-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-06T01:24:58+00:00">
+                2025-03-06
               </time>
             
           </span>
@@ -3624,1036 +4692,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/11/10/Mysql%E7%B4%A2%E5%BC%95%E4%B8%8B%E6%8E%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/11/10/Mysql%E7%B4%A2%E5%BC%95%E4%B8%8B%E6%8E%A8/" itemprop="url">Mysql事务</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-11-10T17:33:00+00:00">
-                2024-11-10
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-03T07:47:36+00:00">
-                2025-03-03
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index">
-                    <span itemprop="name">数据库</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="什么是索引下推"><a href="#什么是索引下推" class="headerlink" title="什么是索引下推"></a>什么是索引下推</h2><h3 id="官方索引条件下推："><a href="#官方索引条件下推：" class="headerlink" title="官方索引条件下推："></a>官方索引条件下推：</h3><blockquote>
-<p>Index Condition Pushdown，简称ICP。是MySQL5.6对使用索引从表中检索行的<br>一种优化。ICP可以减少存储引擎必须访问基表的次数以及MySQL服务器必须访问存储引擎的次数。可<br>用于 InnoDB 和 MyISAM 表，对于InnoDB表ICP仅用于辅助索引。<br>可以通过参数optimizer_switch控制ICP的开始和关闭。</p>
-</blockquote>
-<h3 id="索引下推和覆盖索引是减少回表的一种手段"><a href="#索引下推和覆盖索引是减少回表的一种手段" class="headerlink" title="索引下推和覆盖索引是减少回表的一种手段"></a>索引下推和覆盖索引是减少回表的一种手段</h3><ul>
-<li>ICP可以有效减少回表查询次数和返回给服务层的记录数，从而<br>减少了磁盘IO次数和服务层与存储引擎的交互次数。</li>
-</ul>
-<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>以InnoDB的辅助索引为例，来讲解ICP的作用：MySQl在使用组合索引在检索数据时是使用最左前缀原<br>则来定位记录，左侧前缀之后不匹配的后缀，MySQL会怎么处理？</p>
-<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>#optimizer_switch优化相关参数开关<br>mysql&gt; show VARIABLES like ‘optimizer_switch’;<br>#关闭ICP<br>SET optimizer_switch &#x3D; ‘index_condition_pushdown&#x3D;off’;<br>#开启ICP<br>SET optimizer_switch &#x3D; ‘index_condition_pushdown&#x3D;on’;</p>
-<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE `test1`  (</span><br><span class="line">  `id` int NOT NULL,</span><br><span class="line">  `id1` int NULL DEFAULT NULL,</span><br><span class="line">  `id2` int NULL DEFAULT NULL,</span><br><span class="line">  `id3` int NULL DEFAULT NULL,</span><br><span class="line">  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,</span><br><span class="line">  PRIMARY KEY (`id`) USING BTREE,</span><br><span class="line">  INDEX `id1`(`id1`, `id2`, `id3`) USING BTREE</span><br><span class="line">) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;</span><br><span class="line"></span><br><span class="line">-- ----------------------------</span><br><span class="line">-- Records of test1</span><br><span class="line">-- ----------------------------</span><br><span class="line">INSERT INTO `test1` VALUES (1, 2, 3, 4, &#x27;zhangsan &#x27;);</span><br><span class="line">INSERT INTO `test1` VALUES (2, 2, 3, 5, &#x27;lisi&#x27;);</span><br><span class="line">INSERT INTO `test1` VALUES (3, 2, 4, 5, &#x27;wangwu &#x27;);</span><br><span class="line"></span><br><span class="line">SET FOREIGN_KEY_CHECKS = 1;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">EXPLAIN SELECT * FROM `test1` WHERE id1 = 1 AND id2 &gt; 1 AND id3 = 3;</span><br></pre></td></tr></table></figure>
-<p>如果使用了索引下推，Extra 中是Using index condition</p>
-<h3 id="注意！！！"><a href="#注意！！！" class="headerlink" title="注意！！！"></a>注意！！！</h3><p>如果你的 EXPLAIN 输出显示：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Extra: Using where; Using index</span><br><span class="line">Using where：表示部分条件是在 MySQL 层处理的，而不是完全依赖索引。</span><br><span class="line">Using index：说明查询是覆盖索引的（即所有查询的数据都可以从索引中获取，避免回表）。</span><br></pre></td></tr></table></figure>
-<p>这说明，虽然联合索引 (id1, id2, id3) 被使用，但优化器可能认为使用 索引覆盖扫描 比触发索引下推更高效。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/11/10/volatile/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/11/10/volatile/" itemprop="url">volatile笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-11-10T17:33:00+00:00">
-                2024-11-10
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-03T07:47:36+00:00">
-                2025-03-03
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="volatile能保证原子性吗？"><a href="#volatile能保证原子性吗？" class="headerlink" title="volatile能保证原子性吗？"></a>volatile能保证原子性吗？</h2><p><strong>volatile本身不是锁</strong></p>
-<h2 id="一、原子性"><a href="#一、原子性" class="headerlink" title="一、原子性"></a>一、原子性</h2><p>原子性是指一个操作或者多个操作要么全部执行，要么全部不执行，中间不会被其他线程的操作打断。在Java中，原子性通常通过同步机制（如<code>synchronized</code>）或者原子类（如<code>AtomicInteger</code>、<code>AtomicLong</code>等）来保证。</p>
-<h3 id="为什么需要原子性"><a href="#为什么需要原子性" class="headerlink" title="为什么需要原子性"></a>为什么需要原子性</h3><p>在并发编程中，多个线程可能会同时访问和修改同一个共享资源。如果没有适当的同步机制，就可能会出现数据不一致、数据丢失等问题。原子性操作可以确保这些共享资源在并发访问时的正确性和一致性。</p>
-<h3 id="如何实现原子性操作"><a href="#如何实现原子性操作" class="headerlink" title="如何实现原子性操作"></a>如何实现原子性操作</h3><ol>
-<li><p><strong>使用<code>synchronized</code>关键字</strong>：<br><code>synchronized</code>关键字可以用来修饰方法或代码块，以确保同一时间只有一个线程可以执行被修饰的代码。这是保证原子性的一种常见方式。</p>
-</li>
-<li><p><strong>使用原子类</strong>：<br>Java提供了一些原子类（如<code>AtomicInteger</code>、<code>AtomicLong</code>、<code>AtomicReference</code>等），这些类内部使用了高效的机制来确保操作的原子性。这些类通常用于实现计数器、状态标志等需要原子性操作的场景。</p>
-</li>
-<li><p><strong>使用锁（Lock）</strong>：<br>Java的<code>java.util.concurrent.locks</code>包提供了一些高级的锁机制（如<code>ReentrantLock</code>、<code>ReadWriteLock</code>等），这些锁提供了比<code>synchronized</code>更灵活的同步控制。</p>
-</li>
-<li><p><strong>使用低级别的原子操作</strong>：<br>在某些情况下，开发者可能需要直接使用Java的<code>Unsafe</code>类或者JNI（Java Native Interface）来调用操作系统的原子操作指令。这种方式通常用于实现高性能的并发数据结构或算法。</p>
-</li>
-</ol>
-<h3 id="示例：使用AtomicInteger实现原子性自增"><a href="#示例：使用AtomicInteger实现原子性自增" class="headerlink" title="示例：使用AtomicInteger实现原子性自增"></a>示例：使用<code>AtomicInteger</code>实现原子性自增</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.concurrent.atomic.AtomicInteger;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">AtomicInteger</span> <span class="variable">number</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AtomicInteger</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">increase</span><span class="params">()</span> &#123;</span><br><span class="line">        number.incrementAndGet(); <span class="comment">// 原子性自增操作</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">Test</span> <span class="variable">atomicDemo</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Test</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; <span class="number">10</span>; j++) &#123;</span><br><span class="line">            <span class="keyword">new</span> <span class="title class_">Thread</span>(() -&gt; &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">                    atomicDemo.increase();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;, String.valueOf(j)).start();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 等待所有线程执行完毕</span></span><br><span class="line">        <span class="keyword">while</span> (Thread.activeCount() &gt; <span class="number">2</span>) &#123;</span><br><span class="line">            Thread.yield();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(Thread.currentThread().getName() + <span class="string">&quot; final number result = &quot;</span> + atomicDemo.number.get());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在这个示例中，我们使用了<code>AtomicInteger</code>的<code>incrementAndGet</code>方法来实现原子性自增操作。由于<code>AtomicInteger</code>内部使用了高效的原子操作机制，因此可以保证在多线程环境下的正确性。运行这个程序，你会发现每次的结果都是10000，这与使用<code>volatile</code>修饰的变量时的结果不同。</p>
-<h2 id="二、volatile是如何保证可见性和有序性的？"><a href="#二、volatile是如何保证可见性和有序性的？" class="headerlink" title="二、volatile是如何保证可见性和有序性的？"></a>二、volatile是如何保证可见性和有序性的？</h2><h3 id="volatile和可见性"><a href="#volatile和可见性" class="headerlink" title="volatile和可见性"></a>volatile和可见性</h3><p><strong>对于volatile变量，当对volatile变量进行写操作的时候，JVM会向处理器发送一条lock前缀的指令，将这个缓存中的变量回写到系统主存中。 所以，如果一个变量被volatile所修饰的话，在每次数据变化之后，其值都会被强制刷入主存。而其他处理器的缓存由于遵守了缓存一致性协议，也会把这个变量的值从主存加载到自己的缓存中。这就保证了一个volatile在并发编程中，其值在多个缓存中是可见的。</strong></p>
-<h2 id="三、synchronized和volatile-区别"><a href="#三、synchronized和volatile-区别" class="headerlink" title="三、synchronized和volatile 区别"></a>三、<code>synchronized</code>和<code>volatile</code> 区别</h2><h3 id="synchronized的特点和缺点"><a href="#synchronized的特点和缺点" class="headerlink" title="synchronized的特点和缺点"></a>synchronized的特点和缺点</h3><p><code>synchronized</code>是一种加锁机制，用于确保在同一时刻只有一个线程可以执行某个方法或代码块。它的主要优点在于能够确保线程安全，防止多个线程同时修改共享资源导致的数据不一致问题。然而，<code>synchronized</code>也存在一些缺点：</p>
-<ol>
-<li><p><strong>性能损耗</strong>：虽然JDK 1.6及以后的版本对<code>synchronized</code>进行了多种优化（如适应性自旋、锁消除、锁粗化、轻量级锁和偏向锁等），但加锁和解锁的过程仍然会带来一定的性能损耗。</p>
-</li>
-<li><p><strong>产生阻塞</strong>：<code>synchronized</code>实现的锁本质上是一种阻塞锁。当多个线程同时访问同一段同步代码时，只有一个线程能够获取锁并进入临界区，其他线程则需要在Entry Set中等待。这可能导致线程阻塞和上下文切换，从而影响系统的并发性能。</p>
-</li>
-</ol>
-<h3 id="volatile的特点和优势"><a href="#volatile的特点和优势" class="headerlink" title="volatile的特点和优势"></a>volatile的特点和优势</h3><p><code>volatile</code>是Java虚拟机提供的一种轻量级同步机制，它主要用于确保变量的可见性，并禁止指令重排。与<code>synchronized</code>相比，<code>volatile</code>具有以下特点和优势：</p>
-<ol>
-<li><p><strong>性能更高</strong>：<code>volatile</code>变量的读操作与普通变量几乎无差别，写操作虽然由于需要插入内存屏障而稍慢一些，但在大多数场景下，其开销仍然比锁要低。</p>
-</li>
-<li><p><strong>禁止指令重排</strong>：<code>volatile</code>通过内存屏障来确保变量的可见性和有序性。这意味着，当一个线程修改了<code>volatile</code>变量的值后，其他线程能够立即看到这个修改。同时，<code>volatile</code>还能够防止编译器和处理器对指令进行重排序，从而避免某些潜在的并发问题。</p>
-</li>
-<li><p><strong>非阻塞</strong>：与<code>synchronized</code>不同，<code>volatile</code>不会造成线程的阻塞。它只是确保变量的可见性和有序性，而不会限制线程对共享资源的访问。</p>
-</li>
-</ol>
-<h3 id="为什么需要volatile"><a href="#为什么需要volatile" class="headerlink" title="为什么需要volatile"></a>为什么需要volatile</h3><p>尽管<code>synchronized</code>提供了强大的线程同步功能，但在某些场景下，我们仍然需要<code>volatile</code>。这主要是因为：</p>
-<ol>
-<li><p><strong>可见性问题</strong>：在某些情况下，我们可能只需要确保变量的可见性，而不需要对共享资源进行加锁。这时，使用<code>volatile</code>就足够了。</p>
-</li>
-<li><p><strong>指令重排问题</strong>：在某些并发场景中，指令重排可能会导致潜在的问题。而<code>volatile</code>能够禁止指令重排，从而避免这些问题。</p>
-</li>
-<li><p><strong>性能考虑</strong>：在某些对性能要求较高的场景中，使用<code>volatile</code>可能比使用<code>synchronized</code>更加合适。因为<code>volatile</code>的开销更低，不会造成线程的阻塞和上下文切换。</p>
-</li>
-</ol>
-<p>综上所述，<code>synchronized</code>和<code>volatile</code>各有其特点和适用场景。在Java并发编程中，我们需要根据具体的需求和场景来选择合适的同步机制。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E5%88%9D%E5%A7%8B%E5%AE%B9%E9%87%8F%E6%98%AF%E5%A4%9A%E5%B0%91%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E5%88%9D%E5%A7%8B%E5%AE%B9%E9%87%8F%E6%98%AF%E5%A4%9A%E5%B0%91%EF%BC%9F/" itemprop="url">ArrayList初始容量是多少</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-03T07:47:36+00:00">
-                2025-03-03
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌ArrayList初始容量是多少？"><a href="#👌ArrayList初始容量是多少？" class="headerlink" title="👌ArrayList初始容量是多少？"></a>👌ArrayList初始容量是多少？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>ArrayList 是 Java 中用于动态数组的一个类。它可以在添加或删除元素时自动调整其大小。然而，ArrayList 有一个默认的初始容量，这个容量是在你创建 ArrayList 实例时如果没有明确指定容量参数时所使用的。</p>
-<p>在 Java 的 ArrayList 实现中，默认的初始容量是 10。这意味着当你创建一个新的 ArrayList 而不指定其容量时，它会以一个内部数组长度为 10 的数组来开始。当添加的元素数量超过这个初始容量时，ArrayList 的内部数组会进行扩容，通常是增长为原来的 1.5 倍。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ArrayList&lt;String&gt; list = new ArrayList&lt;&gt;(); // 默认的初始容量是 10</span><br></pre></td></tr></table></figure>
-
-<p>但是，如果你知道你将要在 ArrayList 中存储多少元素，或者预计会存储多少元素，那么最好在创建时指定一个初始容量，这样可以减少由于扩容而导致的重新分配数组和复制元素的操作，从而提高性能。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ArrayList&lt;String&gt; list = new ArrayList&lt;&gt;(50); // 初始容量设置为 50</span><br></pre></td></tr></table></figure>
-
-<p><font style="color:rgb(51, 51, 51);">自从1.7之后，arraylist初始化的时候为一个空数组。但是当你去放入第一个元素的时候，会触发他的懒加载机制，使得数量变为10。</font></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">private static int calculateCapacity(Object[] elementData, int minCapacity) &#123;</span><br><span class="line">if (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) &#123;</span><br><span class="line">return Math.max(DEFAULT_CAPACITY, minCapacity);        </span><br><span class="line">&#125;        </span><br><span class="line">return minCapacity;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><font style="color:rgb(51, 51, 51);">所以我们的arraylist初始容量的确是10。只不过jdk8变为懒加载来节省内存。进行了一点优化。</font></p>
-<blockquote>
-<p>&#x2F;sp17yx6dqwcrail5&gt;</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%EF%BC%9F/" itemprop="url">ArrayList如何保证线程安全</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-03T07:47:36+00:00">
-                2025-03-03
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌ArrayList如何保证线程安全？"><a href="#👌ArrayList如何保证线程安全？" class="headerlink" title="👌ArrayList如何保证线程安全？"></a>👌ArrayList如何保证线程安全？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="借助锁"><a href="#借助锁" class="headerlink" title="借助锁"></a>借助锁</h2><p>可以通过在访问 ArrayList 的代码块上使用 synchronized 关键字来手动同步对 ArrayList 的访问。这要求所有访问 ArrayList 的代码都知道并使用相同的锁。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = new ArrayList&lt;&gt;();</span><br><span class="line">// ... 填充列表 ...</span><br><span class="line"></span><br><span class="line">synchronized(list) &#123;</span><br><span class="line">    Iterator&lt;String&gt; it = list.iterator();</span><br><span class="line">    while (it.hasNext()) &#123;</span><br><span class="line">        String element = it.next();</span><br><span class="line">        // 处理元素...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="使用-Collections-synchronizedList"><a href="#使用-Collections-synchronizedList" class="headerlink" title="使用 Collections.synchronizedList"></a>使用 Collections.synchronizedList</h2><p>Collections.synchronizedList 方法返回一个线程安全的列表，该列表是通过在每个公共方法（如 add(), get(), iterator() 等）上添加同步来实现的，其中同步是基于里面的同步代码块实现。但是，和手动同步一样，它也不能解决在迭代过程中进行结构修改导致的问题。</p>
-<p><img src="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%EF%BC%9F/u2gabD4e1XNpme_5/1721369333026-315b65c8-9222-48af-add6-fde77b52b82b-123723.png" alt="1721369333026-315b65c8-9222-48af-add6-fde77b52b82b.png"></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = Collections.synchronizedList(new ArrayList&lt;&gt;());</span><br></pre></td></tr></table></figure>
-
-<h2 id="使用并发集合"><a href="#使用并发集合" class="headerlink" title="使用并发集合"></a>使用并发集合</h2><p>Java 并发包 java.util.concurrent 提供了一些线程安全的集合类，如 CopyOnWriteArrayList。这些类提供了不同的线程安全保证和性能特性。</p>
-<p>CopyOnWriteArrayList是一个线程安全的变体，其中所有可变操作（add、set 等等）都是通过对底层数组进行新的复制来实现的。因此，迭代器不会受到并发修改的影响，并且遍历期间不需要额外的同步。但是，当有很多写操作时，这种方法可能会很昂贵，因为它需要在每次修改时复制整个底层数组。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = new CopyOnWriteArrayList&lt;&gt;();</span><br></pre></td></tr></table></figure>
-
-<p>选择解决方案时，需要考虑并发模式、读写比例以及性能需求。如果你的应用主要是读操作并且偶尔有写操作，CopyOnWriteArrayList是一个好选择。如果你的应用有大量的写操作，那么可能需要使用其他并发集合或手动同步策略。</p>
-<blockquote>
-<p>&#x2F;hkx8lgbi0mny13uc&gt;</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E6%98%AF%E5%A6%82%E4%BD%95%E6%89%A9%E5%AE%B9%E7%9A%84%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E6%98%AF%E5%A6%82%E4%BD%95%E6%89%A9%E5%AE%B9%E7%9A%84%EF%BC%9F/" itemprop="url">ArrayList是如何扩容的</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-03T07:47:36+00:00">
-                2025-03-03
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌ArrayList是如何扩容的？"><a href="#👌ArrayList是如何扩容的？" class="headerlink" title="👌ArrayList是如何扩容的？"></a>👌ArrayList是如何扩容的？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>ArrayList的扩容机制是Java集合框架中一个重要的概念，它允许ArrayList在需要时自动增加其内部数组的大小以容纳更多的元素。主要有以下的步骤</p>
-<p>1、初始容量和扩容因子：</p>
-<p>当创建一个新的ArrayList对象时，它通常会分配一个初始容量，这个初始容量默认为10。</p>
-<p>ArrayList的扩容因子是一个用于计算新容量的乘数，默认为1.5。</p>
-<p>2、扩容触发条件：</p>
-<p>当向ArrayList中添加一个新元素，并且该元素的数量超过当前数组的容量时，就会触发扩容操作。</p>
-<p>3、扩容策略：</p>
-<p>扩容时，首先根据当前容量和扩容因子计算出一个新的容量。新容量的计算公式为：</p>
-<p>newCapacity &#x3D; oldCapacity + (oldCapacity &gt;&gt; 1)，这实际上是将原容量增加50%（即乘以1.5）。</p>
-<p>如果需要的容量大于Integer.MAX_VALUE - 8（因为数组的长度是一个int类型，其最大值是Integer.MAX_VALUE，但ArrayList需要预留一些空间用于内部操作），则会使用Integer.MAX_VALUE作为新的容量。</p>
-<p>4、扩容过程：</p>
-<p>创建一个新的数组，其长度为新计算的容量。</p>
-<p>将原数组中的所有元素复制到新数组中。</p>
-<p>将ArrayList的内部引用从原数组更新为新数组。</p>
-<p>将新元素添加到新数组的末尾。</p>
-<p>5、性能影响：</p>
-<p>扩容过程涉及到内存分配和元素复制，可能会对性能产生一定的影响。因此，在使用ArrayList时，如果可能的话，最好预估需要存储的元素数量，并设置一个合适的初始容量，以减少扩容的次数。</p>
-<p>6、扩容源码</p>
-<p><img src="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E6%98%AF%E5%A6%82%E4%BD%95%E6%89%A9%E5%AE%B9%E7%9A%84%EF%BC%9F/a6dlsBfyxSbkioxG/1719246984492-7f242ac2-c31e-4cdd-a074-bc448c5d3148-182828.png" alt="1719246984492-7f242ac2-c31e-4cdd-a074-bc448c5d3148.png"></p>
-<blockquote>
-<p>&#x2F;ghpqbh9ig3hu1coh&gt;</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4704,7 +4742,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">112</span>
+                <span class="site-state-item-count">117</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -4715,7 +4753,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
