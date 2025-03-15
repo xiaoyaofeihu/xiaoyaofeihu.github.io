@@ -270,6 +270,170 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/03/15/%E5%9C%BA%E6%99%AF%E9%A2%98/%E4%BC%98%E6%83%A0%E5%88%B8%E7%A7%92%E6%9D%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/03/15/%E5%9C%BA%E6%99%AF%E9%A2%98/%E4%BC%98%E6%83%A0%E5%88%B8%E7%A7%92%E6%9D%80/" itemprop="url">未命名</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-03-15T06:22:32+00:00">
+                2025-03-15
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
+                2025-03-15
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="一、前置校验（redis的lua脚本实现）"><a href="#一、前置校验（redis的lua脚本实现）" class="headerlink" title="一、前置校验（redis的lua脚本实现）"></a>一、前置校验（redis的lua脚本实现）</h2><p>1、检查库从是否充足<br>2、用户是否下单过该优惠券（使用Redis中的set类型来缓存下单该优惠券的用户id集合，并且要保证数据及时更新同步，即 在检验资格通过后需要向set中添加用户id）<br><strong>Lua脚本需要的ARGV参数列表中有两个待定参数，分别是优惠券id 以及 用户id</strong></p>
+<h2 id="二、处理业务"><a href="#二、处理业务" class="headerlink" title="二、处理业务"></a>二、处理业务</h2><p>1、资格检验通过，则需要保证该有效订单被阻塞队列拿到，后续阻塞式执行成功，所以将“凭证”（封装好用户id、券id、订单id的订单实例）传入阻塞队列，等待异步线程阻塞式读取处理下单业务；</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/03/10/Spring/%E8%A7%A3%E9%87%8A%E4%B8%80%E4%B8%8BSpring%E7%9A%84ioc%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +481,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-10T08:26:09+00:00">
-                2025-03-10
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
+                2025-03-15
               </time>
             
           </span>
@@ -481,170 +645,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/03/10/%E5%9C%BA%E6%99%AF%E9%A2%98/%E4%BC%98%E6%83%A0%E5%88%B8%E7%A7%92%E6%9D%80/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/03/10/%E5%9C%BA%E6%99%AF%E9%A2%98/%E4%BC%98%E6%83%A0%E5%88%B8%E7%A7%92%E6%9D%80/" itemprop="url">未命名</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-03-10T08:26:09+00:00">
-                2025-03-10
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-10T08:26:09+00:00">
-                2025-03-10
-              </time>
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="一、前置校验（redis的lua脚本实现）"><a href="#一、前置校验（redis的lua脚本实现）" class="headerlink" title="一、前置校验（redis的lua脚本实现）"></a>一、前置校验（redis的lua脚本实现）</h2><p>1、检查库从是否充足<br>2、用户是否下单过该优惠券（使用Redis中的set类型来缓存下单该优惠券的用户id集合，并且要保证数据及时更新同步，即 在检验资格通过后需要向set中添加用户id）<br><strong>Lua脚本需要的ARGV参数列表中有两个待定参数，分别是优惠券id 以及 用户id</strong></p>
-<h2 id="二、处理业务"><a href="#二、处理业务" class="headerlink" title="二、处理业务"></a>二、处理业务</h2><p>1、资格检验通过，则需要保证该有效订单被阻塞队列拿到，后续阻塞式执行成功，所以将“凭证”（封装好用户id、券id、订单id的订单实例）传入阻塞队列，等待异步线程阻塞式读取处理下单业务；</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/03/09/Spring/%E4%BB%80%E4%B9%88%E6%98%AF%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -692,8 +692,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-10T08:26:09+00:00">
-                2025-03-10
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
+                2025-03-15
               </time>
             
           </span>
@@ -891,8 +891,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-10T08:26:09+00:00">
-                2025-03-10
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
+                2025-03-15
               </time>
             
           </span>
@@ -1090,8 +1090,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-10T08:26:09+00:00">
-                2025-03-10
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
+                2025-03-15
               </time>
             
           </span>
@@ -1297,8 +1297,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-10T08:26:09+00:00">
-                2025-03-10
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
+                2025-03-15
               </time>
             
           </span>
@@ -1473,7 +1473,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/03/02/Rabbitmq%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E6%B6%88%E6%81%AF%E4%B8%A2%E5%A4%B1%EF%BC%9F/">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/03/02/MQ/Rabbitmq%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E6%B6%88%E6%81%AF%E4%B8%A2%E5%A4%B1%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -1492,7 +1492,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2025/03/02/Rabbitmq%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E6%B6%88%E6%81%AF%E4%B8%A2%E5%A4%B1%EF%BC%9F/" itemprop="url">👌Rabbitmq如何避免消息丢失？</a></h1>
+                <a class="post-title-link" href="/2025/03/02/MQ/Rabbitmq%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E6%B6%88%E6%81%AF%E4%B8%A2%E5%A4%B1%EF%BC%9F/" itemprop="url">👌Rabbitmq如何避免消息丢失？</a></h1>
         
 
         <div class="post-meta">
@@ -1520,8 +1520,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-10T08:26:09+00:00">
-                2025-03-10
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
+                2025-03-15
               </time>
             
           </span>
@@ -1724,8 +1724,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-10T08:26:09+00:00">
-                2025-03-10
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
+                2025-03-15
               </time>
             
           </span>
@@ -1937,8 +1937,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-10T08:26:09+00:00">
-                2025-03-10
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
+                2025-03-15
               </time>
             
           </span>
@@ -2142,8 +2142,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-10T08:26:09+00:00">
-                2025-03-10
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
+                2025-03-15
               </time>
             
           </span>
@@ -2347,8 +2347,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-10T08:26:09+00:00">
-                2025-03-10
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
+                2025-03-15
               </time>
             
           </span>
@@ -2570,8 +2570,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-10T08:26:09+00:00">
-                2025-03-10
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
+                2025-03-15
               </time>
             
           </span>
@@ -2801,8 +2801,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-10T08:26:09+00:00">
-                2025-03-10
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
+                2025-03-15
               </time>
             
           </span>
@@ -3011,8 +3011,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-10T08:26:09+00:00">
-                2025-03-10
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
+                2025-03-15
               </time>
             
           </span>
@@ -3206,8 +3206,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-10T08:26:09+00:00">
-                2025-03-10
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
+                2025-03-15
               </time>
             
           </span>
@@ -3419,8 +3419,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-10T08:26:09+00:00">
-                2025-03-10
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
+                2025-03-15
               </time>
             
           </span>
@@ -3631,8 +3631,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-10T08:26:09+00:00">
-                2025-03-10
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
+                2025-03-15
               </time>
             
           </span>
@@ -3836,8 +3836,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-10T08:26:09+00:00">
-                2025-03-10
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
+                2025-03-15
               </time>
             
           </span>
@@ -4072,8 +4072,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-10T08:26:09+00:00">
-                2025-03-10
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
+                2025-03-15
               </time>
             
           </span>
@@ -4284,8 +4284,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-10T08:26:09+00:00">
-                2025-03-10
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
+                2025-03-15
               </time>
             
           </span>

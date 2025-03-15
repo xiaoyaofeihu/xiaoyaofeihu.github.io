@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="优化," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="数据库调优到底调什么？ 调SQL语句：根据需求创建结构良好的SQL语句【实现同一个需求，SQL语句写法很多】 调索引：索引创建原则 调数据库表结构 调MySQL配置：最大连接数，连接超时，线程缓存，查询缓存，排序缓存，连接查询缓存… 调MySQL宿主机OS：TCP连接数，打开文件数，线程栈大小… 调服务器硬件：更多核CPU、更大内存 MySQL客户端：连接池（MaxActive，MaxWait），">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mysql数据库调优">
+<meta property="og:url" content="https://xiaoyaofeihu.github.io/2024/11/13/Mysql/Mysql%E8%B0%83%E4%BC%98/index.html">
+<meta property="og:site_name" content="余声-个人博客">
+<meta property="og:description" content="数据库调优到底调什么？ 调SQL语句：根据需求创建结构良好的SQL语句【实现同一个需求，SQL语句写法很多】 调索引：索引创建原则 调数据库表结构 调MySQL配置：最大连接数，连接超时，线程缓存，查询缓存，排序缓存，连接查询缓存… 调MySQL宿主机OS：TCP连接数，打开文件数，线程栈大小… 调服务器硬件：更多核CPU、更大内存 MySQL客户端：连接池（MaxActive，MaxWait），">
+<meta property="og:locale">
+<meta property="article:published_time" content="2024-11-13T17:33:00.000Z">
+<meta property="article:modified_time" content="2025-03-15T06:22:32.779Z">
+<meta property="article:author" content="javayun">
+<meta property="article:tag" content="优化">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '余声'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://xiaoyaofeihu.github.io/2024/11/13/Mysql/Mysql调优/"/>
+
+
+
+
+
+  <title>Mysql数据库调优 | 余声-个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">余声-个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/11/13/Mysql/Mysql%E8%B0%83%E4%BC%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Mysql数据库调优</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-11-13T17:33:00+00:00">
+                2024-11-13
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
+                2025-03-15
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="数据库调优到底调什么？"><a href="#数据库调优到底调什么？" class="headerlink" title="数据库调优到底调什么？"></a>数据库调优到底调什么？</h2><ul>
+<li>调SQL语句：根据需求创建结构良好的SQL语句【实现同一个需求，SQL语句写法很多】</li>
+<li>调索引：索引创建原则</li>
+<li>调数据库表结构</li>
+<li>调MySQL配置：最大连接数，连接超时，线程缓存，查询缓存，排序缓存，连接查询缓存…</li>
+<li>调MySQL宿主机OS：TCP连接数，打开文件数，线程栈大小…</li>
+<li>调服务器硬件：更多核CPU、更大内存</li>
+<li>MySQL客户端：连接池（MaxActive，MaxWait），连接属性</li>
+</ul>
+<h1 id="前置工作："><a href="#前置工作：" class="headerlink" title="前置工作："></a>前置工作：</h1><h2 id="1、数据库压力测试"><a href="#1、数据库压力测试" class="headerlink" title="1、数据库压力测试"></a>1、数据库压力测试</h2><ul>
+<li>配置数据库驱动</li>
+<li>配置线程组</li>
+<li>配置 JDBC 连接池 </li>
+<li>添加 JDBC 请求</li>
+<li>添加结果监听器</li>
+</ul>
+<h2 id="2、客户端-连接池"><a href="#2、客户端-连接池" class="headerlink" title="2、客户端-连接池"></a>2、客户端-连接池</h2><h3 id="连接池参数设置"><a href="#连接池参数设置" class="headerlink" title="连接池参数设置"></a>连接池参数设置</h3><ul>
+<li>MaxWait 参数表示从连接池获取连接的超时等待时间，单位毫秒。</li>
+<li>MaxActive</li>
+</ul>
+<h1 id="正式调优"><a href="#正式调优" class="headerlink" title="正式调优"></a>正式调优</h1><h2 id="一、SQL语句优化"><a href="#一、SQL语句优化" class="headerlink" title="一、SQL语句优化"></a>一、SQL语句优化</h2><h3 id="1、查看SQL执行计划【Explain】"><a href="#1、查看SQL执行计划【Explain】" class="headerlink" title="1、查看SQL执行计划【Explain】"></a>1、查看SQL执行计划【Explain】</h3><ul>
+<li>id：SELECT识别符，这是SELECT查询序列号。</li>
+<li>select_type：表示单位查询的查询类型，比如：普通查询、联合查询(union、union  all)、子查询等复杂查询。</li>
+<li>table：表示查询的表</li>
+<li>partitions：使用的哪些分区（对于非分区表值为null）。</li>
+<li>type（重要）表示表的连接类型。</li>
+<li>possible_keys：此次查询中可能选用的索引</li>
+<li>key：查询真正使用到的索引</li>
+<li>key_len：显示MySQL决定使用的索引size</li>
+<li>ref：哪个字段或常数与 key 一起被使用</li>
+<li>rows：显示此查询一共扫描了多少行，这个是一个估计值，不是精确的值。</li>
+<li>filtered: 表示此查询条件所过滤的数据的百分比</li>
+<li>Extra：额外信息</li>
+</ul>
+<h3 id="2、索引优化"><a href="#2、索引优化" class="headerlink" title="2、索引优化"></a>2、索引优化</h3><h3 id="3、深分页LIMIT优化"><a href="#3、深分页LIMIT优化" class="headerlink" title="3、深分页LIMIT优化"></a>3、深分页LIMIT优化</h3><h3 id="4、子查询优化-（减少子查询，多用join）"><a href="#4、子查询优化-（减少子查询，多用join）" class="headerlink" title="4、子查询优化 （减少子查询，多用join）"></a>4、子查询优化 （减少子查询，多用join）</h3><h3 id="5、其他查询优化"><a href="#5、其他查询优化" class="headerlink" title="5、其他查询优化"></a>5、其他查询优化</h3><ul>
+<li>小表驱动大表</li>
+<li>避免全表扫描</li>
+<li>WHERE条件中尽量不要使用not in语句，建议使用not exists</li>
+<li>利用慢查询日志、explain执行计划查询、show profile查看SQL执行时的资源使用情况</li>
+</ul>
+<h3 id="6、SQL语句性能分析"><a href="#6、SQL语句性能分析" class="headerlink" title="6、SQL语句性能分析"></a>6、SQL语句性能分析</h3><h2 id="二、数据库优化"><a href="#二、数据库优化" class="headerlink" title="二、数据库优化"></a>二、数据库优化</h2><h3 id="1、慢查询日志"><a href="#1、慢查询日志" class="headerlink" title="1、慢查询日志"></a>1、慢查询日志</h3><h3 id="2、连接数max-connections"><a href="#2、连接数max-connections" class="headerlink" title="2、连接数max_connections"></a>2、连接数max_connections</h3><h3 id="3、线程使用情况"><a href="#3、线程使用情况" class="headerlink" title="3、线程使用情况"></a>3、线程使用情况</h3><h3 id="4、数据库优化-结构优化"><a href="#4、数据库优化-结构优化" class="headerlink" title="4、数据库优化-结构优化"></a>4、数据库优化-结构优化</h3><ul>
+<li>将字段很多的表分解为多个表</li>
+<li>增加中间表</li>
+<li>增加冗余字段</li>
+</ul>
+<h2 id="三、服务器层面的优化"><a href="#三、服务器层面的优化" class="headerlink" title="三、服务器层面的优化"></a>三、服务器层面的优化</h2><h3 id="1、缓冲区优化"><a href="#1、缓冲区优化" class="headerlink" title="1、缓冲区优化"></a>1、缓冲区优化</h3><ul>
+<li>修改buffer_pool</li>
+</ul>
+<h3 id="2、减少磁盘写入次数"><a href="#2、减少磁盘写入次数" class="headerlink" title="2、减少磁盘写入次数"></a>2、减少磁盘写入次数</h3><h3 id="3、MySQL数据库配置优化"><a href="#3、MySQL数据库配置优化" class="headerlink" title="3、MySQL数据库配置优化"></a>3、MySQL数据库配置优化</h3><h3 id="4、服务器硬件优化"><a href="#4、服务器硬件优化" class="headerlink" title="4、服务器硬件优化"></a>4、服务器硬件优化</h3>
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="" alt=" wechat" style="width: 200px; max-width: 100%;"/>
+    <div>天生我才必有用</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E4%BC%98%E5%8C%96/" rel="tag"># 优化</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2024/11/13/%E7%AC%94%E8%AE%B0/Mysql%E7%AC%94%E8%AE%B0/" rel="next" title="Mysql笔记">
+                <i class="fa fa-chevron-left"></i> Mysql笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2024/11/15/%E9%9D%A2%E8%AF%95%E9%A2%98/HashMap/" rel="prev" title="HashMap">
+                HashMap <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/11.jpg"
+               alt="" />
+          <p class="site-author-name" itemprop="name"></p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">131</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E8%B0%83%E4%BC%98%E5%88%B0%E5%BA%95%E8%B0%83%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">数据库调优到底调什么？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E5%B7%A5%E4%BD%9C%EF%BC%9A"><span class="nav-number"></span> <span class="nav-text">前置工作：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95"><span class="nav-number">1.</span> <span class="nav-text">1、数据库压力测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E5%AE%A2%E6%88%B7%E7%AB%AF-%E8%BF%9E%E6%8E%A5%E6%B1%A0"><span class="nav-number">2.</span> <span class="nav-text">2、客户端-连接池</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E6%B1%A0%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.1.</span> <span class="nav-text">连接池参数设置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%A3%E5%BC%8F%E8%B0%83%E4%BC%98"><span class="nav-number"></span> <span class="nav-text">正式调优</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81SQL%E8%AF%AD%E5%8F%A5%E4%BC%98%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">一、SQL语句优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E6%9F%A5%E7%9C%8BSQL%E6%89%A7%E8%A1%8C%E8%AE%A1%E5%88%92%E3%80%90Explain%E3%80%91"><span class="nav-number">1.1.</span> <span class="nav-text">1、查看SQL执行计划【Explain】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96"><span class="nav-number">1.2.</span> <span class="nav-text">2、索引优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E6%B7%B1%E5%88%86%E9%A1%B5LIMIT%E4%BC%98%E5%8C%96"><span class="nav-number">1.3.</span> <span class="nav-text">3、深分页LIMIT优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E5%AD%90%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96-%EF%BC%88%E5%87%8F%E5%B0%91%E5%AD%90%E6%9F%A5%E8%AF%A2%EF%BC%8C%E5%A4%9A%E7%94%A8join%EF%BC%89"><span class="nav-number">1.4.</span> <span class="nav-text">4、子查询优化 （减少子查询，多用join）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E3%80%81%E5%85%B6%E4%BB%96%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96"><span class="nav-number">1.5.</span> <span class="nav-text">5、其他查询优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6%E3%80%81SQL%E8%AF%AD%E5%8F%A5%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90"><span class="nav-number">1.6.</span> <span class="nav-text">6、SQL语句性能分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BC%98%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">二、数据库优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97"><span class="nav-number">2.1.</span> <span class="nav-text">1、慢查询日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E8%BF%9E%E6%8E%A5%E6%95%B0max-connections"><span class="nav-number">2.2.</span> <span class="nav-text">2、连接数max_connections</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E7%BA%BF%E7%A8%8B%E4%BD%BF%E7%94%A8%E6%83%85%E5%86%B5"><span class="nav-number">2.3.</span> <span class="nav-text">3、线程使用情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BC%98%E5%8C%96-%E7%BB%93%E6%9E%84%E4%BC%98%E5%8C%96"><span class="nav-number">2.4.</span> <span class="nav-text">4、数据库优化-结构优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%B1%82%E9%9D%A2%E7%9A%84%E4%BC%98%E5%8C%96"><span class="nav-number">3.</span> <span class="nav-text">三、服务器层面的优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E7%BC%93%E5%86%B2%E5%8C%BA%E4%BC%98%E5%8C%96"><span class="nav-number">3.1.</span> <span class="nav-text">1、缓冲区优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E5%87%8F%E5%B0%91%E7%A3%81%E7%9B%98%E5%86%99%E5%85%A5%E6%AC%A1%E6%95%B0"><span class="nav-number">3.2.</span> <span class="nav-text">2、减少磁盘写入次数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E9%85%8D%E7%BD%AE%E4%BC%98%E5%8C%96"><span class="nav-number">3.3.</span> <span class="nav-text">3、MySQL数据库配置优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%A1%AC%E4%BB%B6%E4%BC%98%E5%8C%96"><span class="nav-number">3.4.</span> <span class="nav-text">4、服务器硬件优化</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">javayun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Gemini
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

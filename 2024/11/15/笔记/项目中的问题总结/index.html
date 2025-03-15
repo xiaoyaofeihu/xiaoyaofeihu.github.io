@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="项目," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="springcloud服务中使用mq做消息的通知，相对于fegin有什么好处在 Spring Cloud 服务中使用 消息队列（如 RabbitMQ、Kafka 等）来处理消息通知，相对于 Feign 进行同步调用，具有多个优势，特别是在分布式系统中。这些好处主要体现在 解耦性、可靠性、性能和可扩展性 等方面。下面详细列出它们的优缺点对比：1. 解耦性 消息队列：使用消息队列时，生产者（发送方）和">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习笔记">
+<meta property="og:url" content="https://xiaoyaofeihu.github.io/2024/11/15/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="余声-个人博客">
+<meta property="og:description" content="springcloud服务中使用mq做消息的通知，相对于fegin有什么好处在 Spring Cloud 服务中使用 消息队列（如 RabbitMQ、Kafka 等）来处理消息通知，相对于 Feign 进行同步调用，具有多个优势，特别是在分布式系统中。这些好处主要体现在 解耦性、可靠性、性能和可扩展性 等方面。下面详细列出它们的优缺点对比：1. 解耦性 消息队列：使用消息队列时，生产者（发送方）和">
+<meta property="og:locale">
+<meta property="article:published_time" content="2024-11-15T13:33:41.000Z">
+<meta property="article:modified_time" content="2025-03-15T06:22:32.781Z">
+<meta property="article:author" content="javayun">
+<meta property="article:tag" content="项目">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '余声'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://xiaoyaofeihu.github.io/2024/11/15/笔记/项目中的问题总结/"/>
+
+
+
+
+
+  <title>学习笔记 | 余声-个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">余声-个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/11/15/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">学习笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-11-15T13:33:41+00:00">
+                2024-11-15
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
+                2025-03-15
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="springcloud服务中使用mq做消息的通知，相对于fegin有什么好处"><a href="#springcloud服务中使用mq做消息的通知，相对于fegin有什么好处" class="headerlink" title="springcloud服务中使用mq做消息的通知，相对于fegin有什么好处"></a>springcloud服务中使用mq做消息的通知，相对于fegin有什么好处</h1><h2 id="在-Spring-Cloud-服务中使用-消息队列（如-RabbitMQ、Kafka-等）来处理消息通知，相对于-Feign-进行同步调用，具有多个优势，特别是在分布式系统中。这些好处主要体现在-解耦性、可靠性、性能和可扩展性-等方面。下面详细列出它们的优缺点对比："><a href="#在-Spring-Cloud-服务中使用-消息队列（如-RabbitMQ、Kafka-等）来处理消息通知，相对于-Feign-进行同步调用，具有多个优势，特别是在分布式系统中。这些好处主要体现在-解耦性、可靠性、性能和可扩展性-等方面。下面详细列出它们的优缺点对比：" class="headerlink" title="在 Spring Cloud 服务中使用 消息队列（如 RabbitMQ、Kafka 等）来处理消息通知，相对于 Feign 进行同步调用，具有多个优势，特别是在分布式系统中。这些好处主要体现在 解耦性、可靠性、性能和可扩展性 等方面。下面详细列出它们的优缺点对比："></a>在 Spring Cloud 服务中使用 消息队列（如 RabbitMQ、Kafka 等）来处理消息通知，相对于 Feign 进行同步调用，具有多个优势，特别是在分布式系统中。这些好处主要体现在 解耦性、可靠性、性能和可扩展性 等方面。下面详细列出它们的优缺点对比：</h2><h2 id="1-解耦性"><a href="#1-解耦性" class="headerlink" title="1. 解耦性"></a>1. 解耦性</h2><ul>
+<li>消息队列：使用消息队列时，生产者（发送方）和消费者（接收方）是松耦合的，即使消费者不可用，消息队列仍然可以存储消息，等待消费者处理。这种异步的方式减少了服务之间的直接依赖，增强了系统的解耦性。</li>
+<li>Feign：Feign 是一种同步调用方式，服务 A 直接调用服务 B，服务之间是强耦合的。如果服务 B 不可用，服务 A 会失败，依赖关系比较紧密。</li>
+</ul>
+<h3 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h3><ul>
+<li>消息队列：更容易扩展服务，减少服务间的直接依赖。</li>
+<li>Feign：服务间的直接调用，导致服务耦合性较强，依赖性高。</li>
+</ul>
+<h2 id="2-可靠性"><a href="#2-可靠性" class="headerlink" title="2. 可靠性"></a>2. 可靠性</h2><ul>
+<li>消息队列：消息队列一般会提供消息持久化、重试机制、死信队列等功能，保证消息在系统出现故障时不会丢失，能够在消费者恢复后重新处理。即使服务 A 出现故障，消息依然可以在队列中等待消费。</li>
+<li>Feign：Feign 调用是同步的，如果服务 B 出现故障，Feign 请求会直接失败，且一般不具备自动重试和消息持久化功能。</li>
+</ul>
+<h3 id="优点：-1"><a href="#优点：-1" class="headerlink" title="优点："></a>优点：</h3><ul>
+<li>消息队列：提供消息持久化、重试机制，能确保消息不丢失。</li>
+<li>Feign：服务失败时请求会直接失败，除非使用像 Ribbon 或 Hystrix 这样的断路器进行处理。</li>
+</ul>
+<h2 id="3-异步与性能"><a href="#3-异步与性能" class="headerlink" title="3. 异步与性能"></a>3. 异步与性能</h2><ul>
+<li>消息队列：消息队列是异步处理的，即生产者发送完消息后，不需要等待消费者处理结果。生产者可以继续执行其他任务，消息队列通过缓冲提高系统吞吐量。当系统负载较高时，消费者可以批量消费消息，提高处理效率。</li>
+<li>Feign：Feign 是同步的，发送请求后，调用方必须等待服务返回结果，可能会导致性能瓶颈，特别是当多个服务调用彼此依赖时，响应时间可能会增加。</li>
+</ul>
+<h3 id="优点：-2"><a href="#优点：-2" class="headerlink" title="优点："></a>优点：</h3><ul>
+<li>消息队列：通过异步处理提高系统吞吐量和性能，适合处理高并发、高负载的场景。</li>
+<li>Feign：同步请求，可能会成为性能瓶颈，尤其在服务间相互调用较多时。</li>
+</ul>
+<h2 id="4-可伸缩性"><a href="#4-可伸缩性" class="headerlink" title="4. 可伸缩性"></a>4. 可伸缩性</h2><ul>
+<li>消息队列：消息队列可以在消费者端进行水平扩展。例如，消费者可以横向扩展多个实例来处理消息，从而提升系统的处理能力。消息队列会自动将消息分发给空闲的消费者实例，提高系统的可伸缩性。</li>
+<li>Feign：Feign 本身并不具备内建的负载均衡功能，虽然可以使用 Spring Cloud 的负载均衡组件（如 Ribbon），但它依赖于同步请求，因此在高并发场景下扩展性较差。</li>
+</ul>
+<h3 id="优点：-3"><a href="#优点：-3" class="headerlink" title="优点："></a>优点：</h3><ul>
+<li>消息队列：通过消费端的水平扩展，提高系统的可伸缩性。</li>
+<li>Feign：虽然有负载均衡，但扩展性主要依赖于同步调用方式，可能会受到性能瓶颈的限制。</li>
+</ul>
+<h2 id="5-流量控制与限流"><a href="#5-流量控制与限流" class="headerlink" title="5. 流量控制与限流"></a>5. 流量控制与限流</h2><ul>
+<li>消息队列：消息队列通常支持流量控制。比如，消费者的处理速度低于生产者的发送速度时，消息队列可以进行流量调节，避免系统被大量消息打垮。此外，死信队列、延时队列等功能可以帮助处理异常消息，避免堆积。</li>
+<li>Feign：Feign 是同步请求，不适合处理流量控制。如果请求量激增，可能会导致服务出现超时或者崩溃。</li>
+</ul>
+<h3 id="优点：-4"><a href="#优点：-4" class="headerlink" title="优点："></a>优点：</h3><ul>
+<li>消息队列：可以通过流量控制机制、死信队列、延时队列等功能保证系统稳定性。</li>
+<li>Feign：不适合直接进行流量控制，可能导致系统超载。</li>
+</ul>
+<h2 id="6-消息顺序"><a href="#6-消息顺序" class="headerlink" title="6. 消息顺序"></a>6. 消息顺序</h2><ul>
+<li>消息队列：许多消息队列系统（如 Kafka 和 RabbitMQ）都支持消息的顺序保证，尤其在处理同一个主题或队列中的消息时，可以确保消息按顺序被消费。对于需要保证顺序消费的场景，消息队列是非常适合的。</li>
+<li>Feign：Feign 的调用是同步的，但它不保证请求的顺序和消费顺序。多个服务之间的调用是按顺序发生的，但并不适用于保证消息顺序。</li>
+</ul>
+<h3 id="优点：-5"><a href="#优点：-5" class="headerlink" title="优点："></a>优点：</h3><ul>
+<li>消息队列：可以确保消息顺序性，适合需要严格顺序的场景。</li>
+<li>Feign：没有内建的顺序保证机制。</li>
+</ul>
+<h2 id="7-场景适配"><a href="#7-场景适配" class="headerlink" title="7. 场景适配"></a>7. 场景适配</h2><ul>
+<li>消息队列：适用于以下场景：</li>
+</ul>
+<blockquote>
+<p>事件驱动的应用，异步通知、推送；<br>高并发、高吞吐量的系统；<br>系统解耦，避免微服务之间的直接调用；<br>消息延迟处理或异步处理的场景。</p>
+</blockquote>
+<ul>
+<li>Feign：适用于以下场景：</li>
+</ul>
+<blockquote>
+<p>服务间的同步调用，需要立即得到返回值；<br>处理简单的请求-响应模式；<br>服务间的低延迟、低耦合调用。</p>
+</blockquote>
+<h2 id="8-总结"><a href="#8-总结" class="headerlink" title="8. 总结"></a>8. 总结</h2><table>
+<thead>
+<tr>
+<th>特性</th>
+<th><strong>消息队列</strong></th>
+<th><strong>Feign</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>耦合性</strong></td>
+<td>松耦合，生产者和消费者分离</td>
+<td>强耦合，服务间直接调用</td>
+</tr>
+<tr>
+<td><strong>可靠性</strong></td>
+<td>提供消息持久化、重试机制</td>
+<td>依赖于服务的可用性，失败时没有自动恢复</td>
+</tr>
+<tr>
+<td><strong>性能</strong></td>
+<td>异步，适合高并发、高吞吐量的场景</td>
+<td>同步，可能成为性能瓶颈</td>
+</tr>
+<tr>
+<td><strong>可伸缩性</strong></td>
+<td>通过水平扩展消费者来提高可伸缩性</td>
+<td>依赖于负载均衡，扩展有限</td>
+</tr>
+<tr>
+<td><strong>流量控制</strong></td>
+<td>可以控制流量，避免系统过载</td>
+<td>没有流量控制机制</td>
+</tr>
+<tr>
+<td><strong>消息顺序</strong></td>
+<td>可以保证消息顺序</td>
+<td>不保证消息顺序</td>
+</tr>
+<tr>
+<td><strong>场景适配</strong></td>
+<td>事件驱动、异步通知、大量消息处理</td>
+<td>服务间同步调用、低延迟处理</td>
+</tr>
+</tbody></table>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><h3 id="使用-消息队列（如-RabbitMQ、Kafka）更适合于-高并发、异步、解耦、事件驱动-的场景，能够提高系统的可靠性、性能和扩展性。"><a href="#使用-消息队列（如-RabbitMQ、Kafka）更适合于-高并发、异步、解耦、事件驱动-的场景，能够提高系统的可靠性、性能和扩展性。" class="headerlink" title="使用 消息队列（如 RabbitMQ、Kafka）更适合于 高并发、异步、解耦、事件驱动 的场景，能够提高系统的可靠性、性能和扩展性。"></a>使用 消息队列（如 RabbitMQ、Kafka）更适合于 高并发、异步、解耦、事件驱动 的场景，能够提高系统的可靠性、性能和扩展性。</h3><h3 id="使用-Feign-更适合-同步调用、简单的请求-响应模式、低延迟-的服务间通信。"><a href="#使用-Feign-更适合-同步调用、简单的请求-响应模式、低延迟-的服务间通信。" class="headerlink" title="使用 Feign 更适合 同步调用、简单的请求-响应模式、低延迟 的服务间通信。"></a>使用 Feign 更适合 同步调用、简单的请求-响应模式、低延迟 的服务间通信。</h3>
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="" alt=" wechat" style="width: 200px; max-width: 100%;"/>
+    <div>天生我才必有用</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag"># 项目</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2024/11/15/%E9%9D%A2%E8%AF%95%E9%A2%98/HashMap/" rel="next" title="HashMap">
+                <i class="fa fa-chevron-left"></i> HashMap
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2024/11/20/%E9%9D%A2%E8%AF%95%E9%A2%98/%E7%B4%A2%E5%BC%95/" rel="prev" title="Mysql中的索引">
+                Mysql中的索引 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/11.jpg"
+               alt="" />
+          <p class="site-author-name" itemprop="name"></p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">131</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#springcloud%E6%9C%8D%E5%8A%A1%E4%B8%AD%E4%BD%BF%E7%94%A8mq%E5%81%9A%E6%B6%88%E6%81%AF%E7%9A%84%E9%80%9A%E7%9F%A5%EF%BC%8C%E7%9B%B8%E5%AF%B9%E4%BA%8Efegin%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E5%A4%84"><span class="nav-number">1.</span> <span class="nav-text">springcloud服务中使用mq做消息的通知，相对于fegin有什么好处</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8-Spring-Cloud-%E6%9C%8D%E5%8A%A1%E4%B8%AD%E4%BD%BF%E7%94%A8-%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%EF%BC%88%E5%A6%82-RabbitMQ%E3%80%81Kafka-%E7%AD%89%EF%BC%89%E6%9D%A5%E5%A4%84%E7%90%86%E6%B6%88%E6%81%AF%E9%80%9A%E7%9F%A5%EF%BC%8C%E7%9B%B8%E5%AF%B9%E4%BA%8E-Feign-%E8%BF%9B%E8%A1%8C%E5%90%8C%E6%AD%A5%E8%B0%83%E7%94%A8%EF%BC%8C%E5%85%B7%E6%9C%89%E5%A4%9A%E4%B8%AA%E4%BC%98%E5%8A%BF%EF%BC%8C%E7%89%B9%E5%88%AB%E6%98%AF%E5%9C%A8%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%AD%E3%80%82%E8%BF%99%E4%BA%9B%E5%A5%BD%E5%A4%84%E4%B8%BB%E8%A6%81%E4%BD%93%E7%8E%B0%E5%9C%A8-%E8%A7%A3%E8%80%A6%E6%80%A7%E3%80%81%E5%8F%AF%E9%9D%A0%E6%80%A7%E3%80%81%E6%80%A7%E8%83%BD%E5%92%8C%E5%8F%AF%E6%89%A9%E5%B1%95%E6%80%A7-%E7%AD%89%E6%96%B9%E9%9D%A2%E3%80%82%E4%B8%8B%E9%9D%A2%E8%AF%A6%E7%BB%86%E5%88%97%E5%87%BA%E5%AE%83%E4%BB%AC%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9%E5%AF%B9%E6%AF%94%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">在 Spring Cloud 服务中使用 消息队列（如 RabbitMQ、Kafka 等）来处理消息通知，相对于 Feign 进行同步调用，具有多个优势，特别是在分布式系统中。这些好处主要体现在 解耦性、可靠性、性能和可扩展性 等方面。下面详细列出它们的优缺点对比：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E8%A7%A3%E8%80%A6%E6%80%A7"><span class="nav-number">1.2.</span> <span class="nav-text">1. 解耦性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E7%82%B9%EF%BC%9A"><span class="nav-number">1.2.1.</span> <span class="nav-text">优点：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%8F%AF%E9%9D%A0%E6%80%A7"><span class="nav-number">1.3.</span> <span class="nav-text">2. 可靠性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E7%82%B9%EF%BC%9A-1"><span class="nav-number">1.3.1.</span> <span class="nav-text">优点：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%BC%82%E6%AD%A5%E4%B8%8E%E6%80%A7%E8%83%BD"><span class="nav-number">1.4.</span> <span class="nav-text">3. 异步与性能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E7%82%B9%EF%BC%9A-2"><span class="nav-number">1.4.1.</span> <span class="nav-text">优点：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%8F%AF%E4%BC%B8%E7%BC%A9%E6%80%A7"><span class="nav-number">1.5.</span> <span class="nav-text">4. 可伸缩性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E7%82%B9%EF%BC%9A-3"><span class="nav-number">1.5.1.</span> <span class="nav-text">优点：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6%E4%B8%8E%E9%99%90%E6%B5%81"><span class="nav-number">1.6.</span> <span class="nav-text">5. 流量控制与限流</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E7%82%B9%EF%BC%9A-4"><span class="nav-number">1.6.1.</span> <span class="nav-text">优点：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E6%B6%88%E6%81%AF%E9%A1%BA%E5%BA%8F"><span class="nav-number">1.7.</span> <span class="nav-text">6. 消息顺序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E7%82%B9%EF%BC%9A-5"><span class="nav-number">1.7.1.</span> <span class="nav-text">优点：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E5%9C%BA%E6%99%AF%E9%80%82%E9%85%8D"><span class="nav-number">1.8.</span> <span class="nav-text">7. 场景适配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E6%80%BB%E7%BB%93"><span class="nav-number">1.9.</span> <span class="nav-text">8. 总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.10.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%EF%BC%88%E5%A6%82-RabbitMQ%E3%80%81Kafka%EF%BC%89%E6%9B%B4%E9%80%82%E5%90%88%E4%BA%8E-%E9%AB%98%E5%B9%B6%E5%8F%91%E3%80%81%E5%BC%82%E6%AD%A5%E3%80%81%E8%A7%A3%E8%80%A6%E3%80%81%E4%BA%8B%E4%BB%B6%E9%A9%B1%E5%8A%A8-%E7%9A%84%E5%9C%BA%E6%99%AF%EF%BC%8C%E8%83%BD%E5%A4%9F%E6%8F%90%E9%AB%98%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%8F%AF%E9%9D%A0%E6%80%A7%E3%80%81%E6%80%A7%E8%83%BD%E5%92%8C%E6%89%A9%E5%B1%95%E6%80%A7%E3%80%82"><span class="nav-number">1.10.1.</span> <span class="nav-text">使用 消息队列（如 RabbitMQ、Kafka）更适合于 高并发、异步、解耦、事件驱动 的场景，能够提高系统的可靠性、性能和扩展性。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-Feign-%E6%9B%B4%E9%80%82%E5%90%88-%E5%90%8C%E6%AD%A5%E8%B0%83%E7%94%A8%E3%80%81%E7%AE%80%E5%8D%95%E7%9A%84%E8%AF%B7%E6%B1%82-%E5%93%8D%E5%BA%94%E6%A8%A1%E5%BC%8F%E3%80%81%E4%BD%8E%E5%BB%B6%E8%BF%9F-%E7%9A%84%E6%9C%8D%E5%8A%A1%E9%97%B4%E9%80%9A%E4%BF%A1%E3%80%82"><span class="nav-number">1.10.2.</span> <span class="nav-text">使用 Feign 更适合 同步调用、简单的请求-响应模式、低延迟 的服务间通信。</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">javayun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Gemini
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
