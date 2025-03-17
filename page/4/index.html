@@ -270,6 +270,220 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E6%98%AF%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E5%90%97%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E6%98%AF%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E5%90%97%EF%BC%9F/" itemprop="url">ArrayList是线程安全的吗</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌ArrayList是线程安全的吗？"><a href="#👌ArrayList是线程安全的吗？" class="headerlink" title="👌ArrayList是线程安全的吗？"></a>👌ArrayList是线程安全的吗？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>ArrayList不是线程安全的。在多线程环境下，如果多个线程同时对ArrayList进行操作，可能会出现数据不一致的情况。</p>
+<p>当多个线程同时对ArrayList进行添加、删除等操作时，可能会导致数组大小的变化，从而引发数据不一致的问题。例如，当一个线程在对ArrayList进行添加元素的操作时（这通常分为两步：先在指定位置存放元素，然后增加size的值），另一个线程可能同时进行删除或其他操作，导致数据的不一致或错误。</p>
+<p>比如下面的这个代码，就是实际上ArrayList 放入元素的代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">elementData[size] = e;</span><br><span class="line">size = size + 1;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>elementData[size] &#x3D; e; 这一行代码是将新的元素 e 放置在 ArrayList 的内部数组 elementData 的当前大小 size 的位置上。这里假设 elementData 数组已经足够大，可以容纳新添加的元素（实际上 ArrayList 在必要时会增长数组的大小）。</li>
+<li>size &#x3D; size + 1; 这一行代码是更新 ArrayList 的大小，使其包含新添加的元素。</li>
+</ol>
+<p>如果两个线程同时尝试向同一个 ArrayList 实例中添加元素，那么可能会发生以下情况：</p>
+<ul>
+<li>线程 A 执行 elementData[size] &#x3D; eA;（假设当前 size 是 0）</li>
+<li>线程 B 执行 elementData[size] &#x3D; eB;（由于线程 A 尚未更新 size，线程 B 看到的 size 仍然是 0）</li>
+<li>此时，elementData[0] 被线程 B 的 eB 覆盖，线程 A 的 eA 丢失</li>
+<li>线程 A 更新 size &#x3D; 1;</li>
+<li>线程 B 更新 size &#x3D; 1;（现在 size 仍然是 1，但是应该是 2，因为有两个元素被添加）</li>
+</ul>
+<p>为了解决ArrayList的线程安全问题，可以采取以下几种方式：</p>
+<ol>
+<li><p>使用Collections类的synchronizedList方法：将ArrayList转换为线程安全的List。这种方式通过在对ArrayList进行操作时加锁来保证线程安全，但可能会带来一定的性能损耗。</p>
+</li>
+<li><p>使用CopyOnWriteArrayList类：它是Java并发包中提供的线程安全的List实现。CopyOnWriteArrayList在对集合进行修改时，会创建一个新的数组来保存修改后的数据，这样就不会影响到其他线程对原数组的访问。因此，它适合在读操作远远多于写操作的场景下使用。</p>
+</li>
+<li><p>使用并发包中的锁机制：如Lock或Semaphore等，显式地使用锁来保护对ArrayList的操作，可以确保在多线程环境下数据的一致性。但这种方式需要开发人员自行管理锁的获取和释放，容易出现死锁等问题。</p>
+</li>
+</ol>
+<p>还可以考虑使用其他线程安全的集合类，如Vector或ConcurrentLinkedQueue等，它们本身就是线程安全的，可以直接在多线程环境下使用。</p>
+<blockquote>
+<p>&#x2F;sok8k2bhymx7np2u&gt;</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E7%9A%84%E6%B7%BB%E5%8A%A0%E4%B8%8E%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0%E4%B8%BA%E4%BB%80%E4%B9%88%E6%85%A2%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +531,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -516,8 +730,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -742,8 +956,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -950,8 +1164,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -1167,8 +1381,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -1372,8 +1586,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -1583,8 +1797,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -1803,8 +2017,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -2005,8 +2219,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -2203,8 +2417,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -2403,8 +2617,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -2615,8 +2829,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -2819,8 +3033,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -3034,8 +3248,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -3250,8 +3464,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -3465,8 +3679,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -3636,213 +3850,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/linkedhashmap%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E6%9C%89%E5%BA%8F%E6%80%A7%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/linkedhashmap%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E6%9C%89%E5%BA%8F%E6%80%A7%EF%BC%9F/" itemprop="url">linkedhashmap如何保证有序性</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌linkedhashmap如何保证有序性？"><a href="#👌linkedhashmap如何保证有序性？" class="headerlink" title="👌linkedhashmap如何保证有序性？"></a>👌linkedhashmap如何保证有序性？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>LinkedHashMap通过维护一个双向链表来保证有序性。这个双向链表记录了所有插入的键值对的顺序。根据构造方法中的参数设置，LinkedHashMap可以按插入顺序或访问顺序来维护这些键值对的顺序。</p>
-<h2 id="具体实现原理"><a href="#具体实现原理" class="headerlink" title="具体实现原理"></a>具体实现原理</h2><ol>
-<li><strong>双向链表</strong>：LinkedHashMap在内部维护了一个双向链表。每个节点对应一个键值对，并且包含指向前一个节点和后一个节点的引用。通过这个链表，LinkedHashMap可以快速地遍历所有键值对，保持其有序性。</li>
-<li><strong>插入顺序</strong>：默认情况下，LinkedHashMap按照键值对插入的顺序来维护顺序。每次插入新键值对时，它会将新节点添加到链表的末尾。</li>
-<li><strong>访问顺序</strong>：如果在构造方法中将accessOrder参数设置为true，LinkedHashMap将按照访问顺序来维护键值对的顺序。每次访问（get或put操作）一个键值对时，它会将对应的节点移动到链表的末尾。</li>
-</ol>
-<h2 id="代码-Demo"><a href="#代码-Demo" class="headerlink" title="代码 Demo"></a>代码 Demo</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">import java.util.LinkedHashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line"></span><br><span class="line">public class LinkedHashMapOrderExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        // 插入顺序</span><br><span class="line">        LinkedHashMap&lt;String, Integer&gt; insertionOrderMap = new LinkedHashMap&lt;&gt;();</span><br><span class="line">        insertionOrderMap.put(&quot;A&quot;, 1);</span><br><span class="line">        insertionOrderMap.put(&quot;B&quot;, 2);</span><br><span class="line">        insertionOrderMap.put(&quot;C&quot;, 3);</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;插入顺序:&quot;);</span><br><span class="line">        for (Map.Entry&lt;String, Integer&gt; entry : insertionOrderMap.entrySet()) &#123;</span><br><span class="line">            System.out.println(entry.getKey() + &quot;: &quot; + entry.getValue());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 访问顺序</span><br><span class="line">        LinkedHashMap&lt;String, Integer&gt; accessOrderMap = new LinkedHashMap&lt;&gt;(16, 0.75f, true);</span><br><span class="line">        accessOrderMap.put(&quot;A&quot;, 1);</span><br><span class="line">        accessOrderMap.put(&quot;B&quot;, 2);</span><br><span class="line">        accessOrderMap.put(&quot;C&quot;, 3);</span><br><span class="line"></span><br><span class="line">        // 访问某些元素</span><br><span class="line">        accessOrderMap.get(&quot;A&quot;);</span><br><span class="line">        accessOrderMap.get(&quot;C&quot;);</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;访问顺序:&quot;);</span><br><span class="line">        for (Map.Entry&lt;String, Integer&gt; entry : accessOrderMap.entrySet()) &#123;</span><br><span class="line">            System.out.println(entry.getKey() + &quot;: &quot; + entry.getValue());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h3><p><strong>插入顺序</strong>：</p>
-<p>创建一个LinkedHashMap实例insertionOrderMap。</p>
-<p>插入键值对 “A”、”B” 和 “C”。</p>
-<p>遍历并打印键值对，顺序与插入顺序一致。</p>
-<p><strong>访问顺序</strong>：</p>
-<p>创建一个LinkedHashMap实例accessOrderMap，并将accessOrder参数设置为true。</p>
-<p>插入键值对 “A”、”B” 和 “C”。</p>
-<p>访问键 “A” 和 “C”（通过get操作）。</p>
-<p>遍历并打印键值对，顺序按照最近访问的顺序排列。</p>
-<h2 id="内部机制"><a href="#内部机制" class="headerlink" title="内部机制"></a>内部机制</h2><p><strong>节点结构</strong>：LinkedHashMap的每个节点不仅包含键和值，还包含指向前一个节点和后一个节点的引用。这使得它可以高效地维护顺序。</p>
-<p><strong>操作调整</strong>：在每次插入或访问键值对时，LinkedHashMap会调整链表中节点的位置，以确保顺序的正确性。例如，在访问顺序模式下，每次访问一个键值对时，它会将对应的节点移动到链表的末尾。</p>
-<p>通过这些机制，LinkedHashMap能够高效地维护键值对的有序性，无论是按插入顺序还是访问顺序。</p>
-<blockquote>
-<p>&#x2F;sgl9ep03rn5cwda1&gt;</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/jdk8%E7%9A%84hashmap%E7%9A%84put%E8%BF%87%E7%A8%8B%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -3890,8 +3897,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -4125,8 +4132,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -4277,7 +4284,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%B8%BA%E4%BB%80%E4%B9%88String,Interger%E8%BF%99%E6%A0%B7%E7%9A%84wrapper%E7%B1%BB%E9%80%82%E5%90%88%E4%BD%9C%E4%B8%BA%E9%94%AE%EF%BC%9F/">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/linkedhashmap%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E6%9C%89%E5%BA%8F%E6%80%A7%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -4296,7 +4303,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%B8%BA%E4%BB%80%E4%B9%88String,Interger%E8%BF%99%E6%A0%B7%E7%9A%84wrapper%E7%B1%BB%E9%80%82%E5%90%88%E4%BD%9C%E4%B8%BA%E9%94%AE%EF%BC%9F/" itemprop="url">为什么String, Interger这样的wrapper类适合作为键</a></h1>
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/linkedhashmap%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E6%9C%89%E5%BA%8F%E6%80%A7%EF%BC%9F/" itemprop="url">linkedhashmap如何保证有序性</a></h1>
         
 
         <div class="post-meta">
@@ -4324,8 +4331,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -4413,13 +4420,29 @@
       
         
           
-            <h1 id="👌为什么String-Interger这样的wrapper类适合作为键？"><a href="#👌为什么String-Interger这样的wrapper类适合作为键？" class="headerlink" title="👌为什么String, Interger这样的wrapper类适合作为键？"></a>👌为什么String, Interger这样的wrapper类适合作为键？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="不可变性"><a href="#不可变性" class="headerlink" title="不可变性"></a>不可变性</h2><p>String和Integer等包装类都是不可变的对象。一旦创建，这些对象的状态就不能被改变。不可变性是一个重要的特性，因为它保证了对象在其生命周期内的哈希码（hash code）不会改变。</p>
-<p>如果一个对象在作为键的过程中其哈希码发生了改变，那么在哈希表中查找该键时将无法找到正确的位置，导致数据结构无法正常工作。不可变对象避免了这一问题。</p>
-<h2 id="合理的hashCode-实现"><a href="#合理的hashCode-实现" class="headerlink" title="合理的hashCode()实现"></a>合理的hashCode()实现</h2><p>String和Integer类都提供了高质量的hashCode()方法，这些方法能够有效地分布哈希值，减少哈希冲突。具体来说：</p>
-<p><strong>String</strong>的hashCode()方法是基于字符串内容计算的，使用了一个高效的算法。</p>
-<p><strong>Integer</strong>的hashCode()方法直接返回其内部存储的整数值。</p>
-<h2 id="合理的equals-实现"><a href="#合理的equals-实现" class="headerlink" title="合理的equals()实现"></a>合理的equals()实现</h2><p>String和Integer类都提供了正确且高效的equals()方法，这些方法能够准确地比较两个对象的内容是否相等。这对于哈希表等数据结构来说是至关重要的，因为在哈希表中查找键时需要依赖equals()方法来判断两个键是否相等。</p>
-<h2 id="内存效率"><a href="#内存效率" class="headerlink" title="内存效率"></a>内存效率</h2><p>虽然包装类相对于原始类型有一些额外的内存开销，但这些类通常经过了优化，能够在大多数情况下提供足够的性能和内存效率。例如，Integer类使用了对象池来缓存常用的整数值（-128 到 127），从而减少了内存消耗和对象创建的开销。</p>
+            <h1 id="👌linkedhashmap如何保证有序性？"><a href="#👌linkedhashmap如何保证有序性？" class="headerlink" title="👌linkedhashmap如何保证有序性？"></a>👌linkedhashmap如何保证有序性？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>LinkedHashMap通过维护一个双向链表来保证有序性。这个双向链表记录了所有插入的键值对的顺序。根据构造方法中的参数设置，LinkedHashMap可以按插入顺序或访问顺序来维护这些键值对的顺序。</p>
+<h2 id="具体实现原理"><a href="#具体实现原理" class="headerlink" title="具体实现原理"></a>具体实现原理</h2><ol>
+<li><strong>双向链表</strong>：LinkedHashMap在内部维护了一个双向链表。每个节点对应一个键值对，并且包含指向前一个节点和后一个节点的引用。通过这个链表，LinkedHashMap可以快速地遍历所有键值对，保持其有序性。</li>
+<li><strong>插入顺序</strong>：默认情况下，LinkedHashMap按照键值对插入的顺序来维护顺序。每次插入新键值对时，它会将新节点添加到链表的末尾。</li>
+<li><strong>访问顺序</strong>：如果在构造方法中将accessOrder参数设置为true，LinkedHashMap将按照访问顺序来维护键值对的顺序。每次访问（get或put操作）一个键值对时，它会将对应的节点移动到链表的末尾。</li>
+</ol>
+<h2 id="代码-Demo"><a href="#代码-Demo" class="headerlink" title="代码 Demo"></a>代码 Demo</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">import java.util.LinkedHashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line"></span><br><span class="line">public class LinkedHashMapOrderExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        // 插入顺序</span><br><span class="line">        LinkedHashMap&lt;String, Integer&gt; insertionOrderMap = new LinkedHashMap&lt;&gt;();</span><br><span class="line">        insertionOrderMap.put(&quot;A&quot;, 1);</span><br><span class="line">        insertionOrderMap.put(&quot;B&quot;, 2);</span><br><span class="line">        insertionOrderMap.put(&quot;C&quot;, 3);</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;插入顺序:&quot;);</span><br><span class="line">        for (Map.Entry&lt;String, Integer&gt; entry : insertionOrderMap.entrySet()) &#123;</span><br><span class="line">            System.out.println(entry.getKey() + &quot;: &quot; + entry.getValue());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 访问顺序</span><br><span class="line">        LinkedHashMap&lt;String, Integer&gt; accessOrderMap = new LinkedHashMap&lt;&gt;(16, 0.75f, true);</span><br><span class="line">        accessOrderMap.put(&quot;A&quot;, 1);</span><br><span class="line">        accessOrderMap.put(&quot;B&quot;, 2);</span><br><span class="line">        accessOrderMap.put(&quot;C&quot;, 3);</span><br><span class="line"></span><br><span class="line">        // 访问某些元素</span><br><span class="line">        accessOrderMap.get(&quot;A&quot;);</span><br><span class="line">        accessOrderMap.get(&quot;C&quot;);</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;访问顺序:&quot;);</span><br><span class="line">        for (Map.Entry&lt;String, Integer&gt; entry : accessOrderMap.entrySet()) &#123;</span><br><span class="line">            System.out.println(entry.getKey() + &quot;: &quot; + entry.getValue());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h3><p><strong>插入顺序</strong>：</p>
+<p>创建一个LinkedHashMap实例insertionOrderMap。</p>
+<p>插入键值对 “A”、”B” 和 “C”。</p>
+<p>遍历并打印键值对，顺序与插入顺序一致。</p>
+<p><strong>访问顺序</strong>：</p>
+<p>创建一个LinkedHashMap实例accessOrderMap，并将accessOrder参数设置为true。</p>
+<p>插入键值对 “A”、”B” 和 “C”。</p>
+<p>访问键 “A” 和 “C”（通过get操作）。</p>
+<p>遍历并打印键值对，顺序按照最近访问的顺序排列。</p>
+<h2 id="内部机制"><a href="#内部机制" class="headerlink" title="内部机制"></a>内部机制</h2><p><strong>节点结构</strong>：LinkedHashMap的每个节点不仅包含键和值，还包含指向前一个节点和后一个节点的引用。这使得它可以高效地维护顺序。</p>
+<p><strong>操作调整</strong>：在每次插入或访问键值对时，LinkedHashMap会调整链表中节点的位置，以确保顺序的正确性。例如，在访问顺序模式下，每次访问一个键值对时，它会将对应的节点移动到链表的末尾。</p>
+<p>通过这些机制，LinkedHashMap能够高效地维护键值对的有序性，无论是按插入顺序还是访问顺序。</p>
+<blockquote>
+<p>&#x2F;sgl9ep03rn5cwda1&gt;</p>
+</blockquote>
 
           
         
@@ -4505,7 +4528,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">131</span>
+                <span class="site-state-item-count">132</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -4516,7 +4539,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>

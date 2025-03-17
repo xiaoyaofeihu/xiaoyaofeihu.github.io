@@ -270,6 +270,223 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E5%B8%B8%E8%A7%81%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98%E5%92%8C%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88_/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E5%B8%B8%E8%A7%81%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98%E5%92%8C%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88_/" itemprop="url">redis 常见性能问题和解决方案</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-02-11T13:33:41+00:00">
+                2025-02-11
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌redis常见性能问题和解决方案"><a href="#👌redis常见性能问题和解决方案" class="headerlink" title="👌redis常见性能问题和解决方案?"></a>👌redis常见性能问题和解决方案?</h1><h1 id="口语化回答"><a href="#口语化回答" class="headerlink" title="口语化回答"></a>口语化回答</h1><p>好的，面试官，redis 常见性能问题主要有内存空间不足，大 key 问题，阻塞操作等等。像内存空间问题，主要发生在大规模的数据量下产生，针对这种我们可以采取数据结构层面的优化，或者集群模式的水平扩。大 key 问题一般就是最初设计的时候，没有考虑清楚，导致业务日积月累，一个小的 key 变成了大 key。会导致我们的性能下降，耗时增加，这种需要从根上进行业务的梳理和处理拆分。还有就是阻塞，如果执行一些 keys 命令会大致阻塞，生产要避免进行这些操作。以上</p>
+<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>这道题大家主要是从以下的几个问题中，选取常见的 3 个即可。建议大家选择空间不足，大 key 和阻塞，这三点比较好回答，也好解释和扩展。</p>
+<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>内存不足，大 key，阻塞，网络延迟，慢查询，持久化性能</p>
+<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="问题一、redis-内存空间不足"><a href="#问题一、redis-内存空间不足" class="headerlink" title="问题一、redis 内存空间不足"></a>问题一、redis 内存空间不足</h2><p>****由于Redis的数据存储在内存中，当数据量增大时，可能会出现内存不足的情况，导致性能下降或服务不可用。</p>
+<p><strong>解决方案</strong>：</p>
+<p><strong>内存优化</strong>：使用更高效的数据结构（如哈希表、压缩列表）来存储数据，减少内存占用。</p>
+<p><strong>水平扩展</strong>：使用Redis集群模式，将数据分片存储在多个节点上，扩展内存容量。</p>
+<h2 id="问题二、redis-的大-key"><a href="#问题二、redis-的大-key" class="headerlink" title="问题二、redis 的大 key"></a>问题二、redis 的大 key</h2><p>****某些键可能存储了大量数据（如大列表、大哈希表），操作这些大键可能导致阻塞，影响性能。</p>
+<p><strong>解决方案</strong>：</p>
+<p><strong>拆分大键</strong>：将大键拆分成多个小键，减少单个键的操作时间。</p>
+<p><strong>分批处理</strong>：对于需要迭代处理的大键，使用SCAN、SSCAN、HSCAN、ZSCAN等命令进行分批处理，避免单次操作时间过长。</p>
+<p><strong>监控和预警</strong>：定期监控Redis中的大键，及时发现并处理。</p>
+<h2 id="问题三、阻塞操作"><a href="#问题三、阻塞操作" class="headerlink" title="问题三、阻塞操作"></a>问题三、阻塞操作</h2><p>某些Redis命令（如KEYS、FLUSHALL、SAVE等）会阻塞服务器，导致其他操作无法执行。</p>
+<p><strong>解决方案</strong>：</p>
+<p><strong>避免阻塞命令</strong>：尽量避免使用阻塞命令，使用非阻塞的替代命令（如SCAN代替KEYS）。</p>
+<p><strong>异步操作</strong>：对于需要执行的阻塞操作，尽量使用异步方式（如FLUSHALL ASYNC）。</p>
+<h2 id="问题四、网络延迟"><a href="#问题四、网络延迟" class="headerlink" title="问题四、网络延迟"></a>问题四、网络延迟</h2><p>Redis是基于TCP协议的网络服务，高网络延迟会影响Redis的性能。</p>
+<p><strong>解决方案</strong>：</p>
+<p><strong>本地部署</strong>：尽量将Redis服务器部署在与应用服务器同一内网，减少网络延迟。</p>
+<p><strong>连接池</strong>：使用连接池来复用Redis连接，减少连接建立和关闭的开销。</p>
+<h2 id="问题五、慢查询"><a href="#问题五、慢查询" class="headerlink" title="问题五、慢查询"></a>问题五、慢查询</h2><p>****某些复杂的查询或数据操作可能会导致Redis响应变慢，影响整体性能。</p>
+<p><strong>解决方案</strong>：</p>
+<p><strong>慢查询日志</strong>：启用Redis的慢查询日志功能，定期检查慢查询并优化。</p>
+<p><strong>索引优化</strong>：合理使用Redis的数据结构和索引，优化查询性能。</p>
+<h2 id="问题六、主从复制延迟"><a href="#问题六、主从复制延迟" class="headerlink" title="问题六、主从复制延迟"></a>问题六、主从复制延迟</h2><p>****在主从复制架构中，从服务器可能会因为网络或负载问题导致复制延迟，影响数据一致性。</p>
+<p><strong>解决方案</strong>：</p>
+<p><strong>优化网络</strong>：确保主从服务器之间的网络连接稳定，带宽充足。</p>
+<p><strong>调整复制参数</strong>：优化Redis的复制参数（如repl-backlog-size、repl-timeout等），减少复制延迟。</p>
+<p><strong>监控复制状态</strong>：定期监控主从复制状态，及时发现并处理延迟问题。</p>
+<h2 id="问题七、持久化性能问题"><a href="#问题七、持久化性能问题" class="headerlink" title="问题七、持久化性能问题"></a>问题七、持久化性能问题</h2><p>****Redis的持久化操作（如RDB快照和AOF日志）可能会影响性能，尤其是在大数据量或高并发情况下。</p>
+<p><strong>解决方案</strong>：</p>
+<p><strong>合理配置持久化策略</strong>：根据业务需求配置合理的持久化策略，平衡性能和数据安全性。</p>
+<p><strong>异步持久化</strong>：使用异步持久化方式（如AOF的fsync策略），减少对主线程的影响。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E7%9A%84%E5%86%85%E5%AD%98%E7%94%A8%E5%AE%8C%E4%BA%86%E4%BC%9A%E5%8F%91%E7%94%9F%E4%BB%80%E4%B9%88%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +534,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -538,8 +755,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -740,8 +957,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -1014,8 +1231,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -1217,8 +1434,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -1411,8 +1628,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -1699,8 +1916,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -1891,8 +2108,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:17+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -2123,8 +2340,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -2329,8 +2546,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -2578,8 +2795,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -2796,8 +3013,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -3018,8 +3235,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -3232,8 +3449,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:17+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -3467,8 +3684,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:17+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -3665,8 +3882,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:17+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -3892,8 +4109,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -4090,8 +4307,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -4291,8 +4508,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
+                2025-03-17
               </time>
             
           </span>
@@ -4437,220 +4654,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E6%98%AF%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E5%90%97%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E6%98%AF%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E5%90%97%EF%BC%9F/" itemprop="url">ArrayList是线程安全的吗</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-15T06:22:32+00:00">
-                2025-03-15
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌ArrayList是线程安全的吗？"><a href="#👌ArrayList是线程安全的吗？" class="headerlink" title="👌ArrayList是线程安全的吗？"></a>👌ArrayList是线程安全的吗？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>ArrayList不是线程安全的。在多线程环境下，如果多个线程同时对ArrayList进行操作，可能会出现数据不一致的情况。</p>
-<p>当多个线程同时对ArrayList进行添加、删除等操作时，可能会导致数组大小的变化，从而引发数据不一致的问题。例如，当一个线程在对ArrayList进行添加元素的操作时（这通常分为两步：先在指定位置存放元素，然后增加size的值），另一个线程可能同时进行删除或其他操作，导致数据的不一致或错误。</p>
-<p>比如下面的这个代码，就是实际上ArrayList 放入元素的代码：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">elementData[size] = e;</span><br><span class="line">size = size + 1;</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>elementData[size] &#x3D; e; 这一行代码是将新的元素 e 放置在 ArrayList 的内部数组 elementData 的当前大小 size 的位置上。这里假设 elementData 数组已经足够大，可以容纳新添加的元素（实际上 ArrayList 在必要时会增长数组的大小）。</li>
-<li>size &#x3D; size + 1; 这一行代码是更新 ArrayList 的大小，使其包含新添加的元素。</li>
-</ol>
-<p>如果两个线程同时尝试向同一个 ArrayList 实例中添加元素，那么可能会发生以下情况：</p>
-<ul>
-<li>线程 A 执行 elementData[size] &#x3D; eA;（假设当前 size 是 0）</li>
-<li>线程 B 执行 elementData[size] &#x3D; eB;（由于线程 A 尚未更新 size，线程 B 看到的 size 仍然是 0）</li>
-<li>此时，elementData[0] 被线程 B 的 eB 覆盖，线程 A 的 eA 丢失</li>
-<li>线程 A 更新 size &#x3D; 1;</li>
-<li>线程 B 更新 size &#x3D; 1;（现在 size 仍然是 1，但是应该是 2，因为有两个元素被添加）</li>
-</ul>
-<p>为了解决ArrayList的线程安全问题，可以采取以下几种方式：</p>
-<ol>
-<li><p>使用Collections类的synchronizedList方法：将ArrayList转换为线程安全的List。这种方式通过在对ArrayList进行操作时加锁来保证线程安全，但可能会带来一定的性能损耗。</p>
-</li>
-<li><p>使用CopyOnWriteArrayList类：它是Java并发包中提供的线程安全的List实现。CopyOnWriteArrayList在对集合进行修改时，会创建一个新的数组来保存修改后的数据，这样就不会影响到其他线程对原数组的访问。因此，它适合在读操作远远多于写操作的场景下使用。</p>
-</li>
-<li><p>使用并发包中的锁机制：如Lock或Semaphore等，显式地使用锁来保护对ArrayList的操作，可以确保在多线程环境下数据的一致性。但这种方式需要开发人员自行管理锁的获取和释放，容易出现死锁等问题。</p>
-</li>
-</ol>
-<p>还可以考虑使用其他线程安全的集合类，如Vector或ConcurrentLinkedQueue等，它们本身就是线程安全的，可以直接在多线程环境下使用。</p>
-<blockquote>
-<p>&#x2F;sok8k2bhymx7np2u&gt;</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4701,7 +4704,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">131</span>
+                <span class="site-state-item-count">132</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -4712,7 +4715,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>

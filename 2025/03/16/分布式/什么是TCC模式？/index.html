@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="什么是TCC（Try-Confirm&#x2F;Cancel）模式？TCC（Try-Confirm&#x2F;Cancel）模式是一种分布式事务管理模式，用于确保分布式系统中的数据一致性。它通过将事务分解为三个阶段：尝试（Try）、确认（Confirm）和取消（Cancel），来实现分布式事务的管理和控制。 TCC模式的三个阶段 尝试（Try）： 尝试阶段是预留资源或锁定资源的阶段。 该阶段确保所">
+<meta property="og:type" content="article">
+<meta property="og:title" content="什么是TCC（Try-Confirm&#x2F;Cancel）模式？">
+<meta property="og:url" content="https://xiaoyaofeihu.github.io/2025/03/16/%E5%88%86%E5%B8%83%E5%BC%8F/%E4%BB%80%E4%B9%88%E6%98%AFTCC%E6%A8%A1%E5%BC%8F%EF%BC%9F/index.html">
+<meta property="og:site_name" content="余声-个人博客">
+<meta property="og:description" content="什么是TCC（Try-Confirm&#x2F;Cancel）模式？TCC（Try-Confirm&#x2F;Cancel）模式是一种分布式事务管理模式，用于确保分布式系统中的数据一致性。它通过将事务分解为三个阶段：尝试（Try）、确认（Confirm）和取消（Cancel），来实现分布式事务的管理和控制。 TCC模式的三个阶段 尝试（Try）： 尝试阶段是预留资源或锁定资源的阶段。 该阶段确保所">
+<meta property="og:locale">
+<meta property="article:published_time" content="2025-03-16T13:33:41.000Z">
+<meta property="article:modified_time" content="2025-03-17T09:14:17.999Z">
+<meta property="article:author" content="javayun">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '余声'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://xiaoyaofeihu.github.io/2025/03/16/分布式/什么是TCC模式？/"/>
+
+
+
+
+
+  <title>什么是TCC（Try-Confirm/Cancel）模式？ | 余声-个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">余声-个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/03/16/%E5%88%86%E5%B8%83%E5%BC%8F/%E4%BB%80%E4%B9%88%E6%98%AFTCC%E6%A8%A1%E5%BC%8F%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">什么是TCC（Try-Confirm/Cancel）模式？</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-03-16T13:33:41+00:00">
+                2025-03-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:17+00:00">
+                2025-03-17
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/" itemprop="url" rel="index">
+                    <span itemprop="name">分布式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="什么是TCC（Try-Confirm-x2F-Cancel）模式？"><a href="#什么是TCC（Try-Confirm-x2F-Cancel）模式？" class="headerlink" title="什么是TCC（Try-Confirm&#x2F;Cancel）模式？"></a>什么是TCC（Try-Confirm&#x2F;Cancel）模式？</h1><p>TCC（Try-Confirm&#x2F;Cancel）模式是一种分布式事务管理模式，用于确保分布式系统中的数据一致性。它通过将事务分解为三个阶段：尝试（Try）、确认（Confirm）和取消（Cancel），来实现分布式事务的管理和控制。</p>
+<h3 id="TCC模式的三个阶段"><a href="#TCC模式的三个阶段" class="headerlink" title="TCC模式的三个阶段"></a>TCC模式的三个阶段</h3><ol>
+<li><strong>尝试（Try）</strong>：<ul>
+<li>尝试阶段是预留资源或锁定资源的阶段。</li>
+<li>该阶段确保所有需要的资源都可以被成功预留，以便后续的确认操作能够顺利进行。</li>
+<li>这一步不会真正提交事务，只是做预留操作。</li>
+</ul>
+</li>
+<li><strong>确认（Confirm）</strong>：<ul>
+<li>确认阶段是实际提交事务的阶段。</li>
+<li>在这个阶段，系统会确认并提交所有的操作，确保数据的最终一致性。</li>
+<li>如果尝试阶段成功，确认阶段应该始终成功。</li>
+</ul>
+</li>
+<li><strong>取消（Cancel）</strong>：<ul>
+<li>取消阶段是回滚事务的阶段。</li>
+<li>如果尝试阶段失败，或者确认阶段未能执行，系统会执行取消操作来释放预留的资源或回滚已经进行的操作。</li>
+<li>这一步确保系统能够恢复到尝试阶段之前的状态。</li>
+</ul>
+</li>
+</ol>
+<h3 id="TCC模式的工作流程"><a href="#TCC模式的工作流程" class="headerlink" title="TCC模式的工作流程"></a>TCC模式的工作流程</h3><ol>
+<li><strong>尝试阶段</strong>：<ul>
+<li>各个服务预留资源或锁定资源。</li>
+<li>如果所有服务的尝试操作都成功，则进入确认阶段；否则，进入取消阶段。</li>
+</ul>
+</li>
+<li><strong>确认阶段</strong>：<ul>
+<li>各个服务正式提交事务，完成实际操作。</li>
+<li>确认阶段的操作应当是幂等的（即多次执行结果相同）。</li>
+</ul>
+</li>
+<li><strong>取消阶段</strong>：<ul>
+<li>如果尝试阶段中的任何一个操作失败，或者确认阶段未能成功执行，系统会调用取消操作来回滚事务。</li>
+<li>取消阶段的操作也应当是幂等的。</li>
+</ul>
+</li>
+</ol>
+<h3 id="TCC模式的优缺点"><a href="#TCC模式的优缺点" class="headerlink" title="TCC模式的优缺点"></a>TCC模式的优缺点</h3><p><strong>优点</strong>：</p>
+<ol>
+<li><strong>强一致性</strong>：通过明确的三阶段操作，确保了分布式事务的强一致性。</li>
+<li><strong>灵活性</strong>：可以根据业务需求灵活定义每个阶段的操作。</li>
+<li><strong>幂等性</strong>：由于确认和取消操作需要幂等性，确保了系统的稳定性和可靠性。</li>
+</ol>
+<p><strong>缺点</strong>：</p>
+<ol>
+<li><strong>复杂性</strong>：需要为每个操作定义对应的尝试、确认和取消操作，增加了系统设计和实现的复杂性。</li>
+<li><strong>资源占用</strong>：尝试阶段需要预留资源，可能会导致资源占用时间较长。</li>
+<li><strong>实现成本</strong>：需要确保每个阶段的操作都是幂等的，增加了开发和维护成本。</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="" alt=" wechat" style="width: 200px; max-width: 100%;"/>
+    <div>天生我才必有用</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2025/03/10/Spring/%E8%A7%A3%E9%87%8A%E4%B8%80%E4%B8%8BSpring%E7%9A%84ioc%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC%EF%BC%9F/" rel="next" title="👌解释一下 Spring 的 ioc 控制反转">
+                <i class="fa fa-chevron-left"></i> 👌解释一下 Spring 的 ioc 控制反转
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2025/03/17/%E5%9C%BA%E6%99%AF%E9%A2%98/%E4%BC%98%E6%83%A0%E5%88%B8%E7%A7%92%E6%9D%80/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/11.jpg"
+               alt="" />
+          <p class="site-author-name" itemprop="name"></p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">132</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFTCC%EF%BC%88Try-Confirm-x2F-Cancel%EF%BC%89%E6%A8%A1%E5%BC%8F%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">什么是TCC（Try-Confirm&#x2F;Cancel）模式？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TCC%E6%A8%A1%E5%BC%8F%E7%9A%84%E4%B8%89%E4%B8%AA%E9%98%B6%E6%AE%B5"><span class="nav-number">1.0.1.</span> <span class="nav-text">TCC模式的三个阶段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCC%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">1.0.2.</span> <span class="nav-text">TCC模式的工作流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCC%E6%A8%A1%E5%BC%8F%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">1.0.3.</span> <span class="nav-text">TCC模式的优缺点</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">javayun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Gemini
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
