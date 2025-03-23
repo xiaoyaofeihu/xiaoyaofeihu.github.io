@@ -2,8 +2,8 @@
 title: Date获取7天后的日期
 date: 2022-07-31 13:33:41
 tags:
-	- java
-categories: 笔记
+	- 日期
+categories: java
 ---
 
 ```

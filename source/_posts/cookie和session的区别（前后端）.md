@@ -2,8 +2,8 @@
 title: cookie和session的区别
 date: 2022-07-31 13:33:41
 tags:
-	- cookie session
-categories: 笔记
+	- 存储
+categories: java
 ---
 
 # cookie 和 session 的区别

@@ -3,7 +3,7 @@ title: SpringSecurity+ oauth2实现同账号多端同时登录
 date: 2022-07-31 13:33:41
 tags:
 	- 权限
-categories: 笔记
+categories: java
 ---
 
 # SpringSecurity+ oauth2实现同账号多端同时登录 

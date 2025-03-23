@@ -3,7 +3,7 @@ title: Spring Joinpoint类注解
 date: 2022-07-31 13:33:41
 tags:
 	- shiro
-categories: 笔记
+categories: java
 ---
 
 # Spring Joinpoint类注解

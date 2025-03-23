@@ -2,9 +2,8 @@
 title: ftp问题
 date: 2022-07-31 13:33:41
 tags:
-	- java
     - ftp
-categories: 笔记
+categories: ERROR
 ---
 
 
