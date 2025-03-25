@@ -270,6 +270,434 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/%E5%9F%BA%E7%A1%80/HashMap/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/10/%E5%9F%BA%E7%A1%80/HashMap/" itemprop="url">HashMap底层</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-10T17:33:00+00:00">
+                2024-10-10
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="HashMap是Java中一种非常重要的数据结构，它基于哈希表的原理，实现了对键值对（key-value-pair）的快速存储和访问。下面详细解释HashMap的数据结构以及其在JDK-1-8中的变化。"><a href="#HashMap是Java中一种非常重要的数据结构，它基于哈希表的原理，实现了对键值对（key-value-pair）的快速存储和访问。下面详细解释HashMap的数据结构以及其在JDK-1-8中的变化。" class="headerlink" title="HashMap是Java中一种非常重要的数据结构，它基于哈希表的原理，实现了对键值对（key-value pair）的快速存储和访问。下面详细解释HashMap的数据结构以及其在JDK 1.8中的变化。"></a>HashMap是Java中一种非常重要的数据结构，它基于哈希表的原理，实现了对键值对（key-value pair）的快速存储和访问。下面详细解释HashMap的数据结构以及其在JDK 1.8中的变化。</h2><h3 id="HashMap的基本数据结构"><a href="#HashMap的基本数据结构" class="headerlink" title="HashMap的基本数据结构"></a>HashMap的基本数据结构</h3><p>在HashMap中，数据是通过“数组+链表”的方式存储的，这种结构也被称为“链表的数组”。具体来说：</p>
+<ol>
+<li><p><strong>数组</strong>：HashMap内部维护了一个Entry数组（在JDK 1.8及以后版本中，Entry被Node类替代，但功能相同），数组的每个元素都是一个桶（Bucket），桶中存放的是指向链表节点的引用。</p>
+</li>
+<li><p><strong>链表</strong>：当发生哈希冲突（即不同的key通过哈希函数计算得到的下标相同）时，这些key-value对会被存储在同一桶中的链表中。链表中的每个节点都包含key、value、next等字段，用于存储数据和指向下一个节点的引用。</p>
+</li>
+</ol>
+<h3 id="哈希函数与冲突解决"><a href="#哈希函数与冲突解决" class="headerlink" title="哈希函数与冲突解决"></a>哈希函数与冲突解决</h3><ol>
+<li><p><strong>哈希函数</strong>：HashMap通过哈希函数（hash()方法）将key转换为数组的下标。这个哈希函数的目标是尽量均匀地分布元素，以减少哈希冲突的发生。</p>
+</li>
+<li><p><strong>冲突解决</strong>：当发生哈希冲突时，HashMap采用链地址法（也称为拉链法）来解决。即在同一桶中维护一个链表，将冲突的元素依次添加到链表中。</p>
+</li>
+</ol>
+<h3 id="JDK-1-8中的优化"><a href="#JDK-1-8中的优化" class="headerlink" title="JDK 1.8中的优化"></a>JDK 1.8中的优化</h3><p>在JDK 1.8中，HashMap进行了重要的优化，引入了红黑树来进一步减少哈希冲突对性能的影响。具体来说：</p>
+<ol>
+<li><p><strong>链表转红黑树</strong>：当桶中的链表长度超过一定阈值（默认为8）时，HashMap会将这个链表转换为红黑树。红黑树是一种平衡二叉搜索树，具有更高的查找效率（O(log n)），从而提高了HashMap的性能。</p>
+</li>
+<li><p><strong>阈值调整</strong>：在JDK 1.8中，HashMap还引入了一个新的参数<code>treeifyThreshold</code>来控制链表转换为红黑树的阈值，以及<code>untreeifyThreshold</code>来控制红黑树转换为链表的阈值（当链表长度小于等于6时）。此外，还有一个<code>minTreeifyCapacity</code>参数，用于确保在链表转换为红黑树之前，HashMap的容量至少达到一定的阈值（默认为64），以避免频繁的树化操作。</p>
+</li>
+</ol>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>HashMap的数据结构是基于“数组+链表”的，通过哈希函数将key映射到数组的下标，并通过链表解决哈希冲突。在JDK 1.8中，HashMap引入了红黑树来优化性能，当链表长度超过一定阈值时，会将链表转换为红黑树以提高查找效率。这些优化使得HashMap在处理大量数据时具有更高的性能和更好的稳定性。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/%E5%9F%BA%E7%A1%80/HashMap%E5%92%8CHashTable%E7%9A%84%E6%AF%94%E8%BE%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/10/%E5%9F%BA%E7%A1%80/HashMap%E5%92%8CHashTable%E7%9A%84%E6%AF%94%E8%BE%83/" itemprop="url">HashMap、Hashtable和ConcurrentHashMap</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-10T17:33:00+00:00">
+                2024-10-10
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在Java中，<code>HashMap</code>、<code>Hashtable</code>和<code>ConcurrentHashMap</code>都是用于存储键值对的数据结构，但它们在使用场景和内部实现上有显著的区别。下面是对这些区别的详细解释：</p>
+<h3 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h3><ol>
+<li><p><strong>HashMap</strong>：</p>
+<ul>
+<li><strong>非线程安全</strong>：<code>HashMap</code>没有考虑线程安全问题，如果在多线程环境下不加同步地使用<code>HashMap</code>，可能会导致数据不一致的问题，如死锁、数据丢失或覆盖。</li>
+</ul>
+</li>
+<li><p><strong>Hashtable</strong>：</p>
+<ul>
+<li><strong>线程安全</strong>：<code>Hashtable</code>是线程安全的，它的所有方法都是同步的。这意味着在多线程环境中，同时访问和修改<code>Hashtable</code>不会导致数据不一致。但是，由于每个方法都使用同步，这可能导致在高并发环境下性能较低。</li>
+</ul>
+</li>
+<li><p><strong>ConcurrentHashMap</strong>：</p>
+<ul>
+<li><strong>线程安全且高效</strong>：<code>ConcurrentHashMap</code>是为了解决在高并发环境下<code>HashMap</code>的性能问题和<code>Hashtable</code>的同步性能瓶颈而设计的。</li>
+<li><strong>JDK 1.7及之前</strong>：使用分段锁（Segment Lock）机制，将整个哈希表分为多个段（Segment），每个段本质上是一个小的哈希表，并且有自己的锁。这样，在高并发情况下，只要多个线程访问的是不同的段，就可以并行处理，提高了并发性能。</li>
+<li><strong>JDK 1.8及之后</strong>：取消了分段锁，而是采用了CAS（Compare-And-Swap）操作和<code>synchronized</code>关键字来实现更细粒度的锁。每个桶（Node）的锁控制更加精确，只有在必要时才锁定相关的桶，进一步提高了并发性能。</li>
+</ul>
+</li>
+</ol>
+<h3 id="继承关系"><a href="#继承关系" class="headerlink" title="继承关系"></a>继承关系</h3><ol>
+<li><p><strong>Hashtable</strong>：</p>
+<ul>
+<li>继承自<code>java.util.Dictionary</code>类，这是一个抽象类，提供了基本的键值对存储功能。<code>Hashtable</code>是最早的键值对存储实现之一，因此在Java早期版本中广泛使用。</li>
+</ul>
+</li>
+<li><p><strong>HashMap</strong>和<strong>ConcurrentHashMap</strong>：</p>
+<ul>
+<li>都继承自<code>java.util.AbstractMap</code>抽象类，并实现了<code>java.util.Map</code>接口。<code>AbstractMap</code>提供了Map接口的部分实现，以减少子类实现的工作量。</li>
+<li><code>HashMap</code>和<code>ConcurrentHashMap</code>都提供了Map接口的所有功能，但在实现上有所不同，以适应不同的使用场景。</li>
+</ul>
+</li>
+</ol>
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><ul>
+<li><strong>HashMap</strong>：适用于单线程环境或不需要考虑线程安全的情况，因为它提供了最好的性能。</li>
+<li><strong>Hashtable</strong>：适用于多线程环境，但需要同步（即线程安全）的键值对存储。然而，由于性能原因，现在通常推荐使用<code>ConcurrentHashMap</code>。</li>
+<li><strong>ConcurrentHashMap</strong>：适用于高并发环境，提供了线程安全的键值对存储，并且性能优于<code>Hashtable</code>。</li>
+</ul>
+<p>总之，选择哪种Map实现取决于应用程序的具体需求，包括是否需要线程安全以及并发性能的要求。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/%E5%9F%BA%E7%A1%80/List%E7%9A%84%E9%81%8D%E5%8E%86%E6%96%B9%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +745,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:17+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -521,8 +949,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:17+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -764,8 +1192,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:17+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -991,8 +1419,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:17+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -1351,8 +1779,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:17+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -1574,8 +2002,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:17+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -1804,8 +2232,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:17+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -2024,8 +2452,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:17+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -2249,8 +2677,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:17+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -2477,8 +2905,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -2671,8 +3099,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -2875,8 +3303,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -3093,8 +3521,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:17+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -3336,8 +3764,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -3543,8 +3971,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -3769,8 +4197,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -3970,8 +4398,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -4171,8 +4599,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -4328,386 +4756,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/maven/dependencyManagement%E4%B8%8Edependencies%E7%9A%84%E5%8C%BA%E5%88%AB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2022/07/31/maven/dependencyManagement%E4%B8%8Edependencies%E7%9A%84%E5%8C%BA%E5%88%AB/" itemprop="url">dependencyManagement与dependencies的区别</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-07-31T13:33:41+00:00">
-                2022-07-31
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:17+00:00">
-                2025-03-17
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li>dependencyManagement<ul>
-<li>用于父类的管理，一般写在顶层父类的pom.xml中</li>
-<li>只是做声明依赖，不做具体引入，只有在子项目中使用到是才会实现依赖</li>
-<li>子类声明了version，就用子类自己的，否则都继承父类的version和scope</li>
-</ul>
-</li>
-<li>dependencies<ul>
-<li>默认被子类全部继承</li>
-</ul>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/%E5%9F%BA%E7%A1%80/%E6%97%A5%E6%9C%9F%E7%B1%BB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2022/07/31/%E5%9F%BA%E7%A1%80/%E6%97%A5%E6%9C%9F%E7%B1%BB/" itemprop="url">日期类</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-07-31T13:33:41+00:00">
-                2022-07-31
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:17+00:00">
-                2025-03-17
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(new Date());</span><br><span class="line">System.out.println(new Date().getTime());</span><br><span class="line">System.out.println(new DateTime());</span><br><span class="line">System.out.println(new LocalDate());</span><br><span class="line">Mon May 30 11:18:29 CST 2022</span><br><span class="line">1653880709973</span><br><span class="line">2022-05-30 11:18:29</span><br><span class="line">2022-05-30</span><br><span class="line">Mysql数据库存储日期dateTime（年月日时分秒）</span><br><span class="line">Mysql数据库存储日期date（年月日）</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4758,7 +4806,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">132</span>
+                <span class="site-state-item-count">134</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

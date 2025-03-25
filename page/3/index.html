@@ -270,6 +270,396 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E5%9B%9E%E6%94%B6%E8%BF%9B%E7%A8%8B%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84_/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E5%9B%9E%E6%94%B6%E8%BF%9B%E7%A8%8B%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84_/" itemprop="url">redis 回收进程如何工作</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-02-11T13:33:41+00:00">
+                2025-02-11
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌redis回收进程如何工作的"><a href="#👌redis回收进程如何工作的" class="headerlink" title="👌redis回收进程如何工作的?"></a>👌redis回收进程如何工作的?</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>Redis的回收进程负责定期扫描和删除过期键。服务器运行时自动执行。主要就是定期回收和惰性回收，其实也可以看之前的 redis 过期策略。来进行合二为一，其实二者答案差不多，就是内容有一定区别。</p>
+<h2 id="定期回收任务"><a href="#定期回收任务" class="headerlink" title="定期回收任务"></a>定期回收任务</h2><p>Redis回收进程的核心是一个定期任务，这个任务在Redis的事件循环中执行。</p>
+<p><strong>事件循环</strong>：Redis使用一个单线程的事件循环模型来处理所有的客户端请求和后台任务。</p>
+<p><strong>定期任务</strong>：在事件循环中，Redis会定期触发一个函数来执行过期键的检查和删除操作。这个函数默认每100毫秒运行一次。</p>
+<p>实现步骤如下：</p>
+<ol>
+<li><strong>选择数据库</strong>：每次执行定期任务时，Redis会遍历所有的数据库（默认16个）。</li>
+<li><strong>随机抽样</strong>：对于每个数据库，Redis会随机选择一部分带有过期时间的键进行检查（默认20个）。</li>
+<li><strong>检查过期键</strong>：检查这些键是否已经过期，如果过期则删除。</li>
+<li><strong>重复检查</strong>：如果发现超过一定比例的键是过期的（默认25%），则继续进行更多次的检查和删除，直到过期键的比例下降到合理范围内。</li>
+</ol>
+<h2 id="惰性回收"><a href="#惰性回收" class="headerlink" title="惰性回收"></a>惰性回收</h2><p>惰性回收不是一个独立的进程，而是每次客户端访问键时触发的检查机制。它的工作原理如下：</p>
+<ol>
+<li><strong>访问键</strong>：每当客户端访问一个键时，Redis会检查该键是否设置了过期时间。</li>
+<li><strong>检查过期</strong>：如果该键已经过期，Redis会立即删除该键，并返回空结果或相应的错误信息。</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%BB%B6%E6%97%B6%E9%98%9F%E5%88%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%BB%B6%E6%97%B6%E9%98%9F%E5%88%97/" itemprop="url">redis 如何实现延迟队列</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-02-11T13:33:41+00:00">
+                2025-02-11
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌redis如何实现延时队列"><a href="#👌redis如何实现延时队列" class="headerlink" title="👌redis如何实现延时队列"></a>👌redis如何实现延时队列</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>可以使用有序集合（Sorted Set）来实现延时队列。有序集合中的每个元素有一个关联的分数，可以用来表示任务的执行时间戳。具体的步骤如下，非常简单</p>
+<h2 id="添加任务到延时队列"><a href="#添加任务到延时队列" class="headerlink" title="添加任务到延时队列"></a>添加任务到延时队列</h2><p>将任务添加到有序集合中，使用任务的执行时间作为分数（score）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 示例代码：添加任务到延时队列</span><br><span class="line">String queueName = &quot;delay_queue&quot;;</span><br><span class="line">String taskId=&quot;task_1&quot;;</span><br><span class="line">long delay=5000; // 延迟时间（毫秒）</span><br><span class="line">long executionTime= System.currentTimeMillis() + delay;</span><br><span class="line">Jedis jedis = newJedis(&quot;localhost&quot;);</span><br><span class="line">jedis.zadd(queueName, executionTime, taskId);</span><br><span class="line">jedis.close();</span><br></pre></td></tr></table></figure>
+
+<h2 id="轮询延时队列并执行任务"><a href="#轮询延时队列并执行任务" class="headerlink" title="轮询延时队列并执行任务"></a>轮询延时队列并执行任务</h2><p>定期检查有序集合中的任务，找到那些执行时间已经到达或超过当前时间的任务，并执行这些任务。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">// 示例代码：轮询延时队列并执行任务</span><br><span class="line">String queueName = &quot;delay_queue&quot;;</span><br><span class="line">Jedis jedis=new Jedis(&quot;localhost&quot;);</span><br><span class="line">while (true) &#123;</span><br><span class="line">    long currentTime= System.currentTimeMillis();</span><br><span class="line">    Set&lt;Tuple&gt; tasks = jedis.zrangeByScoreWithScores(queueName, 0, currentTime, 0, 1);</span><br><span class="line"></span><br><span class="line">    if (tasks.isEmpty()) &#123;</span><br><span class="line">        // 没有任务需要执行，休眠一段时间</span><br><span class="line">        Thread.sleep(1000);</span><br><span class="line">        continue;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    for (Tuple task : tasks) &#123;</span><br><span class="line">        StringtaskId= task.getElement();</span><br><span class="line">        // 执行任务</span><br><span class="line">        executeTask(taskId);</span><br><span class="line"></span><br><span class="line">        // 从队列中移除已执行的任务</span><br><span class="line">        jedis.zrem(queueName, taskId);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">jedis.close();</span><br><span class="line">private static void executeTask(String taskId) &#123;</span><br><span class="line">    // 实现任务执行逻辑</span><br><span class="line">    System.out.println(&quot;Executing task: &quot; + taskId);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E5%B8%B8%E8%A7%81%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98%E5%92%8C%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88_/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +707,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -534,8 +924,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -755,8 +1145,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -957,8 +1347,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -1231,8 +1621,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -1434,8 +1824,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -1628,8 +2018,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -1916,8 +2306,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -2108,8 +2498,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:17+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -2340,8 +2730,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -2546,8 +2936,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -2795,8 +3185,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -3013,8 +3403,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -3235,8 +3625,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -3449,8 +3839,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:17+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -3684,8 +4074,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:17+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -3882,8 +4272,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:17+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -4109,8 +4499,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -4247,413 +4637,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%EF%BC%9F/" itemprop="url">ArrayList如何保证线程安全</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌ArrayList如何保证线程安全？"><a href="#👌ArrayList如何保证线程安全？" class="headerlink" title="👌ArrayList如何保证线程安全？"></a>👌ArrayList如何保证线程安全？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="借助锁"><a href="#借助锁" class="headerlink" title="借助锁"></a>借助锁</h2><p>可以通过在访问 ArrayList 的代码块上使用 synchronized 关键字来手动同步对 ArrayList 的访问。这要求所有访问 ArrayList 的代码都知道并使用相同的锁。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = new ArrayList&lt;&gt;();</span><br><span class="line">// ... 填充列表 ...</span><br><span class="line"></span><br><span class="line">synchronized(list) &#123;</span><br><span class="line">    Iterator&lt;String&gt; it = list.iterator();</span><br><span class="line">    while (it.hasNext()) &#123;</span><br><span class="line">        String element = it.next();</span><br><span class="line">        // 处理元素...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="使用-Collections-synchronizedList"><a href="#使用-Collections-synchronizedList" class="headerlink" title="使用 Collections.synchronizedList"></a>使用 Collections.synchronizedList</h2><p>Collections.synchronizedList 方法返回一个线程安全的列表，该列表是通过在每个公共方法（如 add(), get(), iterator() 等）上添加同步来实现的，其中同步是基于里面的同步代码块实现。但是，和手动同步一样，它也不能解决在迭代过程中进行结构修改导致的问题。</p>
-<p><img src="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%EF%BC%9F/u2gabD4e1XNpme_5/1721369333026-315b65c8-9222-48af-add6-fde77b52b82b-123723.png" alt="1721369333026-315b65c8-9222-48af-add6-fde77b52b82b.png"></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = Collections.synchronizedList(new ArrayList&lt;&gt;());</span><br></pre></td></tr></table></figure>
-
-<h2 id="使用并发集合"><a href="#使用并发集合" class="headerlink" title="使用并发集合"></a>使用并发集合</h2><p>Java 并发包 java.util.concurrent 提供了一些线程安全的集合类，如 CopyOnWriteArrayList。这些类提供了不同的线程安全保证和性能特性。</p>
-<p>CopyOnWriteArrayList是一个线程安全的变体，其中所有可变操作（add、set 等等）都是通过对底层数组进行新的复制来实现的。因此，迭代器不会受到并发修改的影响，并且遍历期间不需要额外的同步。但是，当有很多写操作时，这种方法可能会很昂贵，因为它需要在每次修改时复制整个底层数组。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = new CopyOnWriteArrayList&lt;&gt;();</span><br></pre></td></tr></table></figure>
-
-<p>选择解决方案时，需要考虑并发模式、读写比例以及性能需求。如果你的应用主要是读操作并且偶尔有写操作，CopyOnWriteArrayList是一个好选择。如果你的应用有大量的写操作，那么可能需要使用其他并发集合或手动同步策略。</p>
-<blockquote>
-<p>&#x2F;hkx8lgbi0mny13uc&gt;</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E6%98%AF%E5%A6%82%E4%BD%95%E6%89%A9%E5%AE%B9%E7%9A%84%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E6%98%AF%E5%A6%82%E4%BD%95%E6%89%A9%E5%AE%B9%E7%9A%84%EF%BC%9F/" itemprop="url">ArrayList是如何扩容的</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌ArrayList是如何扩容的？"><a href="#👌ArrayList是如何扩容的？" class="headerlink" title="👌ArrayList是如何扩容的？"></a>👌ArrayList是如何扩容的？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>ArrayList的扩容机制是Java集合框架中一个重要的概念，它允许ArrayList在需要时自动增加其内部数组的大小以容纳更多的元素。主要有以下的步骤</p>
-<p>1、初始容量和扩容因子：</p>
-<p>当创建一个新的ArrayList对象时，它通常会分配一个初始容量，这个初始容量默认为10。</p>
-<p>ArrayList的扩容因子是一个用于计算新容量的乘数，默认为1.5。</p>
-<p>2、扩容触发条件：</p>
-<p>当向ArrayList中添加一个新元素，并且该元素的数量超过当前数组的容量时，就会触发扩容操作。</p>
-<p>3、扩容策略：</p>
-<p>扩容时，首先根据当前容量和扩容因子计算出一个新的容量。新容量的计算公式为：</p>
-<p>newCapacity &#x3D; oldCapacity + (oldCapacity &gt;&gt; 1)，这实际上是将原容量增加50%（即乘以1.5）。</p>
-<p>如果需要的容量大于Integer.MAX_VALUE - 8（因为数组的长度是一个int类型，其最大值是Integer.MAX_VALUE，但ArrayList需要预留一些空间用于内部操作），则会使用Integer.MAX_VALUE作为新的容量。</p>
-<p>4、扩容过程：</p>
-<p>创建一个新的数组，其长度为新计算的容量。</p>
-<p>将原数组中的所有元素复制到新数组中。</p>
-<p>将ArrayList的内部引用从原数组更新为新数组。</p>
-<p>将新元素添加到新数组的末尾。</p>
-<p>5、性能影响：</p>
-<p>扩容过程涉及到内存分配和元素复制，可能会对性能产生一定的影响。因此，在使用ArrayList时，如果可能的话，最好预估需要存储的元素数量，并设置一个合适的初始容量，以减少扩容的次数。</p>
-<p>6、扩容源码</p>
-<p><img src="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E6%98%AF%E5%A6%82%E4%BD%95%E6%89%A9%E5%AE%B9%E7%9A%84%EF%BC%9F/a6dlsBfyxSbkioxG/1719246984492-7f242ac2-c31e-4cdd-a074-bc448c5d3148-182828.png" alt="1719246984492-7f242ac2-c31e-4cdd-a074-bc448c5d3148.png"></p>
-<blockquote>
-<p>&#x2F;ghpqbh9ig3hu1coh&gt;</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4704,7 +4687,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">132</span>
+                <span class="site-state-item-count">134</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

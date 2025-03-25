@@ -270,6 +270,412 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/linkedHashMap%E4%B8%BA%E4%BB%80%E4%B9%88%E8%83%BD%E7%94%A8%E6%9D%A5%E5%81%9ALRUCache%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/linkedHashMap%E4%B8%BA%E4%BB%80%E4%B9%88%E8%83%BD%E7%94%A8%E6%9D%A5%E5%81%9ALRUCache%EF%BC%9F/" itemprop="url">linkedHashMap为什么能用来做LRUCache</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌linkedHashMap为什么能用来做LRUCache？"><a href="#👌linkedHashMap为什么能用来做LRUCache？" class="headerlink" title="👌linkedHashMap为什么能用来做LRUCache？"></a>👌linkedHashMap为什么能用来做LRUCache？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>LinkedHashMap 能用来做 LRU 缓存的关键原因在于它可以维护访问顺序，并且通过重写removeEldestEntry方法，可以轻松实现缓存的自动清理。</p>
+<h2 id="关键特性"><a href="#关键特性" class="headerlink" title="关键特性"></a>关键特性</h2><p><strong>访问顺序</strong>：LinkedHashMap提供了一个构造方法，可以指定是否按照访问顺序来维护键值对的顺序。当accessOrder参数设置为true时，LinkedHashMap将根据每次访问（get或put操作）来调整顺序，把最近访问的键值对移到链表的末尾。</p>
+<p><strong>自动清理</strong>：通过重写removeEldestEntry方法，可以在插入新键值对时自动移除最老的键值对（即链表头部的键值对），从而实现缓存的自动清理。</p>
+<h2 id="实现-LRU-缓存的步骤"><a href="#实现-LRU-缓存的步骤" class="headerlink" title="实现 LRU 缓存的步骤"></a>实现 LRU 缓存的步骤</h2><ol>
+<li>创建一个LinkedHashMap实例，并将accessOrder参数设置为true。</li>
+<li>重写removeEldestEntry方法，以便在缓存大小超过预定义的最大容量时自动移除最老的键值对。</li>
+</ol>
+<h2 id="代码-Demo"><a href="#代码-Demo" class="headerlink" title="代码 Demo"></a>代码 Demo</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">import java.util.LinkedHashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line"></span><br><span class="line">public class LRUCache&lt;K, V&gt; extends LinkedHashMap&lt;K, V&gt; &#123;</span><br><span class="line">    private final int maxCapacity;</span><br><span class="line"></span><br><span class="line">    // 构造函数，初始化最大容量和访问顺序</span><br><span class="line">    public LRUCache(int maxCapacity) &#123;</span><br><span class="line">        super(maxCapacity, 0.75f, true);</span><br><span class="line">        this.maxCapacity = maxCapacity;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 重写removeEldestEntry方法，当大小超过最大容量时移除最老的键值对</span><br><span class="line">    @Override</span><br><span class="line">    protected boolean removeEldestEntry(Map.Entry&lt;K, V&gt; eldest) &#123;</span><br><span class="line">        return size() &gt; maxCapacity;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        // 创建一个容量为3的LRU缓存</span><br><span class="line">        LRUCache&lt;String, Integer&gt; cache = new LRUCache&lt;&gt;(3);</span><br><span class="line"></span><br><span class="line">        // 插入键值对</span><br><span class="line">        cache.put(&quot;A&quot;, 1);</span><br><span class="line">        cache.put(&quot;B&quot;, 2);</span><br><span class="line">        cache.put(&quot;C&quot;, 3);</span><br><span class="line"></span><br><span class="line">        // 访问键&quot;A&quot;（使其成为最近使用的）</span><br><span class="line">        cache.get(&quot;A&quot;);</span><br><span class="line"></span><br><span class="line">        // 插入新键值对&quot;D&quot;，导致最老的键值对&quot;B&quot;被移除</span><br><span class="line">        cache.put(&quot;D&quot;, 4);</span><br><span class="line"></span><br><span class="line">        // 打印缓存内容</span><br><span class="line">        System.out.println(cache); // 输出: &#123;C=3, A=1, D=4&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h2><p><strong>构造方法</strong>：LRUCache构造方法中调用了LinkedHashMap的构造方法，并将accessOrder参数设置为true，以便按照访问顺序维护键值对的顺序。</p>
+<p><strong>removeEldestEntry 方法</strong>：重写了removeEldestEntry方法，当缓存的大小超过maxCapacity时返回true，从而移除最老的键值对。</p>
+<p><strong>使用示例</strong>：在主方法中创建了一个LRUCache实例，插入了几个键值对，并通过访问键 “A” 来改变其顺序。然后插入一个新键值对 “D”，导致最老的键值对 “B” 被移除。</p>
+<blockquote>
+<p>&#x2F;rv2p9mfn43gmr2qn&gt;</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/linkedhashmap%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E6%9C%89%E5%BA%8F%E6%80%A7%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/linkedhashmap%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E6%9C%89%E5%BA%8F%E6%80%A7%EF%BC%9F/" itemprop="url">linkedhashmap如何保证有序性</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌linkedhashmap如何保证有序性？"><a href="#👌linkedhashmap如何保证有序性？" class="headerlink" title="👌linkedhashmap如何保证有序性？"></a>👌linkedhashmap如何保证有序性？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>LinkedHashMap通过维护一个双向链表来保证有序性。这个双向链表记录了所有插入的键值对的顺序。根据构造方法中的参数设置，LinkedHashMap可以按插入顺序或访问顺序来维护这些键值对的顺序。</p>
+<h2 id="具体实现原理"><a href="#具体实现原理" class="headerlink" title="具体实现原理"></a>具体实现原理</h2><ol>
+<li><strong>双向链表</strong>：LinkedHashMap在内部维护了一个双向链表。每个节点对应一个键值对，并且包含指向前一个节点和后一个节点的引用。通过这个链表，LinkedHashMap可以快速地遍历所有键值对，保持其有序性。</li>
+<li><strong>插入顺序</strong>：默认情况下，LinkedHashMap按照键值对插入的顺序来维护顺序。每次插入新键值对时，它会将新节点添加到链表的末尾。</li>
+<li><strong>访问顺序</strong>：如果在构造方法中将accessOrder参数设置为true，LinkedHashMap将按照访问顺序来维护键值对的顺序。每次访问（get或put操作）一个键值对时，它会将对应的节点移动到链表的末尾。</li>
+</ol>
+<h2 id="代码-Demo"><a href="#代码-Demo" class="headerlink" title="代码 Demo"></a>代码 Demo</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">import java.util.LinkedHashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line"></span><br><span class="line">public class LinkedHashMapOrderExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        // 插入顺序</span><br><span class="line">        LinkedHashMap&lt;String, Integer&gt; insertionOrderMap = new LinkedHashMap&lt;&gt;();</span><br><span class="line">        insertionOrderMap.put(&quot;A&quot;, 1);</span><br><span class="line">        insertionOrderMap.put(&quot;B&quot;, 2);</span><br><span class="line">        insertionOrderMap.put(&quot;C&quot;, 3);</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;插入顺序:&quot;);</span><br><span class="line">        for (Map.Entry&lt;String, Integer&gt; entry : insertionOrderMap.entrySet()) &#123;</span><br><span class="line">            System.out.println(entry.getKey() + &quot;: &quot; + entry.getValue());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 访问顺序</span><br><span class="line">        LinkedHashMap&lt;String, Integer&gt; accessOrderMap = new LinkedHashMap&lt;&gt;(16, 0.75f, true);</span><br><span class="line">        accessOrderMap.put(&quot;A&quot;, 1);</span><br><span class="line">        accessOrderMap.put(&quot;B&quot;, 2);</span><br><span class="line">        accessOrderMap.put(&quot;C&quot;, 3);</span><br><span class="line"></span><br><span class="line">        // 访问某些元素</span><br><span class="line">        accessOrderMap.get(&quot;A&quot;);</span><br><span class="line">        accessOrderMap.get(&quot;C&quot;);</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;访问顺序:&quot;);</span><br><span class="line">        for (Map.Entry&lt;String, Integer&gt; entry : accessOrderMap.entrySet()) &#123;</span><br><span class="line">            System.out.println(entry.getKey() + &quot;: &quot; + entry.getValue());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h3><p><strong>插入顺序</strong>：</p>
+<p>创建一个LinkedHashMap实例insertionOrderMap。</p>
+<p>插入键值对 “A”、”B” 和 “C”。</p>
+<p>遍历并打印键值对，顺序与插入顺序一致。</p>
+<p><strong>访问顺序</strong>：</p>
+<p>创建一个LinkedHashMap实例accessOrderMap，并将accessOrder参数设置为true。</p>
+<p>插入键值对 “A”、”B” 和 “C”。</p>
+<p>访问键 “A” 和 “C”（通过get操作）。</p>
+<p>遍历并打印键值对，顺序按照最近访问的顺序排列。</p>
+<h2 id="内部机制"><a href="#内部机制" class="headerlink" title="内部机制"></a>内部机制</h2><p><strong>节点结构</strong>：LinkedHashMap的每个节点不仅包含键和值，还包含指向前一个节点和后一个节点的引用。这使得它可以高效地维护顺序。</p>
+<p><strong>操作调整</strong>：在每次插入或访问键值对时，LinkedHashMap会调整链表中节点的位置，以确保顺序的正确性。例如，在访问顺序模式下，每次访问一个键值对时，它会将对应的节点移动到链表的末尾。</p>
+<p>通过这些机制，LinkedHashMap能够高效地维护键值对的有序性，无论是按插入顺序还是访问顺序。</p>
+<blockquote>
+<p>&#x2F;sgl9ep03rn5cwda1&gt;</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%B8%BA%E4%BB%80%E4%B9%88String,Interger%E8%BF%99%E6%A0%B7%E7%9A%84wrapper%E7%B1%BB%E9%80%82%E5%90%88%E4%BD%9C%E4%B8%BA%E9%94%AE%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +723,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -508,8 +914,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -737,8 +1143,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -942,8 +1348,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -1151,8 +1557,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -1347,8 +1753,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -1551,8 +1957,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -1755,8 +2161,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -1950,8 +2356,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -2149,8 +2555,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -2367,8 +2773,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -2561,8 +2967,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -2758,8 +3164,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -2958,8 +3364,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -3159,8 +3565,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -3355,8 +3761,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -3558,8 +3964,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -3760,8 +4166,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:18+00:00">
-                2025-03-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-03-25T08:23:04+00:00">
+                2025-03-25
               </time>
             
           </span>
@@ -3905,434 +4311,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/%E5%9F%BA%E7%A1%80/HashMap%E5%92%8CHashTable%E7%9A%84%E6%AF%94%E8%BE%83/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/10/%E5%9F%BA%E7%A1%80/HashMap%E5%92%8CHashTable%E7%9A%84%E6%AF%94%E8%BE%83/" itemprop="url">HashMap、Hashtable和ConcurrentHashMap</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-10T17:33:00+00:00">
-                2024-10-10
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:17+00:00">
-                2025-03-17
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在Java中，<code>HashMap</code>、<code>Hashtable</code>和<code>ConcurrentHashMap</code>都是用于存储键值对的数据结构，但它们在使用场景和内部实现上有显著的区别。下面是对这些区别的详细解释：</p>
-<h3 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h3><ol>
-<li><p><strong>HashMap</strong>：</p>
-<ul>
-<li><strong>非线程安全</strong>：<code>HashMap</code>没有考虑线程安全问题，如果在多线程环境下不加同步地使用<code>HashMap</code>，可能会导致数据不一致的问题，如死锁、数据丢失或覆盖。</li>
-</ul>
-</li>
-<li><p><strong>Hashtable</strong>：</p>
-<ul>
-<li><strong>线程安全</strong>：<code>Hashtable</code>是线程安全的，它的所有方法都是同步的。这意味着在多线程环境中，同时访问和修改<code>Hashtable</code>不会导致数据不一致。但是，由于每个方法都使用同步，这可能导致在高并发环境下性能较低。</li>
-</ul>
-</li>
-<li><p><strong>ConcurrentHashMap</strong>：</p>
-<ul>
-<li><strong>线程安全且高效</strong>：<code>ConcurrentHashMap</code>是为了解决在高并发环境下<code>HashMap</code>的性能问题和<code>Hashtable</code>的同步性能瓶颈而设计的。</li>
-<li><strong>JDK 1.7及之前</strong>：使用分段锁（Segment Lock）机制，将整个哈希表分为多个段（Segment），每个段本质上是一个小的哈希表，并且有自己的锁。这样，在高并发情况下，只要多个线程访问的是不同的段，就可以并行处理，提高了并发性能。</li>
-<li><strong>JDK 1.8及之后</strong>：取消了分段锁，而是采用了CAS（Compare-And-Swap）操作和<code>synchronized</code>关键字来实现更细粒度的锁。每个桶（Node）的锁控制更加精确，只有在必要时才锁定相关的桶，进一步提高了并发性能。</li>
-</ul>
-</li>
-</ol>
-<h3 id="继承关系"><a href="#继承关系" class="headerlink" title="继承关系"></a>继承关系</h3><ol>
-<li><p><strong>Hashtable</strong>：</p>
-<ul>
-<li>继承自<code>java.util.Dictionary</code>类，这是一个抽象类，提供了基本的键值对存储功能。<code>Hashtable</code>是最早的键值对存储实现之一，因此在Java早期版本中广泛使用。</li>
-</ul>
-</li>
-<li><p><strong>HashMap</strong>和<strong>ConcurrentHashMap</strong>：</p>
-<ul>
-<li>都继承自<code>java.util.AbstractMap</code>抽象类，并实现了<code>java.util.Map</code>接口。<code>AbstractMap</code>提供了Map接口的部分实现，以减少子类实现的工作量。</li>
-<li><code>HashMap</code>和<code>ConcurrentHashMap</code>都提供了Map接口的所有功能，但在实现上有所不同，以适应不同的使用场景。</li>
-</ul>
-</li>
-</ol>
-<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><ul>
-<li><strong>HashMap</strong>：适用于单线程环境或不需要考虑线程安全的情况，因为它提供了最好的性能。</li>
-<li><strong>Hashtable</strong>：适用于多线程环境，但需要同步（即线程安全）的键值对存储。然而，由于性能原因，现在通常推荐使用<code>ConcurrentHashMap</code>。</li>
-<li><strong>ConcurrentHashMap</strong>：适用于高并发环境，提供了线程安全的键值对存储，并且性能优于<code>Hashtable</code>。</li>
-</ul>
-<p>总之，选择哪种Map实现取决于应用程序的具体需求，包括是否需要线程安全以及并发性能的要求。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/%E5%9F%BA%E7%A1%80/HashMap/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/10/%E5%9F%BA%E7%A1%80/HashMap/" itemprop="url">HashMap底层</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-10T17:33:00+00:00">
-                2024-10-10
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-03-17T09:14:17+00:00">
-                2025-03-17
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="HashMap是Java中一种非常重要的数据结构，它基于哈希表的原理，实现了对键值对（key-value-pair）的快速存储和访问。下面详细解释HashMap的数据结构以及其在JDK-1-8中的变化。"><a href="#HashMap是Java中一种非常重要的数据结构，它基于哈希表的原理，实现了对键值对（key-value-pair）的快速存储和访问。下面详细解释HashMap的数据结构以及其在JDK-1-8中的变化。" class="headerlink" title="HashMap是Java中一种非常重要的数据结构，它基于哈希表的原理，实现了对键值对（key-value pair）的快速存储和访问。下面详细解释HashMap的数据结构以及其在JDK 1.8中的变化。"></a>HashMap是Java中一种非常重要的数据结构，它基于哈希表的原理，实现了对键值对（key-value pair）的快速存储和访问。下面详细解释HashMap的数据结构以及其在JDK 1.8中的变化。</h2><h3 id="HashMap的基本数据结构"><a href="#HashMap的基本数据结构" class="headerlink" title="HashMap的基本数据结构"></a>HashMap的基本数据结构</h3><p>在HashMap中，数据是通过“数组+链表”的方式存储的，这种结构也被称为“链表的数组”。具体来说：</p>
-<ol>
-<li><p><strong>数组</strong>：HashMap内部维护了一个Entry数组（在JDK 1.8及以后版本中，Entry被Node类替代，但功能相同），数组的每个元素都是一个桶（Bucket），桶中存放的是指向链表节点的引用。</p>
-</li>
-<li><p><strong>链表</strong>：当发生哈希冲突（即不同的key通过哈希函数计算得到的下标相同）时，这些key-value对会被存储在同一桶中的链表中。链表中的每个节点都包含key、value、next等字段，用于存储数据和指向下一个节点的引用。</p>
-</li>
-</ol>
-<h3 id="哈希函数与冲突解决"><a href="#哈希函数与冲突解决" class="headerlink" title="哈希函数与冲突解决"></a>哈希函数与冲突解决</h3><ol>
-<li><p><strong>哈希函数</strong>：HashMap通过哈希函数（hash()方法）将key转换为数组的下标。这个哈希函数的目标是尽量均匀地分布元素，以减少哈希冲突的发生。</p>
-</li>
-<li><p><strong>冲突解决</strong>：当发生哈希冲突时，HashMap采用链地址法（也称为拉链法）来解决。即在同一桶中维护一个链表，将冲突的元素依次添加到链表中。</p>
-</li>
-</ol>
-<h3 id="JDK-1-8中的优化"><a href="#JDK-1-8中的优化" class="headerlink" title="JDK 1.8中的优化"></a>JDK 1.8中的优化</h3><p>在JDK 1.8中，HashMap进行了重要的优化，引入了红黑树来进一步减少哈希冲突对性能的影响。具体来说：</p>
-<ol>
-<li><p><strong>链表转红黑树</strong>：当桶中的链表长度超过一定阈值（默认为8）时，HashMap会将这个链表转换为红黑树。红黑树是一种平衡二叉搜索树，具有更高的查找效率（O(log n)），从而提高了HashMap的性能。</p>
-</li>
-<li><p><strong>阈值调整</strong>：在JDK 1.8中，HashMap还引入了一个新的参数<code>treeifyThreshold</code>来控制链表转换为红黑树的阈值，以及<code>untreeifyThreshold</code>来控制红黑树转换为链表的阈值（当链表长度小于等于6时）。此外，还有一个<code>minTreeifyCapacity</code>参数，用于确保在链表转换为红黑树之前，HashMap的容量至少达到一定的阈值（默认为64），以避免频繁的树化操作。</p>
-</li>
-</ol>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>HashMap的数据结构是基于“数组+链表”的，通过哈希函数将key映射到数组的下标，并通过链表解决哈希冲突。在JDK 1.8中，HashMap引入了红黑树来优化性能，当链表长度超过一定阈值时，会将链表转换为红黑树以提高查找效率。这些优化使得HashMap在处理大量数据时具有更高的性能和更好的稳定性。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4383,7 +4361,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">132</span>
+                <span class="site-state-item-count">134</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
