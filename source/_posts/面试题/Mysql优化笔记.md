@@ -16,8 +16,7 @@ HAVING：在分组（GROUP BY）之后过滤数据，属于后过滤。
 原始表
 假设有一个销售记录表 sales：
 
-sql
-复制代码
+```sql
 CREATE TABLE sales (
     id INT PRIMARY KEY,
     product_id INT,
@@ -34,10 +33,9 @@ id	product_id	sale_date	amount
 5	101	2024-01-05	500.00
 查询需求
 我们需要统计每个产品的总销售金额大于 500 的记录。
-
+```
 错误示例：使用 HAVING
-sql
-复制代码
+
 SELECT product_id, SUM(amount) AS total_amount
 FROM sales
 GROUP BY product_id
@@ -48,7 +46,6 @@ HAVING product_id = 101 是一个简单的等值条件，但它放在 HAVING 中
 这增加了计算负担，尤其是当数据量很大时。
 优化：使用 WHERE
 sql
-复制代码
 ```sql
 SELECT product_id, SUM(amount) AS total_amount
 FROM sales
