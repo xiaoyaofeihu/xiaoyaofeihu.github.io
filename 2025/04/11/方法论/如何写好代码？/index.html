@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="👌如何写好代码？前言从代码的角度来说，好的代码可以提高系统的可维护性，扩展性。坏的代码会导致系统后期的维护和复杂性都变得非常高，非常混乱。全是坏代码的话，如果不重构就是，一坨屎山。如果重构的话，重构的人，就要💩上雕花。这是很难受的。下面是鸡哥觉得一个好代码要注意的点，大家理解吸收之后和面试官吹就好了。 代码整洁、可读这个是必须的，代码工整，好理解，不要为了秀技，写一堆复杂的代码。而且代码之间的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="👌如何写好代码？">
+<meta property="og:url" content="https://xiaoyaofeihu.github.io/2025/04/11/%E6%96%B9%E6%B3%95%E8%AE%BA/%E5%A6%82%E4%BD%95%E5%86%99%E5%A5%BD%E4%BB%A3%E7%A0%81%EF%BC%9F/index.html">
+<meta property="og:site_name" content="余声-个人博客">
+<meta property="og:description" content="👌如何写好代码？前言从代码的角度来说，好的代码可以提高系统的可维护性，扩展性。坏的代码会导致系统后期的维护和复杂性都变得非常高，非常混乱。全是坏代码的话，如果不重构就是，一坨屎山。如果重构的话，重构的人，就要💩上雕花。这是很难受的。下面是鸡哥觉得一个好代码要注意的点，大家理解吸收之后和面试官吹就好了。 代码整洁、可读这个是必须的，代码工整，好理解，不要为了秀技，写一堆复杂的代码。而且代码之间的">
+<meta property="og:locale">
+<meta property="article:published_time" content="2025-04-11T13:33:41.000Z">
+<meta property="article:modified_time" content="2025-04-11T07:40:31.785Z">
+<meta property="article:author" content="javayun">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '余声'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://xiaoyaofeihu.github.io/2025/04/11/方法论/如何写好代码？/"/>
+
+
+
+
+
+  <title>👌如何写好代码？ | 余声-个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">余声-个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/04/11/%E6%96%B9%E6%B3%95%E8%AE%BA/%E5%A6%82%E4%BD%95%E5%86%99%E5%A5%BD%E4%BB%A3%E7%A0%81%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">👌如何写好代码？</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-04-11T13:33:41+00:00">
+                2025-04-11
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-04-11T07:40:31+00:00">
+                2025-04-11
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%96%B9%E6%B3%95%E8%AE%BA/" itemprop="url" rel="index">
+                    <span itemprop="name">方法论</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="👌如何写好代码？"><a href="#👌如何写好代码？" class="headerlink" title="👌如何写好代码？"></a>👌如何写好代码？</h1><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>从代码的角度来说，好的代码可以提高系统的可维护性，扩展性。坏的代码会导致系统后期的维护和复杂性都变得非常高，非常混乱。全是坏代码的话，如果不重构就是，一坨屎山。如果重构的话，重构的人，就要💩上雕花。这是很难受的。下面是鸡哥觉得一个好代码要注意的点，大家理解吸收之后和面试官吹就好了。</p>
+<h1 id="代码整洁、可读"><a href="#代码整洁、可读" class="headerlink" title="代码整洁、可读"></a>代码整洁、可读</h1><p>这个是必须的，代码工整，好理解，不要为了秀技，写一堆复杂的代码。而且代码之间的逻辑一定要清晰，不要大段大段的写，一屏幕一屏幕的写，没意义。需要划分模块，规定方法，单一职责，各司其职。</p>
+<p>重复的代码会极大的增加后续的维护成本，也容易造成修改的遗漏。一定要对重复代码进行抽象和处理。</p>
+<h1 id="遵循规范"><a href="#遵循规范" class="headerlink" title="遵循规范"></a>遵循规范</h1><p>遵循项目风格的规范，不要搞特殊，每个项目历史背景不同，时间不同，风格都不一样，大家一定要注意保持一致，不要增加本来熟悉这个项目的人的理解成本。</p>
+<p>还有就是团队内使用统一的代码格式，如缩进、空格和注释风格。</p>
+<h1 id="模块化设计"><a href="#模块化设计" class="headerlink" title="模块化设计"></a>模块化设计</h1><p>开闭原则和单一原则、模块化。要重点考虑。这样当一个需求发生的时候，其他人修改代码也是十分放心的。只需要关注自己修改的地方，而不需要考虑更多的逻辑。</p>
+<p>模块间的依赖尽量少，各自搞各自的。不要强耦合。</p>
+<p>单一职责就是一个方法，类最好只干一件事，这样的理解成本非常低。</p>
+<h1 id="注释"><a href="#注释" class="headerlink" title="注释"></a><font style="color:rgb(36, 41, 47);">注释</font></h1><p>其实说过好多遍，一定要写，复杂的逻辑，注释更加易于理解。但是不要写成流水账，而是描述代码的意图。</p>
+<h1 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a><font style="color:rgb(36, 41, 47);">单元测试</font></h1><p>确保关键功能都有对应的单元测试，覆盖常见的和边界的用例，使用持续集成工具自动运行测试，确保每次代码变更都不会破坏已有功能。</p>
+<h1 id="持续重构"><a href="#持续重构" class="headerlink" title="持续重构"></a><font style="color:rgb(36, 41, 47);">持续重构</font></h1><p>在开发过程中定期进行代码重构，改善代码结构和质量，每次重构的改动应尽量小且可控，确保系统的稳定性。</p>
+<h1 id="鲁棒性"><a href="#鲁棒性" class="headerlink" title="鲁棒性"></a>鲁棒性</h1><p>鲁棒性表示系统可以在各种异常的情况下仍然可以稳定的工作，而不是出现不可预期的问题。好的代码在设计的时候就需要考虑各种异常和极端的场景应该如何处理，也就是常常说的面向失败和异常编程，多考虑失败场景如何处理。</p>
+<h1 id="学习和使用设计模式"><a href="#学习和使用设计模式" class="headerlink" title="学习和使用设计模式"></a><font style="color:rgb(36, 41, 47);">学习和使用设计模式</font></h1><p>学习常见的设计模式并在适当的场景下应用，可以提高代码的可扩展性和可维护性。同时不过度使用设计模式，保持设计的简单和直接。</p>
+<h1 id="代码评审"><a href="#代码评审" class="headerlink" title="代码评审"></a><font style="color:rgb(36, 41, 47);">代码评审</font></h1><p>通过代码评审发现潜在问题，分享知识，提高团队整体的代码质量。积极接受同事的反馈，持续改进自己的编码习惯和技巧。一定要多吸取别人建议。</p>
+<h1 id="性能大关"><a href="#性能大关" class="headerlink" title="性能大关"></a><font style="color:rgb(36, 41, 47);">性能大关</font></h1><p>在开发过程中关注代码的性能，避免不必要的性能瓶颈。使用性能分析工具检测和优化代码中的性能问题。</p>
+<p>通过遵循这些建议，可以显著提高代码的质量，使其更易于维护、扩展和理解。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="" alt=" wechat" style="width: 200px; max-width: 100%;"/>
+    <div>天生我才必有用</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2025/04/11/%E6%96%B9%E6%B3%95%E8%AE%BA/Mysql%E5%B8%B8%E7%94%A8%E7%9B%91%E6%8E%A7%E6%8C%87%E6%A0%87%EF%BC%9F/" rel="next" title="👌Mysql常用监控指标？">
+                <i class="fa fa-chevron-left"></i> 👌Mysql常用监控指标？
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/11.jpg"
+               alt="" />
+          <p class="site-author-name" itemprop="name"></p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">143</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%91%8C%E5%A6%82%E4%BD%95%E5%86%99%E5%A5%BD%E4%BB%A3%E7%A0%81%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">👌如何写好代码？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">2.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E6%95%B4%E6%B4%81%E3%80%81%E5%8F%AF%E8%AF%BB"><span class="nav-number">3.</span> <span class="nav-text">代码整洁、可读</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%81%B5%E5%BE%AA%E8%A7%84%E8%8C%83"><span class="nav-number">4.</span> <span class="nav-text">遵循规范</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E5%8C%96%E8%AE%BE%E8%AE%A1"><span class="nav-number">5.</span> <span class="nav-text">模块化设计</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B3%A8%E9%87%8A"><span class="nav-number">6.</span> <span class="nav-text">注释</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95"><span class="nav-number">7.</span> <span class="nav-text">单元测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8C%81%E7%BB%AD%E9%87%8D%E6%9E%84"><span class="nav-number">8.</span> <span class="nav-text">持续重构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%B2%81%E6%A3%92%E6%80%A7"><span class="nav-number">9.</span> <span class="nav-text">鲁棒性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E5%92%8C%E4%BD%BF%E7%94%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">10.</span> <span class="nav-text">学习和使用设计模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E8%AF%84%E5%AE%A1"><span class="nav-number">11.</span> <span class="nav-text">代码评审</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E5%A4%A7%E5%85%B3"><span class="nav-number">12.</span> <span class="nav-text">性能大关</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">javayun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Gemini
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
