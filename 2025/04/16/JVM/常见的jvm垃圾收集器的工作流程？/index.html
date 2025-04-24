@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JVM," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="👌常见的jvm垃圾收集器的工作流程？题目详细答案SerialSerial 垃圾收集过程的简单之处在于其采用了单线程执行的方式，以简化实现并减少资源占用。  暂停用户线程（Stop the World）：  在开始垃圾收集过程之前，Serial 垃圾收集器会暂停（停止）所有的用户线程。这是为了确保在垃圾收集过程中对象的状态不会被修改，从而保证垃圾收集的准确性。  执行垃圾收集：  一旦用户线程暂停">
+<meta property="og:type" content="article">
+<meta property="og:title" content="👌常见的jvm垃圾收集器的工作流程？">
+<meta property="og:url" content="https://xiaoyaofeihu.github.io/2025/04/16/JVM/%E5%B8%B8%E8%A7%81%E7%9A%84jvm%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%EF%BC%9F/index.html">
+<meta property="og:site_name" content="余声-个人博客">
+<meta property="og:description" content="👌常见的jvm垃圾收集器的工作流程？题目详细答案SerialSerial 垃圾收集过程的简单之处在于其采用了单线程执行的方式，以简化实现并减少资源占用。  暂停用户线程（Stop the World）：  在开始垃圾收集过程之前，Serial 垃圾收集器会暂停（停止）所有的用户线程。这是为了确保在垃圾收集过程中对象的状态不会被修改，从而保证垃圾收集的准确性。  执行垃圾收集：  一旦用户线程暂停">
+<meta property="og:locale">
+<meta property="article:published_time" content="2025-04-16T13:33:41.000Z">
+<meta property="article:modified_time" content="2025-04-24T06:22:33.713Z">
+<meta property="article:author" content="javayun">
+<meta property="article:tag" content="JVM">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '余声'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://xiaoyaofeihu.github.io/2025/04/16/JVM/常见的jvm垃圾收集器的工作流程？/"/>
+
+
+
+
+
+  <title>👌常见的jvm垃圾收集器的工作流程？ | 余声-个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">余声-个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/04/16/JVM/%E5%B8%B8%E8%A7%81%E7%9A%84jvm%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">👌常见的jvm垃圾收集器的工作流程？</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-04-16T13:33:41+00:00">
+                2025-04-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-04-24T06:22:33+00:00">
+                2025-04-24
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="👌常见的jvm垃圾收集器的工作流程？"><a href="#👌常见的jvm垃圾收集器的工作流程？" class="headerlink" title="👌常见的jvm垃圾收集器的工作流程？"></a>👌常见的jvm垃圾收集器的工作流程？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="Serial"><a href="#Serial" class="headerlink" title="Serial"></a>Serial</h2><p>Serial 垃圾收集过程的简单之处在于其采用了单线程执行的方式，以简化实现并减少资源占用。</p>
+<ol>
+<li>暂停用户线程（Stop the World）：</li>
+</ol>
+<p>在开始垃圾收集过程之前，Serial 垃圾收集器会暂停（停止）所有的用户线程。这是为了确保在垃圾收集过程中对象的状态不会被修改，从而保证垃圾收集的准确性。</p>
+<ol start="2">
+<li>执行垃圾收集：</li>
+</ol>
+<p>一旦用户线程暂停，Serial 垃圾收集器会开启一个单线程来执行垃圾回收操作。这个线程会遍历堆中的对象，标记并清理不再使用的对象，以释放内存空间。</p>
+<ol start="3">
+<li>等待垃圾收集完成：</li>
+</ol>
+<p>在垃圾收集过程中，用户线程会被暂停，直到垃圾收集完毕。这意味着用户线程无法在垃圾收集期间执行任何操作。</p>
+<p>当垃圾收集完成后，Serial 垃圾收集器会恢复用户线程的执行。此时，垃圾已被清理，堆内存中有更多的可用空间供应用程序使用。</p>
+<h2 id="Parallel-Scavenge-和-Parallel-Old"><a href="#Parallel-Scavenge-和-Parallel-Old" class="headerlink" title="Parallel Scavenge 和 Parallel Old"></a>Parallel Scavenge 和 Parallel Old</h2><p>Parallel Scavenge 和 Parallel Old 是 Parallel 收集器系列的两个组成部分，它们的工作机制相似，都是利用多线程并行执行垃圾回收操作，以提高整个垃圾收集过程的效率和吞吐量。以 Parallel Scavenge 为例来说明其工作机制：</p>
+<ol>
+<li>多线程并行执行：Parallel Scavenge 收集器利用了多个线程并行执行新生代的垃圾回收操作。这意味着在进行新生代垃圾回收时，多个线程同时工作，加快了垃圾收集的速度。</li>
+<li>暂停用户线程：与 Serial 收集器类似，Parallel Scavenge 在进行垃圾收集时会暂停用户线程，以确保垃圾回收的准确性。这一阶段通常称为“Stop the World”。</li>
+<li>多线程并发清理：Parallel Scavenge 收集器的特点之一是在新生代垃圾收集过程中采用并发清理的方式。这意味着在暂停用户线程期间，多个线程同时清理新生代中的垃圾对象，从而更快地完成垃圾收集过程。</li>
+</ol>
+<p>通过利用多个线程并行执行垃圾收集操作，Parallel Scavenge 能够充分发挥多核 CPU 的优势，提高了垃圾收集的效率。相比于 Serial 收集器，它能更快地完成垃圾回收操作，从而减少了应用程序的停顿时间，从而提高了整个应用程序的性能。</p>
+<h2 id="ParNew-和-Parallel-Scavenge"><a href="#ParNew-和-Parallel-Scavenge" class="headerlink" title="ParNew 和 Parallel Scavenge"></a>ParNew 和 Parallel Scavenge</h2><p>ParNew 收集器和 Parallel Scavenge 收集器在工作流程上确实非常相似，都是并行垃圾收集器。</p>
+<p><font style="color:rgb(36, 41, 47);">1、 标记阶段</font></p>
+<p><font style="color:rgb(36, 41, 47);">在垃圾收集开始时，ParNew 收集器会暂停所有应用线程（Stop-The-World），然后开始标记所有存活的对象。标记阶段的主要任务是识别哪些对象是存活的，并将它们标记出来。</font></p>
+<p><font style="color:rgb(36, 41, 47);">2、 复制阶段</font></p>
+<p><font style="color:rgb(36, 41, 47);">在标记阶段完成之后，ParNew 收集器会将所有存活的对象从 Eden 区和一个 Survivor 区（例如 S0）复制到另一个 Survivor 区（例如 S1）。如果目标 Survivor 区没有足够的空间容纳所有存活对象，存活对象将被移动到老年代。</font></p>
+<p><font style="color:rgb(36, 41, 47);">3、 清理阶段</font></p>
+<p><font style="color:rgb(36, 41, 47);">复制阶段完成后，Eden 区和之前的 Survivor 区（例如 S0）中的所有对象都被认为是垃圾，并且这些区域的内存可以被清理和重用。</font></p>
+<p><font style="color:rgb(36, 41, 47);">4、 应用程序恢复</font></p>
+<p><font style="color:rgb(36, 41, 47);">在清理阶段完成之后，应用程序线程将被重新启动，继续执行。</font></p>
+<p>ParNew 收集器的工作流程与 Parallel Scavenge 收集器类似，都是通过停止应用程序线程，然后利用多线程并行执行垃圾回收操作，最后恢复用户线程的执行。这种并行执行的方式能够提高垃圾收集的效率，同时在暂停用户线程期间确保垃圾收集的准确性。</p>
+<h2 id="CMS"><a href="#CMS" class="headerlink" title="CMS"></a>CMS</h2><p>CMS垃圾收集器为了尽量减少用户线程的停顿时间，采用了一种创新的策略。这一策略使得在垃圾回收过程的某些阶段，用户线程和垃圾回收线程可以共同工作，从而避免了长时间的垃圾回收导致用户线程一直处于等待状态。</p>
+<p>整个 CMS 垃圾收集过程被划分为四个阶段，它们分别是：</p>
+<ol>
+<li>初始标记：在这个阶段，CMS 垃圾收集器会对根对象进行一次快速的标记，标记出所有与根对象直接关联的存活对象。这个阶段需要暂停用户线程，因为要确保标记的准确性。</li>
+<li>并发标记：在这个阶段，CMS 垃圾收集器会与用户线程并发执行，对整个堆进行标记。垃圾回收线程会在后台标记所有存活对象，而用户线程可以继续执行，不受影响。</li>
+<li>重新标记：在并发标记阶段结束后，CMS 垃圾收集器会进行一次重新标记，来处理在并发标记阶段发生变化的对象。这个阶段需要暂停用户线程，以确保标记的准确性。</li>
+<li>并发清理：在重新标记完成后，CMS 垃圾收集器会与用户线程并发执行，清理未标记的对象。垃圾回收线程会在后台清理不再使用的对象，而用户线程可以继续执行，不受影响。</li>
+</ol>
+<p>通过将垃圾回收过程分为多个阶段，并在其中允许用户线程和垃圾回收线程并发执行，CMS 垃圾收集器成功地减少了用户线程的停顿时间。这种创新的并发垃圾收集策略提高了系统的响应性和用户体验，确保了应用程序的顺畅运行。</p>
+<h2 id="G1"><a href="#G1" class="headerlink" title="G1"></a>G1</h2><p>G1 垃圾收集器的回收流程与 CMS 的逻辑大致相同，包括初始标记、并发标记、重新标记和筛选清除等阶段。但是，与 CMS 不同的是，G1 在最后一个阶段不会直接进行整体的清除。相反，它会根据用户设置的停顿时间进行智能的筛选和局部的回收。</p>
+<ol>
+<li>初始标记：在初始标记阶段，G1 垃圾收集器会对根对象进行一次快速的标记，标记出所有与根对象直接关联的存活对象。这个阶段需要暂停用户线程，以确保标记的准确性。</li>
+<li>并发标记：在并发标记阶段，G1 垃圾收集器会与用户线程并发执行，对整个堆进行标记。垃圾回收线程会在后台标记所有存活对象，而用户线程可以继续执行，不受影响。</li>
+<li>重新标记：在并发标记阶段结束后，G1 垃圾收集器会进行一次重新标记，来处理在并发标记阶段发生变化的对象。这个阶段需要暂停用户线程，以确保标记的准确性。</li>
+<li>筛选清除：在重新标记完成后，G1 垃圾收集器不会立即进行整体的清除操作。相反，它会根据用户设置的停顿时间智能地筛选出需要回收的 Region，并执行局部的回收。这样可以在尽量满足停顿时间的情况下，最大限度地回收垃圾。</li>
+</ol>
+<p>通过这种智能的筛选和局部回收方式，G1 垃圾收集器能够更好地平衡垃圾回收的效率和停顿时间，从而提高系统的响应性和用户体验。</p>
+<h2 id="ZGC"><a href="#ZGC" class="headerlink" title="ZGC"></a>ZGC</h2><p>ZGC 的垃圾回收过程几乎全部都是并发执行的，即与应用程序线程同时进行。</p>
+<ol>
+<li>初始标记（Initial Mark）：在初始标记阶段，ZGC 会标记出根对象以及直接与根对象关联的存活对象。这个阶段需要短暂地暂停所有应用线程，以确保标记的准确性。</li>
+<li>并发标记（Concurrent Mark）：在并发标记阶段，ZGC 与应用程序线程并发执行，标记所有存活对象。这个阶段不会暂停应用程序线程，因此垃圾回收和应用程序可以并发执行。</li>
+<li>最终标记（Final Mark）：在并发标记阶段结束后，ZGC 需要再次短暂地暂停所有应用线程，完成最终的标记工作。这个阶段主要用于标记在并发标记阶段有可能发生变化的对象。</li>
+<li>筛选（Concurrent Sweep）：在最终标记完成后，ZGC 会进行一次筛选，确定哪些对象可以被回收。这个阶段会并发地进行，不会暂停应用程序线程。</li>
+<li>并发清除（Concurrent Cleanup）：在筛选阶段完成后，ZGC 会并发地清除未被标记的对象，释放它们所占用的内存。这个阶段也不会暂停应用程序线程。</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="" alt=" wechat" style="width: 200px; max-width: 100%;"/>
+    <div>天生我才必有用</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JVM/" rel="tag"># JVM</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2025/04/16/Linux/Linux%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E7%A3%81%E7%9B%98%E5%8D%A0%E7%94%A8%E6%83%85%E5%86%B5%EF%BC%9F/" rel="next" title="👌Linux查看文件磁盘占用情况？">
+                <i class="fa fa-chevron-left"></i> 👌Linux查看文件磁盘占用情况？
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2025/04/17/Linux/Linux%E4%B8%AD%E6%96%AD%E6%9C%BA%E5%88%B6%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/" rel="prev" title="👌Linux中断机制是什么？">
+                👌Linux中断机制是什么？ <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/11.jpg"
+               alt="" />
+          <p class="site-author-name" itemprop="name"></p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">163</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%91%8C%E5%B8%B8%E8%A7%81%E7%9A%84jvm%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">👌常见的jvm垃圾收集器的工作流程？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E8%AF%A6%E7%BB%86%E7%AD%94%E6%A1%88"><span class="nav-number">2.</span> <span class="nav-text">题目详细答案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Serial"><span class="nav-number">2.1.</span> <span class="nav-text">Serial</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Parallel-Scavenge-%E5%92%8C-Parallel-Old"><span class="nav-number">2.2.</span> <span class="nav-text">Parallel Scavenge 和 Parallel Old</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ParNew-%E5%92%8C-Parallel-Scavenge"><span class="nav-number">2.3.</span> <span class="nav-text">ParNew 和 Parallel Scavenge</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CMS"><span class="nav-number">2.4.</span> <span class="nav-text">CMS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#G1"><span class="nav-number">2.5.</span> <span class="nav-text">G1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ZGC"><span class="nav-number">2.6.</span> <span class="nav-text">ZGC</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">javayun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Gemini
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
