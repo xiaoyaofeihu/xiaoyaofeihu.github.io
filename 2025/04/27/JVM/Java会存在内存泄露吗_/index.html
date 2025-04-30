@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JVM," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="👌Java会存在内存泄露吗?题目详细答案内存泄漏指的是程序在运行过程中由于某种原因未能释放不再使用的内存，导致内存使用量不断增加，最终可能耗尽可用内存。通常是由于程序逻辑错误或不当的资源管理引起的。 常见的内存泄漏情况静态集合类（如HashMap、ArrayList）持有对象引用静态集合类会在整个应用程序生命周期内存在，如果没有及时清理不再使用的对象引用，这些对象就无法被垃圾回收。 123456">
+<meta property="og:type" content="article">
+<meta property="og:title" content="👌Java会存在内存泄露吗">
+<meta property="og:url" content="https://xiaoyaofeihu.github.io/2025/04/27/JVM/Java%E4%BC%9A%E5%AD%98%E5%9C%A8%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E5%90%97_/index.html">
+<meta property="og:site_name" content="余声-个人博客">
+<meta property="og:description" content="👌Java会存在内存泄露吗?题目详细答案内存泄漏指的是程序在运行过程中由于某种原因未能释放不再使用的内存，导致内存使用量不断增加，最终可能耗尽可用内存。通常是由于程序逻辑错误或不当的资源管理引起的。 常见的内存泄漏情况静态集合类（如HashMap、ArrayList）持有对象引用静态集合类会在整个应用程序生命周期内存在，如果没有及时清理不再使用的对象引用，这些对象就无法被垃圾回收。 123456">
+<meta property="og:locale">
+<meta property="article:published_time" content="2025-04-27T13:33:41.000Z">
+<meta property="article:modified_time" content="2025-04-30T03:28:19.103Z">
+<meta property="article:author" content="javayun">
+<meta property="article:tag" content="JVM">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '余声'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://xiaoyaofeihu.github.io/2025/04/27/JVM/Java会存在内存泄露吗_/"/>
+
+
+
+
+
+  <title>👌Java会存在内存泄露吗 | 余声-个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">余声-个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/04/27/JVM/Java%E4%BC%9A%E5%AD%98%E5%9C%A8%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E5%90%97_/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">👌Java会存在内存泄露吗</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-04-27T13:33:41+00:00">
+                2025-04-27
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-04-30T03:28:19+00:00">
+                2025-04-30
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="👌Java会存在内存泄露吗"><a href="#👌Java会存在内存泄露吗" class="headerlink" title="👌Java会存在内存泄露吗?"></a>👌Java会存在内存泄露吗?</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>内存泄漏指的是程序在运行过程中由于某种原因未能释放不再使用的内存，导致内存使用量不断增加，最终可能耗尽可用内存。通常是由于程序逻辑错误或不当的资源管理引起的。</p>
+<h2 id="常见的内存泄漏情况"><a href="#常见的内存泄漏情况" class="headerlink" title="常见的内存泄漏情况"></a>常见的内存泄漏情况</h2><h3 id="静态集合类（如HashMap、ArrayList）持有对象引用"><a href="#静态集合类（如HashMap、ArrayList）持有对象引用" class="headerlink" title="静态集合类（如HashMap、ArrayList）持有对象引用"></a>静态集合类（如HashMap、ArrayList）持有对象引用</h3><p>静态集合类会在整个应用程序生命周期内存在，如果没有及时清理不再使用的对象引用，这些对象就无法被垃圾回收。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class MemoryLeakExample &#123;</span><br><span class="line">    private static List&lt;Object&gt; list = new ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    public void addToList(Object obj) &#123;</span><br><span class="line">        list.add(obj);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="监听器和回调函数"><a href="#监听器和回调函数" class="headerlink" title="监听器和回调函数"></a>监听器和回调函数</h3><p>如果注册的监听器或回调函数没有及时解除注册，它们持有的对象引用也会导致内存泄漏。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class EventSource &#123;</span><br><span class="line">    private List&lt;EventListener&gt; listeners = new ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    public void registerListener(EventListener listener) &#123;</span><br><span class="line">        listeners.add(listener);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="未关闭的资源"><a href="#未关闭的资源" class="headerlink" title="未关闭的资源"></a>未关闭的资源</h3><p>打开的文件、数据库连接、网络连接等资源如果没有及时关闭，会导致内存泄漏。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public void readFile(String filePath) throws IOException &#123;</span><br><span class="line">    BufferedReader reader = new BufferedReader(new FileReader(filePath));</span><br><span class="line">    // 忘记关闭 reader</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="内部类和匿名类持有外部类引用："><a href="#内部类和匿名类持有外部类引用：" class="headerlink" title="内部类和匿名类持有外部类引用："></a>内部类和匿名类持有外部类引用：</h3><p>内部类和匿名类会持有外部类的引用，如果这些类的实例生命周期较长，会导致外部类无法被垃圾回收。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class OuterClass &#123;</span><br><span class="line">    private String data;</span><br><span class="line"></span><br><span class="line">    public void startThread() &#123;</span><br><span class="line">        new Thread(new Runnable() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void run() &#123;</span><br><span class="line">                System.out.println(data);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="缓存（Cache）没有清理："><a href="#缓存（Cache）没有清理：" class="headerlink" title="缓存（Cache）没有清理："></a>缓存（Cache）没有清理：</h3><p>使用缓存时，如果没有适当的清理策略（如 LRU 缓存），缓存中的对象会一直存在，导致内存泄漏。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class CacheExample &#123;</span><br><span class="line">    private Map&lt;String, Object&gt; cache = new HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    public void addToCache(String key, Object value) &#123;</span><br><span class="line">        cache.put(key, value);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="检测和解决内存泄漏的方法"><a href="#检测和解决内存泄漏的方法" class="headerlink" title="检测和解决内存泄漏的方法"></a>检测和解决内存泄漏的方法</h2><h3 id="使用内存分析工具："><a href="#使用内存分析工具：" class="headerlink" title="使用内存分析工具："></a>使用内存分析工具：</h3><p>工具如 VisualVM、Eclipse MAT（Memory Analyzer Tool）可以帮助分析堆内存，找出可能的内存泄漏点。</p>
+<h3 id="代码审查："><a href="#代码审查：" class="headerlink" title="代码审查："></a>代码审查：</h3><p>仔细审查代码，确保没有不必要的对象引用，及时释放资源。</p>
+<h3 id="使用try-with-resources语句"><a href="#使用try-with-resources语句" class="headerlink" title="使用try-with-resources语句"></a>使用try-with-resources语句</h3><p>确保资源在使用完毕后被及时关闭。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public void readFile(String filePath) throws IOException &#123;</span><br><span class="line">    try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) &#123;</span><br><span class="line">        // 读取文件内容</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="解除监听器注册"><a href="#解除监听器注册" class="headerlink" title="解除监听器注册"></a>解除监听器注册</h3><p>确保在不再需要监听器时解除注册。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class EventSource &#123;</span><br><span class="line">    private List&lt;EventListener&gt; listeners = new ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    public void registerListener(EventListener listener) &#123;</span><br><span class="line">        listeners.add(listener);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void unregisterListener(EventListener listener) &#123;</span><br><span class="line">        listeners.remove(listener);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="" alt=" wechat" style="width: 200px; max-width: 100%;"/>
+    <div>天生我才必有用</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JVM/" rel="tag"># JVM</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2025/04/27/JVM/Java%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E7%9A%84%E4%B8%BB%E8%A6%81%E6%B5%81%E7%A8%8B%EF%BC%9F/" rel="next" title="👌Java创建对象的主要流程？">
+                <i class="fa fa-chevron-left"></i> 👌Java创建对象的主要流程？
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2025/04/27/JVM/JVM%E7%B1%BB%E4%BD%95%E6%97%B6%E5%8F%AF%E4%BB%A5%E5%8D%B8%E8%BD%BD%EF%BC%9F/" rel="prev" title="👌JVM类何时可以卸载？">
+                👌JVM类何时可以卸载？ <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/11.jpg"
+               alt="" />
+          <p class="site-author-name" itemprop="name"></p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">194</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%91%8CJava%E4%BC%9A%E5%AD%98%E5%9C%A8%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E5%90%97"><span class="nav-number">1.</span> <span class="nav-text">👌Java会存在内存泄露吗?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E8%AF%A6%E7%BB%86%E7%AD%94%E6%A1%88"><span class="nav-number">2.</span> <span class="nav-text">题目详细答案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E6%83%85%E5%86%B5"><span class="nav-number">2.1.</span> <span class="nav-text">常见的内存泄漏情况</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E9%9B%86%E5%90%88%E7%B1%BB%EF%BC%88%E5%A6%82HashMap%E3%80%81ArrayList%EF%BC%89%E6%8C%81%E6%9C%89%E5%AF%B9%E8%B1%A1%E5%BC%95%E7%94%A8"><span class="nav-number">2.1.1.</span> <span class="nav-text">静态集合类（如HashMap、ArrayList）持有对象引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%91%E5%90%AC%E5%99%A8%E5%92%8C%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0"><span class="nav-number">2.1.2.</span> <span class="nav-text">监听器和回调函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AA%E5%85%B3%E9%97%AD%E7%9A%84%E8%B5%84%E6%BA%90"><span class="nav-number">2.1.3.</span> <span class="nav-text">未关闭的资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E9%83%A8%E7%B1%BB%E5%92%8C%E5%8C%BF%E5%90%8D%E7%B1%BB%E6%8C%81%E6%9C%89%E5%A4%96%E9%83%A8%E7%B1%BB%E5%BC%95%E7%94%A8%EF%BC%9A"><span class="nav-number">2.1.4.</span> <span class="nav-text">内部类和匿名类持有外部类引用：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%93%E5%AD%98%EF%BC%88Cache%EF%BC%89%E6%B2%A1%E6%9C%89%E6%B8%85%E7%90%86%EF%BC%9A"><span class="nav-number">2.1.5.</span> <span class="nav-text">缓存（Cache）没有清理：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A3%80%E6%B5%8B%E5%92%8C%E8%A7%A3%E5%86%B3%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">2.2.</span> <span class="nav-text">检测和解决内存泄漏的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%EF%BC%9A"><span class="nav-number">2.2.1.</span> <span class="nav-text">使用内存分析工具：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%A1%E6%9F%A5%EF%BC%9A"><span class="nav-number">2.2.2.</span> <span class="nav-text">代码审查：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8try-with-resources%E8%AF%AD%E5%8F%A5"><span class="nav-number">2.2.3.</span> <span class="nav-text">使用try-with-resources语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%99%A4%E7%9B%91%E5%90%AC%E5%99%A8%E6%B3%A8%E5%86%8C"><span class="nav-number">2.2.4.</span> <span class="nav-text">解除监听器注册</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">javayun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Gemini
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

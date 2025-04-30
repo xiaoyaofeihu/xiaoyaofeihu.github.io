@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JVM," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="👌Java类加载器的机制是什么?题目详细答案Java 的类加载机制是 JVM 负责将类文件加载到内存中，并将其转换为Class对象的过程。它包括三个主要步骤：加载（Loading）、链接（Linking）和初始化（Initialization）。以下是详细的描述： 类加载过程加载（Loading）加载阶段是将类文件读入内存，并创建一个Class对象的过程。具体步骤如下： 查找和导入类的二进制数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="👌Java类加载器的机制是什么">
+<meta property="og:url" content="https://xiaoyaofeihu.github.io/2025/05/03/JVM/Java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%E7%9A%84%E6%9C%BA%E5%88%B6%E6%98%AF%E4%BB%80%E4%B9%88_/index.html">
+<meta property="og:site_name" content="余声-个人博客">
+<meta property="og:description" content="👌Java类加载器的机制是什么?题目详细答案Java 的类加载机制是 JVM 负责将类文件加载到内存中，并将其转换为Class对象的过程。它包括三个主要步骤：加载（Loading）、链接（Linking）和初始化（Initialization）。以下是详细的描述： 类加载过程加载（Loading）加载阶段是将类文件读入内存，并创建一个Class对象的过程。具体步骤如下： 查找和导入类的二进制数据">
+<meta property="og:locale">
+<meta property="article:published_time" content="2025-05-03T13:33:41.000Z">
+<meta property="article:modified_time" content="2025-04-30T03:28:19.103Z">
+<meta property="article:author" content="javayun">
+<meta property="article:tag" content="JVM">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '余声'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://xiaoyaofeihu.github.io/2025/05/03/JVM/Java类加载器的机制是什么_/"/>
+
+
+
+
+
+  <title>👌Java类加载器的机制是什么 | 余声-个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">余声-个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/03/JVM/Java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%E7%9A%84%E6%9C%BA%E5%88%B6%E6%98%AF%E4%BB%80%E4%B9%88_/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">👌Java类加载器的机制是什么</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-05-03T13:33:41+00:00">
+                2025-05-03
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-04-30T03:28:19+00:00">
+                2025-04-30
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="👌Java类加载器的机制是什么"><a href="#👌Java类加载器的机制是什么" class="headerlink" title="👌Java类加载器的机制是什么?"></a>👌Java类加载器的机制是什么?</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>Java 的类加载机制是 JVM 负责将类文件加载到内存中，并将其转换为Class对象的过程。它包括三个主要步骤：加载（Loading）、链接（Linking）和初始化（Initialization）。以下是详细的描述：</p>
+<h2 id="类加载过程"><a href="#类加载过程" class="headerlink" title="类加载过程"></a>类加载过程</h2><h3 id="加载（Loading）"><a href="#加载（Loading）" class="headerlink" title="加载（Loading）"></a>加载（Loading）</h3><p>加载阶段是将类文件读入内存，并创建一个Class对象的过程。具体步骤如下：</p>
+<p><strong>查找和导入类的二进制数据</strong>：从不同的来源（如文件系统、网络等）获取类的字节码。</p>
+<p><strong>创建Class对象</strong>：将字节码转换为 JVM 能够识别的Class对象。</p>
+<p>加载阶段可以通过系统类加载器（Bootstrap ClassLoader）、扩展类加载器（Extension ClassLoader）和应用程序类加载器（Application ClassLoader）等完成。</p>
+<h3 id="链接（Linking）"><a href="#链接（Linking）" class="headerlink" title="链接（Linking）"></a>链接（Linking）</h3><p>链接阶段将类的二进制数据合并到 JVM 运行时环境中。链接阶段包括三个步骤：</p>
+<p><strong>验证（Verification）</strong>：确保类的字节码符合 JVM 规范，保证不会破坏 JVM 的安全性。</p>
+<p><strong>准备（Preparation）</strong>：为类的静态变量分配内存，并将其初始化为默认值。</p>
+<p><strong>解析（Resolution）</strong>：将常量池中的符号引用转换为直接引用。</p>
+<h3 id="初始化（Initialization）"><a href="#初始化（Initialization）" class="headerlink" title="初始化（Initialization）"></a>初始化（Initialization）</h3><p>初始化阶段是执行类构造器<clinit>方法的过程。该方法是由编译器自动收集类中的所有静态变量的赋值动作和静态代码块（static {}）中的语句合并产生的。初始化阶段是类加载过程的最后一步。</clinit></p>
+<h2 id="类加载器（ClassLoader）"><a href="#类加载器（ClassLoader）" class="headerlink" title="类加载器（ClassLoader）"></a>类加载器（ClassLoader）</h2><p>Java 的类加载器负责加载类文件。Java 中的类加载器遵循双亲委派模型（Parent Delegation Model），即类加载器在加载类时会先委托给父类加载器加载，如果父类加载器无法加载，再尝试自己加载。</p>
+<h3 id="双亲委派模型（Parent-Delegation-Model）"><a href="#双亲委派模型（Parent-Delegation-Model）" class="headerlink" title="双亲委派模型（Parent Delegation Model）"></a>双亲委派模型（Parent Delegation Model）</h3><p>双亲委派模型的工作流程如下：</p>
+<ol>
+<li><strong>检查缓存</strong>：类加载器首先检查缓存中是否已经加载过该类，如果已经加载，则直接返回Class对象。</li>
+<li><strong>委托父类加载</strong>：如果缓存中没有，则委托父类加载器加载。</li>
+<li><strong>父类加载失败</strong>：如果父类加载器加载失败（抛出ClassNotFoundException），则由当前类加载器尝试加载。</li>
+</ol>
+<p>这种模型的好处是避免类的重复加载，确保核心类库不会被自定义类加载器加载和覆盖。</p>
+<h3 id="常见的类加载器"><a href="#常见的类加载器" class="headerlink" title="常见的类加载器"></a>常见的类加载器</h3><p><strong>Bootstrap ClassLoader</strong>：引导类加载器，负责加载核心类库，如rt.jar中的类。它是用原生代码实现的，不是java.lang.ClassLoader的子类。</p>
+<p><strong>Extension ClassLoader</strong>：扩展类加载器，负责加载JAVA_HOME&#x2F;lib&#x2F;ext目录中的类。</p>
+<p><strong>Application ClassLoader</strong>：应用程序类加载器，负责加载应用程序的类路径（classpath）中的类。</p>
+<h2 id="类加载器的示例"><a href="#类加载器的示例" class="headerlink" title="类加载器的示例"></a>类加载器的示例</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">import java.io.IOException;</span><br><span class="line">import java.nio.file.Files;</span><br><span class="line">import java.nio.file.Paths;</span><br><span class="line"></span><br><span class="line">public class MyClassLoader extends ClassLoader &#123;</span><br><span class="line"></span><br><span class="line">    private String classPath;</span><br><span class="line"></span><br><span class="line">    public MyClassLoader(String classPath) &#123;</span><br><span class="line">        this.classPath = classPath;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected Class&lt;?&gt; findClass(String name) throws ClassNotFoundException &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            // 将类名转换为文件路径</span><br><span class="line">            String fileName = classPath + name.replace(&#x27;.&#x27;, &#x27;/&#x27;) + &quot;.class&quot;;</span><br><span class="line">            // 读取类文件的字节码</span><br><span class="line">            byte[] classBytes = Files.readAllBytes(Paths.get(fileName));</span><br><span class="line">            // 将字节码转换为 Class 对象</span><br><span class="line">            return defineClass(name, classBytes, 0, classBytes.length);</span><br><span class="line">        &#125; catch (IOException e) &#123;</span><br><span class="line">            throw new ClassNotFoundException(name, e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class CustomClassLoaderDemo &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            // 创建自定义类加载器，指定类文件所在路径</span><br><span class="line">            MyClassLoader classLoader = new MyClassLoader(&quot;/path/to/classes/&quot;);</span><br><span class="line">            // 加载类</span><br><span class="line">            Class&lt;?&gt; clazz = classLoader.loadClass(&quot;com.example.MyClass&quot;);</span><br><span class="line">            // 创建类的实例</span><br><span class="line">            Object instance = clazz.getDeclaredConstructor().newInstance();</span><br><span class="line">            // 调用方法</span><br><span class="line">            clazz.getMethod(&quot;myMethod&quot;).invoke(instance);</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="" alt=" wechat" style="width: 200px; max-width: 100%;"/>
+    <div>天生我才必有用</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JVM/" rel="tag"># JVM</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2025/05/03/JVM/jvm%E6%96%B0%E7%94%9F%E4%BB%A3%E7%A9%BA%E9%97%B4%E5%A4%A7%E5%B0%8F%E7%9A%84%E6%AF%94%E4%BE%8B%E5%8F%8A%E5%A6%82%E4%BD%95%E8%B0%83%E6%95%B4%EF%BC%9F/" rel="next" title="👌新生代空间大小的比例及如何调整？？">
+                <i class="fa fa-chevron-left"></i> 👌新生代空间大小的比例及如何调整？？
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2025/05/03/JVM/Java%E7%B1%BB%E5%88%9D%E5%A7%8B%E5%8C%96%E6%97%B6%E6%9C%BA_/" rel="prev" title="👌Java类初始化时机">
+                👌Java类初始化时机 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/11.jpg"
+               alt="" />
+          <p class="site-author-name" itemprop="name"></p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">194</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%91%8CJava%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%E7%9A%84%E6%9C%BA%E5%88%B6%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.</span> <span class="nav-text">👌Java类加载器的机制是什么?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E8%AF%A6%E7%BB%86%E7%AD%94%E6%A1%88"><span class="nav-number">2.</span> <span class="nav-text">题目详细答案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B"><span class="nav-number">2.1.</span> <span class="nav-text">类加载过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A0%E8%BD%BD%EF%BC%88Loading%EF%BC%89"><span class="nav-number">2.1.1.</span> <span class="nav-text">加载（Loading）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5%EF%BC%88Linking%EF%BC%89"><span class="nav-number">2.1.2.</span> <span class="nav-text">链接（Linking）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%EF%BC%88Initialization%EF%BC%89"><span class="nav-number">2.1.3.</span> <span class="nav-text">初始化（Initialization）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%EF%BC%88ClassLoader%EF%BC%89"><span class="nav-number">2.2.</span> <span class="nav-text">类加载器（ClassLoader）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%A8%A1%E5%9E%8B%EF%BC%88Parent-Delegation-Model%EF%BC%89"><span class="nav-number">2.2.1.</span> <span class="nav-text">双亲委派模型（Parent Delegation Model）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="nav-number">2.2.2.</span> <span class="nav-text">常见的类加载器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%E7%9A%84%E7%A4%BA%E4%BE%8B"><span class="nav-number">2.3.</span> <span class="nav-text">类加载器的示例</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">javayun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Gemini
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
