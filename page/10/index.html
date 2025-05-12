@@ -270,210 +270,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFTreeMap%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFTreeMap%EF%BC%9F/" itemprop="url">什么是TreeMap</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
-                2025-05-12
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌什么是TreeMap？"><a href="#👌什么是TreeMap？" class="headerlink" title="👌什么是TreeMap？"></a>👌什么是TreeMap？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="基本特点"><a href="#基本特点" class="headerlink" title="基本特点"></a>基本特点</h2><ol>
-<li><strong>有序性</strong>：TreeMap保证了键的自然顺序（通过Comparable接口）或通过提供的比较器（Comparator）的顺序。</li>
-<li><strong>红黑树</strong>：TreeMap内部使用红黑树数据结构来存储键值对，保证了插入、删除、查找等操作的时间复杂度为 O(log n)。</li>
-<li><strong>不允许<strong><strong>null</strong></strong>键</strong>：TreeMap不允许键为null，但允许值为null。</li>
-<li><strong>线程不安全</strong>：TreeMap不是线程安全的，如果需要在多线程环境中使用，需要通过外部同步机制来保证线程安全。</li>
-</ol>
-<h2 id="与其他集合类的比较"><a href="#与其他集合类的比较" class="headerlink" title="与其他集合类的比较"></a>与其他集合类的比较</h2><p><strong>TreeMap vs. HashMap</strong>：</p>
-<p>TreeMap保证键的有序性，而HashMap不保证顺序。</p>
-<p>TreeMap基于红黑树实现，操作的时间复杂度为 O(log n)，而HashMap基于哈希表实现，操作的平均时间复杂度为 O(1)。</p>
-<p>TreeMap不允许null键，而HashMap允许一个null键。</p>
-<p><strong>TreeMap vs. LinkedHashMap</strong>：</p>
-<p>TreeMap保证键的自然顺序或比较器的顺序，而LinkedHashMap保证插入顺序或访问顺序。</p>
-<p>TreeMap的操作时间复杂度为 O(log n)，而LinkedHashMap的操作时间复杂度为 O(1)。</p>
-<h2 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h2><p>TreeMap适用于需要按键排序存储键值对的场景，例如：</p>
-<p>实现基于范围的查询。</p>
-<p>需要按顺序遍历键值对。</p>
-<p>需要快速查找最小或最大键值对。</p>
-<blockquote>
-<p>&#x2F;angmwmt1ka8unn4o&gt;</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFfail-fast%E6%9C%BA%E5%88%B6%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -521,7 +317,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -716,7 +512,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -915,7 +711,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -1133,7 +929,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -1327,7 +1123,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -1524,7 +1320,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -1724,7 +1520,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -1925,7 +1721,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -2121,7 +1917,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -2324,7 +2120,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -2526,7 +2322,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -2731,7 +2527,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -2936,7 +2732,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -3159,7 +2955,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -3363,7 +3159,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -3606,7 +3402,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -3833,7 +3629,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -4193,7 +3989,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -4416,7 +4212,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -4586,6 +4382,226 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/%E5%9F%BA%E7%A1%80/%E7%BA%BF%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/10/%E5%9F%BA%E7%A1%80/%E7%BA%BF%E7%A8%8B/" itemprop="url">线程</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-10T17:33:00+00:00">
+                2024-10-10
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
+                2025-05-12
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="线程状态的详细解释"><a href="#线程状态的详细解释" class="headerlink" title="线程状态的详细解释"></a>线程状态的详细解释</h3><ol>
+<li><p><strong>初始(NEW)</strong></p>
+<p>线程对象被创建，但尚未调用<code>start()</code>方法。此时线程还未开始执行，只是作为一个对象存在于内存中。</p>
+</li>
+<li><p><strong>运行(RUNNABLE)</strong></p>
+<ul>
+<li><strong>就绪(READY)</strong>: 线程对象创建后，通过调用<code>start()</code>方法启动。此时线程进入就绪状态，等待操作系统的调度，以获取CPU时间片。</li>
+<li><strong>运行中(RUNNING)</strong>: 当就绪状态的线程获得CPU时间片时，开始执行程序代码，进入运行状态。</li>
+</ul>
+<p>在Java中，由于就绪和运行状态的切换非常频繁，且难以准确区分，因此将两者统称为“运行(RUNNABLE)”状态。</p>
+</li>
+<li><p><strong>阻塞(BLOCKED)</strong></p>
+<p>线程尝试获取某个对象的锁（如通过<code>synchronized</code>关键字），但锁已被其他线程持有。此时线程进入阻塞状态，直到锁被释放并成功获取。</p>
+</li>
+<li><p><strong>等待(WAITING)</strong></p>
+<p>线程通过调用<code>Object</code>类的<code>wait()</code>方法或其他等待方法（如<code>Condition</code>的<code>await()</code>方法）进入等待状态。此时线程需要等待其他线程的通知（通过<code>notify()</code>或<code>notifyAll()</code>方法）或中断来唤醒。</p>
+</li>
+<li><p><strong>超时等待(TIMED_WAITING)</strong></p>
+<p>线程通过调用带有超时参数的等待方法（如<code>Thread.sleep(long millis)</code>、<code>Object.wait(long timeout)</code>等）进入超时等待状态。此时线程在指定的时间内等待，如果超时时间到达或收到其他线程的通知，则线程会被唤醒。</p>
+</li>
+<li><p><strong>终止(TERMINATED)</strong></p>
+<p>线程执行完毕或由于异常等原因终止执行，进入终止状态。此时线程不再占用系统资源。</p>
+</li>
+</ol>
+<h3 id="状态流转的细化"><a href="#状态流转的细化" class="headerlink" title="状态流转的细化"></a>状态流转的细化</h3><ul>
+<li>从<strong>初始(NEW)<strong>到</strong>运行(RUNNABLE)</strong>: 调用<code>start()</code>方法。</li>
+<li>从<strong>运行(RUNNABLE)<strong>到</strong>阻塞(BLOCKED)</strong>: 尝试获取锁失败。</li>
+<li>从<strong>阻塞(BLOCKED)<strong>到</strong>运行(RUNNABLE)</strong>: 成功获取锁。</li>
+<li>从<strong>运行(RUNNABLE)<strong>到</strong>等待(WAITING)</strong>: 调用<code>wait()</code>等方法。</li>
+<li>从<strong>等待(WAITING)<strong>到</strong>运行(RUNNABLE)</strong>: 收到其他线程的通知或中断。</li>
+<li>从<strong>运行(RUNNABLE)<strong>到</strong>超时等待(TIMED_WAITING)</strong>: 调用带有超时参数的等待方法。</li>
+<li>从<strong>超时等待(TIMED_WAITING)<strong>到</strong>运行(RUNNABLE)</strong>: 超时时间到达或收到其他线程的通知。</li>
+<li>从<strong>运行(RUNNABLE)<strong>到</strong>终止(TERMINATED)</strong>: 线程执行完毕或异常终止。</li>
+</ul>
+<h3 id="关于RUNNING状态的缺失"><a href="#关于RUNNING状态的缺失" class="headerlink" title="关于RUNNING状态的缺失"></a>关于RUNNING状态的缺失</h3><p>如你所述，由于CPU时间片的分配和线程状态的频繁切换，很难准确区分线程是处于就绪状态还是运行状态。因此，Java将两者统称为“运行(RUNNABLE)”状态，以表示线程当前是可执行的，只要获得CPU时间片就能立即执行。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>了解线程的状态及其流转对于编写高效、可靠的并发程序至关重要。通过合理管理线程状态，可以确保程序的正确性和性能。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -4636,7 +4652,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">226</span>
+                <span class="site-state-item-count">225</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

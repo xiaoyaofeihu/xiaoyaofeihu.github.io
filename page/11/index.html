@@ -270,226 +270,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/%E5%9F%BA%E7%A1%80/%E7%BA%BF%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/10/%E5%9F%BA%E7%A1%80/%E7%BA%BF%E7%A8%8B/" itemprop="url">线程</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-10T17:33:00+00:00">
-                2024-10-10
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
-                2025-05-12
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="线程状态的详细解释"><a href="#线程状态的详细解释" class="headerlink" title="线程状态的详细解释"></a>线程状态的详细解释</h3><ol>
-<li><p><strong>初始(NEW)</strong></p>
-<p>线程对象被创建，但尚未调用<code>start()</code>方法。此时线程还未开始执行，只是作为一个对象存在于内存中。</p>
-</li>
-<li><p><strong>运行(RUNNABLE)</strong></p>
-<ul>
-<li><strong>就绪(READY)</strong>: 线程对象创建后，通过调用<code>start()</code>方法启动。此时线程进入就绪状态，等待操作系统的调度，以获取CPU时间片。</li>
-<li><strong>运行中(RUNNING)</strong>: 当就绪状态的线程获得CPU时间片时，开始执行程序代码，进入运行状态。</li>
-</ul>
-<p>在Java中，由于就绪和运行状态的切换非常频繁，且难以准确区分，因此将两者统称为“运行(RUNNABLE)”状态。</p>
-</li>
-<li><p><strong>阻塞(BLOCKED)</strong></p>
-<p>线程尝试获取某个对象的锁（如通过<code>synchronized</code>关键字），但锁已被其他线程持有。此时线程进入阻塞状态，直到锁被释放并成功获取。</p>
-</li>
-<li><p><strong>等待(WAITING)</strong></p>
-<p>线程通过调用<code>Object</code>类的<code>wait()</code>方法或其他等待方法（如<code>Condition</code>的<code>await()</code>方法）进入等待状态。此时线程需要等待其他线程的通知（通过<code>notify()</code>或<code>notifyAll()</code>方法）或中断来唤醒。</p>
-</li>
-<li><p><strong>超时等待(TIMED_WAITING)</strong></p>
-<p>线程通过调用带有超时参数的等待方法（如<code>Thread.sleep(long millis)</code>、<code>Object.wait(long timeout)</code>等）进入超时等待状态。此时线程在指定的时间内等待，如果超时时间到达或收到其他线程的通知，则线程会被唤醒。</p>
-</li>
-<li><p><strong>终止(TERMINATED)</strong></p>
-<p>线程执行完毕或由于异常等原因终止执行，进入终止状态。此时线程不再占用系统资源。</p>
-</li>
-</ol>
-<h3 id="状态流转的细化"><a href="#状态流转的细化" class="headerlink" title="状态流转的细化"></a>状态流转的细化</h3><ul>
-<li>从<strong>初始(NEW)<strong>到</strong>运行(RUNNABLE)</strong>: 调用<code>start()</code>方法。</li>
-<li>从<strong>运行(RUNNABLE)<strong>到</strong>阻塞(BLOCKED)</strong>: 尝试获取锁失败。</li>
-<li>从<strong>阻塞(BLOCKED)<strong>到</strong>运行(RUNNABLE)</strong>: 成功获取锁。</li>
-<li>从<strong>运行(RUNNABLE)<strong>到</strong>等待(WAITING)</strong>: 调用<code>wait()</code>等方法。</li>
-<li>从<strong>等待(WAITING)<strong>到</strong>运行(RUNNABLE)</strong>: 收到其他线程的通知或中断。</li>
-<li>从<strong>运行(RUNNABLE)<strong>到</strong>超时等待(TIMED_WAITING)</strong>: 调用带有超时参数的等待方法。</li>
-<li>从<strong>超时等待(TIMED_WAITING)<strong>到</strong>运行(RUNNABLE)</strong>: 超时时间到达或收到其他线程的通知。</li>
-<li>从<strong>运行(RUNNABLE)<strong>到</strong>终止(TERMINATED)</strong>: 线程执行完毕或异常终止。</li>
-</ul>
-<h3 id="关于RUNNING状态的缺失"><a href="#关于RUNNING状态的缺失" class="headerlink" title="关于RUNNING状态的缺失"></a>关于RUNNING状态的缺失</h3><p>如你所述，由于CPU时间片的分配和线程状态的频繁切换，很难准确区分线程是处于就绪状态还是运行状态。因此，Java将两者统称为“运行(RUNNABLE)”状态，以表示线程当前是可执行的，只要获得CPU时间片就能立即执行。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>了解线程的状态及其流转对于编写高效、可靠的并发程序至关重要。通过合理管理线程状态，可以确保程序的正确性和性能。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/%E5%9F%BA%E7%A1%80/%E7%BA%BF%E7%A8%8B%E6%B1%A0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -537,7 +317,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -762,7 +542,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -990,7 +770,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -1184,7 +964,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -1388,7 +1168,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -1606,7 +1386,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -1849,7 +1629,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -2056,7 +1836,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -2282,7 +2062,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -2483,7 +2263,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -2684,7 +2464,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -2901,7 +2681,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
                 2025-05-12
               </time>
             
@@ -3097,7 +2877,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -3281,7 +3061,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -3465,7 +3245,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -3654,7 +3434,7 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -3808,6 +3588,192 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/%E7%AC%94%E8%AE%B0/javacv%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2022/07/31/%E7%AC%94%E8%AE%B0/javacv%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url">javacv学习笔记</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-07-31T13:33:41+00:00">
+                2022-07-31
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
+                2025-05-12
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="java版opencv之Javacv各种场景使用案例"><a href="#java版opencv之Javacv各种场景使用案例" class="headerlink" title="java版opencv之Javacv各种场景使用案例"></a>java版opencv之Javacv各种场景使用案例</h1><p>————————————————<br>版权声明：本文为CSDN博主「jwolf2」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_39506978/article/details/133251234">https://blog.csdn.net/qq_39506978/article/details/133251234</a></p>
+<h1 id="java-opencv-基本操作6"><a href="#java-opencv-基本操作6" class="headerlink" title="java opencv 基本操作6"></a>java opencv 基本操作6</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/kan_Feng/article/details/126456760">https://blog.csdn.net/kan_Feng/article/details/126456760</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/%E7%AC%94%E8%AE%B0/ftp%E9%97%AE%E9%A2%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -3855,7 +3821,7 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -3998,192 +3964,6 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/%E7%AC%94%E8%AE%B0/javacv%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2022/07/31/%E7%AC%94%E8%AE%B0/javacv%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url">javacv学习笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-07-31T13:33:41+00:00">
-                2022-07-31
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
-                2025-05-12
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="java版opencv之Javacv各种场景使用案例"><a href="#java版opencv之Javacv各种场景使用案例" class="headerlink" title="java版opencv之Javacv各种场景使用案例"></a>java版opencv之Javacv各种场景使用案例</h1><p>————————————————<br>版权声明：本文为CSDN博主「jwolf2」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_39506978/article/details/133251234">https://blog.csdn.net/qq_39506978/article/details/133251234</a></p>
-<h1 id="java-opencv-基本操作6"><a href="#java-opencv-基本操作6" class="headerlink" title="java opencv 基本操作6"></a>java opencv 基本操作6</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/kan_Feng/article/details/126456760">https://blog.csdn.net/kan_Feng/article/details/126456760</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/%E7%AC%94%E8%AE%B0/js%E8%BF%90%E8%A1%8C%E8%BF%9B%E5%88%B6%E7%9A%84%E6%A2%B3%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -4231,7 +4011,7 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
                 2025-05-12
               </time>
             
@@ -4394,6 +4174,213 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/%E7%AC%94%E8%AE%B0/shiro%20%E6%B3%A8%E8%A7%A3@RequiresPermissions/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2022/07/31/%E7%AC%94%E8%AE%B0/shiro%20%E6%B3%A8%E8%A7%A3@RequiresPermissions/" itemprop="url">Spring Joinpoint类注解</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-07-31T13:33:41+00:00">
+                2022-07-31
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
+                2025-05-12
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Spring-Joinpoint类注解"><a href="#Spring-Joinpoint类注解" class="headerlink" title="Spring Joinpoint类注解"></a>Spring Joinpoint类注解</h1><pre><code>joinpoint是AOP 的连接点（一个连接点代表一个被代理的方法）
+    静态连接点就是被代理的方法本身，可以直接通过getStaticPart方法调用，动态连接点就是对静态方法之外的增强方法；
+    动态连接点从静态连接点的拦截器上获取静态部分，并进行加强，形成动态连接点；
+    proceed() 方法得作用是：转到链的下一个拦截器上；
+    getStaticPart() 方法的作用是：返回连接点的静态部分；静态部分是一个拥有连接器链的对象；（这个静态方法都要被谁拦截使用，可以通过该方法返回）
+
+ReflectiveMethodInvocation类是joinpoint的实现类
+
+    至此，proceed()方法解析完毕。我们来总结一下。
+    首先要明确的一点就是一个连接点代表着一个对象里的一个方法。一个对象里的多个方法，就是多个连接点。每个连接点对象中，都存着一个拦截器链，proceed方法就是遍历拦截器链，如果和连接点所代表的方法一致，则执行MethodInterceptor的invoke方法，进行方法的代理，如果拦截器和代理方法不匹配，则进入下一个拦截器。直到都不匹配，则执行原始方法。
+
+    代理对象的所有方法，都会形成一个连接点对象；
+
+    由此可知，我们定义的方法，最终会封装为相应的MethodInterceptor对象，在连接点的proceed中被调用；而在连接点的拦截器中，已经封装好了连接点所代理方法MethodInterceptor;连接点直接使用拦截器进行方法的调用；
+
+综合所述，连接点就是AOP中的最小单元，连接点里存放了代理对象的目标类，目标方法，方法拦截器；进行代理的时候，调用拦截器MethodInterceptor的加强方法，执行代理方法；
+</code></pre>
+<p>参考链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq1309664161/article/details/120159606">https://blog.csdn.net/qq1309664161/article/details/120159606</a></p>
+<h1 id="Shiro之-RequiresPermissions注解原理详解"><a href="#Shiro之-RequiresPermissions注解原理详解" class="headerlink" title="Shiro之@RequiresPermissions注解原理详解"></a>Shiro之@RequiresPermissions注解原理详解</h1><pre><code>原理：使用了AOP进行了增强，来判断当前用户是否有该权限标识；
+从proceed()方法进来，然后发送请求，进入断点，加强链上的AopAllianceAnnotationsAuthorizingMethodInterceptor元素就是加强@RequiresPermissions而生成的元素，该类实现了MethodInterceptor 接口，其中invoke方法就是对原对象方法的增强，进入方法，执行到了assertAuthorized()方法，调用其中的getMethodInterceptors()方法获取注解，若有则调用相应的注解Handler去处理相应的逻辑（就是调用Realm中定义的权限获取方法）；
+这样就对注解@RequiresPermissions的方法进行了增强
+</code></pre>
+<p>参考链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq1309664161/article/details/123181245">https://blog.csdn.net/qq1309664161/article/details/123181245</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -4444,7 +4431,7 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">226</span>
+                <span class="site-state-item-count">225</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

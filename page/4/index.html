@@ -270,202 +270,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/04/27/JVM/Java%E6%98%AF%E8%A7%A3%E9%87%8A%E8%AF%AD%E8%A8%80%E8%BF%98%E6%98%AF%E7%BC%96%E8%AF%91%E8%AF%AD%E8%A8%80/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/04/27/JVM/Java%E6%98%AF%E8%A7%A3%E9%87%8A%E8%AF%AD%E8%A8%80%E8%BF%98%E6%98%AF%E7%BC%96%E8%AF%91%E8%AF%AD%E8%A8%80/" itemprop="url">👌Java是解释语言还是编译语言</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-04-27T13:33:41+00:00">
-                2025-04-27
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
-                2025-05-12
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌Java是解释语言还是编译语言"><a href="#👌Java是解释语言还是编译语言" class="headerlink" title="👌Java是解释语言还是编译语言"></a>👌Java是解释语言还是编译语言</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>Java 是一种既具有编译特性又具有解释特性的语言。它独特的运行机制使得它既不同于传统的编译语言（如 C 或 C++），也不同于传统的解释语言（如 Python 或 JavaScript）。</p>
-<h2 id="编译阶段"><a href="#编译阶段" class="headerlink" title="编译阶段"></a>编译阶段</h2><p><strong>源代码编译</strong>：</p>
-<p>Java 源代码文件（.java 文件）首先通过 Java 编译器（javac）编译成字节码文件（.class 文件）。这个编译过程将高层次的 Java 代码转换成一种中间表示形式，即字节码。这些字节码是平台无关的，可以在任何支持 Java 虚拟机（JVM）的系统上运行。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javac MyClass.java</span><br></pre></td></tr></table></figure>
-
-<p><strong>字节码</strong>：字节码是一种中间语言，它并不是直接可执行的机器码，而是需要进一步解释或编译成机器码才能运行。</p>
-<p>字节码的设计使得 Java 程序可以在不同的平台上运行，而无需重新编译源代码。</p>
-<h2 id="解释阶段"><a href="#解释阶段" class="headerlink" title="解释阶段"></a>解释阶段</h2><p>当运行一个 Java 程序时，Java 虚拟机（JVM）会加载字节码并解释执行。JVM 内部包含一个解释器，它将字节码逐行解释成机器指令，然后执行这些指令。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java MyClass</span><br></pre></td></tr></table></figure>
-
-<h2 id="Just-In-Time-JIT-编译"><a href="#Just-In-Time-JIT-编译" class="headerlink" title="Just-In-Time (JIT) 编译"></a>Just-In-Time (JIT) 编译</h2><p>为了提高性能，现代 JVM 实现通常包含一个 Just-In-Time (JIT) 编译器。JIT 编译器在程序运行时，将热点代码（即频繁执行的代码）动态编译成本地机器码，从而提高执行效率。这种动态编译使得 Java 结合了解释语言的灵活性和编译语言的高性能。</p>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>Java 既是一种编译语言，也是一种解释语言。它通过先编译成字节码，然后由 JVM 解释执行，并结合 JIT 编译优化性能。这种独特的机制使得 Java 具有跨平台性和高效性。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/04/27/JVM/Java%E7%9A%84%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%E6%9C%89%E5%93%AA%E4%BA%9B_/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -513,7 +317,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
                 2025-05-12
               </time>
             
@@ -722,7 +526,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
                 2025-05-12
               </time>
             
@@ -925,7 +729,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
                 2025-05-12
               </time>
             
@@ -1122,7 +926,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
                 2025-05-12
               </time>
             
@@ -1323,7 +1127,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
                 2025-05-12
               </time>
             
@@ -1527,7 +1331,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
                 2025-05-12
               </time>
             
@@ -1735,7 +1539,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
                 2025-05-12
               </time>
             
@@ -1937,7 +1741,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
                 2025-05-12
               </time>
             
@@ -2133,7 +1937,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
                 2025-05-12
               </time>
             
@@ -2336,7 +2140,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
                 2025-05-12
               </time>
             
@@ -2487,6 +2291,203 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/04/25/JVM/%E5%A6%82%E4%BD%95%E7%A0%B4%E5%9D%8F%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%A8%A1%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/04/25/JVM/%E5%A6%82%E4%BD%95%E7%A0%B4%E5%9D%8F%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%A8%A1%E5%9E%8B/" itemprop="url">👌如何破坏双亲委派模型</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-04-25T13:33:41+00:00">
+                2025-04-25
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
+                2025-05-12
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌如何破坏双亲委派模型"><a href="#👌如何破坏双亲委派模型" class="headerlink" title="👌如何破坏双亲委派模型"></a>👌如何破坏双亲委派模型</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="自定义类加载器"><a href="#自定义类加载器" class="headerlink" title="自定义类加载器"></a>自定义类加载器</h2><p>通过创建自定义类加载器并覆盖loadClass方法，可以实现不同于双亲委派机制的类加载策略。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">public class CustomClassLoader extends ClassLoader &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public Class&lt;?&gt; loadClass(String name) throws ClassNotFoundException &#123;</span><br><span class="line">        // 如果是特定的类，不使用双亲委派机制</span><br><span class="line">        if (name.startsWith(&quot;com.example&quot;)) &#123;</span><br><span class="line">            // 自定义加载逻辑</span><br><span class="line">            byte[] classData = getClassData(name);</span><br><span class="line">            if (classData != null) &#123;</span><br><span class="line">                return defineClass(name, classData, 0, classData.length);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        // 否则，使用默认的双亲委派机制</span><br><span class="line">        return super.loadClass(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private byte[] getClassData(String className) &#123;</span><br><span class="line">        // 实现类加载的逻辑，例如从文件系统或网络加载类字节码</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="通过反射机制"><a href="#通过反射机制" class="headerlink" title="通过反射机制"></a>通过反射机制</h2><p>利用反射机制直接操作类加载器的父类加载器，绕过双亲委派机制。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">import java.lang.reflect.Field;</span><br><span class="line"></span><br><span class="line">public class BreakParentDelegation &#123;</span><br><span class="line">    public static void main(String[] args) throws Exception &#123;</span><br><span class="line">        CustomClassLoader customClassLoader = new CustomClassLoader();</span><br><span class="line">        ClassLoader appClassLoader = ClassLoader.getSystemClassLoader();</span><br><span class="line"></span><br><span class="line">        // 获取系统类加载器的父类加载器（扩展类加载器）</span><br><span class="line">        Field parentField = ClassLoader.class.getDeclaredField(&quot;parent&quot;);</span><br><span class="line">        parentField.setAccessible(true);</span><br><span class="line">        parentField.set(appClassLoader, customClassLoader);</span><br><span class="line"></span><br><span class="line">        // 现在系统类加载器的父类加载器被替换为自定义类加载器</span><br><span class="line">        Class&lt;?&gt; clazz = Class.forName(&quot;com.example.MyClass&quot;, true, appClassLoader);</span><br><span class="line">        System.out.println(clazz.getClassLoader());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="OSGi-框架"><a href="#OSGi-框架" class="headerlink" title="OSGi 框架"></a>OSGi 框架</h2><p>OSGi 框架提供了一种模块化的类加载机制，允许每个模块（Bundle）有自己的类加载器，从而可以打破双亲委派机制。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// OSGi 中的 BundleActivator 示例</span><br><span class="line">public class MyBundleActivator implements BundleActivator &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void start(BundleContext context) throws Exception &#123;</span><br><span class="line">        // 在 OSGi 环境中，每个 Bundle 有自己的类加载器</span><br><span class="line">        ClassLoader bundleClassLoader = getClass().getClassLoader();</span><br><span class="line">        Class&lt;?&gt; clazz = bundleClassLoader.loadClass(&quot;com.example.MyClass&quot;);</span><br><span class="line">        System.out.println(clazz.getClassLoader());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void stop(BundleContext context) throws Exception &#123;</span><br><span class="line">        // 停止 Bundle 时的清理工作</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用-SPI（Service-Provider-Interface）"><a href="#使用-SPI（Service-Provider-Interface）" class="headerlink" title="使用 SPI（Service Provider Interface）"></a>使用 SPI（Service Provider Interface）</h2><p>某些服务提供者接口的实现中，可能需要打破双亲委派机制来加载服务实现类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ServiceLoader;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SPIDemo</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        ServiceLoader&lt;MyService&gt; loader = ServiceLoader.load(MyService.class);</span><br><span class="line">        <span class="keyword">for</span> (MyService service : loader) &#123;</span><br><span class="line">            service.execute();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在META-INF&#x2F;services目录下创建一个文件，文件名为接口的全限定名，文件内容为实现类的全限定名。通过这种方式，JVM 会使用Thread.contextClassLoader来加载服务实现类，从而可以打破双亲委派机制。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/04/25/JVM/%E5%A6%82%E4%BD%95%E4%BC%98%E5%8C%96%E5%87%8F%E5%B0%91FULLGC%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2534,7 +2535,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
                 2025-05-12
               </time>
             
@@ -2687,203 +2688,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/04/25/JVM/%E5%A6%82%E4%BD%95%E7%A0%B4%E5%9D%8F%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%A8%A1%E5%9E%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/04/25/JVM/%E5%A6%82%E4%BD%95%E7%A0%B4%E5%9D%8F%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%A8%A1%E5%9E%8B/" itemprop="url">👌如何破坏双亲委派模型</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-04-25T13:33:41+00:00">
-                2025-04-25
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
-                2025-05-12
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌如何破坏双亲委派模型"><a href="#👌如何破坏双亲委派模型" class="headerlink" title="👌如何破坏双亲委派模型"></a>👌如何破坏双亲委派模型</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="自定义类加载器"><a href="#自定义类加载器" class="headerlink" title="自定义类加载器"></a>自定义类加载器</h2><p>通过创建自定义类加载器并覆盖loadClass方法，可以实现不同于双亲委派机制的类加载策略。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">public class CustomClassLoader extends ClassLoader &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public Class&lt;?&gt; loadClass(String name) throws ClassNotFoundException &#123;</span><br><span class="line">        // 如果是特定的类，不使用双亲委派机制</span><br><span class="line">        if (name.startsWith(&quot;com.example&quot;)) &#123;</span><br><span class="line">            // 自定义加载逻辑</span><br><span class="line">            byte[] classData = getClassData(name);</span><br><span class="line">            if (classData != null) &#123;</span><br><span class="line">                return defineClass(name, classData, 0, classData.length);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        // 否则，使用默认的双亲委派机制</span><br><span class="line">        return super.loadClass(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private byte[] getClassData(String className) &#123;</span><br><span class="line">        // 实现类加载的逻辑，例如从文件系统或网络加载类字节码</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="通过反射机制"><a href="#通过反射机制" class="headerlink" title="通过反射机制"></a>通过反射机制</h2><p>利用反射机制直接操作类加载器的父类加载器，绕过双亲委派机制。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">import java.lang.reflect.Field;</span><br><span class="line"></span><br><span class="line">public class BreakParentDelegation &#123;</span><br><span class="line">    public static void main(String[] args) throws Exception &#123;</span><br><span class="line">        CustomClassLoader customClassLoader = new CustomClassLoader();</span><br><span class="line">        ClassLoader appClassLoader = ClassLoader.getSystemClassLoader();</span><br><span class="line"></span><br><span class="line">        // 获取系统类加载器的父类加载器（扩展类加载器）</span><br><span class="line">        Field parentField = ClassLoader.class.getDeclaredField(&quot;parent&quot;);</span><br><span class="line">        parentField.setAccessible(true);</span><br><span class="line">        parentField.set(appClassLoader, customClassLoader);</span><br><span class="line"></span><br><span class="line">        // 现在系统类加载器的父类加载器被替换为自定义类加载器</span><br><span class="line">        Class&lt;?&gt; clazz = Class.forName(&quot;com.example.MyClass&quot;, true, appClassLoader);</span><br><span class="line">        System.out.println(clazz.getClassLoader());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="OSGi-框架"><a href="#OSGi-框架" class="headerlink" title="OSGi 框架"></a>OSGi 框架</h2><p>OSGi 框架提供了一种模块化的类加载机制，允许每个模块（Bundle）有自己的类加载器，从而可以打破双亲委派机制。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// OSGi 中的 BundleActivator 示例</span><br><span class="line">public class MyBundleActivator implements BundleActivator &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void start(BundleContext context) throws Exception &#123;</span><br><span class="line">        // 在 OSGi 环境中，每个 Bundle 有自己的类加载器</span><br><span class="line">        ClassLoader bundleClassLoader = getClass().getClassLoader();</span><br><span class="line">        Class&lt;?&gt; clazz = bundleClassLoader.loadClass(&quot;com.example.MyClass&quot;);</span><br><span class="line">        System.out.println(clazz.getClassLoader());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void stop(BundleContext context) throws Exception &#123;</span><br><span class="line">        // 停止 Bundle 时的清理工作</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="使用-SPI（Service-Provider-Interface）"><a href="#使用-SPI（Service-Provider-Interface）" class="headerlink" title="使用 SPI（Service Provider Interface）"></a>使用 SPI（Service Provider Interface）</h2><p>某些服务提供者接口的实现中，可能需要打破双亲委派机制来加载服务实现类。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ServiceLoader;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SPIDemo</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        ServiceLoader&lt;MyService&gt; loader = ServiceLoader.load(MyService.class);</span><br><span class="line">        <span class="keyword">for</span> (MyService service : loader) &#123;</span><br><span class="line">            service.execute();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在META-INF&#x2F;services目录下创建一个文件，文件名为接口的全限定名，文件内容为实现类的全限定名。通过这种方式，JVM 会使用Thread.contextClassLoader来加载服务实现类，从而可以打破双亲委派机制。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/04/24/JVM/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E5%AF%B9%E8%B1%A1%E6%98%AF%E5%90%A6%E5%8F%AF%E4%BB%A5%E8%A2%AB%E5%9B%9E%E6%94%B6%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2931,7 +2735,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
                 2025-05-12
               </time>
             
@@ -3133,7 +2937,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
                 2025-05-12
               </time>
             
@@ -3377,7 +3181,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
                 2025-05-12
               </time>
             
@@ -3589,7 +3393,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
                 2025-05-12
               </time>
             
@@ -3781,7 +3585,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
                 2025-05-12
               </time>
             
@@ -3981,7 +3785,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
                 2025-05-12
               </time>
             
@@ -4220,7 +4024,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
                 2025-05-12
               </time>
             
@@ -4374,6 +4178,264 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/04/16/Linux/Linux%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E7%A3%81%E7%9B%98%E5%8D%A0%E7%94%A8%E6%83%85%E5%86%B5%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/04/16/Linux/Linux%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E7%A3%81%E7%9B%98%E5%8D%A0%E7%94%A8%E6%83%85%E5%86%B5%EF%BC%9F/" itemprop="url">👌Linux查看文件磁盘占用情况？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-04-16T13:33:41+00:00">
+                2025-04-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
+                2025-05-12
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌Linux查看文件磁盘占用情况？"><a href="#👌Linux查看文件磁盘占用情况？" class="headerlink" title="👌Linux查看文件磁盘占用情况？"></a>👌Linux查看文件磁盘占用情况？</h1><h3 id="1-du命令"><a href="#1-du命令" class="headerlink" title="1.du命令"></a>1.<code>du</code>命令</h3><p><code>du</code>（disk usage）命令用于估算文件和目录的磁盘使用情况。</p>
+<h4 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">du [选项] [文件或目录]</span><br></pre></td></tr></table></figure>
+
+<h4 id="常用选项"><a href="#常用选项" class="headerlink" title="常用选项"></a>常用选项</h4><ul>
+<li><code>-h</code>：以人类可读的格式显示（例如，K、M、G）。</li>
+<li><code>-s</code>：显示总计（不显示子目录的详细信息）。</li>
+<li><code>-a</code>：包括所有文件和目录。</li>
+<li><code>-c</code>：显示总计。</li>
+<li><code>--max-depth=N</code>：限制显示的目录层级深度。</li>
+</ul>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><ul>
+<li>查看当前目录下每个文件和子目录的磁盘使用情况：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">du -h</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查看指定目录的总磁盘使用情况：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">du -sh /path/to/directory</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查看指定目录及其子目录的磁盘使用情况，限制深度为1：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">du -h --max-depth=1 /path/to/directory</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-df命令"><a href="#2-df命令" class="headerlink" title="2.df命令"></a>2.<code>df</code>命令</h3><p><code>df</code>（disk free）命令用于查看文件系统的磁盘使用情况。</p>
+<h4 id="基本用法-1"><a href="#基本用法-1" class="headerlink" title="基本用法"></a>基本用法</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df [选项] [文件或目录]</span><br></pre></td></tr></table></figure>
+
+<h4 id="常用选项-1"><a href="#常用选项-1" class="headerlink" title="常用选项"></a>常用选项</h4><ul>
+<li><code>-h</code>：以人类可读的格式显示（例如，K、M、G）。</li>
+<li><code>-T</code>：显示文件系统类型。</li>
+<li><code>-i</code>：显示inode使用情况。</li>
+</ul>
+<h4 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h4><ul>
+<li>查看所有挂载的文件系统的磁盘使用情况：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df -h</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查看特定目录所在的文件系统的磁盘使用情况：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df -h /path/to/directory</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-ncdu工具"><a href="#3-ncdu工具" class="headerlink" title="3.ncdu工具"></a>3.<code>ncdu</code>工具</h3><p><code>ncdu</code>（NCurses Disk Usage）是一个基于ncurses的磁盘使用分析工具，提供了交互式界面。</p>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>在Debian&#x2F;Ubuntu系统上：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install ncdu</span><br></pre></td></tr></table></figure>
+
+<p>在CentOS&#x2F;RHEL系统上：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install ncdu</span><br></pre></td></tr></table></figure>
+
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ncdu /path/to/directory</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-ls命令"><a href="#4-ls命令" class="headerlink" title="4.ls命令"></a>4.<code>ls</code>命令</h3><p><code>ls</code>命令也可以显示文件的大小，但不如<code>du</code>详细。</p>
+<h4 id="示例-2"><a href="#示例-2" class="headerlink" title="示例"></a>示例</h4><ul>
+<li>以人类可读的格式显示文件大小：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -lh</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>显示目录的总大小：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -lhS</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-find命令结合du"><a href="#5-find命令结合du" class="headerlink" title="5.find命令结合du"></a>5.<code>find</code>命令结合<code>du</code></h3><p>可以使用<code>find</code>命令查找特定条件的文件，然后结合<code>du</code>命令查看它们的磁盘使用情况。</p>
+<h4 id="示例-3"><a href="#示例-3" class="headerlink" title="示例"></a>示例</h4><ul>
+<li>查找大于100MB的文件并显示其磁盘使用情况：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find /path/to/directory -type f -size +100M -execdu -h &#123;&#125; +</span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>原文: <a target="_blank" rel="noopener" href="https://www.yuque.com/jingdianjichi/xyxdsi/bnus9ng4m4oydmlu">https://www.yuque.com/jingdianjichi/xyxdsi/bnus9ng4m4oydmlu</a></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -4424,7 +4486,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">226</span>
+                <span class="site-state-item-count">225</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
