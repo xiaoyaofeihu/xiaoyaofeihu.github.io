@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="缓存," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="👌redis为什么这么快？口语化回答redis 的快主要得益于以下几个点，第一个就是纯内存的操作，相比磁盘来说，纯内存带来的速度提升非常大。其次就是合理的数据结构和数据编码设计。像不同的数据类型所对应的底层结构都会有变化，基本上作者让我们在 o1 的复杂度内就可以读取到我们想要的值。还有就是单线程，因为在内存，所以压力瓶颈一般在网络和 cpu，单线程完全足够，这使得 redis 不需要考虑切换的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="👌redis是单进程单线程？">
+<meta property="og:url" content="https://xiaoyaofeihu.github.io/2025/05/09/redis/redis%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B9%88%E5%BF%AB%EF%BC%9F/index.html">
+<meta property="og:site_name" content="余声-个人博客">
+<meta property="og:description" content="👌redis为什么这么快？口语化回答redis 的快主要得益于以下几个点，第一个就是纯内存的操作，相比磁盘来说，纯内存带来的速度提升非常大。其次就是合理的数据结构和数据编码设计。像不同的数据类型所对应的底层结构都会有变化，基本上作者让我们在 o1 的复杂度内就可以读取到我们想要的值。还有就是单线程，因为在内存，所以压力瓶颈一般在网络和 cpu，单线程完全足够，这使得 redis 不需要考虑切换的">
+<meta property="og:locale">
+<meta property="article:published_time" content="2025-05-09T13:33:41.000Z">
+<meta property="article:modified_time" content="2025-05-12T03:01:32.617Z">
+<meta property="article:author" content="javayun">
+<meta property="article:tag" content="缓存">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '余声'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://xiaoyaofeihu.github.io/2025/05/09/redis/redis为什么这么快？/"/>
+
+
+
+
+
+  <title>👌redis是单进程单线程？ | 余声-个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">余声-个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/09/redis/redis%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B9%88%E5%BF%AB%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">👌redis是单进程单线程？</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-05-09T13:33:41+00:00">
+                2025-05-09
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:01:32+00:00">
+                2025-05-12
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Redis/" itemprop="url" rel="index">
+                    <span itemprop="name">Redis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="👌redis为什么这么快？"><a href="#👌redis为什么这么快？" class="headerlink" title="👌redis为什么这么快？"></a>👌redis为什么这么快？</h1><h1 id="口语化回答"><a href="#口语化回答" class="headerlink" title="口语化回答"></a>口语化回答</h1><p>redis 的快主要得益于以下几个点，第一个就是纯内存的操作，相比磁盘来说，纯内存带来的速度提升非常大。其次就是合理的数据结构和数据编码设计。像不同的数据类型所对应的底层结构都会有变化，基本上作者让我们在 o1 的复杂度内就可以读取到我们想要的值。还有就是单线程，因为在内存，所以压力瓶颈一般在网络和 cpu，单线程完全足够，这使得 redis 不需要考虑切换的消耗。以及 redis 采取了 io 多路复用，减少了网络压力，提高了吞吐量。以上就是 redis 这么快的原因。</p>
+<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>经典题目了，主要是看你对内存的速度有没有一个思考性的了解，知道内存比磁盘快的多，有这种思维，可以在平时开发的时候多注意。还有就是考察单线程不需要考虑切换和争抢的性能问题。io 多路复用是 redis 的比较特色的东西。再深一点就是要考察你对数据类型的底层结构有没有具体的了解了。</p>
+<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>内存，数据结构，单线程，io 多路复用</p>
+<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>redis 巨快，巨快，操作毫秒级，qps 可达 10w+。</p>
+<h2 id="主要原因"><a href="#主要原因" class="headerlink" title="主要原因"></a>主要原因</h2><h3 id="纯内存"><a href="#纯内存" class="headerlink" title="纯内存"></a>纯内存</h3><p>Redis将数据存储在内存中，避免了大量访问数据库和直接读取磁盘数据的操作。内存的读写速度远超过磁盘I&#x2F;O，使得Redis的数据访问非常迅速。</p>
+<h3 id="数据结构合理"><a href="#数据结构合理" class="headerlink" title="数据结构合理"></a>数据结构合理</h3><p>Redis内部的数据结构都是为快速读写而设计的，如跳跃表、SDS（简单动态字符串）、链表和Hash等。基本都能够在 o（1）复杂度下完成大部分操作，比如 hash 的结构，想获取其中一个属性的值，非常的方便，不像数据库查询需要磁盘寻找。</p>
+<h3 id="单线程操作"><a href="#单线程操作" class="headerlink" title="单线程操作"></a>单线程操作</h3><p>Redis采用单线程模型来处理客户端请求，避免了多线程带来的上下文切换和竞争条件。单线程模型使得Redis不需要考虑各种锁的问题，减少了性能消耗。但是持久化，异步删除等等是异步线程处理，但这不影响性能。不过要注意一个点，因为单线程，某个命令如果耗时太大，可能会产生阻塞，也就是我们经常说的，不要使用 keys，或者直接读整个 hash 大 key。</p>
+<h3 id="io-多路复用模型"><a href="#io-多路复用模型" class="headerlink" title="io 多路复用模型"></a>io 多路复用模型</h3><p><font style="color:rgb(25, 27, 31);">Redis在网络通信和磁盘写入方面采用了异步式的IO处理，即使用epoll</font>多路复用技术<font style="color:rgb(25, 27, 31);">同时处理多个网络请求，减少了I&#x2F;O阻塞及</font>上下文切换<font style="color:rgb(25, 27, 31);">开销，提高了系统的吞吐量和响应时间。</font></p>
+<h3 id="专门设计的数据结构"><a href="#专门设计的数据结构" class="headerlink" title="专门设计的数据结构"></a>专门设计的数据结构</h3><p>redis 的每种数据类型对应的底层存储结构都不一样，经历过多种方式的设计。拿 string 类型来进行说，如果存储数字的话，是用int类型的编码。如果存储非数字，小于等于39字节的字符串，是embstr。大于39个字节，则是raw编码。这种根据类型和字节数的设计，在 key 越多的场景下，占用空间越少。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="" alt=" wechat" style="width: 200px; max-width: 100%;"/>
+    <div>天生我才必有用</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E7%BC%93%E5%AD%98/" rel="tag"># 缓存</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2025/05/09/redis/redis%E4%BA%8B%E5%8A%A1%E4%BF%9D%E8%AF%81%E5%8E%9F%E5%AD%90%E6%80%A7%E5%90%97%EF%BC%8C%E6%94%AF%E6%8C%81%E5%9B%9E%E6%BB%9A%E5%90%97_/" rel="next" title="👌redis事务支持原子性，支持回滚？">
+                <i class="fa fa-chevron-left"></i> 👌redis事务支持原子性，支持回滚？
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2025/05/10/redis/redis%E7%9B%B8%E6%AF%94memcached%E6%9C%89%E5%93%AA%E4%BA%9B%E4%BC%98%E5%8A%BF%EF%BC%9F/" rel="prev" title="👌redis相比memcached有哪些优势？">
+                👌redis相比memcached有哪些优势？ <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/11.jpg"
+               alt="" />
+          <p class="site-author-name" itemprop="name"></p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">226</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%91%8Credis%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B9%88%E5%BF%AB%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">👌redis为什么这么快？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%A3%E8%AF%AD%E5%8C%96%E5%9B%9E%E7%AD%94"><span class="nav-number">2.</span> <span class="nav-text">口语化回答</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E8%A7%A3%E6%9E%90"><span class="nav-number">3.</span> <span class="nav-text">题目解析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9D%A2%E8%AF%95%E5%BE%97%E5%88%86%E7%82%B9"><span class="nav-number">4.</span> <span class="nav-text">面试得分点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E8%AF%A6%E7%BB%86%E7%AD%94%E6%A1%88"><span class="nav-number">5.</span> <span class="nav-text">题目详细答案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">5.1.</span> <span class="nav-text">结论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E5%8E%9F%E5%9B%A0"><span class="nav-number">5.2.</span> <span class="nav-text">主要原因</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%AF%E5%86%85%E5%AD%98"><span class="nav-number">5.2.1.</span> <span class="nav-text">纯内存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%90%88%E7%90%86"><span class="nav-number">5.2.2.</span> <span class="nav-text">数据结构合理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E7%BA%BF%E7%A8%8B%E6%93%8D%E4%BD%9C"><span class="nav-number">5.2.3.</span> <span class="nav-text">单线程操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#io-%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E6%A8%A1%E5%9E%8B"><span class="nav-number">5.2.4.</span> <span class="nav-text">io 多路复用模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%93%E9%97%A8%E8%AE%BE%E8%AE%A1%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">5.2.5.</span> <span class="nav-text">专门设计的数据结构</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">javayun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Gemini
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
