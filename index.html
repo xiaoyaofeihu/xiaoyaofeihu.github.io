@@ -264,6 +264,817 @@
   
   
   
+    
+  
+
+  <article class="post post-type-normal post-sticky" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/11/15/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                  <span class="post-sticky-flag" title="置顶">
+                    <i class="fa fa-thumb-tack"></i>
+                  </span>
+                
+                <a class="post-title-link" href="/2024/11/15/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/" itemprop="url">学习笔记</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-11-15T13:33:41+00:00">
+                2024-11-15
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="springcloud服务中使用mq做消息的通知，相对于fegin有什么好处"><a href="#springcloud服务中使用mq做消息的通知，相对于fegin有什么好处" class="headerlink" title="springcloud服务中使用mq做消息的通知，相对于fegin有什么好处"></a>springcloud服务中使用mq做消息的通知，相对于fegin有什么好处</h1><h2 id="在-Spring-Cloud-服务中使用-消息队列（如-RabbitMQ、Kafka-等）来处理消息通知，相对于-Feign-进行同步调用，具有多个优势，特别是在分布式系统中。这些好处主要体现在-解耦性、可靠性、性能和可扩展性-等方面。下面详细列出它们的优缺点对比："><a href="#在-Spring-Cloud-服务中使用-消息队列（如-RabbitMQ、Kafka-等）来处理消息通知，相对于-Feign-进行同步调用，具有多个优势，特别是在分布式系统中。这些好处主要体现在-解耦性、可靠性、性能和可扩展性-等方面。下面详细列出它们的优缺点对比：" class="headerlink" title="在 Spring Cloud 服务中使用 消息队列（如 RabbitMQ、Kafka 等）来处理消息通知，相对于 Feign 进行同步调用，具有多个优势，特别是在分布式系统中。这些好处主要体现在 解耦性、可靠性、性能和可扩展性 等方面。下面详细列出它们的优缺点对比："></a>在 Spring Cloud 服务中使用 消息队列（如 RabbitMQ、Kafka 等）来处理消息通知，相对于 Feign 进行同步调用，具有多个优势，特别是在分布式系统中。这些好处主要体现在 解耦性、可靠性、性能和可扩展性 等方面。下面详细列出它们的优缺点对比：</h2><h2 id="1-解耦性"><a href="#1-解耦性" class="headerlink" title="1. 解耦性"></a>1. 解耦性</h2><ul>
+<li>消息队列：使用消息队列时，生产者（发送方）和消费者（接收方）是松耦合的，即使消费者不可用，消息队列仍然可以存储消息，等待消费者处理。这种异步的方式减少了服务之间的直接依赖，增强了系统的解耦性。</li>
+<li>Feign：Feign 是一种同步调用方式，服务 A 直接调用服务 B，服务之间是强耦合的。如果服务 B 不可用，服务 A 会失败，依赖关系比较紧密。</li>
+</ul>
+<h3 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h3><ul>
+<li>消息队列：更容易扩展服务，减少服务间的直接依赖。</li>
+<li>Feign：服务间的直接调用，导致服务耦合性较强，依赖性高。</li>
+</ul>
+<h2 id="2-可靠性"><a href="#2-可靠性" class="headerlink" title="2. 可靠性"></a>2. 可靠性</h2><ul>
+<li>消息队列：消息队列一般会提供消息持久化、重试机制、死信队列等功能，保证消息在系统出现故障时不会丢失，能够在消费者恢复后重新处理。即使服务 A 出现故障，消息依然可以在队列中等待消费。</li>
+<li>Feign：Feign 调用是同步的，如果服务 B 出现故障，Feign 请求会直接失败，且一般不具备自动重试和消息持久化功能。</li>
+</ul>
+<h3 id="优点：-1"><a href="#优点：-1" class="headerlink" title="优点："></a>优点：</h3><ul>
+<li>消息队列：提供消息持久化、重试机制，能确保消息不丢失。</li>
+<li>Feign：服务失败时请求会直接失败，除非使用像 Ribbon 或 Hystrix 这样的断路器进行处理。</li>
+</ul>
+<h2 id="3-异步与性能"><a href="#3-异步与性能" class="headerlink" title="3. 异步与性能"></a>3. 异步与性能</h2><ul>
+<li>消息队列：消息队列是异步处理的，即生产者发送完消息后，不需要等待消费者处理结果。生产者可以继续执行其他任务，消息队列通过缓冲提高系统吞吐量。当系统负载较高时，消费者可以批量消费消息，提高处理效率。</li>
+<li>Feign：Feign 是同步的，发送请求后，调用方必须等待服务返回结果，可能会导致性能瓶颈，特别是当多个服务调用彼此依赖时，响应时间可能会增加。</li>
+</ul>
+<h3 id="优点：-2"><a href="#优点：-2" class="headerlink" title="优点："></a>优点：</h3><ul>
+<li>消息队列：通过异步处理提高系统吞吐量和性能，适合处理高并发、高负载的场景。</li>
+<li>Feign：同步请求，可能会成为性能瓶颈，尤其在服务间相互调用较多时。</li>
+</ul>
+<h2 id="4-可伸缩性"><a href="#4-可伸缩性" class="headerlink" title="4. 可伸缩性"></a>4. 可伸缩性</h2><ul>
+<li>消息队列：消息队列可以在消费者端进行水平扩展。例如，消费者可以横向扩展多个实例来处理消息，从而提升系统的处理能力。消息队列会自动将消息分发给空闲的消费者实例，提高系统的可伸缩性。</li>
+<li>Feign：Feign 本身并不具备内建的负载均衡功能，虽然可以使用 Spring Cloud 的负载均衡组件（如 Ribbon），但它依赖于同步请求，因此在高并发场景下扩展性较差。</li>
+</ul>
+<h3 id="优点：-3"><a href="#优点：-3" class="headerlink" title="优点："></a>优点：</h3><ul>
+<li>消息队列：通过消费端的水平扩展，提高系统的可伸缩性。</li>
+<li>Feign：虽然有负载均衡，但扩展性主要依赖于同步调用方式，可能会受到性能瓶颈的限制。</li>
+</ul>
+<h2 id="5-流量控制与限流"><a href="#5-流量控制与限流" class="headerlink" title="5. 流量控制与限流"></a>5. 流量控制与限流</h2><ul>
+<li>消息队列：消息队列通常支持流量控制。比如，消费者的处理速度低于生产者的发送速度时，消息队列可以进行流量调节，避免系统被大量消息打垮。此外，死信队列、延时队列等功能可以帮助处理异常消息，避免堆积。</li>
+<li>Feign：Feign 是同步请求，不适合处理流量控制。如果请求量激增，可能会导致服务出现超时或者崩溃。</li>
+</ul>
+<h3 id="优点：-4"><a href="#优点：-4" class="headerlink" title="优点："></a>优点：</h3><ul>
+<li>消息队列：可以通过流量控制机制、死信队列、延时队列等功能保证系统稳定性。</li>
+<li>Feign：不适合直接进行流量控制，可能导致系统超载。</li>
+</ul>
+<h2 id="6-消息顺序"><a href="#6-消息顺序" class="headerlink" title="6. 消息顺序"></a>6. 消息顺序</h2><ul>
+<li>消息队列：许多消息队列系统（如 Kafka 和 RabbitMQ）都支持消息的顺序保证，尤其在处理同一个主题或队列中的消息时，可以确保消息按顺序被消费。对于需要保证顺序消费的场景，消息队列是非常适合的。</li>
+<li>Feign：Feign 的调用是同步的，但它不保证请求的顺序和消费顺序。多个服务之间的调用是按顺序发生的，但并不适用于保证消息顺序。</li>
+</ul>
+<h3 id="优点：-5"><a href="#优点：-5" class="headerlink" title="优点："></a>优点：</h3><ul>
+<li>消息队列：可以确保消息顺序性，适合需要严格顺序的场景。</li>
+<li>Feign：没有内建的顺序保证机制。</li>
+</ul>
+<h2 id="7-场景适配"><a href="#7-场景适配" class="headerlink" title="7. 场景适配"></a>7. 场景适配</h2><ul>
+<li>消息队列：适用于以下场景：</li>
+</ul>
+<blockquote>
+<p>事件驱动的应用，异步通知、推送；<br>高并发、高吞吐量的系统；<br>系统解耦，避免微服务之间的直接调用；<br>消息延迟处理或异步处理的场景。</p>
+</blockquote>
+<ul>
+<li>Feign：适用于以下场景：</li>
+</ul>
+<blockquote>
+<p>服务间的同步调用，需要立即得到返回值；<br>处理简单的请求-响应模式；<br>服务间的低延迟、低耦合调用。</p>
+</blockquote>
+<h2 id="8-总结"><a href="#8-总结" class="headerlink" title="8. 总结"></a>8. 总结</h2><table>
+<thead>
+<tr>
+<th>特性</th>
+<th><strong>消息队列</strong></th>
+<th><strong>Feign</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>耦合性</strong></td>
+<td>松耦合，生产者和消费者分离</td>
+<td>强耦合，服务间直接调用</td>
+</tr>
+<tr>
+<td><strong>可靠性</strong></td>
+<td>提供消息持久化、重试机制</td>
+<td>依赖于服务的可用性，失败时没有自动恢复</td>
+</tr>
+<tr>
+<td><strong>性能</strong></td>
+<td>异步，适合高并发、高吞吐量的场景</td>
+<td>同步，可能成为性能瓶颈</td>
+</tr>
+<tr>
+<td><strong>可伸缩性</strong></td>
+<td>通过水平扩展消费者来提高可伸缩性</td>
+<td>依赖于负载均衡，扩展有限</td>
+</tr>
+<tr>
+<td><strong>流量控制</strong></td>
+<td>可以控制流量，避免系统过载</td>
+<td>没有流量控制机制</td>
+</tr>
+<tr>
+<td><strong>消息顺序</strong></td>
+<td>可以保证消息顺序</td>
+<td>不保证消息顺序</td>
+</tr>
+<tr>
+<td><strong>场景适配</strong></td>
+<td>事件驱动、异步通知、大量消息处理</td>
+<td>服务间同步调用、低延迟处理</td>
+</tr>
+</tbody></table>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><h3 id="使用-消息队列（如-RabbitMQ、Kafka）更适合于-高并发、异步、解耦、事件驱动-的场景，能够提高系统的可靠性、性能和扩展性。"><a href="#使用-消息队列（如-RabbitMQ、Kafka）更适合于-高并发、异步、解耦、事件驱动-的场景，能够提高系统的可靠性、性能和扩展性。" class="headerlink" title="使用 消息队列（如 RabbitMQ、Kafka）更适合于 高并发、异步、解耦、事件驱动 的场景，能够提高系统的可靠性、性能和扩展性。"></a>使用 消息队列（如 RabbitMQ、Kafka）更适合于 高并发、异步、解耦、事件驱动 的场景，能够提高系统的可靠性、性能和扩展性。</h3><h3 id="使用-Feign-更适合-同步调用、简单的请求-响应模式、低延迟-的服务间通信。"><a href="#使用-Feign-更适合-同步调用、简单的请求-响应模式、低延迟-的服务间通信。" class="headerlink" title="使用 Feign 更适合 同步调用、简单的请求-响应模式、低延迟 的服务间通信。"></a>使用 Feign 更适合 同步调用、简单的请求-响应模式、低延迟 的服务间通信。</h3>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+    
+  
+
+  <article class="post post-type-normal post-sticky" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/10/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E7%BA%BF%E7%A8%8B%E6%B1%A0%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                  <span class="post-sticky-flag" title="置顶">
+                    <i class="fa fa-thumb-tack"></i>
+                  </span>
+                
+                <a class="post-title-link" href="/2025/05/10/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E7%BA%BF%E7%A8%8B%E6%B1%A0%E9%97%AE%E9%A2%98/" itemprop="url">线程池问题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-05-10T13:33:41+00:00">
+                2025-05-10
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/" itemprop="url" rel="index">
+                    <span itemprop="name">分布式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="一、线程池拒绝策略选择指南"><a href="#一、线程池拒绝策略选择指南" class="headerlink" title="一、线程池拒绝策略选择指南"></a>一、线程池拒绝策略选择指南</h1><p>在实际开发中，线程池拒绝策略的选择需要根据具体的业务场景和系统需求来决定。Java线程池提供了四种内置拒绝策略，每种策略适用于不同的情况。</p>
+<p>一、四种内置拒绝策略</p>
+<ol>
+<li>AbortPolicy（默认策略）<br>行为：直接抛出RejectedExecutionException异常</li>
+</ol>
+<p>适用场景：</p>
+<p>需要明确知道任务被拒绝的情况</p>
+<p>关键业务系统，不能容忍任务静默丢失</p>
+<p>开发测试环境（便于发现问题）</p>
+<p>示例：</p>
+<p>java<br>ThreadPoolExecutor executor &#x3D; new ThreadPoolExecutor(<br>    2, 4, 60, TimeUnit.SECONDS,<br>    new ArrayBlockingQueue&lt;&gt;(2),<br>    new ThreadPoolExecutor.AbortPolicy()  &#x2F;&#x2F; 显式指定<br>);<br>2. CallerRunsPolicy<br>行为：将任务回退给调用者线程执行</p>
+<p>适用场景：</p>
+<p>适合能承受一定延迟的业务</p>
+<p>需要保证每个任务都能被执行</p>
+<p>不希望任务丢失但可以接受降级</p>
+<p>特点：</p>
+<p>会降低新任务提交速度，起到负反馈调节作用</p>
+<p>调用者线程可能被阻塞</p>
+<ol start="3">
+<li>DiscardPolicy<br>行为：静默丢弃被拒绝的任务，不做任何处理</li>
+</ol>
+<p>适用场景：</p>
+<p>非核心业务</p>
+<p>允许丢失部分任务的场景</p>
+<p>监控日志不重要的任务</p>
+<p>风险：</p>
+<p>任务丢失无感知，可能造成数据不一致</p>
+<ol start="4">
+<li>DiscardOldestPolicy<br>行为：丢弃队列中最老的任务，然后尝试重新提交当前任务</li>
+</ol>
+<p>适用场景：</p>
+<p>允许丢弃旧任务的新业务场景</p>
+<p>实时性要求高的任务优先处理</p>
+<p>任务本身具有时效性（旧任务价值低）</p>
+<p>注意事项：</p>
+<p>可能丢失重要但处理慢的任务</p>
+<p>不适合任务之间有依赖关系的场景</p>
+<p>二、选择策略的决策流程</p>
+<ul>
+<li>是否绝对不能丢失任务<ul>
+<li>是：使用CallerRunsPolicy</li>
+<li>否：是否需要立即知道被拒绝<ul>
+<li>是：使用AbortPolicy</li>
+<li>否：新任务比旧任务更重要<ul>
+<li>是：使用DiscardOldestPolicy</li>
+<li>否：使用DiscardPolicy</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>三、实际业务场景推荐</p>
+<ol>
+<li><p>支付&#x2F;交易核心系统<br>推荐策略：CallerRunsPolicy<br>理由：保证每个支付请求都能被处理，宁可降级也不丢失</p>
+</li>
+<li><p>日志记录&#x2F;数据收集<br>推荐策略：DiscardPolicy<br>理由：日志可容忍部分丢失，避免影响主业务流程</p>
+</li>
+<li><p>实时数据处理<br>推荐策略：DiscardOldestPolicy<br>理由：新数据比旧数据更有价值</p>
+</li>
+<li><p>管理系统后台任务<br>推荐策略：AbortPolicy<br>理由：需要及时发现系统过载情况</p>
+</li>
+</ol>
+<p>四、自定义拒绝策略<br>当内置策略不满足需求时，可以实现RejectedExecutionHandler接口：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CustomRejectionPolicy</span> <span class="keyword">implements</span> <span class="title class_">RejectedExecutionHandler</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">rejectedExecution</span><span class="params">(Runnable r, ThreadPoolExecutor executor)</span> &#123;</span><br><span class="line">        <span class="comment">// 1. 记录日志</span></span><br><span class="line">        log.warn(<span class="string">&quot;Task rejected: &#123;&#125;&quot;</span>, r.toString());</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 2. 持久化任务到数据库/文件</span></span><br><span class="line">        persistTask(r);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 3. 尝试重新提交</span></span><br><span class="line">        <span class="keyword">if</span> (!executor.isShutdown()) &#123;</span><br><span class="line">            executor.submit(r);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用示例</span></span><br><span class="line">executor.setRejectedExecutionHandler(<span class="keyword">new</span> <span class="title class_">CustomRejectionPolicy</span>());</span><br></pre></td></tr></table></figure>
+
+<p>五、配置建议<br>监控报警：无论选择哪种策略，都应监控拒绝情况</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 通过ThreadPoolExecutor的getRejectedExecutionCount()获取拒绝数</span></span><br></pre></td></tr></table></figure>
+
+<p>参数调优：合理设置队列容量和线程数比选择拒绝策略更重要</p>
+<p>组合使用：不同业务使用不同线程池，配置不同策略</p>
+<p>文档记录：在代码中明确注释选择该策略的原因</p>
+<p>六、最佳实践总结<br>关键业务：优先保证任务执行（CallerRunsPolicy）</p>
+<p>可丢弃任务：选择静默丢弃（DiscardPolicy）</p>
+<p>需要感知：抛出异常（AbortPolicy）</p>
+<p>时效敏感：丢弃旧任务（DiscardOldestPolicy）</p>
+<p>特殊需求：自定义策略（如持久化后重试）</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+    
+  
+
+  <article class="post post-type-normal post-sticky" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/%E5%9F%BA%E7%A1%80/ThreadLocal/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                  <span class="post-sticky-flag" title="置顶">
+                    <i class="fa fa-thumb-tack"></i>
+                  </span>
+                
+                <a class="post-title-link" href="/2024/10/10/%E5%9F%BA%E7%A1%80/ThreadLocal/" itemprop="url">ThreadLocal的实现原理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-10T17:33:00+00:00">
+                2024-10-10
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="ThreadLocal是Java中用于解决多线程环境下数据隔离问题的一个类。它提供了一种方式，使得每个线程都可以拥有其独立的变量副本，这样每个线程都可以独立地改变自己的副本，而不会影响其他线程的副本。这种机制在多线程编程中非常有用，特别是当需要在多个线程之间共享某些数据，但又不希望这些数据因为并发访问而引发问题时。"><a href="#ThreadLocal是Java中用于解决多线程环境下数据隔离问题的一个类。它提供了一种方式，使得每个线程都可以拥有其独立的变量副本，这样每个线程都可以独立地改变自己的副本，而不会影响其他线程的副本。这种机制在多线程编程中非常有用，特别是当需要在多个线程之间共享某些数据，但又不希望这些数据因为并发访问而引发问题时。" class="headerlink" title="ThreadLocal是Java中用于解决多线程环境下数据隔离问题的一个类。它提供了一种方式，使得每个线程都可以拥有其独立的变量副本，这样每个线程都可以独立地改变自己的副本，而不会影响其他线程的副本。这种机制在多线程编程中非常有用，特别是当需要在多个线程之间共享某些数据，但又不希望这些数据因为并发访问而引发问题时。"></a>ThreadLocal是Java中用于解决多线程环境下数据隔离问题的一个类。它提供了一种方式，使得每个线程都可以拥有其独立的变量副本，这样每个线程都可以独立地改变自己的副本，而不会影响其他线程的副本。这种机制在多线程编程中非常有用，特别是当需要在多个线程之间共享某些数据，但又不希望这些数据因为并发访问而引发问题时。</h2><h3 id="ThreadLocal的实现原理"><a href="#ThreadLocal的实现原理" class="headerlink" title="ThreadLocal的实现原理"></a>ThreadLocal的实现原理</h3><p>ThreadLocal的实现主要依赖于一个内部类ThreadLocalMap。这个Map以ThreadLocal对象为键，以线程独有的变量为值。每个线程都维护着一个ThreadLocalMap的引用，这样线程就可以通过ThreadLocal对象作为键，在其自己的ThreadLocalMap中查找或设置值。</p>
+<ol>
+<li><p><strong>ThreadLocalMap的结构</strong>：</p>
+<ul>
+<li>ThreadLocalMap是一个哈希表，它的键（Key）是ThreadLocal对象本身的一个弱引用（WeakReference），而值（Value）则是线程独有的变量。</li>
+<li>使用弱引用作为键的好处是，当ThreadLocal对象被垃圾回收时，不会因为ThreadLocalMap中的引用而阻止其被回收。但这也带来了一个问题，即如果ThreadLocal对象被回收了，而ThreadLocalMap中的Entry还存在（且Value还未被回收），那么就会出现键为null的情况，这需要在ThreadLocalMap的操作中特别处理。</li>
+</ul>
+</li>
+<li><p><strong>ThreadLocal的方法</strong>：</p>
+<ul>
+<li><code>initialValue()</code>：返回此线程局部变量的初始值。</li>
+<li><code>get()</code>：返回此线程局部变量的当前线程副本中的值。如果这是线程第一次调用该方法，则通过调用<code>initialValue()</code>方法创建并初始化此副本。</li>
+<li><code>set(T value)</code>：将此线程局部变量的当前线程副本中的值设置为指定值。</li>
+<li><code>remove()</code>：移除此线程局部变量的值。这是一个清理操作，有助于避免内存泄漏，特别是在使用线程池时。</li>
+</ul>
+</li>
+<li><p><strong>ThreadLocalMap的扩容和清理</strong>：</p>
+<ul>
+<li>ThreadLocalMap的扩容机制与HashMap类似，当元素数量超过阈值时，会进行扩容。</li>
+<li>由于ThreadLocalMap的键是弱引用，当没有强引用指向ThreadLocal对象时，ThreadLocal对象可以被垃圾回收。但是，如果ThreadLocal对象被回收了，而对应的Value对象还有强引用存在（即还没有被线程显式地调用<code>remove()</code>方法移除），那么这些Value对象就变成了“孤儿对象”，可能会导致内存泄漏。因此，在使用ThreadLocal时，建议显式地调用<code>remove()</code>方法来清理不再需要的线程局部变量。</li>
+</ul>
+</li>
+</ol>
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><p>ThreadLocal的典型使用场景包括：</p>
+<ul>
+<li>在多线程环境中，每个线程需要维护一个独立的、不与其他线程共享的状态或数据。</li>
+<li>在处理用户请求时，将用户相关的信息（如用户ID、会话信息等）保存在ThreadLocal中，以便在同一个请求处理流程中方便地访问这些信息，而不需要通过参数传递。</li>
+</ul>
+<h3 id="内存泄漏与内存溢出的区别"><a href="#内存泄漏与内存溢出的区别" class="headerlink" title="内存泄漏与内存溢出的区别"></a>内存泄漏与内存溢出的区别</h3><ul>
+<li><strong>内存泄漏</strong>：指的是程序中分配的内存在不再需要时没有被正确释放或回收的情况。随着时间的推移，可用内存逐渐减少，最终可能导致程序性能下降或崩溃。</li>
+<li><strong>内存溢出</strong>（OOM, Out of Memory）：当程序运行时，如果请求的内存超出了可用内存的限制，就会抛出内存溢出异常。内存泄漏如果不及时解决，最终可能导致内存溢出。</li>
+</ul>
+<h3 id="ThreadLocal内存泄漏问题"><a href="#ThreadLocal内存泄漏问题" class="headerlink" title="ThreadLocal内存泄漏问题"></a>ThreadLocal内存泄漏问题</h3><p>ThreadLocal是一个用于创建线程本地变量的类。每个线程都拥有自己独立的、初始化为null的变量副本，这些变量对其他线程是不可见的。然而，ThreadLocal的内存泄漏问题是一个比较典型的问题。</p>
+<h4 id="ThreadLocal内存泄漏的来源"><a href="#ThreadLocal内存泄漏的来源" class="headerlink" title="ThreadLocal内存泄漏的来源"></a>ThreadLocal内存泄漏的来源</h4><ol>
+<li><p><strong>ThreadLocal对象在堆上存储的ThreadLocalMap</strong>：</p>
+<ul>
+<li>ThreadLocalMap是ThreadLocal的内部类，用于存储线程局部变量。</li>
+<li>ThreadLocalMap的key是ThreadLocal对象，value是线程变量的值。</li>
+</ul>
+</li>
+<li><p><strong>ThreadLocal的引用链</strong>：</p>
+<ul>
+<li>ThreadLocal对象有两个引用源：一个是栈上的ThreadLocal引用（方法内创建），一个是ThreadLocalMap中的key对它的引用。</li>
+<li>如果栈上的ThreadLocal引用不再使用（方法结束），但ThreadLocal对象因为还有ThreadLocalMap中的key引用而无法被回收，就会导致内存泄漏。</li>
+</ul>
+</li>
+<li><p><strong>线程对象被重复使用</strong>：</p>
+<ul>
+<li>在线程池场景中，线程对象会被重复使用。如果线程中的ThreadLocalMap没有及时清理，就会导致内存泄漏。</li>
+</ul>
+</li>
+</ol>
+<h4 id="弱引用解决部分内存泄漏问题"><a href="#弱引用解决部分内存泄漏问题" class="headerlink" title="弱引用解决部分内存泄漏问题"></a>弱引用解决部分内存泄漏问题</h4><p>为了解决ThreadLocal对象因为ThreadLocalMap中的key引用而无法被回收的问题，ThreadLocalMap使用了弱引用。</p>
+<ul>
+<li><strong>弱引用</strong>：如果一个对象只具有弱引用，那么这个对象就会在下次垃圾回收时被回收。</li>
+<li>在ThreadLocalMap中，key（ThreadLocal对象）是弱引用。这意味着，当栈上的ThreadLocal引用不再使用时，ThreadLocal对象可以被垃圾回收器回收，从而避免了因为ThreadLocal对象无法被回收而导致的内存泄漏。</li>
+</ul>
+<p>然而，即使使用了弱引用，ThreadLocal的内存泄漏问题并没有完全解决。因为value（线程变量的值）还是强引用，如果线程对象被重复使用（如在线程池中），并且ThreadLocalMap没有及时清理，那么value所占用的内存仍然无法被回收。因此，开发者还需要在使用完ThreadLocal后，显式地调用<code>remove()</code>方法来清理ThreadLocalMap中的entry，以避免内存泄漏。</p>
+<p>综上所述，ThreadLocal的内存泄漏问题是一个复杂的问题，需要开发者和JDK共同解决。JDK通过使用弱引用来解决了一部分问题，但开发者还需要在使用完ThreadLocal后显式地调用<code>remove()</code>方法来避免内存泄漏。<br>总之，ThreadLocal是一个强大的工具，它可以帮助我们在多线程环境中实现数据的隔离和线程安全。但是，使用时也需要注意其潜在的内存泄漏问题，特别是在使用线程池时。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
@@ -317,8 +1128,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -543,8 +1354,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -760,8 +1571,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -960,8 +1771,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -1156,8 +1967,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -1359,8 +2170,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -1567,8 +2378,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -1755,8 +2566,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -1975,8 +2786,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -2155,268 +2966,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/10/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E7%BA%BF%E7%A8%8B%E6%B1%A0%E9%97%AE%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/05/10/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E7%BA%BF%E7%A8%8B%E6%B1%A0%E9%97%AE%E9%A2%98/" itemprop="url">线程池问题</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-05-10T13:33:41+00:00">
-                2025-05-10
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/" itemprop="url" rel="index">
-                    <span itemprop="name">分布式</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="一、线程池拒绝策略选择指南"><a href="#一、线程池拒绝策略选择指南" class="headerlink" title="一、线程池拒绝策略选择指南"></a>一、线程池拒绝策略选择指南</h1><p>在实际开发中，线程池拒绝策略的选择需要根据具体的业务场景和系统需求来决定。Java线程池提供了四种内置拒绝策略，每种策略适用于不同的情况。</p>
-<p>一、四种内置拒绝策略</p>
-<ol>
-<li>AbortPolicy（默认策略）<br>行为：直接抛出RejectedExecutionException异常</li>
-</ol>
-<p>适用场景：</p>
-<p>需要明确知道任务被拒绝的情况</p>
-<p>关键业务系统，不能容忍任务静默丢失</p>
-<p>开发测试环境（便于发现问题）</p>
-<p>示例：</p>
-<p>java<br>ThreadPoolExecutor executor &#x3D; new ThreadPoolExecutor(<br>    2, 4, 60, TimeUnit.SECONDS,<br>    new ArrayBlockingQueue&lt;&gt;(2),<br>    new ThreadPoolExecutor.AbortPolicy()  &#x2F;&#x2F; 显式指定<br>);<br>2. CallerRunsPolicy<br>行为：将任务回退给调用者线程执行</p>
-<p>适用场景：</p>
-<p>适合能承受一定延迟的业务</p>
-<p>需要保证每个任务都能被执行</p>
-<p>不希望任务丢失但可以接受降级</p>
-<p>特点：</p>
-<p>会降低新任务提交速度，起到负反馈调节作用</p>
-<p>调用者线程可能被阻塞</p>
-<ol start="3">
-<li>DiscardPolicy<br>行为：静默丢弃被拒绝的任务，不做任何处理</li>
-</ol>
-<p>适用场景：</p>
-<p>非核心业务</p>
-<p>允许丢失部分任务的场景</p>
-<p>监控日志不重要的任务</p>
-<p>风险：</p>
-<p>任务丢失无感知，可能造成数据不一致</p>
-<ol start="4">
-<li>DiscardOldestPolicy<br>行为：丢弃队列中最老的任务，然后尝试重新提交当前任务</li>
-</ol>
-<p>适用场景：</p>
-<p>允许丢弃旧任务的新业务场景</p>
-<p>实时性要求高的任务优先处理</p>
-<p>任务本身具有时效性（旧任务价值低）</p>
-<p>注意事项：</p>
-<p>可能丢失重要但处理慢的任务</p>
-<p>不适合任务之间有依赖关系的场景</p>
-<p>二、选择策略的决策流程</p>
-<ul>
-<li>是否绝对不能丢失任务<ul>
-<li>是：使用CallerRunsPolicy</li>
-<li>否：是否需要立即知道被拒绝<ul>
-<li>是：使用AbortPolicy</li>
-<li>否：新任务比旧任务更重要<ul>
-<li>是：使用DiscardOldestPolicy</li>
-<li>否：使用DiscardPolicy</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>三、实际业务场景推荐</p>
-<ol>
-<li><p>支付&#x2F;交易核心系统<br>推荐策略：CallerRunsPolicy<br>理由：保证每个支付请求都能被处理，宁可降级也不丢失</p>
-</li>
-<li><p>日志记录&#x2F;数据收集<br>推荐策略：DiscardPolicy<br>理由：日志可容忍部分丢失，避免影响主业务流程</p>
-</li>
-<li><p>实时数据处理<br>推荐策略：DiscardOldestPolicy<br>理由：新数据比旧数据更有价值</p>
-</li>
-<li><p>管理系统后台任务<br>推荐策略：AbortPolicy<br>理由：需要及时发现系统过载情况</p>
-</li>
-</ol>
-<p>四、自定义拒绝策略<br>当内置策略不满足需求时，可以实现RejectedExecutionHandler接口：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CustomRejectionPolicy</span> <span class="keyword">implements</span> <span class="title class_">RejectedExecutionHandler</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">rejectedExecution</span><span class="params">(Runnable r, ThreadPoolExecutor executor)</span> &#123;</span><br><span class="line">        <span class="comment">// 1. 记录日志</span></span><br><span class="line">        log.warn(<span class="string">&quot;Task rejected: &#123;&#125;&quot;</span>, r.toString());</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 2. 持久化任务到数据库/文件</span></span><br><span class="line">        persistTask(r);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 3. 尝试重新提交</span></span><br><span class="line">        <span class="keyword">if</span> (!executor.isShutdown()) &#123;</span><br><span class="line">            executor.submit(r);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用示例</span></span><br><span class="line">executor.setRejectedExecutionHandler(<span class="keyword">new</span> <span class="title class_">CustomRejectionPolicy</span>());</span><br></pre></td></tr></table></figure>
-
-<p>五、配置建议<br>监控报警：无论选择哪种策略，都应监控拒绝情况</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 通过ThreadPoolExecutor的getRejectedExecutionCount()获取拒绝数</span></span><br></pre></td></tr></table></figure>
-
-<p>参数调优：合理设置队列容量和线程数比选择拒绝策略更重要</p>
-<p>组合使用：不同业务使用不同线程池，配置不同策略</p>
-<p>文档记录：在代码中明确注释选择该策略的原因</p>
-<p>六、最佳实践总结<br>关键业务：优先保证任务执行（CallerRunsPolicy）</p>
-<p>可丢弃任务：选择静默丢弃（DiscardPolicy）</p>
-<p>需要感知：抛出异常（AbortPolicy）</p>
-<p>时效敏感：丢弃旧任务（DiscardOldestPolicy）</p>
-<p>特殊需求：自定义策略（如持久化后重试）</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/09/redis/redis%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B9%88%E5%BF%AB%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2464,8 +3013,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -2657,8 +3206,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -2851,8 +3400,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -3051,8 +3600,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -3240,8 +3789,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -3434,8 +3983,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -3637,8 +4186,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -3829,8 +4378,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -3955,411 +4504,6 @@
 <p>原文: <a target="_blank" rel="noopener" href="https://www.yuque.com/jingdianjichi/xyxdsi/eg6c7clpzgsazknn">https://www.yuque.com/jingdianjichi/xyxdsi/eg6c7clpzgsazknn</a></p>
 </blockquote>
 
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/07/redis/redis%E7%9A%84setnx%E5%92%8Csetex%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/05/07/redis/redis%E7%9A%84setnx%E5%92%8Csetex%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F/" itemprop="url">👌redis的setnx和setex的区别？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-05-07T13:33:41+00:00">
-                2025-05-07
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Redis/" itemprop="url" rel="index">
-                    <span itemprop="name">Redis</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌redis的setnx和setex的区别？"><a href="#👌redis的setnx和setex的区别？" class="headerlink" title="👌redis的setnx和setex的区别？"></a>👌redis的setnx和setex的区别？</h1><h1 id="口语化答案"><a href="#口语化答案" class="headerlink" title="口语化答案"></a>口语化答案</h1><p>setnx 和 setex 都是在最基础的 set 命令上面所做的升级。setnx 的一个特性就是如果 key 已经存在，在此放入会放不进去，这种特性也常常用来做分布式锁。如果 setnx 成功，则证明获取到锁成功，没有 set 成功，则证明获取锁失败。setex 只多了一个过期时间的概念，比如我希望本次放入的缓存 3 秒后自动失效，就可以通过这个命令来实现。</p>
-<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>比较基础的一道题，面试官主要是借这个问题，聊到分布式锁相关的一些处理。注意二者的区别即可。</p>
-<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>不存在则设置，过期时间，分布式锁</p>
-<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>SET：最基础的命令，setnx 和 setex 都是在此基础上进行变种。set 命令就是设置键值对，如果已经有值则覆盖，没值就放进去，不涉及过期时间的概念。</p>
-<p>SETNX：是一个设置键-值对的命令，但仅在键不存在时才设置该键。如果键已经存在，则不进行任何操作。它是“Set if Not Exists”的缩写，即“如果不存在则设置”。</p>
-<p>SETEX：这个命令用于为指定的键设置值及其过期时间。如果键已经存在，SETEX命令将会替换旧的值和过期时间。</p>
-<h2 id="命令使用"><a href="#命令使用" class="headerlink" title="命令使用"></a>命令使用</h2><p>SETNX的语法为：SETNX key value。其中，key是要设置的键名，value是要设置的值。如果key不存在，则返回1表示设置成功；如果key已经存在，则返回0表示设置失败。</p>
-<p>SETEX的语法为：SETEX key seconds value。其中，key是要设置的键名，seconds是过期时间（以秒为单位），value是要设置的值。如果设置成功，则返回“OK”。</p>
-<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><p>SETNX常用于分布式场景中的锁机制。例如，在多个客户端同时访问共享资源或执行关键操作时，可以使用SETNX命令尝试在Redis中设置一个特定的键作为锁键，从而确保只有一个客户端能够成功设置该键并执行关键操作。其他执行命令因为设置不成功，所以就可以认为是未获得到锁。</p>
-<p>SETEX则用于为键设置值和过期时间。这在需要临时存储数据或限制数据有效期的场景中非常有用。例如，可以使用SETEX命令存储会话信息或缓存数据，并为其设置适当的过期时间以自动删除过期的数据。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/06/JVM/JVM%E4%B8%BB%E8%A6%81%E7%BB%84%E6%88%90%E9%83%A8%E5%88%86%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/05/06/JVM/JVM%E4%B8%BB%E8%A6%81%E7%BB%84%E6%88%90%E9%83%A8%E5%88%86%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F/" itemprop="url">👌JVM主要组成部分有哪些？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-05-06T13:33:41+00:00">
-                2025-05-06
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌JVM主要组成部分有哪些？"><a href="#👌JVM主要组成部分有哪些？" class="headerlink" title="👌JVM主要组成部分有哪些？"></a>👌JVM主要组成部分有哪些？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p><img src="/2025/05/06/JVM/JVM%E4%B8%BB%E8%A6%81%E7%BB%84%E6%88%90%E9%83%A8%E5%88%86%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F/bfRGipU0bnWvup3D/1725898764439-e7db4bb9-4d60-4b85-9b3d-02c5dbfd311c-379175.png" alt="1725898764439-e7db4bb9-4d60-4b85-9b3d-02c5dbfd311c.png"></p>
-<h2 id="类加载子系统"><a href="#类加载子系统" class="headerlink" title="类加载子系统"></a>类加载子系统</h2><p>类加载子系统负责将 .class 文件加载到内存中，并进行验证、准备、解析和初始化。</p>
-<p><strong>主要功能</strong>：</p>
-<p><strong>加载</strong>：从文件系统或网络中读取 .class 文件。</p>
-<p><strong>验证</strong>：确保字节码文件的正确性和安全性。</p>
-<p><strong>准备</strong>：为类的静态变量分配内存并设置默认初始值。</p>
-<p><strong>解析</strong>：将符号引用转换为直接引用。</p>
-<p><strong>初始化</strong>：执行类的静态初始化块和静态变量的初始化。</p>
-<h2 id="运行时数据区"><a href="#运行时数据区" class="headerlink" title="运行时数据区"></a>运行时数据区</h2><p>JVM 在运行时将内存划分为多个不同的数据区域，每个区域都有特定的用途。</p>
-<p><strong>方法区（Method Area）</strong>：存储已加载的类信息、常量、静态变量、即时编译器编译后的代码等。</p>
-<p><strong>堆（Heap）</strong>：存储所有对象实例和数组，是垃圾收集的主要区域。</p>
-<p><strong>Java 栈（Java Stacks）</strong>：每个线程都有自己的 Java 栈，存储局部变量表、操作数栈、动态链接、方法返回地址等信息。</p>
-<p><strong>本地方法栈（Native Method Stacks）</strong>：为本地方法调用服务，存储本地方法调用的状态。</p>
-<p><strong>程序计数器（Program Counter Register）</strong>：每个线程都有自己的程序计数器，指示当前线程执行的字节码行号。</p>
-<h2 id="执行引擎"><a href="#执行引擎" class="headerlink" title="执行引擎"></a>执行引擎</h2><p>执行引擎负责执行字节码指令。</p>
-<p><strong>主要组件</strong>：</p>
-<p><strong>解释器（Interpreter）</strong>：逐条解释执行字节码指令，速度较慢。</p>
-<p><strong>即时编译器（Just-In-Time Compiler, JIT）</strong>：将热点代码（频繁执行的代码）编译为本地机器码，提高执行速度。</p>
-<p><strong>垃圾收集器（Garbage Collector, GC）</strong>：自动管理内存，回收不再使用的对象，防止内存泄漏。</p>
-<h2 id="本地接口"><a href="#本地接口" class="headerlink" title="本地接口"></a>本地接口</h2><p>本地接口（通常是 Java Native Interface, JNI）允许 Java 代码与本地（非 Java）代码进行交互。</p>
-<p><strong>主要功能</strong>：</p>
-<p>调用本地方法（通常是用 C 或 C++ 编写的）。</p>
-<p>允许 Java 代码使用操作系统特性或访问硬件。</p>
-<h2 id="本地方法库"><a href="#本地方法库" class="headerlink" title="本地方法库"></a>本地方法库</h2><p>本地方法库是存储本地方法实现的动态链接库（如 .dll 文件或 .so 文件）。</p>
-<p><strong>主要功能</strong>：</p>
-<p>提供本地方法的具体实现。</p>
-<p>由本地接口调用以执行本地代码。</p>
-<h3 id="JVM-主要组成部分的图示"><a href="#JVM-主要组成部分的图示" class="headerlink" title="JVM 主要组成部分的图示"></a>JVM 主要组成部分的图示</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">+---------------------------+</span><br><span class="line">|     类加载子系统 (Class Loader Subsystem)    |</span><br><span class="line">+---------------------------+</span><br><span class="line">|         运行时数据区 (Runtime Data Area)         |</span><br><span class="line">|  - 方法区 (Method Area)                        |</span><br><span class="line">|  - 堆 (Heap)                                   |</span><br><span class="line">|  - Java 栈 (Java Stacks)                       |</span><br><span class="line">|  - 本地方法栈 (Native Method Stacks)           |</span><br><span class="line">|  - 程序计数器 (Program Counter)                |</span><br><span class="line">+---------------------------+</span><br><span class="line">|          执行引擎 (Execution Engine)           |</span><br><span class="line">|  - 解释器 (Interpreter)                        |</span><br><span class="line">|  - 即时编译器 (Just-In-Time Compiler, JIT)      |</span><br><span class="line">|  - 垃圾收集器 (Garbage Collector, GC)          |</span><br><span class="line">+---------------------------+</span><br><span class="line">|         本地接口 (Native Interface)            |</span><br><span class="line">+---------------------------+</span><br><span class="line">|     本地方法库 (Native Method Libraries)      |</span><br><span class="line">+---------------------------+</span><br></pre></td></tr></table></figure>
           
         
       

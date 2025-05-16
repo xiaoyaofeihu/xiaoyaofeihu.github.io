@@ -270,6 +270,404 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/02/JVM/Java%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%9C%BA%E5%88%B6%E7%9A%84%E4%BD%9C%E7%94%A8_/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/05/02/JVM/Java%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%9C%BA%E5%88%B6%E7%9A%84%E4%BD%9C%E7%94%A8_/" itemprop="url">👌Java双亲委派机制的作用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-05-02T13:33:41+00:00">
+                2025-05-02
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌Java双亲委派机制的作用"><a href="#👌Java双亲委派机制的作用" class="headerlink" title="👌Java双亲委派机制的作用?"></a>👌Java双亲委派机制的作用?</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="保证-Java-核心库的安全性"><a href="#保证-Java-核心库的安全性" class="headerlink" title="保证 Java 核心库的安全性"></a>保证 Java 核心库的安全性</h2><p>通过双亲委派机制，Java 核心库（如java.lang.Object等）由启动类加载器（Bootstrap ClassLoader）加载。由于启动类加载器是在 JVM 启动时由本地代码实现的，并且它加载的类路径是固定的系统核心库路径，因此可以确保这些核心类不会被篡改或替换。这样系统的安全性和稳定性得到了保障。</p>
+<h2 id="避免类的重复加载"><a href="#避免类的重复加载" class="headerlink" title="避免类的重复加载"></a>避免类的重复加载</h2><p>双亲委派机制确保了每个类只会被加载一次。如果一个类已经被父类加载器加载过，那么子类加载器就不会再重复加载这个类。这样可以避免类的重复加载，提高类加载的效率，并减少内存消耗。</p>
+<h2 id="保证类加载的一致性"><a href="#保证类加载的一致性" class="headerlink" title="保证类加载的一致性"></a>保证类加载的一致性</h2><p>通过双亲委派机制，可以确保同一个类在整个 JVM 中只有一个定义。这样可以避免类的冲突和不一致问题。例如，如果应用程序和第三方库中都定义了一个相同的类名，通过双亲委派机制可以确保最终加载的是位于更高层次的类加载器中的类，从而避免冲突。</p>
+<h2 id="提高类加载的效率"><a href="#提高类加载的效率" class="headerlink" title="提高类加载的效率"></a>提高类加载的效率</h2><p>双亲委派机制通过将类加载请求逐级向上委派，可以利用已经加载的类，提高类加载的效率。父类加载器在加载类时，如果该类已经被加载过，那么直接返回该类的引用，从而减少了重复加载的开销。</p>
+<h2 id="支持动态扩展"><a href="#支持动态扩展" class="headerlink" title="支持动态扩展"></a>支持动态扩展</h2><p>双亲委派机制允许在不同的类加载器中加载不同的类，从而支持动态扩展。例如，应用程序类加载器（Application ClassLoader）可以加载应用程序特定的类，而扩展类加载器（Extension ClassLoader）可以加载扩展库中的类，这样可以方便地进行动态扩展和模块化开发。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/02/JVM/Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%BF%9B%E7%A8%8B%E4%BD%95%E6%97%B6%E7%BB%93%E6%9D%9F_/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/05/02/JVM/Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%BF%9B%E7%A8%8B%E4%BD%95%E6%97%B6%E7%BB%93%E6%9D%9F_/" itemprop="url">👌Java虚拟机进程何时结束</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-05-02T13:33:41+00:00">
+                2025-05-02
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌Java虚拟机进程何时结束"><a href="#👌Java虚拟机进程何时结束" class="headerlink" title="👌Java虚拟机进程何时结束?"></a>👌Java虚拟机进程何时结束?</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="所有非守护线程（Non-Daemon-Threads）结束"><a href="#所有非守护线程（Non-Daemon-Threads）结束" class="headerlink" title="所有非守护线程（Non-Daemon Threads）结束"></a>所有非守护线程（Non-Daemon Threads）结束</h2><p>JVM 进程会在所有非守护线程结束后自动退出。非守护线程是默认的线程类型，通常用于执行主要任务。守护线程（Daemon Thread）则是辅助线程，通常用于执行后台任务，例如垃圾回收。</p>
+<p><strong>非守护线程</strong>：主要任务线程，JVM 会等待其执行完毕。</p>
+<p><strong>守护线程</strong>：辅助任务线程，JVM 不会等待其执行完毕。</p>
+<p>当所有非守护线程都结束时，JVM 会自动退出，即使还有守护线程在运行。</p>
+<h2 id="调用System-exit-int-status"><a href="#调用System-exit-int-status" class="headerlink" title="调用System.exit(int status)"></a>调用System.exit(int status)</h2><p>可以通过调用System.exit(int status)方法来显式终止 JVM 进程。status参数是一个整数，通常用于表示退出状态码。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class ExitExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        System.out.println(&quot;Program is exiting&quot;);</span><br><span class="line">        System.exit(0); // 正常退出</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>System.exit(0)：表示正常退出。非零状态码：表示异常退出。</p>
+<h2 id="JVM-遇到未捕获的异常或错误"><a href="#JVM-遇到未捕获的异常或错误" class="headerlink" title="JVM 遇到未捕获的异常或错误"></a>JVM 遇到未捕获的异常或错误</h2><p>如果主线程或其他非守护线程中出现未捕获的异常或错误，且没有相应的异常处理机制，JVM 进程会终止。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public class UncaughtExceptionExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        throw new RuntimeException(&quot;Uncaught exception&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="通过外部命令强制终止"><a href="#通过外部命令强制终止" class="headerlink" title="通过外部命令强制终止"></a>通过外部命令强制终止</h2><p>可以使用操作系统的命令或工具强制终止 JVM 进程，例如使用kill命令（在 Unix&#x2F;Linux 系统上）或任务管理器（在 Windows 系统上）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 查找 JVM 进程 ID</span><br><span class="line">ps -ef | grep java</span><br><span class="line"></span><br><span class="line"># 强制终止 JVM 进程</span><br><span class="line">kill -9 &lt;pid&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="主线程结束且没有其他非守护线程"><a href="#主线程结束且没有其他非守护线程" class="headerlink" title="主线程结束且没有其他非守护线程"></a>主线程结束且没有其他非守护线程</h2><p>如果主线程结束且没有其他非守护线程在运行，JVM 进程也会结束。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public class MainThreadExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        System.out.println(&quot;Main thread is ending&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="调用Runtime-halt-int-status"><a href="#调用Runtime-halt-int-status" class="headerlink" title="调用Runtime.halt(int status)"></a>调用Runtime.halt(int status)</h2><p>Runtime.halt(int status)方法会立即终止 JVM 进程，不执行任何关闭钩子（Shutdown Hook）或finalize方法。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public class HaltExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Runtime.getRuntime().halt(0); // 立即终止 JVM</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="关闭钩子（Shutdown-Hook）"><a href="#关闭钩子（Shutdown-Hook）" class="headerlink" title="关闭钩子（Shutdown Hook）"></a>关闭钩子（Shutdown Hook）</h2><p>在 JVM 进程结束前，可以注册关闭钩子来执行一些清理操作。关闭钩子是在 JVM 关闭前执行的线程。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class ShutdownHookExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Runtime.getRuntime().addShutdownHook(new Thread(() -&gt; &#123;</span><br><span class="line">            System.out.println(&quot;Shutdown hook is running&quot;);</span><br><span class="line">        &#125;));</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;Main thread is ending&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/02/JVM/java%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%9C%BA%E5%88%B6%E6%98%AF%E4%BB%80%E4%B9%88_/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +715,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -525,8 +923,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -746,8 +1144,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -957,8 +1355,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -1152,8 +1550,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -1354,8 +1752,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -1565,8 +1963,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -1781,8 +2179,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -1977,8 +2375,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -2176,8 +2574,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -2377,8 +2775,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -2614,8 +3012,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -2818,8 +3216,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -3057,8 +3455,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -3268,8 +3666,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -3466,8 +3864,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -3664,8 +4062,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -3871,8 +4269,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -3987,413 +4385,6 @@
 <h3 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Class MyClass is being initialized.</span><br><span class="line">Instance initialization block.</span><br><span class="line">Constructor is called.</span><br><span class="line">Object created with value: 10</span><br></pre></td></tr></table></figure>
 
 <h3 id><a href="#" class="headerlink" title></a></h3>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/04/27/JVM/Java%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/04/27/JVM/Java%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9F/" itemprop="url">👌Java创建对象的几种方式？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-04-27T13:33:41+00:00">
-                2025-04-27
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌Java创建对象的几种方式？"><a href="#👌Java创建对象的几种方式？" class="headerlink" title="👌Java创建对象的几种方式？"></a>👌Java创建对象的几种方式？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="使用new关键字"><a href="#使用new关键字" class="headerlink" title="使用new关键字"></a>使用new关键字</h2><p>这是最常见和直接的方式。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MyClass obj = new MyClass();</span><br></pre></td></tr></table></figure>
-
-<h2 id="使用反射"><a href="#使用反射" class="headerlink" title="使用反射"></a>使用反射</h2><p>通过Class类的newInstance()方法（已过时）或Constructor类的newInstance()方法。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 使用 Class.newInstance() 方法（已过时）</span><br><span class="line">MyClass obj1 = MyClass.class.newInstance();</span><br><span class="line"></span><br><span class="line">// 使用 Constructor.newInstance() 方法</span><br><span class="line">Constructor&lt;MyClass&gt; constructor = MyClass.class.getConstructor();</span><br><span class="line">MyClass obj2 = constructor.newInstance();</span><br></pre></td></tr></table></figure>
-
-<h2 id="使用clone-方法"><a href="#使用clone-方法" class="headerlink" title="使用clone()方法"></a>使用clone()方法</h2><p>通过实现Cloneable接口并重写clone()方法。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class MyClass implements Cloneable &#123;</span><br><span class="line">    @Override</span><br><span class="line">    protected Object clone() throws CloneNotSupportedException &#123;</span><br><span class="line">        return super.clone();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">MyClass obj1 = new MyClass();</span><br><span class="line">MyClass obj2 = (MyClass) obj1.clone();</span><br></pre></td></tr></table></figure>
-
-<h2 id="使用反序列化"><a href="#使用反序列化" class="headerlink" title="使用反序列化"></a>使用反序列化</h2><p>通过ObjectInputStream进行反序列化。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 序列化对象</span><br><span class="line">ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(&quot;object.dat&quot;));</span><br><span class="line">out.writeObject(obj);</span><br><span class="line">out.close();</span><br><span class="line"></span><br><span class="line">// 反序列化对象</span><br><span class="line">ObjectInputStream in = new ObjectInputStream(new FileInputStream(&quot;object.dat&quot;));</span><br><span class="line">MyClass obj = (MyClass) in.readObject();</span><br><span class="line">in.close();</span><br></pre></td></tr></table></figure>
-
-<h2 id="使用工厂方法"><a href="#使用工厂方法" class="headerlink" title="使用工厂方法"></a>使用工厂方法</h2><p>通过工厂方法模式创建对象。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class MyClassFactory &#123;</span><br><span class="line">    public static MyClass createInstance() &#123;</span><br><span class="line">        return new MyClass();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">MyClass obj = MyClassFactory.createInstance();</span><br></pre></td></tr></table></figure>
-
-<h2 id="使用-Builder-模式"><a href="#使用-Builder-模式" class="headerlink" title="使用 Builder 模式"></a>使用 Builder 模式</h2><p>通过构建器模式创建对象。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">public class MyClass &#123;</span><br><span class="line">    private String field1;</span><br><span class="line">    private int field2;</span><br><span class="line"></span><br><span class="line">    private MyClass(Builder builder) &#123;</span><br><span class="line">        this.field1 = builder.field1;</span><br><span class="line">        this.field2 = builder.field2;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static class Builder &#123;</span><br><span class="line">        private String field1;</span><br><span class="line">        private int field2;</span><br><span class="line"></span><br><span class="line">        public Builder setField1(String field1) &#123;</span><br><span class="line">            this.field1 = field1;</span><br><span class="line">            return this;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public Builder setField2(int field2) &#123;</span><br><span class="line">            this.field2 = field2;</span><br><span class="line">            return this;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public MyClass build() &#123;</span><br><span class="line">            return new MyClass(this);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">MyClass obj = new MyClass.Builder().setField1(&quot;value1&quot;).setField2(42).build();</span><br></pre></td></tr></table></figure>
-
-<h2 id="通过Unsafe类"><a href="#通过Unsafe类" class="headerlink" title="通过Unsafe类"></a>通过Unsafe类</h2><p>使用sun.misc.Unsafe类（不建议在生产代码中使用，因为它依赖于内部 API，且不安全）。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import sun.misc.Unsafe;</span><br><span class="line">import java.lang.reflect.Field;</span><br><span class="line"></span><br><span class="line">public class UnsafeExample &#123;</span><br><span class="line">    public static void main(String[] args) throws Exception &#123;</span><br><span class="line">        Field field = Unsafe.class.getDeclaredField(&quot;theUnsafe&quot;);</span><br><span class="line">        field.setAccessible(true);</span><br><span class="line">        Unsafe unsafe = (Unsafe) field.get(null);</span><br><span class="line"></span><br><span class="line">        MyClass obj = (MyClass) unsafe.allocateInstance(MyClass.class);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><strong>new关键字</strong>：最常用，适用于大多数情况。</p>
-<p><strong>反射</strong>：灵活但性能较差，适用于框架或工具类开发。</p>
-<p><strong>clone()方法</strong>：适用于需要精确复制对象的情况。</p>
-<p><strong>反序列化</strong>：适用于需要从持久化存储中恢复对象的情况。</p>
-<p><strong>工厂方法和 Builder 模式</strong>：适用于需要复杂对象创建逻辑的情况。</p>
-<p><strong>Unsafe类</strong>：不建议使用，除非在非常特殊的低级别操作中。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/04/27/JVM/Java%E6%98%AF%E8%A7%A3%E9%87%8A%E8%AF%AD%E8%A8%80%E8%BF%98%E6%98%AF%E7%BC%96%E8%AF%91%E8%AF%AD%E8%A8%80/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/04/27/JVM/Java%E6%98%AF%E8%A7%A3%E9%87%8A%E8%AF%AD%E8%A8%80%E8%BF%98%E6%98%AF%E7%BC%96%E8%AF%91%E8%AF%AD%E8%A8%80/" itemprop="url">👌Java是解释语言还是编译语言</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-04-27T13:33:41+00:00">
-                2025-04-27
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌Java是解释语言还是编译语言"><a href="#👌Java是解释语言还是编译语言" class="headerlink" title="👌Java是解释语言还是编译语言"></a>👌Java是解释语言还是编译语言</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>Java 是一种既具有编译特性又具有解释特性的语言。它独特的运行机制使得它既不同于传统的编译语言（如 C 或 C++），也不同于传统的解释语言（如 Python 或 JavaScript）。</p>
-<h2 id="编译阶段"><a href="#编译阶段" class="headerlink" title="编译阶段"></a>编译阶段</h2><p><strong>源代码编译</strong>：</p>
-<p>Java 源代码文件（.java 文件）首先通过 Java 编译器（javac）编译成字节码文件（.class 文件）。这个编译过程将高层次的 Java 代码转换成一种中间表示形式，即字节码。这些字节码是平台无关的，可以在任何支持 Java 虚拟机（JVM）的系统上运行。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javac MyClass.java</span><br></pre></td></tr></table></figure>
-
-<p><strong>字节码</strong>：字节码是一种中间语言，它并不是直接可执行的机器码，而是需要进一步解释或编译成机器码才能运行。</p>
-<p>字节码的设计使得 Java 程序可以在不同的平台上运行，而无需重新编译源代码。</p>
-<h2 id="解释阶段"><a href="#解释阶段" class="headerlink" title="解释阶段"></a>解释阶段</h2><p>当运行一个 Java 程序时，Java 虚拟机（JVM）会加载字节码并解释执行。JVM 内部包含一个解释器，它将字节码逐行解释成机器指令，然后执行这些指令。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java MyClass</span><br></pre></td></tr></table></figure>
-
-<h2 id="Just-In-Time-JIT-编译"><a href="#Just-In-Time-JIT-编译" class="headerlink" title="Just-In-Time (JIT) 编译"></a>Just-In-Time (JIT) 编译</h2><p>为了提高性能，现代 JVM 实现通常包含一个 Just-In-Time (JIT) 编译器。JIT 编译器在程序运行时，将热点代码（即频繁执行的代码）动态编译成本地机器码，从而提高执行效率。这种动态编译使得 Java 结合了解释语言的灵活性和编译语言的高性能。</p>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>Java 既是一种编译语言，也是一种解释语言。它通过先编译成字节码，然后由 JVM 解释执行，并结合 JIT 编译优化性能。这种独特的机制使得 Java 具有跨平台性和高效性。</p>
-
           
         
       

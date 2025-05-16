@@ -270,6 +270,428 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/20/%E9%9D%A2%E8%AF%95%E9%A2%98/linux%E5%86%85%E5%AD%98%E6%9C%89%E9%97%AE%E9%A2%98%E6%80%8E%E4%B9%88%E6%9F%A5%E7%9C%8B%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/02/20/%E9%9D%A2%E8%AF%95%E9%A2%98/linux%E5%86%85%E5%AD%98%E6%9C%89%E9%97%AE%E9%A2%98%E6%80%8E%E4%B9%88%E6%9F%A5%E7%9C%8B%EF%BC%9F/" itemprop="url">linux 内存有问题怎么查看</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-02-20T13:33:41+00:00">
+                2025-02-20
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌linux-内存有问题怎么查看？"><a href="#👌linux-内存有问题怎么查看？" class="headerlink" title="👌linux 内存有问题怎么查看？"></a>👌linux 内存有问题怎么查看？</h1><p>如果怀疑内存有问题，可以通过以下步骤进行检查和诊断：</p>
+<h3 id="1-使用free命令查看内存使用情况"><a href="#1-使用free命令查看内存使用情况" class="headerlink" title="1. 使用free命令查看内存使用情况"></a>1. 使用<code>free</code>命令查看内存使用情况</h3><p><code>free</code>命令可以显示系统的内存使用情况，包括总内存、已使用内存、空闲内存和缓存等信息。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">free -h</span><br></pre></td></tr></table></figure>
+
+<p>输出示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:           7.8G        3.2G        1.5G        200M        3.1G        4.1G</span><br><span class="line">Swap:          2.0G        0.0K        2.0G</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-使用top或htop命令查看内存使用情况"><a href="#2-使用top或htop命令查看内存使用情况" class="headerlink" title="2. 使用top或htop命令查看内存使用情况"></a>2. 使用<code>top</code>或<code>htop</code>命令查看内存使用情况</h3><p><code>top</code>和<code>htop</code>命令可以实时显示系统的资源使用情况，包括内存使用情况。</p>
+<ul>
+<li><code>top</code>命令：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">top</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>htop</code>命令（需要安装）：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install htop</span><br><span class="line">htop</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-使用vmstat命令查看内存和系统性能"><a href="#3-使用vmstat命令查看内存和系统性能" class="headerlink" title="3. 使用vmstat命令查看内存和系统性能"></a>3. 使用<code>vmstat</code>命令查看内存和系统性能</h3><p><code>vmstat</code>命令可以报告虚拟内存、进程、CPU 活动等信息。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vmstat 1 5</span><br></pre></td></tr></table></figure>
+
+<p>输出示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----</span><br><span class="line"> r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st</span><br><span class="line"> 1  0      0 1576828  72464 2192160    0    0     8    11   64  150  1  0 99  0  0</span><br><span class="line"> 0  0      0 1576820  72464 2192160    0    0     0     0   59  144  0  0 100  0  0</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-检查内存使用情况的日志"><a href="#4-检查内存使用情况的日志" class="headerlink" title="4. 检查内存使用情况的日志"></a>4. 检查内存使用情况的日志</h3><p>查看系统日志，如<code>/var/log/syslog</code>或<code>/var/log/messages</code>，看看是否有与内存相关的错误或警告。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo grep -i memory /var/log/syslog</span><br><span class="line">sudo grep -i memory /var/log/messages</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/20/%E9%9D%A2%E8%AF%95%E9%A2%98/linux%E7%9A%84%E4%B8%AD%E6%96%AD%E6%9C%BA%E5%88%B6%E7%94%A8%E6%9D%A5%E5%B9%B2%E4%BB%80%E4%B9%88%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/02/20/%E9%9D%A2%E8%AF%95%E9%A2%98/linux%E7%9A%84%E4%B8%AD%E6%96%AD%E6%9C%BA%E5%88%B6%E7%94%A8%E6%9D%A5%E5%B9%B2%E4%BB%80%E4%B9%88%EF%BC%9F/" itemprop="url">linux的中断机制用来干什么</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-02-20T13:33:41+00:00">
+                2025-02-20
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌linux的中断机制用来干什么？"><a href="#👌linux的中断机制用来干什么？" class="headerlink" title="👌linux的中断机制用来干什么？"></a>👌linux的中断机制用来干什么？</h1><p>Linux的中断机制用于处理各种硬件和软件事件，使操作系统能够及时响应并处理这些事件。中断机制在操作系统中起着至关重要的作用。</p>
+<h3 id="1-硬件设备的事件处理"><a href="#1-硬件设备的事件处理" class="headerlink" title="1.硬件设备的事件处理"></a>1.<strong>硬件设备的事件处理</strong></h3><p>硬件设备通过中断机制通知操作系统它们的状态变化或需要处理的事件。例如：</p>
+<ul>
+<li><strong>键盘输入</strong>：当键盘按键被按下时，键盘控制器会发出中断信号，通知CPU读取按键值。</li>
+<li><strong>网络数据接收</strong>：网卡接收到数据包时，会触发中断，通知操作系统处理接收到的数据。</li>
+<li><strong>硬盘I&#x2F;O完成</strong>：硬盘完成读写操作后，会发出中断信号，通知操作系统该操作已完成，可以继续处理数据。</li>
+</ul>
+<h3 id="2-定时器和时钟管理"><a href="#2-定时器和时钟管理" class="headerlink" title="2.定时器和时钟管理"></a>2.<strong>定时器和时钟管理</strong></h3><p>操作系统使用定时器中断来管理系统时钟和时间片轮转。例如：</p>
+<ul>
+<li><strong>系统时钟更新</strong>：定时器会定期触发中断，操作系统通过这些中断更新系统时钟。</li>
+<li><strong>时间片轮转</strong>：在多任务操作系统中，定时器中断用于实现时间片轮转调度，确保各个进程能够公平地获得CPU时间。</li>
+</ul>
+<h3 id="3-系统调用和异常处理"><a href="#3-系统调用和异常处理" class="headerlink" title="3.系统调用和异常处理"></a>3.<strong>系统调用和异常处理</strong></h3><p>软件中断（如系统调用和异常）允许用户空间程序与内核进行交互，并处理异常情况。例如：</p>
+<ul>
+<li><strong>系统调用</strong>：用户程序通过触发软件中断进入内核态，执行系统调用以请求操作系统服务（如文件操作、进程管理等）。</li>
+<li><strong>异常处理</strong>：当程序发生异常（如除零错误、非法内存访问等）时，CPU会触发异常中断，操作系统捕获并处理这些异常。</li>
+</ul>
+<h3 id="4-中断驱动的I-x2F-O操作"><a href="#4-中断驱动的I-x2F-O操作" class="headerlink" title="4.中断驱动的I&#x2F;O操作"></a>4.<strong>中断驱动的I&#x2F;O操作</strong></h3><p>中断机制使得设备驱动程序可以实现高效的I&#x2F;O操作。例如：</p>
+<ul>
+<li><strong>非阻塞I&#x2F;O</strong>：通过中断通知，设备驱动程序可以在设备准备好时处理I&#x2F;O操作，而无需进程持续轮询设备状态，从而提高系统效率。</li>
+</ul>
+<h3 id="5-电源管理"><a href="#5-电源管理" class="headerlink" title="5.电源管理"></a>5.<strong>电源管理</strong></h3><p>中断机制在电源管理中也扮演重要角色。例如：</p>
+<ul>
+<li><strong>电池状态变化</strong>：当电池电量低或充电完成时，电源管理芯片会触发中断，通知操作系统采取相应的措施（如节能模式或提示用户）。</li>
+</ul>
+<h3 id="6-多核处理器的中断分配"><a href="#6-多核处理器的中断分配" class="headerlink" title="6.多核处理器的中断分配"></a>6.<strong>多核处理器的中断分配</strong></h3><p>在多核处理器系统中，中断控制器（如APIC）可以将中断分配到不同的CPU核，以实现负载均衡和提高并行处理能力。</p>
+<blockquote>
+<p>原文: <a target="_blank" rel="noopener" href="https://www.yuque.com/jsyun/vwxwc6">https://www.yuque.com/jsyun/vwxwc6</a></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/16/%E5%9C%BA%E6%99%AF%E9%A2%98/%E4%BC%98%E6%83%A0%E5%88%B8%E7%A7%92%E6%9D%80/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +739,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -503,8 +925,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -739,8 +1161,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -947,8 +1369,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -1170,8 +1592,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -1372,8 +1794,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -1605,8 +2027,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -1830,8 +2252,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -2031,8 +2453,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -2289,8 +2711,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -2494,8 +2916,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -2709,8 +3131,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -2899,8 +3321,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -3099,8 +3521,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -3316,8 +3738,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -3537,8 +3959,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -3692,209 +4114,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E8%BF%87%E6%9C%9F%E7%AD%96%E7%95%A5%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E8%BF%87%E6%9C%9F%E7%AD%96%E7%95%A5%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F/" itemprop="url">redis 过期策略有哪些</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-02-11T13:33:41+00:00">
-                2025-02-11
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌redis过期策略有哪些？"><a href="#👌redis过期策略有哪些？" class="headerlink" title="👌redis过期策略有哪些？"></a>👌redis过期策略有哪些？</h1><h1 id="口语化回答"><a href="#口语化回答" class="headerlink" title="口语化回答"></a>口语化回答</h1><p>好的，面试官，过期策略主要分为主动和被动，主动又分为定时、定期，被动就是常说的惰性清理。先说结论，redis 采取的方案是定期+惰性配合的方式来进行实现。定期策略主要是通过周期性执行的函数来扫描即将过期的键，立马将其进行失效操作。这种方式比较消耗 cpu。于是产生了定期操作，没隔多少 ms 来进行执行，这种减少了 cpu 的消耗。也能比较准时的删除过期的键。算是定时的一种优化，比较难的点就是寻求平衡。最后就是拖性删除，所有的 key 即使过期了也不会立马删除，当这个键过期之后，下一次访问的时候，才会被删除，容易造成内存泄漏的问题。最后 oom 就会触发内存淘汰策略了，优点就是大大减轻了 cpu 的压力。以上两种方式配合，能达到一个平衡。</p>
-<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>常考题，很多人把过期策略和淘汰策略混在一起。二者既不同，当惰性删除的时候，又有联系。大家要注意多层面来回答，注意辩证 cpu 性能的问题处理。</p>
-<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>定期删除，定时删除，惰性删除，主动于被动</p>
-<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>从行为上，我们可以把过期策略分为两大点。主动删除，被动删除。主动删除又分为定时删除和定期删除。</p>
-<h2 id="主动删除"><a href="#主动删除" class="headerlink" title="主动删除"></a>主动删除</h2><h3 id="定时删除"><a href="#定时删除" class="headerlink" title="定时删除"></a><strong>定时删除</strong></h3><p>当设置键的过期时间时，Redis会为该键创建一个定时器，当过期时间到达时自动删除该键。redis.c 下的 activeExpireCycle 函数实现了定期删除粗略，配合 Redis的服务器的 serverCron函数，在服务器周期执行serverCron 的时候，activeExpireCycle函数就会被调用，在一定的时间内，分多次遍历 redis 中的数据库，从数据库的expires字典中检查一部分键的过期时间，此操作是随机性的，然后删除其中的过期键。</p>
-<p>优点：删除操作会在数据到期时立即进行，确保内存及时释放。</p>
-<p>缺点：定时器的管理会消耗系统资源，特别是在大量键设置过期时间的情况下，删除 key 会对响应时间和吞吐量产生影响。</p>
-<h3 id="定期删除"><a href="#定期删除" class="headerlink" title="定期删除"></a><strong>定期删除</strong></h3><p>Redis会定期扫描数据库中的键，并删除其中已过期的键。通过随机抽取一定数量的键，并检查它们是否过期，如果过期就删除，Redis默认每隔100ms（可以通过配置文件中的hz参数进行调整）就执行一次过期扫描任务。</p>
-<blockquote>
-<p>配置redis.conf的hz选项，默认为10，1s刷新的频率。即1秒执行10次，相当于100ms执行一次，hz值越大，说明刷新频率越快，Redis性能损耗也越大</p>
-</blockquote>
-<p>优点：通过限制删除操作执行的时长和频率来减少删除操作对CPU的影响，同时能有效释放过期键占用的内存。</p>
-<p>缺点：难以确定删除操作执行的时长和频率，如果执行的太频繁，会对CPU造成负担，就变成了定时删除；如果执行的太少，则过期键长时间占用的内存没有及时释放，造成内存浪费。</p>
-<h3 id="内存不足"><a href="#内存不足" class="headerlink" title="内存不足"></a>内存不足</h3><p>当Redis的内存达到最大限制时，还会触发内存淘汰策略，策略不同决定哪些数据会被删除以腾出空间。<br>no eviction：禁止淘汰，达到内存限制时拒绝新的写请求。<br>allkeys-lru：从所有键中淘汰最近最少使用的键。<br>volatile-lru：从设置了过期时间的键中驱逐最近最少使用的键。<br>allkeys-random：从所有键中随机驱逐键。<br>volatile-random：从设置了过期时间的键中随机驱逐键。<br>volatile-ttl：从设置了过期时间的键中驱逐剩余时间最短的键。</p>
-<h2 id="被动删除"><a href="#被动删除" class="headerlink" title="被动删除"></a>被动删除</h2><h3 id="惰性删除"><a href="#惰性删除" class="headerlink" title="惰性删除"></a><strong>惰性删除</strong></h3><p>Redis不会在键过期时立即删除它，而是在下一次访问这个键时检查其是否过期，然后删除过期的键。假设这个键已经过期，但是后面一直没有被访问，则会永远存在。不会被删除，这就是惰性删除。</p>
-<p>惰性删除策略由db.c&#x2F;expireIfNeeded函数实现，所有读写数据库的Redis命令在执行之前都会调用expireIfNeeded函数对输入键进行检查。如果输入键已经过期，那么expireIfNeeded函数将输入键从数据库中删除；如果输入键未过期，那么expireIfNeeded函数不做动作。</p>
-<p>优点：惰性删除不会增加额外的系统开销，不浪费 cpu，只在访问时进行检查。</p>
-<p>缺点：如果某个键永远不会被访问，即使设置了过期时间，它也不会被自动删除，造成内存泄漏问题。</p>
-<p>Redis 实际使用的是定期删除+惰性删除的方式！定期删除减少 cpu 消耗和浪费，配合惰性删除，二次检查保险。</p>
-<h3 id><a href="#" class="headerlink" title></a></h3>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E7%9A%84%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -3942,8 +4161,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -4169,7 +4388,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/11/20/%E9%9D%A2%E8%AF%95%E9%A2%98/%E7%B4%A2%E5%BC%95/">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E8%BF%87%E6%9C%9F%E7%AD%96%E7%95%A5%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -4188,7 +4407,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2024/11/20/%E9%9D%A2%E8%AF%95%E9%A2%98/%E7%B4%A2%E5%BC%95/" itemprop="url">Mysql中的索引</a></h1>
+                <a class="post-title-link" href="/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E8%BF%87%E6%9C%9F%E7%AD%96%E7%95%A5%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F/" itemprop="url">redis 过期策略有哪些</a></h1>
         
 
         <div class="post-meta">
@@ -4200,8 +4419,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-11-20T13:33:41+00:00">
-                2024-11-20
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-02-11T13:33:41+00:00">
+                2025-02-11
               </time>
             
 
@@ -4216,8 +4435,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -4305,305 +4524,26 @@
       
         
           
-            <h2 id="一、MySQL-为什么使用-B-树？"><a href="#一、MySQL-为什么使用-B-树？" class="headerlink" title="一、MySQL 为什么使用 B+ 树？"></a>一、MySQL 为什么使用 B+ 树？</h2><blockquote>
-<p>与B+ 树相比，平衡二叉树、红黑树在同等数据量下，高度更高，性能更差，而且它们会频<br>繁执行再平衡过程，来保证树形结构平衡。<br>与B+ 树相比，跳表在极端情况下会退化为链表，平衡性差，而数据库查询需要一个可预期<br>的查询时间，并且跳表需要更多的内存<br>与B+ 树相比，B 树的数据存储在全部节点中，对范围查询不友好;非叶子节点存储了数<br>据，导致内存中难以放下全部非叶子节点，可能需要磁盘IO；</p>
-</blockquote>
-<h2 id="二、MySQL-对-NULL-值的索引支持特点如下："><a href="#二、MySQL-对-NULL-值的索引支持特点如下：" class="headerlink" title="二、MySQL 对 NULL 值的索引支持特点如下："></a>二、MySQL 对 NULL 值的索引支持特点如下：</h2><p><strong>索引会存储并支持 NULL 值</strong><br><strong>查询条件 IS NULL 和 IS NOT NULL 可以利用索引。</strong> </p>
-<ul>
-<li>与其他数据库相比，MySQL 的索引对 NULL 的支持更完善且优化更好。</li>
-</ul>
-<h1 id="索引的优化"><a href="#索引的优化" class="headerlink" title="索引的优化"></a>索引的优化</h1><h2 id="优化方面：sql本身优化、服务器-x2F-引擎（配置）优化、操作系统优化、硬件资源问题"><a href="#优化方面：sql本身优化、服务器-x2F-引擎（配置）优化、操作系统优化、硬件资源问题" class="headerlink" title="优化方面：sql本身优化、服务器&#x2F;引擎（配置）优化、操作系统优化、硬件资源问题"></a>优化方面：sql本身优化、服务器&#x2F;引擎（配置）优化、操作系统优化、硬件资源问题</h2><h2 id="1、sql优化达到的目的："><a href="#1、sql优化达到的目的：" class="headerlink" title="1、sql优化达到的目的："></a>1、sql优化达到的目的：</h2><blockquote>
-<p>减少磁盘IO：避免全面扫描、使用索引（覆盖索引）<br>减少内存cpu消耗：尽可能减少排序、分组、去重之类的操作<br><strong>修改索引或者说表定义变更的核心问题是数据库会加表锁，直到修改完成</strong></p>
-</blockquote>
-<h2 id="示例："><a href="#示例：" class="headerlink" title="示例："></a>示例：</h2><h3 id="1、使用覆盖索引和索引下推减少回表；-索引下推中范围查询排序的字段使用不当，使用了index-where，增加字段走索引下推，优化-ORDER-BY-将排序列加入索引。"><a href="#1、使用覆盖索引和索引下推减少回表；-索引下推中范围查询排序的字段使用不当，使用了index-where，增加字段走索引下推，优化-ORDER-BY-将排序列加入索引。" class="headerlink" title="1、使用覆盖索引和索引下推减少回表； 索引下推中范围查询排序的字段使用不当，使用了index where，增加字段走索引下推，优化 ORDER BY 将排序列加入索引。"></a>1、使用覆盖索引和索引下推减少回表； 索引下推中范围查询排序的字段使用不当，使用了index where，增加字段走索引下推，优化 ORDER BY 将排序列加入索引。</h3><h3 id="2、用-WHERE-替换-HAVING（注意sql的执行顺序）；如果不是使用聚合函数来作为过滤条件，最好还是将过滤条件优先写到WHERE-里面。"><a href="#2、用-WHERE-替换-HAVING（注意sql的执行顺序）；如果不是使用聚合函数来作为过滤条件，最好还是将过滤条件优先写到WHERE-里面。" class="headerlink" title="2、用 WHERE 替换 HAVING（注意sql的执行顺序）；如果不是使用聚合函数来作为过滤条件，最好还是将过滤条件优先写到WHERE 里面。"></a>2、用 WHERE 替换 HAVING（注意sql的执行顺序）；如果不是使用聚合函数来作为过滤条件，最好还是将过滤条件优先写到WHERE 里面。</h3>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/11/15/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/11/15/%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/" itemprop="url">学习笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-11-15T13:33:41+00:00">
-                2024-11-15
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="springcloud服务中使用mq做消息的通知，相对于fegin有什么好处"><a href="#springcloud服务中使用mq做消息的通知，相对于fegin有什么好处" class="headerlink" title="springcloud服务中使用mq做消息的通知，相对于fegin有什么好处"></a>springcloud服务中使用mq做消息的通知，相对于fegin有什么好处</h1><h2 id="在-Spring-Cloud-服务中使用-消息队列（如-RabbitMQ、Kafka-等）来处理消息通知，相对于-Feign-进行同步调用，具有多个优势，特别是在分布式系统中。这些好处主要体现在-解耦性、可靠性、性能和可扩展性-等方面。下面详细列出它们的优缺点对比："><a href="#在-Spring-Cloud-服务中使用-消息队列（如-RabbitMQ、Kafka-等）来处理消息通知，相对于-Feign-进行同步调用，具有多个优势，特别是在分布式系统中。这些好处主要体现在-解耦性、可靠性、性能和可扩展性-等方面。下面详细列出它们的优缺点对比：" class="headerlink" title="在 Spring Cloud 服务中使用 消息队列（如 RabbitMQ、Kafka 等）来处理消息通知，相对于 Feign 进行同步调用，具有多个优势，特别是在分布式系统中。这些好处主要体现在 解耦性、可靠性、性能和可扩展性 等方面。下面详细列出它们的优缺点对比："></a>在 Spring Cloud 服务中使用 消息队列（如 RabbitMQ、Kafka 等）来处理消息通知，相对于 Feign 进行同步调用，具有多个优势，特别是在分布式系统中。这些好处主要体现在 解耦性、可靠性、性能和可扩展性 等方面。下面详细列出它们的优缺点对比：</h2><h2 id="1-解耦性"><a href="#1-解耦性" class="headerlink" title="1. 解耦性"></a>1. 解耦性</h2><ul>
-<li>消息队列：使用消息队列时，生产者（发送方）和消费者（接收方）是松耦合的，即使消费者不可用，消息队列仍然可以存储消息，等待消费者处理。这种异步的方式减少了服务之间的直接依赖，增强了系统的解耦性。</li>
-<li>Feign：Feign 是一种同步调用方式，服务 A 直接调用服务 B，服务之间是强耦合的。如果服务 B 不可用，服务 A 会失败，依赖关系比较紧密。</li>
-</ul>
-<h3 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h3><ul>
-<li>消息队列：更容易扩展服务，减少服务间的直接依赖。</li>
-<li>Feign：服务间的直接调用，导致服务耦合性较强，依赖性高。</li>
-</ul>
-<h2 id="2-可靠性"><a href="#2-可靠性" class="headerlink" title="2. 可靠性"></a>2. 可靠性</h2><ul>
-<li>消息队列：消息队列一般会提供消息持久化、重试机制、死信队列等功能，保证消息在系统出现故障时不会丢失，能够在消费者恢复后重新处理。即使服务 A 出现故障，消息依然可以在队列中等待消费。</li>
-<li>Feign：Feign 调用是同步的，如果服务 B 出现故障，Feign 请求会直接失败，且一般不具备自动重试和消息持久化功能。</li>
-</ul>
-<h3 id="优点：-1"><a href="#优点：-1" class="headerlink" title="优点："></a>优点：</h3><ul>
-<li>消息队列：提供消息持久化、重试机制，能确保消息不丢失。</li>
-<li>Feign：服务失败时请求会直接失败，除非使用像 Ribbon 或 Hystrix 这样的断路器进行处理。</li>
-</ul>
-<h2 id="3-异步与性能"><a href="#3-异步与性能" class="headerlink" title="3. 异步与性能"></a>3. 异步与性能</h2><ul>
-<li>消息队列：消息队列是异步处理的，即生产者发送完消息后，不需要等待消费者处理结果。生产者可以继续执行其他任务，消息队列通过缓冲提高系统吞吐量。当系统负载较高时，消费者可以批量消费消息，提高处理效率。</li>
-<li>Feign：Feign 是同步的，发送请求后，调用方必须等待服务返回结果，可能会导致性能瓶颈，特别是当多个服务调用彼此依赖时，响应时间可能会增加。</li>
-</ul>
-<h3 id="优点：-2"><a href="#优点：-2" class="headerlink" title="优点："></a>优点：</h3><ul>
-<li>消息队列：通过异步处理提高系统吞吐量和性能，适合处理高并发、高负载的场景。</li>
-<li>Feign：同步请求，可能会成为性能瓶颈，尤其在服务间相互调用较多时。</li>
-</ul>
-<h2 id="4-可伸缩性"><a href="#4-可伸缩性" class="headerlink" title="4. 可伸缩性"></a>4. 可伸缩性</h2><ul>
-<li>消息队列：消息队列可以在消费者端进行水平扩展。例如，消费者可以横向扩展多个实例来处理消息，从而提升系统的处理能力。消息队列会自动将消息分发给空闲的消费者实例，提高系统的可伸缩性。</li>
-<li>Feign：Feign 本身并不具备内建的负载均衡功能，虽然可以使用 Spring Cloud 的负载均衡组件（如 Ribbon），但它依赖于同步请求，因此在高并发场景下扩展性较差。</li>
-</ul>
-<h3 id="优点：-3"><a href="#优点：-3" class="headerlink" title="优点："></a>优点：</h3><ul>
-<li>消息队列：通过消费端的水平扩展，提高系统的可伸缩性。</li>
-<li>Feign：虽然有负载均衡，但扩展性主要依赖于同步调用方式，可能会受到性能瓶颈的限制。</li>
-</ul>
-<h2 id="5-流量控制与限流"><a href="#5-流量控制与限流" class="headerlink" title="5. 流量控制与限流"></a>5. 流量控制与限流</h2><ul>
-<li>消息队列：消息队列通常支持流量控制。比如，消费者的处理速度低于生产者的发送速度时，消息队列可以进行流量调节，避免系统被大量消息打垮。此外，死信队列、延时队列等功能可以帮助处理异常消息，避免堆积。</li>
-<li>Feign：Feign 是同步请求，不适合处理流量控制。如果请求量激增，可能会导致服务出现超时或者崩溃。</li>
-</ul>
-<h3 id="优点：-4"><a href="#优点：-4" class="headerlink" title="优点："></a>优点：</h3><ul>
-<li>消息队列：可以通过流量控制机制、死信队列、延时队列等功能保证系统稳定性。</li>
-<li>Feign：不适合直接进行流量控制，可能导致系统超载。</li>
-</ul>
-<h2 id="6-消息顺序"><a href="#6-消息顺序" class="headerlink" title="6. 消息顺序"></a>6. 消息顺序</h2><ul>
-<li>消息队列：许多消息队列系统（如 Kafka 和 RabbitMQ）都支持消息的顺序保证，尤其在处理同一个主题或队列中的消息时，可以确保消息按顺序被消费。对于需要保证顺序消费的场景，消息队列是非常适合的。</li>
-<li>Feign：Feign 的调用是同步的，但它不保证请求的顺序和消费顺序。多个服务之间的调用是按顺序发生的，但并不适用于保证消息顺序。</li>
-</ul>
-<h3 id="优点：-5"><a href="#优点：-5" class="headerlink" title="优点："></a>优点：</h3><ul>
-<li>消息队列：可以确保消息顺序性，适合需要严格顺序的场景。</li>
-<li>Feign：没有内建的顺序保证机制。</li>
-</ul>
-<h2 id="7-场景适配"><a href="#7-场景适配" class="headerlink" title="7. 场景适配"></a>7. 场景适配</h2><ul>
-<li>消息队列：适用于以下场景：</li>
-</ul>
+            <h1 id="👌redis过期策略有哪些？"><a href="#👌redis过期策略有哪些？" class="headerlink" title="👌redis过期策略有哪些？"></a>👌redis过期策略有哪些？</h1><h1 id="口语化回答"><a href="#口语化回答" class="headerlink" title="口语化回答"></a>口语化回答</h1><p>好的，面试官，过期策略主要分为主动和被动，主动又分为定时、定期，被动就是常说的惰性清理。先说结论，redis 采取的方案是定期+惰性配合的方式来进行实现。定期策略主要是通过周期性执行的函数来扫描即将过期的键，立马将其进行失效操作。这种方式比较消耗 cpu。于是产生了定期操作，没隔多少 ms 来进行执行，这种减少了 cpu 的消耗。也能比较准时的删除过期的键。算是定时的一种优化，比较难的点就是寻求平衡。最后就是拖性删除，所有的 key 即使过期了也不会立马删除，当这个键过期之后，下一次访问的时候，才会被删除，容易造成内存泄漏的问题。最后 oom 就会触发内存淘汰策略了，优点就是大大减轻了 cpu 的压力。以上两种方式配合，能达到一个平衡。</p>
+<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>常考题，很多人把过期策略和淘汰策略混在一起。二者既不同，当惰性删除的时候，又有联系。大家要注意多层面来回答，注意辩证 cpu 性能的问题处理。</p>
+<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>定期删除，定时删除，惰性删除，主动于被动</p>
+<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>从行为上，我们可以把过期策略分为两大点。主动删除，被动删除。主动删除又分为定时删除和定期删除。</p>
+<h2 id="主动删除"><a href="#主动删除" class="headerlink" title="主动删除"></a>主动删除</h2><h3 id="定时删除"><a href="#定时删除" class="headerlink" title="定时删除"></a><strong>定时删除</strong></h3><p>当设置键的过期时间时，Redis会为该键创建一个定时器，当过期时间到达时自动删除该键。redis.c 下的 activeExpireCycle 函数实现了定期删除粗略，配合 Redis的服务器的 serverCron函数，在服务器周期执行serverCron 的时候，activeExpireCycle函数就会被调用，在一定的时间内，分多次遍历 redis 中的数据库，从数据库的expires字典中检查一部分键的过期时间，此操作是随机性的，然后删除其中的过期键。</p>
+<p>优点：删除操作会在数据到期时立即进行，确保内存及时释放。</p>
+<p>缺点：定时器的管理会消耗系统资源，特别是在大量键设置过期时间的情况下，删除 key 会对响应时间和吞吐量产生影响。</p>
+<h3 id="定期删除"><a href="#定期删除" class="headerlink" title="定期删除"></a><strong>定期删除</strong></h3><p>Redis会定期扫描数据库中的键，并删除其中已过期的键。通过随机抽取一定数量的键，并检查它们是否过期，如果过期就删除，Redis默认每隔100ms（可以通过配置文件中的hz参数进行调整）就执行一次过期扫描任务。</p>
 <blockquote>
-<p>事件驱动的应用，异步通知、推送；<br>高并发、高吞吐量的系统；<br>系统解耦，避免微服务之间的直接调用；<br>消息延迟处理或异步处理的场景。</p>
+<p>配置redis.conf的hz选项，默认为10，1s刷新的频率。即1秒执行10次，相当于100ms执行一次，hz值越大，说明刷新频率越快，Redis性能损耗也越大</p>
 </blockquote>
-<ul>
-<li>Feign：适用于以下场景：</li>
-</ul>
-<blockquote>
-<p>服务间的同步调用，需要立即得到返回值；<br>处理简单的请求-响应模式；<br>服务间的低延迟、低耦合调用。</p>
-</blockquote>
-<h2 id="8-总结"><a href="#8-总结" class="headerlink" title="8. 总结"></a>8. 总结</h2><table>
-<thead>
-<tr>
-<th>特性</th>
-<th><strong>消息队列</strong></th>
-<th><strong>Feign</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>耦合性</strong></td>
-<td>松耦合，生产者和消费者分离</td>
-<td>强耦合，服务间直接调用</td>
-</tr>
-<tr>
-<td><strong>可靠性</strong></td>
-<td>提供消息持久化、重试机制</td>
-<td>依赖于服务的可用性，失败时没有自动恢复</td>
-</tr>
-<tr>
-<td><strong>性能</strong></td>
-<td>异步，适合高并发、高吞吐量的场景</td>
-<td>同步，可能成为性能瓶颈</td>
-</tr>
-<tr>
-<td><strong>可伸缩性</strong></td>
-<td>通过水平扩展消费者来提高可伸缩性</td>
-<td>依赖于负载均衡，扩展有限</td>
-</tr>
-<tr>
-<td><strong>流量控制</strong></td>
-<td>可以控制流量，避免系统过载</td>
-<td>没有流量控制机制</td>
-</tr>
-<tr>
-<td><strong>消息顺序</strong></td>
-<td>可以保证消息顺序</td>
-<td>不保证消息顺序</td>
-</tr>
-<tr>
-<td><strong>场景适配</strong></td>
-<td>事件驱动、异步通知、大量消息处理</td>
-<td>服务间同步调用、低延迟处理</td>
-</tr>
-</tbody></table>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><h3 id="使用-消息队列（如-RabbitMQ、Kafka）更适合于-高并发、异步、解耦、事件驱动-的场景，能够提高系统的可靠性、性能和扩展性。"><a href="#使用-消息队列（如-RabbitMQ、Kafka）更适合于-高并发、异步、解耦、事件驱动-的场景，能够提高系统的可靠性、性能和扩展性。" class="headerlink" title="使用 消息队列（如 RabbitMQ、Kafka）更适合于 高并发、异步、解耦、事件驱动 的场景，能够提高系统的可靠性、性能和扩展性。"></a>使用 消息队列（如 RabbitMQ、Kafka）更适合于 高并发、异步、解耦、事件驱动 的场景，能够提高系统的可靠性、性能和扩展性。</h3><h3 id="使用-Feign-更适合-同步调用、简单的请求-响应模式、低延迟-的服务间通信。"><a href="#使用-Feign-更适合-同步调用、简单的请求-响应模式、低延迟-的服务间通信。" class="headerlink" title="使用 Feign 更适合 同步调用、简单的请求-响应模式、低延迟 的服务间通信。"></a>使用 Feign 更适合 同步调用、简单的请求-响应模式、低延迟 的服务间通信。</h3>
+<p>优点：通过限制删除操作执行的时长和频率来减少删除操作对CPU的影响，同时能有效释放过期键占用的内存。</p>
+<p>缺点：难以确定删除操作执行的时长和频率，如果执行的太频繁，会对CPU造成负担，就变成了定时删除；如果执行的太少，则过期键长时间占用的内存没有及时释放，造成内存浪费。</p>
+<h3 id="内存不足"><a href="#内存不足" class="headerlink" title="内存不足"></a>内存不足</h3><p>当Redis的内存达到最大限制时，还会触发内存淘汰策略，策略不同决定哪些数据会被删除以腾出空间。<br>no eviction：禁止淘汰，达到内存限制时拒绝新的写请求。<br>allkeys-lru：从所有键中淘汰最近最少使用的键。<br>volatile-lru：从设置了过期时间的键中驱逐最近最少使用的键。<br>allkeys-random：从所有键中随机驱逐键。<br>volatile-random：从设置了过期时间的键中随机驱逐键。<br>volatile-ttl：从设置了过期时间的键中驱逐剩余时间最短的键。</p>
+<h2 id="被动删除"><a href="#被动删除" class="headerlink" title="被动删除"></a>被动删除</h2><h3 id="惰性删除"><a href="#惰性删除" class="headerlink" title="惰性删除"></a><strong>惰性删除</strong></h3><p>Redis不会在键过期时立即删除它，而是在下一次访问这个键时检查其是否过期，然后删除过期的键。假设这个键已经过期，但是后面一直没有被访问，则会永远存在。不会被删除，这就是惰性删除。</p>
+<p>惰性删除策略由db.c&#x2F;expireIfNeeded函数实现，所有读写数据库的Redis命令在执行之前都会调用expireIfNeeded函数对输入键进行检查。如果输入键已经过期，那么expireIfNeeded函数将输入键从数据库中删除；如果输入键未过期，那么expireIfNeeded函数不做动作。</p>
+<p>优点：惰性删除不会增加额外的系统开销，不浪费 cpu，只在访问时进行检查。</p>
+<p>缺点：如果某个键永远不会被访问，即使设置了过期时间，它也不会被自动删除，造成内存泄漏问题。</p>
+<p>Redis 实际使用的是定期删除+惰性删除的方式！定期删除减少 cpu 消耗和浪费，配合惰性删除，二次检查保险。</p>
+<h3 id><a href="#" class="headerlink" title></a></h3>
           
         
       

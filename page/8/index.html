@@ -270,6 +270,200 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/11/20/%E9%9D%A2%E8%AF%95%E9%A2%98/%E7%B4%A2%E5%BC%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/11/20/%E9%9D%A2%E8%AF%95%E9%A2%98/%E7%B4%A2%E5%BC%95/" itemprop="url">Mysql中的索引</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-11-20T13:33:41+00:00">
+                2024-11-20
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="一、MySQL-为什么使用-B-树？"><a href="#一、MySQL-为什么使用-B-树？" class="headerlink" title="一、MySQL 为什么使用 B+ 树？"></a>一、MySQL 为什么使用 B+ 树？</h2><blockquote>
+<p>与B+ 树相比，平衡二叉树、红黑树在同等数据量下，高度更高，性能更差，而且它们会频<br>繁执行再平衡过程，来保证树形结构平衡。<br>与B+ 树相比，跳表在极端情况下会退化为链表，平衡性差，而数据库查询需要一个可预期<br>的查询时间，并且跳表需要更多的内存<br>与B+ 树相比，B 树的数据存储在全部节点中，对范围查询不友好;非叶子节点存储了数<br>据，导致内存中难以放下全部非叶子节点，可能需要磁盘IO；</p>
+</blockquote>
+<h2 id="二、MySQL-对-NULL-值的索引支持特点如下："><a href="#二、MySQL-对-NULL-值的索引支持特点如下：" class="headerlink" title="二、MySQL 对 NULL 值的索引支持特点如下："></a>二、MySQL 对 NULL 值的索引支持特点如下：</h2><p><strong>索引会存储并支持 NULL 值</strong><br><strong>查询条件 IS NULL 和 IS NOT NULL 可以利用索引。</strong> </p>
+<ul>
+<li>与其他数据库相比，MySQL 的索引对 NULL 的支持更完善且优化更好。</li>
+</ul>
+<h1 id="索引的优化"><a href="#索引的优化" class="headerlink" title="索引的优化"></a>索引的优化</h1><h2 id="优化方面：sql本身优化、服务器-x2F-引擎（配置）优化、操作系统优化、硬件资源问题"><a href="#优化方面：sql本身优化、服务器-x2F-引擎（配置）优化、操作系统优化、硬件资源问题" class="headerlink" title="优化方面：sql本身优化、服务器&#x2F;引擎（配置）优化、操作系统优化、硬件资源问题"></a>优化方面：sql本身优化、服务器&#x2F;引擎（配置）优化、操作系统优化、硬件资源问题</h2><h2 id="1、sql优化达到的目的："><a href="#1、sql优化达到的目的：" class="headerlink" title="1、sql优化达到的目的："></a>1、sql优化达到的目的：</h2><blockquote>
+<p>减少磁盘IO：避免全面扫描、使用索引（覆盖索引）<br>减少内存cpu消耗：尽可能减少排序、分组、去重之类的操作<br><strong>修改索引或者说表定义变更的核心问题是数据库会加表锁，直到修改完成</strong></p>
+</blockquote>
+<h2 id="示例："><a href="#示例：" class="headerlink" title="示例："></a>示例：</h2><h3 id="1、使用覆盖索引和索引下推减少回表；-索引下推中范围查询排序的字段使用不当，使用了index-where，增加字段走索引下推，优化-ORDER-BY-将排序列加入索引。"><a href="#1、使用覆盖索引和索引下推减少回表；-索引下推中范围查询排序的字段使用不当，使用了index-where，增加字段走索引下推，优化-ORDER-BY-将排序列加入索引。" class="headerlink" title="1、使用覆盖索引和索引下推减少回表； 索引下推中范围查询排序的字段使用不当，使用了index where，增加字段走索引下推，优化 ORDER BY 将排序列加入索引。"></a>1、使用覆盖索引和索引下推减少回表； 索引下推中范围查询排序的字段使用不当，使用了index where，增加字段走索引下推，优化 ORDER BY 将排序列加入索引。</h3><h3 id="2、用-WHERE-替换-HAVING（注意sql的执行顺序）；如果不是使用聚合函数来作为过滤条件，最好还是将过滤条件优先写到WHERE-里面。"><a href="#2、用-WHERE-替换-HAVING（注意sql的执行顺序）；如果不是使用聚合函数来作为过滤条件，最好还是将过滤条件优先写到WHERE-里面。" class="headerlink" title="2、用 WHERE 替换 HAVING（注意sql的执行顺序）；如果不是使用聚合函数来作为过滤条件，最好还是将过滤条件优先写到WHERE 里面。"></a>2、用 WHERE 替换 HAVING（注意sql的执行顺序）；如果不是使用聚合函数来作为过滤条件，最好还是将过滤条件优先写到WHERE 里面。</h3>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/11/15/%E9%9D%A2%E8%AF%95%E9%A2%98/HashMap/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +511,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -509,8 +703,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -741,8 +935,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -947,8 +1141,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -1196,8 +1390,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -1414,8 +1608,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -1636,8 +1830,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -1850,8 +2044,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -2085,8 +2279,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -2283,8 +2477,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -2510,8 +2704,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -2661,207 +2855,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%EF%BC%9F/" itemprop="url">ArrayList如何保证线程安全</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌ArrayList如何保证线程安全？"><a href="#👌ArrayList如何保证线程安全？" class="headerlink" title="👌ArrayList如何保证线程安全？"></a>👌ArrayList如何保证线程安全？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="借助锁"><a href="#借助锁" class="headerlink" title="借助锁"></a>借助锁</h2><p>可以通过在访问 ArrayList 的代码块上使用 synchronized 关键字来手动同步对 ArrayList 的访问。这要求所有访问 ArrayList 的代码都知道并使用相同的锁。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = new ArrayList&lt;&gt;();</span><br><span class="line">// ... 填充列表 ...</span><br><span class="line"></span><br><span class="line">synchronized(list) &#123;</span><br><span class="line">    Iterator&lt;String&gt; it = list.iterator();</span><br><span class="line">    while (it.hasNext()) &#123;</span><br><span class="line">        String element = it.next();</span><br><span class="line">        // 处理元素...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="使用-Collections-synchronizedList"><a href="#使用-Collections-synchronizedList" class="headerlink" title="使用 Collections.synchronizedList"></a>使用 Collections.synchronizedList</h2><p>Collections.synchronizedList 方法返回一个线程安全的列表，该列表是通过在每个公共方法（如 add(), get(), iterator() 等）上添加同步来实现的，其中同步是基于里面的同步代码块实现。但是，和手动同步一样，它也不能解决在迭代过程中进行结构修改导致的问题。</p>
-<p><img src="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%EF%BC%9F/u2gabD4e1XNpme_5/1721369333026-315b65c8-9222-48af-add6-fde77b52b82b-123723.png" alt="1721369333026-315b65c8-9222-48af-add6-fde77b52b82b.png"></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = Collections.synchronizedList(new ArrayList&lt;&gt;());</span><br></pre></td></tr></table></figure>
-
-<h2 id="使用并发集合"><a href="#使用并发集合" class="headerlink" title="使用并发集合"></a>使用并发集合</h2><p>Java 并发包 java.util.concurrent 提供了一些线程安全的集合类，如 CopyOnWriteArrayList。这些类提供了不同的线程安全保证和性能特性。</p>
-<p>CopyOnWriteArrayList是一个线程安全的变体，其中所有可变操作（add、set 等等）都是通过对底层数组进行新的复制来实现的。因此，迭代器不会受到并发修改的影响，并且遍历期间不需要额外的同步。但是，当有很多写操作时，这种方法可能会很昂贵，因为它需要在每次修改时复制整个底层数组。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = new CopyOnWriteArrayList&lt;&gt;();</span><br></pre></td></tr></table></figure>
-
-<p>选择解决方案时，需要考虑并发模式、读写比例以及性能需求。如果你的应用主要是读操作并且偶尔有写操作，CopyOnWriteArrayList是一个好选择。如果你的应用有大量的写操作，那么可能需要使用其他并发集合或手动同步策略。</p>
-<blockquote>
-<p>&#x2F;hkx8lgbi0mny13uc&gt;</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E6%98%AF%E5%A6%82%E4%BD%95%E6%89%A9%E5%AE%B9%E7%9A%84%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2909,8 +2902,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -3068,6 +3061,207 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%EF%BC%9F/" itemprop="url">ArrayList如何保证线程安全</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌ArrayList如何保证线程安全？"><a href="#👌ArrayList如何保证线程安全？" class="headerlink" title="👌ArrayList如何保证线程安全？"></a>👌ArrayList如何保证线程安全？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="借助锁"><a href="#借助锁" class="headerlink" title="借助锁"></a>借助锁</h2><p>可以通过在访问 ArrayList 的代码块上使用 synchronized 关键字来手动同步对 ArrayList 的访问。这要求所有访问 ArrayList 的代码都知道并使用相同的锁。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = new ArrayList&lt;&gt;();</span><br><span class="line">// ... 填充列表 ...</span><br><span class="line"></span><br><span class="line">synchronized(list) &#123;</span><br><span class="line">    Iterator&lt;String&gt; it = list.iterator();</span><br><span class="line">    while (it.hasNext()) &#123;</span><br><span class="line">        String element = it.next();</span><br><span class="line">        // 处理元素...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="使用-Collections-synchronizedList"><a href="#使用-Collections-synchronizedList" class="headerlink" title="使用 Collections.synchronizedList"></a>使用 Collections.synchronizedList</h2><p>Collections.synchronizedList 方法返回一个线程安全的列表，该列表是通过在每个公共方法（如 add(), get(), iterator() 等）上添加同步来实现的，其中同步是基于里面的同步代码块实现。但是，和手动同步一样，它也不能解决在迭代过程中进行结构修改导致的问题。</p>
+<p><img src="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%EF%BC%9F/u2gabD4e1XNpme_5/1721369333026-315b65c8-9222-48af-add6-fde77b52b82b-123723.png" alt="1721369333026-315b65c8-9222-48af-add6-fde77b52b82b.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = Collections.synchronizedList(new ArrayList&lt;&gt;());</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用并发集合"><a href="#使用并发集合" class="headerlink" title="使用并发集合"></a>使用并发集合</h2><p>Java 并发包 java.util.concurrent 提供了一些线程安全的集合类，如 CopyOnWriteArrayList。这些类提供了不同的线程安全保证和性能特性。</p>
+<p>CopyOnWriteArrayList是一个线程安全的变体，其中所有可变操作（add、set 等等）都是通过对底层数组进行新的复制来实现的。因此，迭代器不会受到并发修改的影响，并且遍历期间不需要额外的同步。但是，当有很多写操作时，这种方法可能会很昂贵，因为它需要在每次修改时复制整个底层数组。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = new CopyOnWriteArrayList&lt;&gt;();</span><br></pre></td></tr></table></figure>
+
+<p>选择解决方案时，需要考虑并发模式、读写比例以及性能需求。如果你的应用主要是读操作并且偶尔有写操作，CopyOnWriteArrayList是一个好选择。如果你的应用有大量的写操作，那么可能需要使用其他并发集合或手动同步策略。</p>
+<blockquote>
+<p>&#x2F;hkx8lgbi0mny13uc&gt;</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E6%98%AF%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E5%90%97%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -3115,8 +3309,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -3329,8 +3523,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -3528,8 +3722,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -3754,8 +3948,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -3962,8 +4156,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -4179,8 +4373,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -4288,217 +4482,6 @@
 <p>如果键<code>&quot;key&quot;</code>存在，则将其值与<code>1</code>相加，否则将其值设置为<code>1</code>。此操作也是原子性的。</p>
 <blockquote>
 <p>&#x2F;bg29eue26kgthvqq&gt;</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/Enumeration%E5%92%8CIterator%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/Enumeration%E5%92%8CIterator%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F/" itemprop="url">Enumeration和Iterator接口的区别</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌Enumeration和Iterator接口的区别？"><a href="#👌Enumeration和Iterator接口的区别？" class="headerlink" title="👌Enumeration和Iterator接口的区别？"></a>👌Enumeration和Iterator接口的区别？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>Enumeration和Iterator是 Java 中用于遍历集合的两个接口。虽然它们有相似的功能，但它们有不同的设计和使用方式。</p>
-<h2 id="Enumeration接口"><a href="#Enumeration接口" class="headerlink" title="Enumeration接口"></a>Enumeration接口</h2><p>Enumeration是一个较老的接口，存在于 Java 1.0 中。它主要用于遍历旧的集合类，如Vector和Hashtable。</p>
-<h3 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h3><p>boolean hasMoreElements(): 如果枚举中仍有更多元素，则返回true。</p>
-<p>Object nextElement(): 返回枚举中的下一个元素。</p>
-<h3 id="代码-Demo"><a href="#代码-Demo" class="headerlink" title="代码 Demo"></a>代码 Demo</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import java.util.*;</span><br><span class="line"></span><br><span class="line">public class EnumerationExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Vector&lt;String&gt; vector = new Vector&lt;&gt;();</span><br><span class="line">        vector.add(&quot;A&quot;);</span><br><span class="line">        vector.add(&quot;B&quot;);</span><br><span class="line">        vector.add(&quot;C&quot;);</span><br><span class="line"></span><br><span class="line">        Enumeration&lt;String&gt; enumeration = vector.elements();</span><br><span class="line">        while (enumeration.hasMoreElements()) &#123;</span><br><span class="line">            String element = enumeration.nextElement();</span><br><span class="line">            System.out.println(element);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="Iterator接口"><a href="#Iterator接口" class="headerlink" title="Iterator接口"></a>Iterator接口</h2><p>Iterator是在 Java 2 (JDK 1.2) 中引入的。它是集合框架的一部分，适用于所有集合类（如ArrayList、HashSet、HashMap等）。Iterator提供了更灵活的遍历方法，并允许在遍历过程中安全地移除元素。</p>
-<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>boolean hasNext(): 如果迭代器中仍有更多元素，则返回true。</p>
-<p>E next(): 返回迭代器中的下一个元素。</p>
-<p>void remove(): 从集合中移除迭代器返回的最后一个元素（可选操作）。</p>
-<h3 id="代码-Demo-1"><a href="#代码-Demo-1" class="headerlink" title="代码 Demo"></a>代码 Demo</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">import java.util.*;</span><br><span class="line"></span><br><span class="line">public class IteratorExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        List&lt;String&gt; list = new ArrayList&lt;&gt;();</span><br><span class="line">        list.add(&quot;A&quot;);</span><br><span class="line">        list.add(&quot;B&quot;);</span><br><span class="line">        list.add(&quot;C&quot;);</span><br><span class="line"></span><br><span class="line">        Iterator&lt;String&gt; iterator = list.iterator();</span><br><span class="line">        while (iterator.hasNext()) &#123;</span><br><span class="line">            String element = iterator.next();</span><br><span class="line">            System.out.println(element);</span><br><span class="line">            if (element.equals(&quot;B&quot;)) &#123;</span><br><span class="line">                iterator.remove(); // 安全地移除元素</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;After removal: &quot; + list);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="主要区别"><a href="#主要区别" class="headerlink" title="主要区别"></a>主要区别</h2><p><strong>接口引入时间</strong>：</p>
-<p>Enumeration：引入于 Java 1.0。</p>
-<p>Iterator：引入于 Java 2 (JDK 1.2)。</p>
-<p><strong>方法名称和功能</strong>：</p>
-<p>Enumeration：使用hasMoreElements()和nextElement()方法。</p>
-<p>Iterator：使用hasNext()和next()方法，并增加了remove()方法。</p>
-<p><strong>元素移除</strong>：</p>
-<p>Enumeration：不支持在遍历过程中移除元素。</p>
-<p>Iterator：支持在遍历过程中安全地移除元素（通过remove()方法）。</p>
-<p><strong>适用范围</strong>：</p>
-<p>Enumeration：主要用于旧的集合类，如Vector和Hashtable。</p>
-<p>Iterator：适用于所有集合类，是集合框架的一部分。</p>
-<blockquote>
-<p>&#x2F;vk496pkev2ub6nh4&gt;</p>
 </blockquote>
 
           

@@ -270,6 +270,478 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/04/17/Linux/Linux%E4%B8%AD%E6%96%AD%E6%9C%BA%E5%88%B6%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/04/17/Linux/Linux%E4%B8%AD%E6%96%AD%E6%9C%BA%E5%88%B6%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/" itemprop="url">👌Linux中断机制是什么？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-04-17T13:33:41+00:00">
+                2025-04-17
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌Linux中断机制是什么？"><a href="#👌Linux中断机制是什么？" class="headerlink" title="👌Linux中断机制是什么？"></a>👌Linux中断机制是什么？</h1><p>Linux中断机制是操作系统处理硬件和软件事件的一种重要方式。中断可以使操作系统及时响应各种事件，如硬件设备的输入输出操作、定时器事件等。</p>
+<h3 id="中断的基本概念"><a href="#中断的基本概念" class="headerlink" title="中断的基本概念"></a>中断的基本概念</h3><h4 id="1-中断类型"><a href="#1-中断类型" class="headerlink" title="1.中断类型"></a>1.<strong>中断类型</strong></h4><ul>
+<li><strong>硬件中断</strong>：由硬件设备（如键盘、网卡、硬盘等）发出的信号，引起CPU中断当前执行的程序，转而执行中断处理程序。</li>
+<li><strong>软件中断</strong>：由软件指令（如系统调用、异常等）引发的中断。</li>
+</ul>
+<h4 id="2-中断向量表"><a href="#2-中断向量表" class="headerlink" title="2.中断向量表"></a>2.<strong>中断向量表</strong></h4><p>中断向量表（Interrupt Vector Table, IVT）是一个包含中断服务程序地址的表。当中断发生时，CPU通过中断向量表找到相应的中断服务程序并执行。</p>
+<h3 id="中断处理流程"><a href="#中断处理流程" class="headerlink" title="中断处理流程"></a>中断处理流程</h3><ol>
+<li><strong>中断发生</strong>：硬件设备或软件事件发出中断信号。</li>
+<li><strong>中断响应</strong>：CPU停止当前执行的程序，保存当前的上下文（如程序计数器、寄存器等），并根据中断向量表找到对应的中断服务程序。</li>
+<li><strong>中断处理</strong>：执行中断服务程序，处理中断事件。</li>
+<li><strong>中断返回</strong>：中断处理完成后，恢复保存的上下文，继续执行被中断的程序。</li>
+</ol>
+<h3 id="中断处理的关键组件"><a href="#中断处理的关键组件" class="headerlink" title="中断处理的关键组件"></a>中断处理的关键组件</h3><h4 id="1-中断控制器"><a href="#1-中断控制器" class="headerlink" title="1.中断控制器"></a>1.<strong>中断控制器</strong></h4><p>中断控制器（如PIC、APIC）负责管理和分配中断请求。它可以屏蔽不需要的中断，并确定中断的优先级。</p>
+<h4 id="2-中断处理程序"><a href="#2-中断处理程序" class="headerlink" title="2.中断处理程序"></a>2.<strong>中断处理程序</strong></h4><p>中断处理程序（Interrupt Service Routine, ISR）是处理特定中断事件的函数。它通常分为顶半部（Top Half）和底半部（Bottom Half）：</p>
+<ul>
+<li><strong>顶半部</strong>：快速响应中断，执行紧急的处理任务。</li>
+<li><strong>底半部</strong>：延迟执行较长时间的任务，以减少顶半部的执行时间，避免阻塞其他中断。</li>
+</ul>
+<h4 id="3-中断上下文"><a href="#3-中断上下文" class="headerlink" title="3.中断上下文"></a>3.<strong>中断上下文</strong></h4><p>中断上下文是指中断发生时CPU的状态，包括程序计数器、寄存器等。保存和恢复中断上下文是中断处理的关键步骤。</p>
+<h3 id="中断处理的实现"><a href="#中断处理的实现" class="headerlink" title="中断处理的实现"></a>中断处理的实现</h3><h4 id="1-注册中断处理程序"><a href="#1-注册中断处理程序" class="headerlink" title="1.注册中断处理程序"></a>1.<strong>注册中断处理程序</strong></h4><p>在Linux内核中，可以使用<code>request_irq</code>函数注册中断处理程序：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;linux/interrupt.h&gt;</span><br><span class="line"></span><br><span class="line">int request_irq(unsigned int irq, irq_handler_t handler, unsigned long flags, const char *name, void *dev);</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-中断处理程序示例"><a href="#2-中断处理程序示例" class="headerlink" title="2.中断处理程序示例"></a>2.<strong>中断处理程序示例</strong></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;linux/module.h&gt;</span><br><span class="line">#include &lt;linux/kernel.h&gt;</span><br><span class="line">#include &lt;linux/interrupt.h&gt;</span><br><span class="line"></span><br><span class="line">static irqreturn_t my_interrupt_handler(int irq, void *dev_id) &#123;</span><br><span class="line">    printk(KERN_INFO &quot;Interrupt occurred!\n&quot;);</span><br><span class="line">    // 中断处理逻辑</span><br><span class="line">    return IRQ_HANDLED;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static int __init my_module_init(void) &#123;</span><br><span class="line">    int irq = 1; // 假设中断号为1</span><br><span class="line">    int result = request_irq(irq, my_interrupt_handler, IRQF_SHARED, &quot;my_interrupt&quot;, NULL);</span><br><span class="line">    if (result) &#123;</span><br><span class="line">        printk(KERN_ERR &quot;Failed to request IRQ\n&quot;);</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static void __exit my_module_exit(void) &#123;</span><br><span class="line">    int irq = 1; // 假设中断号为1</span><br><span class="line">    free_irq(irq, NULL);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">module_init(my_module_init);</span><br><span class="line">module_exit(my_module_exit);</span><br><span class="line"></span><br><span class="line">MODULE_LICENSE(&quot;GPL&quot;);</span><br><span class="line">MODULE_DESCRIPTION(&quot;A simple interrupt handler module&quot;);</span><br><span class="line">MODULE_AUTHOR(&quot;Your Name&quot;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-顶半部和底半部"><a href="#3-顶半部和底半部" class="headerlink" title="3.顶半部和底半部"></a>3.<strong>顶半部和底半部</strong></h4><ul>
+<li><strong>顶半部</strong>：快速处理中断的关键部分。</li>
+<li><strong>底半部</strong>：使用任务队列、工作队列或软中断机制延迟处理较长时间的任务。</li>
+</ul>
+<h3 id="中断的优先级和屏蔽"><a href="#中断的优先级和屏蔽" class="headerlink" title="中断的优先级和屏蔽"></a>中断的优先级和屏蔽</h3><p>中断控制器可以设置中断的优先级和屏蔽某些中断，以确保重要的中断优先得到处理。APIC（Advanced Programmable Interrupt Controller）提供了更高级的中断管理功能，如多级中断优先级和分布式中断处理。</p>
+<h3 id="中断的嵌套和重入"><a href="#中断的嵌套和重入" class="headerlink" title="中断的嵌套和重入"></a>中断的嵌套和重入</h3><p>中断处理程序应尽量短小精悍，以减少中断嵌套的层数。中断处理程序应避免使用可能导致阻塞的操作，如长时间的I&#x2F;O操作和锁定操作。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/04/16/Linux/Linux%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E7%A3%81%E7%9B%98%E5%8D%A0%E7%94%A8%E6%83%85%E5%86%B5%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/04/16/Linux/Linux%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E7%A3%81%E7%9B%98%E5%8D%A0%E7%94%A8%E6%83%85%E5%86%B5%EF%BC%9F/" itemprop="url">👌Linux查看文件磁盘占用情况？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-04-16T13:33:41+00:00">
+                2025-04-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌Linux查看文件磁盘占用情况？"><a href="#👌Linux查看文件磁盘占用情况？" class="headerlink" title="👌Linux查看文件磁盘占用情况？"></a>👌Linux查看文件磁盘占用情况？</h1><h3 id="1-du命令"><a href="#1-du命令" class="headerlink" title="1.du命令"></a>1.<code>du</code>命令</h3><p><code>du</code>（disk usage）命令用于估算文件和目录的磁盘使用情况。</p>
+<h4 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">du [选项] [文件或目录]</span><br></pre></td></tr></table></figure>
+
+<h4 id="常用选项"><a href="#常用选项" class="headerlink" title="常用选项"></a>常用选项</h4><ul>
+<li><code>-h</code>：以人类可读的格式显示（例如，K、M、G）。</li>
+<li><code>-s</code>：显示总计（不显示子目录的详细信息）。</li>
+<li><code>-a</code>：包括所有文件和目录。</li>
+<li><code>-c</code>：显示总计。</li>
+<li><code>--max-depth=N</code>：限制显示的目录层级深度。</li>
+</ul>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><ul>
+<li>查看当前目录下每个文件和子目录的磁盘使用情况：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">du -h</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查看指定目录的总磁盘使用情况：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">du -sh /path/to/directory</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查看指定目录及其子目录的磁盘使用情况，限制深度为1：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">du -h --max-depth=1 /path/to/directory</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-df命令"><a href="#2-df命令" class="headerlink" title="2.df命令"></a>2.<code>df</code>命令</h3><p><code>df</code>（disk free）命令用于查看文件系统的磁盘使用情况。</p>
+<h4 id="基本用法-1"><a href="#基本用法-1" class="headerlink" title="基本用法"></a>基本用法</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df [选项] [文件或目录]</span><br></pre></td></tr></table></figure>
+
+<h4 id="常用选项-1"><a href="#常用选项-1" class="headerlink" title="常用选项"></a>常用选项</h4><ul>
+<li><code>-h</code>：以人类可读的格式显示（例如，K、M、G）。</li>
+<li><code>-T</code>：显示文件系统类型。</li>
+<li><code>-i</code>：显示inode使用情况。</li>
+</ul>
+<h4 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h4><ul>
+<li>查看所有挂载的文件系统的磁盘使用情况：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df -h</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查看特定目录所在的文件系统的磁盘使用情况：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df -h /path/to/directory</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-ncdu工具"><a href="#3-ncdu工具" class="headerlink" title="3.ncdu工具"></a>3.<code>ncdu</code>工具</h3><p><code>ncdu</code>（NCurses Disk Usage）是一个基于ncurses的磁盘使用分析工具，提供了交互式界面。</p>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>在Debian&#x2F;Ubuntu系统上：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install ncdu</span><br></pre></td></tr></table></figure>
+
+<p>在CentOS&#x2F;RHEL系统上：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install ncdu</span><br></pre></td></tr></table></figure>
+
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ncdu /path/to/directory</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-ls命令"><a href="#4-ls命令" class="headerlink" title="4.ls命令"></a>4.<code>ls</code>命令</h3><p><code>ls</code>命令也可以显示文件的大小，但不如<code>du</code>详细。</p>
+<h4 id="示例-2"><a href="#示例-2" class="headerlink" title="示例"></a>示例</h4><ul>
+<li>以人类可读的格式显示文件大小：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -lh</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>显示目录的总大小：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -lhS</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-find命令结合du"><a href="#5-find命令结合du" class="headerlink" title="5.find命令结合du"></a>5.<code>find</code>命令结合<code>du</code></h3><p>可以使用<code>find</code>命令查找特定条件的文件，然后结合<code>du</code>命令查看它们的磁盘使用情况。</p>
+<h4 id="示例-3"><a href="#示例-3" class="headerlink" title="示例"></a>示例</h4><ul>
+<li>查找大于100MB的文件并显示其磁盘使用情况：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find /path/to/directory -type f -size +100M -execdu -h &#123;&#125; +</span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>原文: <a target="_blank" rel="noopener" href="https://www.yuque.com/jingdianjichi/xyxdsi/bnus9ng4m4oydmlu">https://www.yuque.com/jingdianjichi/xyxdsi/bnus9ng4m4oydmlu</a></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/04/16/Linux/Linux%E6%AD%BB%E9%94%81%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +789,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -527,8 +999,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -736,8 +1208,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -946,8 +1418,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -1186,8 +1658,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -1400,8 +1872,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -1600,8 +2072,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -1798,8 +2270,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -2005,8 +2477,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -2260,8 +2732,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -2455,8 +2927,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -2681,8 +3153,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -2885,8 +3357,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -3124,8 +3596,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:56+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -3358,8 +3830,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -3569,8 +4041,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -3768,8 +4240,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -3967,8 +4439,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
+                2025-05-16
               </time>
             
           </span>
@@ -4080,433 +4552,6 @@
 <p><strong>NEVER</strong>：适用于必须在非事务上下文中执行的方法。</p>
 <p><strong>NESTED</strong>：适用于需要嵌套事务的情况，例如需要在一个事务内执行多个子事务，并且可以单独回滚子事务。	</p>
 
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/03/04/Spring/Spring%E5%AE%9E%E4%BE%8B%E5%8C%96bean%E6%9C%89%E5%93%AA%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/03/04/Spring/Spring%E5%AE%9E%E4%BE%8B%E5%8C%96bean%E6%9C%89%E5%93%AA%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9F/" itemprop="url">👌Spring 实例化 bean 有哪几种方式？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-03-04T13:33:41+00:00">
-                2025-03-04
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌Spring-实例化-bean-有哪几种方式？"><a href="#👌Spring-实例化-bean-有哪几种方式？" class="headerlink" title="👌Spring 实例化 bean 有哪几种方式？"></a>👌Spring 实例化 bean 有哪几种方式？</h1><h1 id="口语化回答"><a href="#口语化回答" class="headerlink" title="口语化回答"></a>口语化回答</h1><p>好的，面试官。实例化 bean 的方式，主要有构造器实例化，bean 注解实例化，不常用的用静态工厂和实例工厂实例化。构造器实例化主要是通过调用类的构造器来实例化 Bean。构造器可以是无参构造器，也可以是有参构造器。配合 bean 标签的 xml 配置形式，放入容器中。bean 注解的方式就更加常用，尤其是现在都是 boot 的形式。一个注解就可以放入容器中。以上。</p>
-<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>这道题也很常问，同样的还是考察是否平时在学习中用过。应届生比较常问，工作的小伙伴问的概率不大。</p>
-<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>构造器实例化，bean 方式，工厂方式</p>
-<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="通过构造器实例化"><a href="#通过构造器实例化" class="headerlink" title="通过构造器实例化"></a>通过构造器实例化</h2><p>这是最常见的方式之一，Spring 可以通过调用类的构造器来实例化 Bean。构造器可以是无参构造器，也可以是有参构造器。</p>
-<h3 id="无参构造器"><a href="#无参构造器" class="headerlink" title="无参构造器"></a>无参构造器</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public class MyBean &#123;</span><br><span class="line">    public MyBean() &#123;</span><br><span class="line">        // 无参构造器</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>配置方式：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;myBean&quot; class=&quot;com.example.MyBean&quot;/&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="有参构造器"><a href="#有参构造器" class="headerlink" title="有参构造器"></a>有参构造器</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class MyBean &#123;</span><br><span class="line">    private String name;</span><br><span class="line"></span><br><span class="line">    public MyBean(String name) &#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>配置方式：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;myBean&quot; class=&quot;com.example.MyBean&quot;&gt;</span><br><span class="line">    &lt;constructor-arg value=&quot;exampleName&quot;/&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="通过静态工厂方法实例化"><a href="#通过静态工厂方法实例化" class="headerlink" title="通过静态工厂方法实例化"></a>通过静态工厂方法实例化</h2><p>Spring 可以通过调用静态工厂方法来实例化 Bean。这种方式适用于需要复杂初始化逻辑的情况。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public class MyBeanFactory &#123;</span><br><span class="line">    public static MyBean createInstance(String name) &#123;</span><br><span class="line">        return new MyBean(name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>配置方式：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;myBean&quot; class=&quot;com.example.MyBeanFactory&quot; factory-method=&quot;createInstance&quot;&gt;</span><br><span class="line">    &lt;constructor-arg value=&quot;exampleName&quot;/&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="通过实例工厂方法实例化"><a href="#通过实例工厂方法实例化" class="headerlink" title="通过实例工厂方法实例化"></a>通过实例工厂方法实例化</h2><p>这种方式类似于静态工厂方法，不同之处在于实例工厂方法需要先实例化工厂类，然后调用工厂类的实例方法来创建 Bean。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public class MyBeanFactory &#123;</span><br><span class="line">    public MyBean createInstance(String name) &#123;</span><br><span class="line">        return new MyBean(name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>配置方式：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;myBeanFactory&quot; class=&quot;com.example.MyBeanFactory&quot;/&gt;</span><br><span class="line">&lt;bean id=&quot;myBean&quot; factory-bean=&quot;myBeanFactory&quot; factory-method=&quot;createInstance&quot;&gt;</span><br><span class="line">    &lt;constructor-arg value=&quot;exampleName&quot;/&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="通过-FactoryBean-接口实例化"><a href="#通过-FactoryBean-接口实例化" class="headerlink" title="通过 FactoryBean 接口实例化"></a>通过 FactoryBean 接口实例化</h2><p>Spring 提供了一个FactoryBean接口，允许开发者定制 Bean 的创建逻辑。实现FactoryBean接口的类可以被用作工厂来生成其他 Bean。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public class MyFactoryBean implements FactoryBean&lt;MyBean&gt; &#123;</span><br><span class="line">    private String name;</span><br><span class="line"></span><br><span class="line">    public void setName(String name) &#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public MyBean getObject() throws Exception &#123;</span><br><span class="line">        return new MyBean(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Class&lt;?&gt; getObjectType() &#123;</span><br><span class="line">        return MyBean.class;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public boolean isSingleton() &#123;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>配置方式：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;myFactoryBean&quot; class=&quot;com.example.MyFactoryBean&quot;&gt;</span><br><span class="line">    &lt;property name=&quot;name&quot; value=&quot;exampleName&quot;/&gt;</span><br><span class="line">&lt;/bean&gt;</span><br><span class="line">&lt;bean id=&quot;myBean&quot; factory-bean=&quot;myFactoryBean&quot; factory-method=&quot;getObject&quot;/&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="通过-Bean-注解实例化"><a href="#通过-Bean-注解实例化" class="headerlink" title="通过 @Bean 注解实例化"></a>通过 @Bean 注解实例化</h2><p>使用@Bean注解的方法可以用来实例化和配置 Bean。这种方式更加直观和灵活，适合基于 Java 配置的 Spring 应用。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">public class AppConfig &#123;</span><br><span class="line">    @Bean</span><br><span class="line">    public MyBean myBean() &#123;</span><br><span class="line">        return new MyBean(&quot;exampleName&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="通过-Component-注解实例化"><a href="#通过-Component-注解实例化" class="headerlink" title="通过 @Component 注解实例化"></a>通过 @Component 注解实例化</h2><p>使用@Component注解可以将类标记为 Spring 管理的 Bean。结合@ComponentScan注解，Spring 会自动扫描并实例化这些类。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">public class MyBean &#123;</span><br><span class="line">    // Bean 定义</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>配置方式：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">@ComponentScan(basePackages = &quot;com.example&quot;)</span><br><span class="line">public class AppConfig &#123;</span><br><span class="line">    // 配置类</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/03/02/MQ/Rabbitmq%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E6%B6%88%E6%81%AF%E4%B8%A2%E5%A4%B1%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/03/02/MQ/Rabbitmq%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E6%B6%88%E6%81%AF%E4%B8%A2%E5%A4%B1%EF%BC%9F/" itemprop="url">👌Rabbitmq如何避免消息丢失？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-03-02T13:33:41+00:00">
-                2025-03-02
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-12T03:24:55+00:00">
-                2025-05-12
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌Rabbitmq如何避免消息丢失？"><a href="#👌Rabbitmq如何避免消息丢失？" class="headerlink" title="👌Rabbitmq如何避免消息丢失？"></a>👌Rabbitmq如何避免消息丢失？</h1><h1 id="口语化回答"><a href="#口语化回答" class="headerlink" title="口语化回答"></a>口语化回答</h1><p>好的，面试官，rabbitmq 主要通过持久化机制，ack 确认机制，镜像等保证消息不丢失。rabbitmq 在创建队列的时候，可以设置为持久化队列，消息也可以设置为持久化消息，这样消息会被写入磁盘。即使重启，也不会产生丢失的问题。确认机制是我们平时最常见的机制，ack，消费者正常消费成功过消息后，会发出 ack 信号。mq 收到之后，才会认为消息成功消费，否则会认为消费失败，此时不会抛弃会让其他消费者继续进行消费。镜像队列是高可用的一种形式。可以确保一个节点挂了，另一个节点可以正常的存储消息，类似 redis 主从复制。以上。</p>
-<h2 id="消息持久化"><a href="#消息持久化" class="headerlink" title="消息持久化"></a>消息持久化</h2><p><strong>1、 持久化队列</strong>：创建队列时，可以将其声明为持久化队列（durable）。持久化队列在 RabbitMQ 重启后依然存在。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">channel.queueDeclare(&quot;queue_name&quot;, true, false, false, null);</span><br></pre></td></tr></table></figure>
-
-<p><strong>2、 持久化消息</strong>：在发送消息时，可以将消息标记为持久化（persistent）。持久化消息会被写入磁盘，即使 RabbitMQ 重启，消息也不会丢失。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">AMQP.BasicProperties props = new AMQP.BasicProperties.Builder()</span><br><span class="line">    .deliveryMode(2) // 2 表示持久化消息</span><br><span class="line">    .build();</span><br><span class="line">channel.basicPublish(&quot;exchange_name&quot;, &quot;routing_key&quot;, props, messageBody);</span><br></pre></td></tr></table></figure>
-
-<h2 id="消息确认机制（Acknowledgements）"><a href="#消息确认机制（Acknowledgements）" class="headerlink" title="消息确认机制（Acknowledgements）"></a>消息确认机制（Acknowledgements）</h2><p><strong>1、 消费者确认</strong>：消费者处理完消息后，向 RabbitMQ 发送确认（ack）。如果消费者未确认消息（如消费者崩溃），RabbitMQ 会将消息重新投递给其他消费者。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 自动确认关闭</span><br><span class="line">channel.basicConsume(&quot;queue_name&quot;, false, consumer);</span><br><span class="line"></span><br><span class="line">// 消费者处理完消息后手动确认</span><br><span class="line">channel.basicAck(deliveryTag, false);</span><br></pre></td></tr></table></figure>
-
-<p><strong>2、 发布者确认</strong>：发布者可以启用发布确认模式（publisher confirms），RabbitMQ 会在消息成功写入队列后发送确认给发布者。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">channel.confirmSelect();</span><br><span class="line">channel.basicPublish(&quot;exchange_name&quot;, &quot;routing_key&quot;, null, messageBody);</span><br><span class="line">channel.waitForConfirmsOrDie(); // 等待确认</span><br></pre></td></tr></table></figure>
-
-<h2 id="事务支持"><a href="#事务支持" class="headerlink" title="事务支持"></a>事务支持</h2><p>RabbitMQ 支持 AMQP 事务，可以在一个事务中发布多条消息，确保这些消息要么全部成功，要么全部失败。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">channel.txSelect();</span><br><span class="line">channel.basicPublish(&quot;exchange_name&quot;, &quot;routing_key&quot;, null, messageBody);</span><br><span class="line">channel.txCommit(); // 提交事务</span><br></pre></td></tr></table></figure>
-
-<h2 id="镜像队列（Mirrored-Queues）"><a href="#镜像队列（Mirrored-Queues）" class="headerlink" title="镜像队列（Mirrored Queues）"></a>镜像队列（Mirrored Queues）</h2><p>RabbitMQ 的集群模式支持镜像队列（也称为高可用队列），可以将队列的数据复制到多个节点上，确保在一个节点故障时，其他节点仍然可以提供服务。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 定义队列策略，将队列配置为镜像队列</span><br><span class="line">rabbitmqctl set_policy ha-all &quot;^queue_name$&quot; &#x27;&#123;&quot;ha-mode&quot;:&quot;all&quot;&#125;&#x27;</span><br></pre></td></tr></table></figure>
-
-<h2 id="消费者重试机制"><a href="#消费者重试机制" class="headerlink" title="消费者重试机制"></a>消费者重试机制</h2><p>消费者可以实现重试机制，当消息处理失败时，可以将消息重新投递到队列或死信队列，避免消息丢失。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">try &#123;</span><br><span class="line">    // 处理消息</span><br><span class="line">    channel.basicAck(deliveryTag, false);</span><br><span class="line">&#125; catch (Exception e) &#123;</span><br><span class="line">    channel.basicNack(deliveryTag, false, true); // 重试</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           
         
       
