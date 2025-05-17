@@ -270,6 +270,601 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFHashTable_/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFHashTable_/" itemprop="url">什么是HashTable</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌什么是HashTable"><a href="#👌什么是HashTable" class="headerlink" title="👌什么是HashTable?"></a>👌什么是HashTable?</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>Hashtable 是遗留类，很多映射的常用功能与 HashMap 类似，不同的是它承自 Dictionary 类，并且是线程安全的，任一时间只有一个线程能写 Hashtable，并发性不如 ConcurrentHashMap，因为 ConcurrentHashMap 引入了分段锁。Hashtable 不建议在新代码中使用，不需要线程安全的场合可以用 HashMap 替换，需要线程安全的场合可以用 ConcurrentHashMap 替换。</p>
+<h3 id="与其他集合类的比较"><a href="#与其他集合类的比较" class="headerlink" title="与其他集合类的比较"></a>与其他集合类的比较</h3><p><strong>Hashtable vs. HashMap</strong>：</p>
+<p>Hashtable是线程安全的，而HashMap不是。</p>
+<p>Hashtable不允许键或值为null，而HashMap允许一个null键和多个null值。</p>
+<p>在现代 Java 编程中，HashMap更常用，因为它在大多数情况下性能更好，并且可以通过外部同步来实现线程安全。</p>
+<p><strong>Hashtable vs. ConcurrentHashMap</strong>：</p>
+<p>ConcurrentHashMap是 Java 5 引入的一种改进的哈希表实现，专为高并发环境设计。</p>
+<p>ConcurrentHashMap提供了更细粒度的锁机制，允许更高的并发性和更好的性能。</p>
+<p>总的来说，Hashtable是一种较早的哈希表实现，适用于需要线程安全的简单场景。然而，在现代 Java 开发中，通常推荐使用ConcurrentHashMap或通过外部同步来使用HashMap，以获得更好的性能和灵活性。</p>
+<blockquote>
+<p>&#x2F;bgy4pz59q8ffzxwo&gt;</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFLinkedHashMap_/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFLinkedHashMap_/" itemprop="url">什么是LinkedHashMap</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌什么是LinkedHashMap"><a href="#👌什么是LinkedHashMap" class="headerlink" title="👌什么是LinkedHashMap?"></a>👌什么是LinkedHashMap?</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>LinkedHashMap是 Java 集合框架中的一个类，它继承自HashMap，并且具有哈希表和链表的双重特性。LinkedHashMap通过维护一个双向链表来记录键值对的插入顺序或访问顺序，从而提供了一种有序的映射。</p>
+<h2 id="基本特点"><a href="#基本特点" class="headerlink" title="基本特点"></a>基本特点</h2><ol>
+<li><strong>有序性</strong>：LinkedHashMap保证了键值对的顺序，可以是插入顺序（默认）或访问顺序（可选）。</li>
+<li><strong>哈希表和链表结合</strong>：LinkedHashMap通过哈希表实现快速的键值对查找，同时通过双向链表维护顺序。</li>
+<li><strong>允许<strong><strong>null</strong></strong>键和值</strong>：LinkedHashMap允许一个null键和多个null值。</li>
+<li><strong>线程不安全</strong>：LinkedHashMap不是线程安全的，如果需要在多线程环境中使用，需要通过外部同步机制来保证线程安全。</li>
+</ol>
+<h2 id="与其他集合类的比较"><a href="#与其他集合类的比较" class="headerlink" title="与其他集合类的比较"></a>与其他集合类的比较</h2><p><strong>LinkedHashMap vs. HashMap</strong>：</p>
+<p>LinkedHashMap保证键值对的顺序（插入顺序或访问顺序），而HashMap不保证顺序。</p>
+<p>LinkedHashMap通过维护链表来记录顺序，因此在插入和删除操作上可能略慢于HashMap。</p>
+<p><strong>LinkedHashMap vs. TreeMap</strong>：</p>
+<p>LinkedHashMap保证插入顺序或访问顺序，而TreeMap保证键的自然顺序或比较器的顺序。</p>
+<p>LinkedHashMap基于哈希表实现，操作的平均时间复杂度为 O(1)，而TreeMap基于红黑树实现，操作的时间复杂度为 O(log n)。</p>
+<h2 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h2><p>LinkedHashMap适用于需要保持键值对的插入顺序或访问顺序的场景：</p>
+<p>实现 LRU（最近最少使用）缓存。</p>
+<p>需要按插入顺序遍历键值对。</p>
+<p>需要在保持顺序的同时快速查找键值对。</p>
+<blockquote>
+<p>&#x2F;ttdsl1h3wbwte5u4&gt;</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFfail-fast%E6%9C%BA%E5%88%B6%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFfail-fast%E6%9C%BA%E5%88%B6%EF%BC%9F/" itemprop="url">fail-fast机制</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌什么是fail-fast机制？"><a href="#👌什么是fail-fast机制？" class="headerlink" title="👌什么是fail-fast机制？"></a>👌什么是fail-fast机制？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>在Java集合框架中，fail-fast是一种机制，用于检测在遍历集合时的结构性修改，并立即抛出异常以防止不一致状态。fail-fast迭代器在检测到集合在迭代过程中被修改后，会抛出ConcurrentModificationException异常。</p>
+<h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><p>fail-fast迭代器通过在遍历集合时维护一个修改计数器（modification count）来工作。每当集合结构发生变化（如添加或删除元素）时，这个计数器就会增加。当创建迭代器时，它会保存当前的修改计数器值。在每次调用next()方法时，迭代器会检查当前的修改计数器值是否与保存的值一致。如果不一致，说明集合在迭代过程中被修改了，迭代器会立即抛出ConcurrentModificationException。</p>
+<h2 id="代码-Demo"><a href="#代码-Demo" class="headerlink" title="代码 Demo"></a>代码 Demo</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import java.util.*;</span><br><span class="line"></span><br><span class="line">public class FailFastExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        List&lt;String&gt; list = new ArrayList&lt;&gt;();</span><br><span class="line">        list.add(&quot;A&quot;);</span><br><span class="line">        list.add(&quot;B&quot;);</span><br><span class="line">        list.add(&quot;C&quot;);</span><br><span class="line"></span><br><span class="line">        Iterator&lt;String&gt; iterator = list.iterator();</span><br><span class="line">        while (iterator.hasNext()) &#123;</span><br><span class="line">            String element = iterator.next();</span><br><span class="line">            System.out.println(element);</span><br><span class="line">            // 在迭代过程中修改集合</span><br><span class="line">            if (element.equals(&quot;B&quot;)) &#123;</span><br><span class="line">                list.add(&quot;D&quot;); // 这将引发 ConcurrentModificationException</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的代码中，当迭代器遍历到元素 “B” 时，集合被修改（添加了新元素 “D”），因此迭代器将抛出ConcurrentModificationException。</p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p><strong>快速失败并不保证</strong>：fail-fast机制并不能保证在所有情况下都能检测到并发修改。它是尽力而为的检测机制，不能依赖于它来实现并发安全。如果需要并发安全的集合，可以使用java.util.concurrent包中的并发集合类。</p>
+<p><strong>避免并发修改</strong>：在遍历集合时，避免在外部修改集合。可以使用迭代器的remove方法来安全地移除元素。</p>
+<h2 id="使用remove方法"><a href="#使用remove方法" class="headerlink" title="使用remove方法"></a>使用remove方法</h2><p>为了避免ConcurrentModificationException，可以使用迭代器的remove方法来移除元素：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">import java.util.*;</span><br><span class="line"></span><br><span class="line">public class SafeRemovalExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        List&lt;String&gt; list = new ArrayList&lt;&gt;();</span><br><span class="line">        list.add(&quot;A&quot;);</span><br><span class="line">        list.add(&quot;B&quot;);</span><br><span class="line">        list.add(&quot;C&quot;);</span><br><span class="line"></span><br><span class="line">        Iterator&lt;String&gt; iterator = list.iterator();</span><br><span class="line">        while (iterator.hasNext()) &#123;</span><br><span class="line">            String element = iterator.next();</span><br><span class="line">            System.out.println(element);</span><br><span class="line">            // 使用迭代器的 remove 方法安全地移除元素</span><br><span class="line">            if (element.equals(&quot;B&quot;)) &#123;</span><br><span class="line">                iterator.remove();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;After removal: &quot; + list);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个示例中，使用iterator.remove()方法安全地移除了元素 “B”。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFTreeMap%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +912,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -474,400 +1069,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFfail-fast%E6%9C%BA%E5%88%B6%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFfail-fast%E6%9C%BA%E5%88%B6%EF%BC%9F/" itemprop="url">fail-fast机制</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌什么是fail-fast机制？"><a href="#👌什么是fail-fast机制？" class="headerlink" title="👌什么是fail-fast机制？"></a>👌什么是fail-fast机制？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>在Java集合框架中，fail-fast是一种机制，用于检测在遍历集合时的结构性修改，并立即抛出异常以防止不一致状态。fail-fast迭代器在检测到集合在迭代过程中被修改后，会抛出ConcurrentModificationException异常。</p>
-<h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><p>fail-fast迭代器通过在遍历集合时维护一个修改计数器（modification count）来工作。每当集合结构发生变化（如添加或删除元素）时，这个计数器就会增加。当创建迭代器时，它会保存当前的修改计数器值。在每次调用next()方法时，迭代器会检查当前的修改计数器值是否与保存的值一致。如果不一致，说明集合在迭代过程中被修改了，迭代器会立即抛出ConcurrentModificationException。</p>
-<h2 id="代码-Demo"><a href="#代码-Demo" class="headerlink" title="代码 Demo"></a>代码 Demo</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import java.util.*;</span><br><span class="line"></span><br><span class="line">public class FailFastExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        List&lt;String&gt; list = new ArrayList&lt;&gt;();</span><br><span class="line">        list.add(&quot;A&quot;);</span><br><span class="line">        list.add(&quot;B&quot;);</span><br><span class="line">        list.add(&quot;C&quot;);</span><br><span class="line"></span><br><span class="line">        Iterator&lt;String&gt; iterator = list.iterator();</span><br><span class="line">        while (iterator.hasNext()) &#123;</span><br><span class="line">            String element = iterator.next();</span><br><span class="line">            System.out.println(element);</span><br><span class="line">            // 在迭代过程中修改集合</span><br><span class="line">            if (element.equals(&quot;B&quot;)) &#123;</span><br><span class="line">                list.add(&quot;D&quot;); // 这将引发 ConcurrentModificationException</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在上面的代码中，当迭代器遍历到元素 “B” 时，集合被修改（添加了新元素 “D”），因此迭代器将抛出ConcurrentModificationException。</p>
-<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p><strong>快速失败并不保证</strong>：fail-fast机制并不能保证在所有情况下都能检测到并发修改。它是尽力而为的检测机制，不能依赖于它来实现并发安全。如果需要并发安全的集合，可以使用java.util.concurrent包中的并发集合类。</p>
-<p><strong>避免并发修改</strong>：在遍历集合时，避免在外部修改集合。可以使用迭代器的remove方法来安全地移除元素。</p>
-<h2 id="使用remove方法"><a href="#使用remove方法" class="headerlink" title="使用remove方法"></a>使用remove方法</h2><p>为了避免ConcurrentModificationException，可以使用迭代器的remove方法来移除元素：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">import java.util.*;</span><br><span class="line"></span><br><span class="line">public class SafeRemovalExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        List&lt;String&gt; list = new ArrayList&lt;&gt;();</span><br><span class="line">        list.add(&quot;A&quot;);</span><br><span class="line">        list.add(&quot;B&quot;);</span><br><span class="line">        list.add(&quot;C&quot;);</span><br><span class="line"></span><br><span class="line">        Iterator&lt;String&gt; iterator = list.iterator();</span><br><span class="line">        while (iterator.hasNext()) &#123;</span><br><span class="line">            String element = iterator.next();</span><br><span class="line">            System.out.println(element);</span><br><span class="line">            // 使用迭代器的 remove 方法安全地移除元素</span><br><span class="line">            if (element.equals(&quot;B&quot;)) &#123;</span><br><span class="line">                iterator.remove();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;After removal: &quot; + list);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在这个示例中，使用iterator.remove()方法安全地移除了元素 “B”。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFfail-safe%E6%9C%BA%E5%88%B6%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFfail-safe%E6%9C%BA%E5%88%B6%EF%BC%9F/" itemprop="url">fail-safe机制</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌什么是fail-safe机制？"><a href="#👌什么是fail-safe机制？" class="headerlink" title="👌什么是fail-safe机制？"></a>👌什么是fail-safe机制？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>fail-safe机制是与fail-fast机制相对的一种并发处理机制。在 Java 集合框架中，fail-safe迭代器在检测到集合在遍历过程中被修改时，不会抛出异常，而是允许这种修改继续进行。fail-safe迭代器通常是通过在遍历时使用集合的副本来实现的，这样即使原集合被修改，迭代器也不会受到影响。</p>
-<h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><p>fail-safe迭代器在遍历集合时，实际上是遍历集合的一个副本。因此，任何对原集合的修改都不会影响到迭代器正在遍历的副本。这种机制保证了遍历操作的安全性，但也意味着迭代器不能反映集合的实时变化。</p>
-<h2 id="代码-Demo"><a href="#代码-Demo" class="headerlink" title="代码 Demo"></a>代码 Demo</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">import java.util.concurrent.CopyOnWriteArrayList;</span><br><span class="line">import java.util.Iterator;</span><br><span class="line">public class FailSafeExample &#123;</span><br><span class="line">    publicstaticvoidmain(String[] args) &#123;</span><br><span class="line">        CopyOnWriteArrayList&lt;String&gt; list = new CopyOnWriteArrayList&lt;&gt;();</span><br><span class="line">        list.add(&quot;A&quot;);</span><br><span class="line">        list.add(&quot;B&quot;);</span><br><span class="line">        list.add(&quot;C&quot;);</span><br><span class="line"></span><br><span class="line">        Iterator&lt;String&gt; iterator = list.iterator();</span><br><span class="line">        while (iterator.hasNext()) &#123;</span><br><span class="line">            Stringelement= iterator.next();</span><br><span class="line">            System.out.println(element);</span><br><span class="line">            // 在迭代过程中修改集合</span><br><span class="line">            if (element.equals(&quot;B&quot;)) &#123;</span><br><span class="line">                list.add(&quot;D&quot;); // 不会引发 ConcurrentModificationException</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;After modification: &quot; + list);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在上面的代码中，使用CopyOnWriteArrayList作为集合。CopyOnWriteArrayList是一个典型的fail-safe集合类，它在每次修改时都会创建集合的一个副本，因此迭代器不会检测到并发修改，不会抛出ConcurrentModificationException。</p>
-<h2 id="主要特点"><a href="#主要特点" class="headerlink" title="主要特点"></a>主要特点</h2><ol>
-<li><strong>不抛异常</strong>：fail-safe迭代器在检测到集合被修改时，不会抛出ConcurrentModificationException异常。</li>
-<li><strong>副本遍历</strong>：fail-safe迭代器遍历的是集合的一个副本，而不是原集合。这意味着对原集合的修改不会影响迭代器的遍历。</li>
-<li><strong>线程安全</strong>：fail-safe集合类（如CopyOnWriteArrayList、ConcurrentHashMap等）通常是线程安全的，适用于并发环境。</li>
-</ol>
-<h2 id="常见的fail-safe集合类"><a href="#常见的fail-safe集合类" class="headerlink" title="常见的fail-safe集合类"></a>常见的fail-safe集合类</h2><p>CopyOnWriteArrayList，ConcurrentHashMap，ConcurrentLinkedQueue，ConcurrentSkipListMap，ConcurrentSkipListSet</p>
-<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
-<li><strong>性能开销</strong>：由于fail-safe机制通常需要创建集合的副本，因此在修改频繁的场景下，性能开销较大。适用于读多写少的场景。</li>
-<li><strong>一致性问题</strong>：由于迭代器遍历的是集合的副本，因此它不能反映集合的实时变化。如果需要实时一致性，fail-safe机制可能不适用。</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8BHashMap%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -915,8 +1116,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -1086,6 +1287,205 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFfail-safe%E6%9C%BA%E5%88%B6%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%80%E4%B9%88%E6%98%AFfail-safe%E6%9C%BA%E5%88%B6%EF%BC%9F/" itemprop="url">fail-safe机制</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌什么是fail-safe机制？"><a href="#👌什么是fail-safe机制？" class="headerlink" title="👌什么是fail-safe机制？"></a>👌什么是fail-safe机制？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>fail-safe机制是与fail-fast机制相对的一种并发处理机制。在 Java 集合框架中，fail-safe迭代器在检测到集合在遍历过程中被修改时，不会抛出异常，而是允许这种修改继续进行。fail-safe迭代器通常是通过在遍历时使用集合的副本来实现的，这样即使原集合被修改，迭代器也不会受到影响。</p>
+<h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><p>fail-safe迭代器在遍历集合时，实际上是遍历集合的一个副本。因此，任何对原集合的修改都不会影响到迭代器正在遍历的副本。这种机制保证了遍历操作的安全性，但也意味着迭代器不能反映集合的实时变化。</p>
+<h2 id="代码-Demo"><a href="#代码-Demo" class="headerlink" title="代码 Demo"></a>代码 Demo</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">import java.util.concurrent.CopyOnWriteArrayList;</span><br><span class="line">import java.util.Iterator;</span><br><span class="line">public class FailSafeExample &#123;</span><br><span class="line">    publicstaticvoidmain(String[] args) &#123;</span><br><span class="line">        CopyOnWriteArrayList&lt;String&gt; list = new CopyOnWriteArrayList&lt;&gt;();</span><br><span class="line">        list.add(&quot;A&quot;);</span><br><span class="line">        list.add(&quot;B&quot;);</span><br><span class="line">        list.add(&quot;C&quot;);</span><br><span class="line"></span><br><span class="line">        Iterator&lt;String&gt; iterator = list.iterator();</span><br><span class="line">        while (iterator.hasNext()) &#123;</span><br><span class="line">            Stringelement= iterator.next();</span><br><span class="line">            System.out.println(element);</span><br><span class="line">            // 在迭代过程中修改集合</span><br><span class="line">            if (element.equals(&quot;B&quot;)) &#123;</span><br><span class="line">                list.add(&quot;D&quot;); // 不会引发 ConcurrentModificationException</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;After modification: &quot; + list);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的代码中，使用CopyOnWriteArrayList作为集合。CopyOnWriteArrayList是一个典型的fail-safe集合类，它在每次修改时都会创建集合的一个副本，因此迭代器不会检测到并发修改，不会抛出ConcurrentModificationException。</p>
+<h2 id="主要特点"><a href="#主要特点" class="headerlink" title="主要特点"></a>主要特点</h2><ol>
+<li><strong>不抛异常</strong>：fail-safe迭代器在检测到集合被修改时，不会抛出ConcurrentModificationException异常。</li>
+<li><strong>副本遍历</strong>：fail-safe迭代器遍历的是集合的一个副本，而不是原集合。这意味着对原集合的修改不会影响迭代器的遍历。</li>
+<li><strong>线程安全</strong>：fail-safe集合类（如CopyOnWriteArrayList、ConcurrentHashMap等）通常是线程安全的，适用于并发环境。</li>
+</ol>
+<h2 id="常见的fail-safe集合类"><a href="#常见的fail-safe集合类" class="headerlink" title="常见的fail-safe集合类"></a>常见的fail-safe集合类</h2><p>CopyOnWriteArrayList，ConcurrentHashMap，ConcurrentLinkedQueue，ConcurrentSkipListMap，ConcurrentSkipListSet</p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
+<li><strong>性能开销</strong>：由于fail-safe机制通常需要创建集合的副本，因此在修改频繁的场景下，性能开销较大。适用于读多写少的场景。</li>
+<li><strong>一致性问题</strong>：由于迭代器遍历的是集合的副本，因此它不能反映集合的实时变化。如果需要实时一致性，fail-safe机制可能不适用。</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8B%E5%B8%B8%E8%A7%81%E7%9A%84list%E5%AE%9E%E7%8E%B0%E7%B1%BB%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1133,8 +1533,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -1327,8 +1727,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -1524,8 +1924,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -1724,8 +2124,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -1925,8 +2325,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -2121,8 +2521,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -2324,8 +2724,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -2526,8 +2926,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -2731,8 +3131,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -2936,8 +3336,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -3159,8 +3559,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -3363,8 +3763,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -3590,8 +3990,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -3950,8 +4350,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -4113,456 +4513,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/%E5%9F%BA%E7%A1%80/%E6%AD%BB%E9%94%81/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/10/%E5%9F%BA%E7%A1%80/%E6%AD%BB%E9%94%81/" itemprop="url">死锁</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-10T17:33:00+00:00">
-                2024-10-10
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="死锁的定义"><a href="#死锁的定义" class="headerlink" title="死锁的定义"></a>死锁的定义</h2><p>死锁是指两个或两个以上的进程（或线程）在执行过程中，因竞争资源或彼此通信而造成的一种阻塞现象。当这些进程都在等待对方释放资源时，就会形成一个无法打破的僵局，若无外力作用，它们都将无法继续执行。此时，系统处于死锁状态。</p>
-<h3 id="产生死锁的四个必要条件"><a href="#产生死锁的四个必要条件" class="headerlink" title="产生死锁的四个必要条件"></a>产生死锁的四个必要条件</h3><ol>
-<li><strong>互斥条件</strong>：一个资源每次只能被一个进程使用。</li>
-<li><strong>占有且等待</strong>：一个进程因请求资源而阻塞时，对已获得的资源保持不放。</li>
-<li><strong>不可抢占</strong>：进程已获得的资源，在未使用完之前，不能强行剥夺。</li>
-<li><strong>循环等待条件</strong>：若干进程之间形成一种头尾相接的循环等待资源关系。</li>
-</ol>
-<h3 id="如何解决死锁"><a href="#如何解决死锁" class="headerlink" title="如何解决死锁"></a>如何解决死锁</h3><p>解决死锁的方法主要分为预防死锁、避免死锁、检测死锁和解除死锁四种。</p>
-<ol>
-<li><p><strong>预防死锁</strong>：</p>
-<ul>
-<li>破坏互斥条件：允许资源被多个进程同时访问（但某些资源可能无法这样做）。</li>
-<li>破坏占有且等待条件：要求进程一次性申请所有所需资源，或者允许进程在持有资源的同时申请其他资源（但可能降低系统效率）。</li>
-<li>破坏不可抢占条件：允许进程被抢占已分配的资源（但可能导致数据不一致等问题）。</li>
-<li>破坏循环等待条件：对资源编号，要求进程按编号顺序申请资源（但可能增加资源管理的复杂性）。</li>
-</ul>
-</li>
-<li><p><strong>避免死锁</strong>：</p>
-<ul>
-<li>使用银行家算法等算法来动态地检查资源分配的安全性，确保系统不会进入不安全状态。</li>
-<li>在资源分配过程中，采用资源预分配策略或资源按需分配策略，并监控系统的资源使用情况。</li>
-</ul>
-</li>
-<li><p><strong>检测死锁</strong>：</p>
-<ul>
-<li>定期检查系统是否存在死锁现象，如使用资源分配图等方法。</li>
-<li>一旦发现死锁，立即采取措施进行解除。</li>
-</ul>
-</li>
-<li><p><strong>解除死锁</strong>：</p>
-<ul>
-<li>终止一个或多个进程，以打破循环等待条件。</li>
-<li>回滚到安全状态，重新分配资源。</li>
-<li>在数据库系统中，可以采用自动回滚事务、重启事务等方法来解除死锁。</li>
-</ul>
-</li>
-</ol>
-<h3 id="数据库死锁的发生与解决"><a href="#数据库死锁的发生与解决" class="headerlink" title="数据库死锁的发生与解决"></a>数据库死锁的发生与解决</h3><p>在数据库中，死锁通常发生在多个事务并发执行时。当事务A持有资源A的锁并尝试获取资源B的锁时，而事务B持有资源B的锁并尝试获取资源A的锁时，就会发生死锁。</p>
-<p>解决数据库死锁的方法包括：</p>
-<ul>
-<li>避免并发修改：尽量减少多个事务对同一资源的并发访问。</li>
-<li>保证操作顺序：确保多个事务按照相同的顺序访问资源。</li>
-<li>使用锁超时机制：设置锁的超时时间，当事务持有锁超过一定时间时自动释放锁。</li>
-<li>使用乐观锁或悲观锁等锁策略来管理资源访问。</li>
-</ul>
-<p>综上所述，死锁是并发系统中常见的问题之一。通过理解死锁的产生条件、掌握解决死锁的方法以及合理设计资源访问策略，可以有效地预防和解决死锁问题。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/%E5%9F%BA%E7%A1%80/%E7%BA%BF%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/10/%E5%9F%BA%E7%A1%80/%E7%BA%BF%E7%A8%8B/" itemprop="url">线程</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-10T17:33:00+00:00">
-                2024-10-10
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="线程状态的详细解释"><a href="#线程状态的详细解释" class="headerlink" title="线程状态的详细解释"></a>线程状态的详细解释</h3><ol>
-<li><p><strong>初始(NEW)</strong></p>
-<p>线程对象被创建，但尚未调用<code>start()</code>方法。此时线程还未开始执行，只是作为一个对象存在于内存中。</p>
-</li>
-<li><p><strong>运行(RUNNABLE)</strong></p>
-<ul>
-<li><strong>就绪(READY)</strong>: 线程对象创建后，通过调用<code>start()</code>方法启动。此时线程进入就绪状态，等待操作系统的调度，以获取CPU时间片。</li>
-<li><strong>运行中(RUNNING)</strong>: 当就绪状态的线程获得CPU时间片时，开始执行程序代码，进入运行状态。</li>
-</ul>
-<p>在Java中，由于就绪和运行状态的切换非常频繁，且难以准确区分，因此将两者统称为“运行(RUNNABLE)”状态。</p>
-</li>
-<li><p><strong>阻塞(BLOCKED)</strong></p>
-<p>线程尝试获取某个对象的锁（如通过<code>synchronized</code>关键字），但锁已被其他线程持有。此时线程进入阻塞状态，直到锁被释放并成功获取。</p>
-</li>
-<li><p><strong>等待(WAITING)</strong></p>
-<p>线程通过调用<code>Object</code>类的<code>wait()</code>方法或其他等待方法（如<code>Condition</code>的<code>await()</code>方法）进入等待状态。此时线程需要等待其他线程的通知（通过<code>notify()</code>或<code>notifyAll()</code>方法）或中断来唤醒。</p>
-</li>
-<li><p><strong>超时等待(TIMED_WAITING)</strong></p>
-<p>线程通过调用带有超时参数的等待方法（如<code>Thread.sleep(long millis)</code>、<code>Object.wait(long timeout)</code>等）进入超时等待状态。此时线程在指定的时间内等待，如果超时时间到达或收到其他线程的通知，则线程会被唤醒。</p>
-</li>
-<li><p><strong>终止(TERMINATED)</strong></p>
-<p>线程执行完毕或由于异常等原因终止执行，进入终止状态。此时线程不再占用系统资源。</p>
-</li>
-</ol>
-<h3 id="状态流转的细化"><a href="#状态流转的细化" class="headerlink" title="状态流转的细化"></a>状态流转的细化</h3><ul>
-<li>从<strong>初始(NEW)<strong>到</strong>运行(RUNNABLE)</strong>: 调用<code>start()</code>方法。</li>
-<li>从<strong>运行(RUNNABLE)<strong>到</strong>阻塞(BLOCKED)</strong>: 尝试获取锁失败。</li>
-<li>从<strong>阻塞(BLOCKED)<strong>到</strong>运行(RUNNABLE)</strong>: 成功获取锁。</li>
-<li>从<strong>运行(RUNNABLE)<strong>到</strong>等待(WAITING)</strong>: 调用<code>wait()</code>等方法。</li>
-<li>从<strong>等待(WAITING)<strong>到</strong>运行(RUNNABLE)</strong>: 收到其他线程的通知或中断。</li>
-<li>从<strong>运行(RUNNABLE)<strong>到</strong>超时等待(TIMED_WAITING)</strong>: 调用带有超时参数的等待方法。</li>
-<li>从<strong>超时等待(TIMED_WAITING)<strong>到</strong>运行(RUNNABLE)</strong>: 超时时间到达或收到其他线程的通知。</li>
-<li>从<strong>运行(RUNNABLE)<strong>到</strong>终止(TERMINATED)</strong>: 线程执行完毕或异常终止。</li>
-</ul>
-<h3 id="关于RUNNING状态的缺失"><a href="#关于RUNNING状态的缺失" class="headerlink" title="关于RUNNING状态的缺失"></a>关于RUNNING状态的缺失</h3><p>如你所述，由于CPU时间片的分配和线程状态的频繁切换，很难准确区分线程是处于就绪状态还是运行状态。因此，Java将两者统称为“运行(RUNNABLE)”状态，以表示线程当前是可执行的，只要获得CPU时间片就能立即执行。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>了解线程的状态及其流转对于编写高效、可靠的并发程序至关重要。通过合理管理线程状态，可以确保程序的正确性和性能。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4613,7 +4563,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">225</span>
+                <span class="site-state-item-count">229</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -4635,7 +4585,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-count">26</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

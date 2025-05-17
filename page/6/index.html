@@ -270,6 +270,213 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/03/05/Spring/Spring%E4%BA%8B%E5%8A%A1%E4%BC%A0%E6%92%AD%E8%A1%8C%E4%B8%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/03/05/Spring/Spring%E4%BA%8B%E5%8A%A1%E4%BC%A0%E6%92%AD%E8%A1%8C%E4%B8%BA/" itemprop="url">👌Spring事务传播行为</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-03-05T13:33:41+00:00">
+                2025-03-05
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌Spring事务传播行为"><a href="#👌Spring事务传播行为" class="headerlink" title="👌Spring事务传播行为"></a>👌Spring事务传播行为</h1><h1 id="口语化回答"><a href="#口语化回答" class="headerlink" title="口语化回答"></a>口语化回答</h1><p>好的，面试官，传播行为主要有几种，REQUIRED，如果当前存在事务，则加入，否则创建一个新的。这是默认的事务传播行为。还有就是其他的不常用的事务形式，比如REQUIRES_NEW，总是创建一个新的事务。如果当前存在事务，则挂起当前事务。SUPPORTS总是创建一个新的事务。使用方式就是@Transactional 里面的propagation 属性进行直接指定即可。其他不常见的就不多提了，就是围绕有事务，无事务，嵌套，以及异常来分不同情况选择事务创建，以上。</p>
+<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>问的比较少，大家就记住前两种就 ok 了。如果全部理解的口诀，就是，有用，没有创建，异常建，没则抛异常。</p>
+<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>required，Transactional</p>
+<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>Spring 事务传播行为定义了在事务方法被调用时，事务如何传播。Spring 提供了多种传播行为，允许开发者定义事务的边界和行为。这些传播行为通过@Transactional注解的propagation属性来配置。</p>
+<h2 id="传播行为类型"><a href="#传播行为类型" class="headerlink" title="传播行为类型"></a>传播行为类型</h2><p><strong>REQUIRED</strong>（默认值）：如果当前存在事务，则加入该事务；如果当前没有事务，则创建一个新的事务。</p>
+<p><strong>REQUIRES_NEW：</strong>总是创建一个新的事务。如果当前存在事务，则挂起当前事务。</p>
+<p><strong>SUPPORTS：</strong>如果当前存在事务，则加入该事务；如果当前没有事务，则以非事务方式继续执行。</p>
+<p><strong>NOT_SUPPORTED：</strong>总是以非事务方式执行，如果当前存在事务，则挂起当前事务。</p>
+<p><strong>MANDATORY：</strong>如果当前存在事务，则加入该事务；如果当前没有事务，则抛出异常。</p>
+<p><strong>NEVER：</strong>总是以非事务方式执行，如果当前存在事务，则抛出异常。</p>
+<p><strong>NESTED：</strong>如果当前存在事务，则在嵌套事务内执行；如果当前没有事务，则创建一个新的事务。</p>
+<h2 id="代码-Demo"><a href="#代码-Demo" class="headerlink" title="代码 Demo"></a>代码 Demo</h2><p>假设有两个服务类ServiceA和ServiceB，可以通过不同的传播行为来控制事务的传播。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">@Service</span><br><span class="line">public class ServiceA &#123;</span><br><span class="line">    </span><br><span class="line">    @Autowired</span><br><span class="line">    private ServiceB serviceB;</span><br><span class="line"></span><br><span class="line">    @Transactional(propagation = Propagation.REQUIRED)</span><br><span class="line">    public void methodA() &#123;</span><br><span class="line">        // Some database operations</span><br><span class="line">        serviceB.methodB();</span><br><span class="line">        // Some more database operations</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Service</span><br><span class="line">public class ServiceB &#123;</span><br><span class="line"></span><br><span class="line">    @Transactional(propagation = Propagation.REQUIRES_NEW)</span><br><span class="line">    public void methodB() &#123;</span><br><span class="line">        // Some database operations</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>ServiceA的methodA方法使用REQUIRED传播行为，这意味着如果methodA被调用时没有事务存在，它将创建一个新的事务。如果methodA被调用时已经有一个事务存在，它将加入该事务。</p>
+<p>ServiceB的methodB方法使用REQUIRES_NEW传播行为，这意味着它总是会创建一个新的事务。如果methodB被调用时已经有一个事务存在，该事务将被挂起，直到methodB的事务完成。</p>
+<h2 id="事务传播行为的选择"><a href="#事务传播行为的选择" class="headerlink" title="事务传播行为的选择"></a>事务传播行为的选择</h2><p><strong>REQUIRED</strong>：大多数情况下使用的默认传播行为，适用于大多数需要事务管理的方法。</p>
+<p><strong>REQUIRES_NEW</strong>：适用于需要独立事务的情况，例如记录日志、审计等操作，即使外层事务回滚，这些操作也应该提交。</p>
+<p><strong>SUPPORTS</strong>：适用于可选事务的情况，例如读取操作，可以在事务内或事务外执行。</p>
+<p><strong>NOT_SUPPORTED</strong>：适用于不需要事务的情况，例如调用外部服务。</p>
+<p><strong>MANDATORY</strong>：适用于必须在事务内执行的方法，例如严格依赖事务上下文的操作。</p>
+<p><strong>NEVER</strong>：适用于必须在非事务上下文中执行的方法。</p>
+<p><strong>NESTED</strong>：适用于需要嵌套事务的情况，例如需要在一个事务内执行多个子事务，并且可以单独回滚子事务。	</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/03/04/Spring/Spring%E5%AE%9E%E4%BE%8B%E5%8C%96bean%E6%9C%89%E5%93%AA%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +524,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -493,6 +700,227 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/03/02/Spring/@Autowired%E5%92%8C@Resource%E7%9A%84%E5%8C%BA%E5%88%AB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/03/02/Spring/@Autowired%E5%92%8C@Resource%E7%9A%84%E5%8C%BA%E5%88%AB/" itemprop="url">Autowired和@Resource的区别</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-03-02T17:33:00+00:00">
+                2025-03-02
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌-Autowired和-Resource的区别"><a href="#👌-Autowired和-Resource的区别" class="headerlink" title="👌@Autowired和@Resource的区别"></a>👌@Autowired和@Resource的区别</h1><h1 id="口语化答案"><a href="#口语化答案" class="headerlink" title="口语化答案"></a>口语化答案</h1><p>好的，面试官，Autowired 和 Resource 都是依赖注入注解。一个是 spring 框架带的，一个是 javaee 框架带的。Autowired 主要是类型注入，Resource 是按照名称注入，名称找不到的话，会按照类型进行注入。Autowired 当存在多个的时候，可以配合Qualifier 来进行使用。一般在实际工作中比较常用 Resource。以上。</p>
+<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>常考题，面试官喜欢问，其实两者比较好区分，记住一个是类型，一个是名称即可。然后就是提供方的不同。</p>
+<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>类型注入，名称注入，指定名称。</p>
+<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>@Autowired和@Resource都是用于依赖注入的注解。</p>
+<h3 id="Autowired"><a href="#Autowired" class="headerlink" title="@Autowired"></a>@Autowired</h3><p><strong>来源</strong>：Spring 框架。</p>
+<p><strong>注入方式</strong>：默认按类型注入。</p>
+<p><strong>用法</strong>：可以用于字段、构造器、Setter 方法或其他任意方法。</p>
+<p><strong>可选性</strong>：可以与@Qualifier一起使用，以指定具体的 Bean。</p>
+<p><strong>处理机制</strong>：Spring 的AutowiredAnnotationBeanPostProcessor处理@Autowired注解。</p>
+<h3 id="Resource"><a href="#Resource" class="headerlink" title="@Resource"></a>@Resource</h3><p><strong>来源</strong>：由 Java EE 提供。</p>
+<p><strong>注入方式</strong>：默认按名称注入，如果按名称找不到，则按类型注入。</p>
+<p><strong>用法</strong>：可以用于字段或 Setter 方法。</p>
+<p><strong>属性</strong>：可以指定name和type属性。</p>
+<p><strong>处理机制</strong>：Spring 的CommonAnnotationBeanPostProcessor处理@Resource注解。</p>
+<h3 id="详细比较"><a href="#详细比较" class="headerlink" title="详细比较"></a>详细比较</h3><ol>
+<li><strong>注入方式</strong>：</li>
+</ol>
+<p>@Autowired：默认按类型注入。如果需要按名称注入，可以结合@Qualifier注解使用。</p>
+<p>@Resource：默认按名称注入。如果名称匹配失败，则按类型注入。</p>
+<ol start="2">
+<li><strong>属性</strong>：</li>
+</ol>
+<p>@Autowired：没有name和type属性，但可以使用@Qualifier指定名称。</p>
+<p>@Resource：有name和type属性，可以明确指定要注入的 Bean 名称或类型。</p>
+<ol start="3">
+<li><strong>兼容性</strong>：</li>
+</ol>
+<p>@Autowired：是 Spring 框架特有的注解。</p>
+<p>@Resource：是 Java 标准注解，兼容性更广，适用于任何支持 JSR-250 的容器。</p>
+<ol start="4">
+<li><strong>使用场景</strong>：</li>
+</ol>
+<p>@Autowired：在 Spring 应用中更为常见，尤其是在需要按类型注入的场景中。</p>
+<p>@Resource：在需要兼容标准 Java EE 规范的应用中更为常见，或者在需要明确指定 Bean 名称时使用。</p>
+<blockquote>
+<p>原文: <a target="_blank" rel="noopener" href="https://www.yuque.com/jingdianjichi/xyxdsi/bnn9a113lxo4uvpm">https://www.yuque.com/jingdianjichi/xyxdsi/bnn9a113lxo4uvpm</a></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/03/02/MQ/Rabbitmq%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E6%B6%88%E6%81%AF%E4%B8%A2%E5%A4%B1%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -540,8 +968,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -744,8 +1172,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -957,8 +1385,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -1162,8 +1590,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -1367,8 +1795,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -1590,8 +2018,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -1821,8 +2249,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -2031,8 +2459,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -2226,8 +2654,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -2439,8 +2867,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -2644,8 +3072,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -2856,8 +3284,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -3092,8 +3520,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -3304,8 +3732,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -3523,8 +3951,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -3759,8 +4187,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -3967,8 +4395,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -4124,467 +4552,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/20/%E9%9D%A2%E8%AF%95%E9%A2%98/Linux%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E7%A3%81%E7%9B%98%E5%8D%A0%E7%94%A8%E6%83%85%E5%86%B5%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/02/20/%E9%9D%A2%E8%AF%95%E9%A2%98/Linux%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E7%A3%81%E7%9B%98%E5%8D%A0%E7%94%A8%E6%83%85%E5%86%B5%EF%BC%9F/" itemprop="url">Linux查看文件磁盘占用情况</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-02-20T13:33:41+00:00">
-                2025-02-20
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌Linux查看文件磁盘占用情况？"><a href="#👌Linux查看文件磁盘占用情况？" class="headerlink" title="👌Linux查看文件磁盘占用情况？"></a>👌Linux查看文件磁盘占用情况？</h1><h3 id="1-du命令"><a href="#1-du命令" class="headerlink" title="1.du命令"></a>1.<code>du</code>命令</h3><p><code>du</code>（disk usage）命令用于估算文件和目录的磁盘使用情况。</p>
-<h4 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">du [选项] [文件或目录]</span><br></pre></td></tr></table></figure>
-
-<h4 id="常用选项"><a href="#常用选项" class="headerlink" title="常用选项"></a>常用选项</h4><ul>
-<li><code>-h</code>：以人类可读的格式显示（例如，K、M、G）。</li>
-<li><code>-s</code>：显示总计（不显示子目录的详细信息）。</li>
-<li><code>-a</code>：包括所有文件和目录。</li>
-<li><code>-c</code>：显示总计。</li>
-<li><code>--max-depth=N</code>：限制显示的目录层级深度。</li>
-</ul>
-<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><ul>
-<li>查看当前目录下每个文件和子目录的磁盘使用情况：</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">du -h</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>查看指定目录的总磁盘使用情况：</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">du -sh /path/to/directory</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>查看指定目录及其子目录的磁盘使用情况，限制深度为1：</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">du -h --max-depth=1 /path/to/directory</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-df命令"><a href="#2-df命令" class="headerlink" title="2.df命令"></a>2.<code>df</code>命令</h3><p><code>df</code>（disk free）命令用于查看文件系统的磁盘使用情况。</p>
-<h4 id="基本用法-1"><a href="#基本用法-1" class="headerlink" title="基本用法"></a>基本用法</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df [选项] [文件或目录]</span><br></pre></td></tr></table></figure>
-
-<h4 id="常用选项-1"><a href="#常用选项-1" class="headerlink" title="常用选项"></a>常用选项</h4><ul>
-<li><code>-h</code>：以人类可读的格式显示（例如，K、M、G）。</li>
-<li><code>-T</code>：显示文件系统类型。</li>
-<li><code>-i</code>：显示inode使用情况。</li>
-</ul>
-<h4 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h4><ul>
-<li>查看所有挂载的文件系统的磁盘使用情况：</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df -h</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>查看特定目录所在的文件系统的磁盘使用情况：</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df -h /path/to/directory</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-ncdu工具"><a href="#3-ncdu工具" class="headerlink" title="3.ncdu工具"></a>3.<code>ncdu</code>工具</h3><p><code>ncdu</code>（NCurses Disk Usage）是一个基于ncurses的磁盘使用分析工具，提供了交互式界面。</p>
-<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>在Debian&#x2F;Ubuntu系统上：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install ncdu</span><br></pre></td></tr></table></figure>
-
-<p>在CentOS&#x2F;RHEL系统上：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install ncdu</span><br></pre></td></tr></table></figure>
-
-<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ncdu /path/to/directory</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-ls命令"><a href="#4-ls命令" class="headerlink" title="4.ls命令"></a>4.<code>ls</code>命令</h3><p><code>ls</code>命令也可以显示文件的大小，但不如<code>du</code>详细。</p>
-<h4 id="示例-2"><a href="#示例-2" class="headerlink" title="示例"></a>示例</h4><ul>
-<li>以人类可读的格式显示文件大小：</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -lh</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>显示目录的总大小：</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -lhS</span><br></pre></td></tr></table></figure>
-
-<h3 id="5-find命令结合du"><a href="#5-find命令结合du" class="headerlink" title="5.find命令结合du"></a>5.<code>find</code>命令结合<code>du</code></h3><p>可以使用<code>find</code>命令查找特定条件的文件，然后结合<code>du</code>命令查看它们的磁盘使用情况。</p>
-<h4 id="示例-3"><a href="#示例-3" class="headerlink" title="示例"></a>示例</h4><ul>
-<li>查找大于100MB的文件并显示其磁盘使用情况：</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find /path/to/directory -type f -size +100M -execdu -h &#123;&#125; +</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/20/%E9%9D%A2%E8%AF%95%E9%A2%98/Linux%E6%AD%BB%E9%94%81%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/02/20/%E9%9D%A2%E8%AF%95%E9%A2%98/Linux%E6%AD%BB%E9%94%81%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/" itemprop="url">Linux死锁是什么？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-02-20T13:33:41+00:00">
-                2025-02-20
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌Linux死锁是什么？"><a href="#👌Linux死锁是什么？" class="headerlink" title="👌Linux死锁是什么？"></a>👌Linux死锁是什么？</h1><p>在Linux操作系统中，死锁（Deadlock）是指两个或多个进程在等待彼此释放资源，从而导致它们都无法继续执行的情况。这是一种常见的并发问题，尤其在多线程或多进程环境中。</p>
-<h3 id="死锁的四个必要条件"><a href="#死锁的四个必要条件" class="headerlink" title="死锁的四个必要条件"></a>死锁的四个必要条件</h3><p>死锁的发生需要满足以下四个条件（也称为Coffman条件）：</p>
-<ol>
-<li><strong>互斥条件（Mutual Exclusion）</strong>：至少有一个资源是非共享的，即一次只能被一个进程使用。</li>
-<li><strong>占有并等待条件（Hold and Wait）</strong>：一个进程已经持有了至少一个资源，并且正在等待获取其他被其他进程持有的资源。</li>
-<li><strong>不剥夺条件（No Preemption）</strong>：资源不能被强制从进程中剥夺，只有持有资源的进程可以主动释放资源。</li>
-<li><strong>环路等待条件（Circular Wait）</strong>：存在一个进程链，使得每个进程都在等待链中下一个进程所持有的资源。</li>
-</ol>
-<h3 id="死锁的检测和预防"><a href="#死锁的检测和预防" class="headerlink" title="死锁的检测和预防"></a>死锁的检测和预防</h3><p>为了处理死锁问题，可以采取以下几种策略：</p>
-<h4 id="1-预防死锁"><a href="#1-预防死锁" class="headerlink" title="1.预防死锁"></a>1.<strong>预防死锁</strong></h4><p>预防死锁的方法包括破坏上述四个条件之一：</p>
-<ul>
-<li><strong>破坏互斥条件</strong>：尽可能减少对非共享资源的使用。</li>
-<li><strong>破坏占有并等待条件</strong>：在进程开始时一次性分配所有需要的资源，或者要求进程在请求资源前释放所有持有的资源。</li>
-<li><strong>破坏不剥夺条件</strong>：允许操作系统强制剥夺某些资源。</li>
-<li><strong>破坏环路等待条件</strong>：对资源进行排序，并要求进程按顺序请求资源。</li>
-</ul>
-<h4 id="2-避免死锁"><a href="#2-避免死锁" class="headerlink" title="2.避免死锁"></a>2.<strong>避免死锁</strong></h4><p>避免死锁的方法主要是通过资源分配策略来确保系统永远不会进入死锁状态。常用的方法包括银行家算法（Banker’s Algorithm），它通过模拟资源分配情况来判断是否会导致死锁。</p>
-<h4 id="3-检测和恢复"><a href="#3-检测和恢复" class="headerlink" title="3.检测和恢复"></a>3.<strong>检测和恢复</strong></h4><p>如果无法预防或避免死锁，可以通过检测和恢复来处理死锁：</p>
-<ul>
-<li><strong>死锁检测</strong>：定期检查系统中是否存在死锁。可以使用资源分配图（Resource Allocation Graph）来检测环路，从而识别死锁。</li>
-<li><strong>死锁恢复</strong>：一旦检测到死锁，可以通过以下方式恢复：<ul>
-<li><strong>终止进程</strong>：强制终止一个或多个进程以打破死锁。</li>
-<li><strong>资源剥夺</strong>：强制从某些进程中剥夺资源并重新分配。</li>
-</ul>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4635,7 +4602,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">225</span>
+                <span class="site-state-item-count">229</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -4657,7 +4624,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-count">26</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

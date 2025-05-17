@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="事务," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="@Transactional底层实现？ 解析**@Transactional**注解： Spring在启动时会扫描所有带有@Transactional注解的类和方法，并解析注解中的属性，生成TransactionAttribute对象。   创建代理对象： Spring使用AOP创建代理对象，代理对象会拦截对目标方法的调用。   事务拦截器拦截方法调用： 当代理对象的方法被调用时，Transact">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Transactional底层实现？">
+<meta property="og:url" content="https://xiaoyaofeihu.github.io/2024/09/16/%E9%9D%A2%E8%AF%95%E9%A2%98/@transactional%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0%EF%BC%9F/index.html">
+<meta property="og:site_name" content="余声-个人博客">
+<meta property="og:description" content="@Transactional底层实现？ 解析**@Transactional**注解： Spring在启动时会扫描所有带有@Transactional注解的类和方法，并解析注解中的属性，生成TransactionAttribute对象。   创建代理对象： Spring使用AOP创建代理对象，代理对象会拦截对目标方法的调用。   事务拦截器拦截方法调用： 当代理对象的方法被调用时，Transact">
+<meta property="og:locale">
+<meta property="article:published_time" content="2024-09-16T13:33:41.000Z">
+<meta property="article:modified_time" content="2025-05-17T09:01:35.103Z">
+<meta property="article:author" content="javayun">
+<meta property="article:tag" content="事务">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '余声'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://xiaoyaofeihu.github.io/2024/09/16/面试题/@transactional底层实现？/"/>
+
+
+
+
+
+  <title>Transactional底层实现？ | 余声-个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">余声-个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/09/16/%E9%9D%A2%E8%AF%95%E9%A2%98/@transactional%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Transactional底层实现？</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-09-16T13:33:41+00:00">
+                2024-09-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Transactional底层实现？"><a href="#Transactional底层实现？" class="headerlink" title="@Transactional底层实现？"></a>@Transactional底层实现？</h1><ol>
+<li><strong>解析</strong><code>**@Transactional**</code><strong>注解</strong>：<ul>
+<li>Spring在启动时会扫描所有带有<code>@Transactional</code>注解的类和方法，并解析注解中的属性，生成<code>TransactionAttribute</code>对象。</li>
+</ul>
+</li>
+<li><strong>创建代理对象</strong>：<ul>
+<li>Spring使用AOP创建代理对象，代理对象会拦截对目标方法的调用。</li>
+</ul>
+</li>
+<li><strong>事务拦截器拦截方法调用</strong>：<ul>
+<li>当代理对象的方法被调用时，<code>TransactionInterceptor</code>会拦截该调用。</li>
+</ul>
+</li>
+<li><strong>获取事务属性</strong>：<ul>
+<li><code>TransactionInterceptor</code>从<code>TransactionAttributeSource</code>获取当前方法的事务属性。</li>
+</ul>
+</li>
+<li><strong>事务管理器处理事务</strong>：<ul>
+<li>根据事务属性，<code>TransactionInterceptor</code>会通过<code>TransactionManager</code>开启一个新事务或加入一个现有事务。</li>
+</ul>
+</li>
+<li><strong>执行目标方法</strong>：<ul>
+<li>事务开始后，<code>TransactionInterceptor</code>会调用目标方法。</li>
+</ul>
+</li>
+<li><strong>提交或回滚事务</strong>：<ul>
+<li>如果目标方法执行成功，<code>TransactionInterceptor</code>会通过<code>TransactionManager</code>提交事务。</li>
+<li>如果目标方法抛出异常，根据事务属性中的回滚规则，<code>TransactionInterceptor</code>会决定是否回滚事务。</li>
+</ul>
+</li>
+<li><strong>清理事务上下文</strong>：<ul>
+<li>事务提交或回滚后，<code>TransactionSynchronizationManager</code>会清理事务上下文，确保线程的事务状态一致。</li>
+</ul>
+</li>
+</ol>
+<h2 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h2><h3 id="1-AOP（面向切面编程）"><a href="#1-AOP（面向切面编程）" class="headerlink" title="1. AOP（面向切面编程）"></a>1. AOP（面向切面编程）</h3><p>Spring的声明式事务管理主要依靠AOP来实现。AOP允许在方法执行之前和之后添加额外的行为（如事务管理）。</p>
+<h3 id="2-事务管理器（Transaction-Manager）"><a href="#2-事务管理器（Transaction-Manager）" class="headerlink" title="2. 事务管理器（Transaction Manager）"></a>2. 事务管理器（Transaction Manager）</h3><p>Spring提供了多种事务管理器实现，如：</p>
+<ul>
+<li><code>DataSourceTransactionManager</code>：用于JDBC数据源的事务管理。</li>
+<li><code>JpaTransactionManager</code>：用于JPA的事务管理。</li>
+<li><code>HibernateTransactionManager</code>：用于Hibernate的事务管理。</li>
+</ul>
+<p>这些事务管理器负责具体的事务处理逻辑。</p>
+<h3 id="3-事务拦截器（Transaction-Interceptor）"><a href="#3-事务拦截器（Transaction-Interceptor）" class="headerlink" title="3. 事务拦截器（Transaction Interceptor）"></a>3. 事务拦截器（Transaction Interceptor）</h3><p><code>TransactionInterceptor</code>是AOP的一个拦截器，用于拦截带有<code>@Transactional</code>注解的方法。它会在方法执行之前和之后执行事务管理逻辑。</p>
+<h3 id="4-事务属性（Transaction-Attributes）"><a href="#4-事务属性（Transaction-Attributes）" class="headerlink" title="4. 事务属性（Transaction Attributes）"></a>4. 事务属性（Transaction Attributes）</h3><p><code>@Transactional</code>注解的属性（如传播行为、隔离级别、超时、只读等）会被解析为<code>TransactionAttribute</code>对象。这些属性定义了事务的具体行为。</p>
+<h3 id="5-事务同步管理器（Transaction-Synchronization-Manager）"><a href="#5-事务同步管理器（Transaction-Synchronization-Manager）" class="headerlink" title="5. 事务同步管理器（Transaction Synchronization Manager）"></a>5. 事务同步管理器（Transaction Synchronization Manager）</h3><p><code>TransactionSynchronizationManager</code>用于管理事务的同步状态。它维护了当前线程的事务状态，并负责在事务开始、提交或回滚时调用相应的回调。</p>
+<h3 id="6-事务代理（Transaction-Proxy）"><a href="#6-事务代理（Transaction-Proxy）" class="headerlink" title="6. 事务代理（Transaction Proxy）"></a>6. 事务代理（Transaction Proxy）</h3><p>Spring使用代理模式来实现声明式事务管理。代理对象会拦截对目标方法的调用，并在调用目标方法之前和之后执行事务管理逻辑。</p>
+<h3 id="7-事务上下文（Transaction-Context）"><a href="#7-事务上下文（Transaction-Context）" class="headerlink" title="7. 事务上下文（Transaction Context）"></a>7. 事务上下文（Transaction Context）</h3><p>事务上下文包含了当前事务的状态信息，如事务是否已经开始、是否需要回滚等。Spring会在事务开始时创建事务上下文，并在事务结束时清理它。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="" alt=" wechat" style="width: 200px; max-width: 100%;"/>
+    <div>天生我才必有用</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E4%BA%8B%E5%8A%A1/" rel="tag"># 事务</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2024/09/16/%E9%9D%A2%E8%AF%95%E9%A2%98/LinkedList%E7%9C%9F%E7%9A%84%E6%AF%94ArrayList%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0%E5%BF%AB%E5%90%97_/" rel="next" title="LinkedList 真的比 ArrayList 添加元素快吗">
+                <i class="fa fa-chevron-left"></i> LinkedList 真的比 ArrayList 添加元素快吗
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2024/09/16/%E9%9D%A2%E8%AF%95%E9%A2%98/@Autowired%E5%92%8C@Resource%E7%9A%84%E5%8C%BA%E5%88%AB/" rel="prev" title="Autowired和@Resource的区别？">
+                Autowired和@Resource的区别？ <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/11.jpg"
+               alt="" />
+          <p class="site-author-name" itemprop="name"></p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Transactional%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">@Transactional底层实现？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.</span> <span class="nav-text">相关概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-AOP%EF%BC%88%E9%9D%A2%E5%90%91%E5%88%87%E9%9D%A2%E7%BC%96%E7%A8%8B%EF%BC%89"><span class="nav-number">1.1.1.</span> <span class="nav-text">1. AOP（面向切面编程）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86%E5%99%A8%EF%BC%88Transaction-Manager%EF%BC%89"><span class="nav-number">1.1.2.</span> <span class="nav-text">2. 事务管理器（Transaction Manager）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%BA%8B%E5%8A%A1%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%88Transaction-Interceptor%EF%BC%89"><span class="nav-number">1.1.3.</span> <span class="nav-text">3. 事务拦截器（Transaction Interceptor）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E4%BA%8B%E5%8A%A1%E5%B1%9E%E6%80%A7%EF%BC%88Transaction-Attributes%EF%BC%89"><span class="nav-number">1.1.4.</span> <span class="nav-text">4. 事务属性（Transaction Attributes）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E4%BA%8B%E5%8A%A1%E5%90%8C%E6%AD%A5%E7%AE%A1%E7%90%86%E5%99%A8%EF%BC%88Transaction-Synchronization-Manager%EF%BC%89"><span class="nav-number">1.1.5.</span> <span class="nav-text">5. 事务同步管理器（Transaction Synchronization Manager）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E4%BA%8B%E5%8A%A1%E4%BB%A3%E7%90%86%EF%BC%88Transaction-Proxy%EF%BC%89"><span class="nav-number">1.1.6.</span> <span class="nav-text">6. 事务代理（Transaction Proxy）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E4%BA%8B%E5%8A%A1%E4%B8%8A%E4%B8%8B%E6%96%87%EF%BC%88Transaction-Context%EF%BC%89"><span class="nav-number">1.1.7.</span> <span class="nav-text">7. 事务上下文（Transaction Context）</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">javayun</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Gemini
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

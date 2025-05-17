@@ -270,6 +270,245 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/04/20/JVM/%E5%B8%B8%E8%A7%81%E7%9A%84jvm%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/04/20/JVM/%E5%B8%B8%E8%A7%81%E7%9A%84jvm%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F/" itemprop="url">👌常见的jvm垃圾收集器有哪些？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-04-20T13:33:41+00:00">
+                2025-04-20
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌常见的jvm垃圾收集器有哪些？"><a href="#👌常见的jvm垃圾收集器有哪些？" class="headerlink" title="👌常见的jvm垃圾收集器有哪些？"></a>👌常见的jvm垃圾收集器有哪些？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>按照堆内存分代管理的思想，目前主要的垃圾收集器有：</p>
+<p><img src="/2025/04/20/JVM/%E5%B8%B8%E8%A7%81%E7%9A%84jvm%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F/jrzDa7tRwAqZ-X9T/1719153437245-6b20a86f-da22-4468-a839-248939d27401-853517.png" alt="1719153437245-6b20a86f-da22-4468-a839-248939d27401.png"></p>
+<h2 id="Serial-和Serial-Old收集器"><a href="#Serial-和Serial-Old收集器" class="headerlink" title="Serial 和Serial Old收集器"></a>Serial 和Serial Old收集器</h2><p>Serial是jvm中最早一批的收集器之一，它是一款单线程收集器。在进行垃圾收集时，需要暂停所有的用户线程（Stop-The-World）</p>
+<blockquote>
+<p>它的设计初衷是为了适应早期的硬件环境和应用场景。在那个时候，硬件配置相对较低，主要特点包括内存容量较小、CPU 单核、并发应用场景相对较少。</p>
+</blockquote>
+<p>基于这些限制条件，Serial 系列的垃圾收集器采用了简单高效、资源消耗最少、单线程收集的设计思路</p>
+<p>简单高效：由于硬件资源有限，垃圾回收器需要设计得简单高效，以减少系统资源的占用。Serial 系列的垃圾收集器实现简单，适用于小型应用或者简单的测试场景。</p>
+<p>资源消耗最少：考虑到当时硬件资源有限，Serial 系列的垃圾收集器尽可能地减少了对系统资源的占用。通过使用单线程执行垃圾回收操作，避免了多线程切换的开销，从而最大程度地节约了系统资源。</p>
+<p>单线程收集：由于早期的硬件环境和应用场景下，并发需求较低，采用单线程收集的设计方案足以满足当时的需求。单线程收集简化了垃圾回收器的实现，并降低了系统复杂性，使得垃圾回收过程更加可控和稳定。</p>
+<p>Serial采用复制算法进行垃圾收集，Serial Old 收集器是 Serial 的老年代版本，同样是一个单线程收集器，采用标记整理法进行垃圾收集</p>
+<h2 id="Parallel-Scavenge-和-Parallel-Old收集器"><a href="#Parallel-Scavenge-和-Parallel-Old收集器" class="headerlink" title="Parallel Scavenge 和 Parallel Old收集器"></a>Parallel Scavenge 和 Parallel Old收集器</h2><p>与ParNew类似，也是一款用于新生代的多线程收集器。但Parallel Scavenge的目标是达到一个可控制的吞吐量，而ParNew的目标是尽可能缩短垃圾收集时用户线程的停顿时间。</p>
+<blockquote>
+<p>随着硬件资源的升级，包括内存空间的增大和 CPU 的多核化，传统的 Serial 垃圾收集器面临着性能瓶颈。由于它采用单线程执行垃圾回收操作，无法充分利用多核 CPU 的优势，导致在处理大内存空间时性能下降，垃圾回收时间变得更长。为了充分发挥多核 CPU 的优势，JVM 推出了 Parallel 收集器系列。Parallel 收集器的设计思想是利用多线程并行执行垃圾回收操作，以提高整个垃圾收集过程的并行度和性能。</p>
+</blockquote>
+<p>Parallel 收集器的核心特点包括</p>
+<p>多线程并行执行：Parallel 收集器利用了多核 CPU 的优势，通过多个线程同时执行垃圾回收操作，加快了垃圾收集的速度。</p>
+<p>高吞吐量：由于并行执行垃圾收集操作，Parallel 收集器适用于吞吐量要求较高的应用场景。它能够在保证吞吐量的同时，尽可能地减少垃圾收集的停顿时间。</p>
+<p>适用于大内存堆：随着内存空间的扩大，Parallel 收集器能够更好地应对大内存堆的情况，通过并行执行垃圾收集操作，提高了整个垃圾收集过程的效率。</p>
+<p>相比于传统的 Serial 收集器，Parallel 收集器能更好地适应现代应用的需求，特别是大型内存堆和高吞吐量的场景。</p>
+<p>Parallel Scavenge是一款采用复制算法进行垃圾收集的新生代收集器，Parallel Old是Parallel Scavenge收集器的老年代版本，也是一款多线程的收集器，采用标记整理法进行垃圾收集</p>
+<h2 id="ParNew-收集器"><a href="#ParNew-收集器" class="headerlink" title="ParNew 收集器"></a>ParNew 收集器</h2><p>ParNew 和 Parallel Scavenge 垃圾收集器都属于并行垃圾收集器。但ParNew的目标是尽可能缩短垃圾收集时用户线程的停顿时间。</p>
+<blockquote>
+<p> ParNew 垃圾收集器之所以应用更加广泛，一个重要原因是它是唯一能与 CMS（Concurrent Mark-Sweep）收集器配合使用的新生代收集器，特别适用于那些对停顿时间要求较高的应用场景。</p>
+</blockquote>
+<p>以下是 ParNew 垃圾收集器的一些特点和与 CMS 配合的优势</p>
+<p>与 CMS 配合：ParNew 垃圾收集器能够与 CMS 垃圾收集器配合使用，用于处理老年代的垃圾回收。在这种组合中，ParNew 负责新生代的垃圾收集，而 CMS 负责老年代的并发垃圾收集。这种分工合作可以有效地减少应用程序的停顿时间，满足对低停顿时间的需求。</p>
+<p>并行收集：ParNew 垃圾收集器采用多线程并行收集的方式，类似于 Parallel Scavenge 收集器。它能够充分利用多核 CPU 的优势，加快垃圾收集的速度，提高整个应用程序的性能。</p>
+<p>应对停顿时间要求高的场景：由于 ParNew 与 CMS 配合使用，可以针对那些对停顿时间要求较高的应用场景。CMS 收集器通过并发执行垃圾回收操作，尽量减少停顿时间，而 ParNew 则能够在新生代中高效地执行垃圾回收操作，进一步降低停顿时间。</p>
+<p>ParNew采用复制算法进行垃圾收集，是一款新生代的并行收集器</p>
+<h2 id="CMS收集器"><a href="#CMS收集器" class="headerlink" title="CMS收集器"></a>CMS收集器</h2><p>CMS 垃圾收集器的设计初衷是允许垃圾收集器在进行垃圾回收的同时，与应用程序的线程并发执行，不需要长时间暂停应用程序线程。它的工作原理是通过并发标记和清除的方式，先标记所有的存活对象，然后清除未被标记的对象。允许在垃圾收集过程中与应用程序并发执行，从而降低了垃圾收集的停顿时间，提高了系统的响应性和用户体验。</p>
+<blockquote>
+<p>随着硬件技术的发展，可用内存越来越大，这为应用程序提供了更多的内存空间，从而能够创建更多的对象，减少了垃圾收集的频率。然而，随着内存空间的增大，垃圾收集的时间也相应增加，可能导致长时间的停顿，影响用户体验。在这种情况下，传统的垃圾收集器需要暂停应用程序线程进行垃圾收集，这会导致用户在执行某些操作时出现延迟甚至停顿的情况，这是无法接受的。</p>
+</blockquote>
+<p>CMS 垃圾收集器的优势</p>
+<p>并发标记和清除：CMS 垃圾收集器采用了并发标记和清除的方式，允许在垃圾收集过程中与应用程序并发执行。这意味着垃圾收集过程中只有一小部分时间需要暂停应用程序线程。</p>
+<p>低停顿时间：由于并发执行的特性，CMS 垃圾收集器能够在较短的时间内完成垃圾回收操作，从而减少了应用程序的停顿时间。通常情况下，CMS 垃圾收集器能够将停顿时间控制在几百毫秒甚至更低。</p>
+<p>CMS 垃圾收集器主要针对老年代进行垃圾回收，对于新生代则通常使用 ParNew 收集器。这种分代收集的方式能够更好地适应不同内存区域的特点和垃圾回收需求。使用了标记清除法+标记整理法</p>
+<h2 id="G1收集器"><a href="#G1收集器" class="headerlink" title="G1收集器"></a>G1收集器</h2><p>CMS 垃圾收集器开创了垃圾收集器的一个新时代，实现了垃圾收集和用户线程同时执行，从而达到了垃圾收集的过程不停止用户线程的目标。这种并发垃圾收集的思路为后续垃圾收集器的发展提供了重要的参考。</p>
+<blockquote>
+<p>随着硬件资源的不断升级，可用的内存资源越来越多，这对于垃圾收集器的发展提出了新的挑战。传统的垃圾收集器采用物理分区的方式将内存分为老年代、新生代、永久代或 MetaSpace，但随着可用内存的增加，某一分代区域的大小可能会达到几十上百 GB。在这种情况下，传统的物理分区收集方式会导致垃圾扫描和清理时间变得更长，性能下降。</p>
+</blockquote>
+<p>G1 垃圾收集器摒弃了传统的物理分区方式</p>
+<p>将整个内存分成若干个大小不同的 Region 区域。每个 Region 在逻辑上组合成各个分代，这样做的好处是可以以 Region 为单位进行更细粒度的垃圾回收。G1 垃圾收集器在进行垃圾回收时，可以针对单个或多个 Region 进行回收，从而提高了收集效率和性能。</p>
+<p>G1 垃圾收集器吸取了 CMS 垃圾收集器的优良思路并通过摒弃物理分区、采用 Region 分区的方式，实现了更细粒度的垃圾回收，从而提高了整个系统的性能和可用性。 G1 垃圾收集器在大内存环境下的表现更加出色，成为了现代 Java 应用中的重要选择。</p>
+<h3 id="Region（局部收集）"><a href="#Region（局部收集）" class="headerlink" title="Region（局部收集）"></a>Region（局部收集）</h3><p>G1 垃圾收集器的最核心分区基本单位是 Region。与传统的垃圾收集器不同，G1 不再将堆内存划分为固定连续的几块区域，而是完全舍弃了物理分区，而是将堆内存拆分成大小为 1MB 到 32MB 的 Region 块。然后，以 Region 为单位自由地组合成新生代、老年代、Eden 区、Survivor 区和大对象区（Humongous Region）等。随着垃圾回收和对象分配的进行，每个 Region 也不会一直固定属于某个分代，它们可以随时扮演任何一个分代区域的内存角色。</p>
+<h3 id="Collect-Set（智能收集）"><a href="#Collect-Set（智能收集）" class="headerlink" title="Collect Set（智能收集）"></a>Collect Set（智能收集）</h3><p>在G1里面会维护一个Collect Set集合。这个集合记录了待回收的 Region 块的信息，包括每个 Region 块可回收的大小空间。有了这个 CSet 信息，G1 在进行垃圾收集时可以根据用户设定的可接受停顿时间来进行分析，找出在设定的时间范围内收集哪些区域最划算，然后优先收集这些区域。这样做不仅可以优先收集垃圾最多的 Region，还可以根据用户的设定来计算收集哪些 Region 可以达到用户所期望的垃圾收集时间。</p>
+<p>通过 CSet，G1 垃圾收集器的性能得到了极大的提升，并且能够实现可预测的停顿时间要求。这使得垃圾回收过程变得更加智能化，更加适应不同的应用场景和用户需求。需要注意的是，用户设定的时间应该合理，官方建议在 100ms 到 300ms 之间，以平衡垃圾收集的效率和停顿时间的需求。</p>
+<p>G1采用标记复制法进行垃圾收集，是一款适用于整个堆内存的并行收集器</p>
+<h2 id="ZGC收集器"><a href="#ZGC收集器" class="headerlink" title="ZGC收集器"></a>ZGC收集器</h2><p>ZGC（Z Garbage Collector）是一种低延迟的垃圾回收器，是 JDK 11 引入的一项重要特性。ZGC 的出现为 Java 应用提供了一种更加高效、可预测的垃圾回收解决方案，与传统的垃圾回收器相比，ZGC 的主要目标是实现极低的垃圾回收停顿时间，使得 Java 应用能够以更可预测的方式运行，尤其在大内存堆上表现良好。</p>
+<p>ZGC 的优势和特点包括：</p>
+<p>低停顿时间：ZGC 致力于将垃圾回收的停顿时间降至最低。它通过并发标记、并发清理等技术，在整个垃圾回收过程中尽量减少对应用程序的影响，从而实现了极低的垃圾回收停顿时间。这使得 Java 应用能够更加平滑地运行，减少了因垃圾回收而导致的不可预测性和性能波动。</p>
+<p>可预测性：ZGC 的设计注重可预测性，即使在大内存堆上，也能够提供稳定的性能和可预测的垃圾回收行为。这使得开发人员能够更加信任和依赖于 Java 应用在生产环境中的稳定性和可靠性。</p>
+<p>适用于大内存堆：ZGC 的低停顿时间特性使其特别适用于大内存堆的场景。在这种场景下，传统的垃圾回收器可能会面临长时间的停顿，影响应用的响应性和用户体验，而 ZGC 能够有效地缓解这一问题，保持较低的停顿时间，从而确保应用的流畅运行。</p>
+<p>ZGC采用并发标记法+并发清理进行垃圾收集，是一款适用整个堆内存并行收集器。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/04/17/Linux/Linux%E4%B8%AD%E6%96%AD%E6%9C%BA%E5%88%B6%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +556,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -484,6 +723,246 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/04/16/JVM/%E5%B8%B8%E8%A7%81%E7%9A%84jvm%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/04/16/JVM/%E5%B8%B8%E8%A7%81%E7%9A%84jvm%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%EF%BC%9F/" itemprop="url">👌常见的jvm垃圾收集器的工作流程？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-04-16T13:33:41+00:00">
+                2025-04-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌常见的jvm垃圾收集器的工作流程？"><a href="#👌常见的jvm垃圾收集器的工作流程？" class="headerlink" title="👌常见的jvm垃圾收集器的工作流程？"></a>👌常见的jvm垃圾收集器的工作流程？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="Serial"><a href="#Serial" class="headerlink" title="Serial"></a>Serial</h2><p>Serial 垃圾收集过程的简单之处在于其采用了单线程执行的方式，以简化实现并减少资源占用。</p>
+<ol>
+<li>暂停用户线程（Stop the World）：</li>
+</ol>
+<p>在开始垃圾收集过程之前，Serial 垃圾收集器会暂停（停止）所有的用户线程。这是为了确保在垃圾收集过程中对象的状态不会被修改，从而保证垃圾收集的准确性。</p>
+<ol start="2">
+<li>执行垃圾收集：</li>
+</ol>
+<p>一旦用户线程暂停，Serial 垃圾收集器会开启一个单线程来执行垃圾回收操作。这个线程会遍历堆中的对象，标记并清理不再使用的对象，以释放内存空间。</p>
+<ol start="3">
+<li>等待垃圾收集完成：</li>
+</ol>
+<p>在垃圾收集过程中，用户线程会被暂停，直到垃圾收集完毕。这意味着用户线程无法在垃圾收集期间执行任何操作。</p>
+<p>当垃圾收集完成后，Serial 垃圾收集器会恢复用户线程的执行。此时，垃圾已被清理，堆内存中有更多的可用空间供应用程序使用。</p>
+<h2 id="Parallel-Scavenge-和-Parallel-Old"><a href="#Parallel-Scavenge-和-Parallel-Old" class="headerlink" title="Parallel Scavenge 和 Parallel Old"></a>Parallel Scavenge 和 Parallel Old</h2><p>Parallel Scavenge 和 Parallel Old 是 Parallel 收集器系列的两个组成部分，它们的工作机制相似，都是利用多线程并行执行垃圾回收操作，以提高整个垃圾收集过程的效率和吞吐量。以 Parallel Scavenge 为例来说明其工作机制：</p>
+<ol>
+<li>多线程并行执行：Parallel Scavenge 收集器利用了多个线程并行执行新生代的垃圾回收操作。这意味着在进行新生代垃圾回收时，多个线程同时工作，加快了垃圾收集的速度。</li>
+<li>暂停用户线程：与 Serial 收集器类似，Parallel Scavenge 在进行垃圾收集时会暂停用户线程，以确保垃圾回收的准确性。这一阶段通常称为“Stop the World”。</li>
+<li>多线程并发清理：Parallel Scavenge 收集器的特点之一是在新生代垃圾收集过程中采用并发清理的方式。这意味着在暂停用户线程期间，多个线程同时清理新生代中的垃圾对象，从而更快地完成垃圾收集过程。</li>
+</ol>
+<p>通过利用多个线程并行执行垃圾收集操作，Parallel Scavenge 能够充分发挥多核 CPU 的优势，提高了垃圾收集的效率。相比于 Serial 收集器，它能更快地完成垃圾回收操作，从而减少了应用程序的停顿时间，从而提高了整个应用程序的性能。</p>
+<h2 id="ParNew-和-Parallel-Scavenge"><a href="#ParNew-和-Parallel-Scavenge" class="headerlink" title="ParNew 和 Parallel Scavenge"></a>ParNew 和 Parallel Scavenge</h2><p>ParNew 收集器和 Parallel Scavenge 收集器在工作流程上确实非常相似，都是并行垃圾收集器。</p>
+<p><font style="color:rgb(36, 41, 47);">1、 标记阶段</font></p>
+<p><font style="color:rgb(36, 41, 47);">在垃圾收集开始时，ParNew 收集器会暂停所有应用线程（Stop-The-World），然后开始标记所有存活的对象。标记阶段的主要任务是识别哪些对象是存活的，并将它们标记出来。</font></p>
+<p><font style="color:rgb(36, 41, 47);">2、 复制阶段</font></p>
+<p><font style="color:rgb(36, 41, 47);">在标记阶段完成之后，ParNew 收集器会将所有存活的对象从 Eden 区和一个 Survivor 区（例如 S0）复制到另一个 Survivor 区（例如 S1）。如果目标 Survivor 区没有足够的空间容纳所有存活对象，存活对象将被移动到老年代。</font></p>
+<p><font style="color:rgb(36, 41, 47);">3、 清理阶段</font></p>
+<p><font style="color:rgb(36, 41, 47);">复制阶段完成后，Eden 区和之前的 Survivor 区（例如 S0）中的所有对象都被认为是垃圾，并且这些区域的内存可以被清理和重用。</font></p>
+<p><font style="color:rgb(36, 41, 47);">4、 应用程序恢复</font></p>
+<p><font style="color:rgb(36, 41, 47);">在清理阶段完成之后，应用程序线程将被重新启动，继续执行。</font></p>
+<p>ParNew 收集器的工作流程与 Parallel Scavenge 收集器类似，都是通过停止应用程序线程，然后利用多线程并行执行垃圾回收操作，最后恢复用户线程的执行。这种并行执行的方式能够提高垃圾收集的效率，同时在暂停用户线程期间确保垃圾收集的准确性。</p>
+<h2 id="CMS"><a href="#CMS" class="headerlink" title="CMS"></a>CMS</h2><p>CMS垃圾收集器为了尽量减少用户线程的停顿时间，采用了一种创新的策略。这一策略使得在垃圾回收过程的某些阶段，用户线程和垃圾回收线程可以共同工作，从而避免了长时间的垃圾回收导致用户线程一直处于等待状态。</p>
+<p>整个 CMS 垃圾收集过程被划分为四个阶段，它们分别是：</p>
+<ol>
+<li>初始标记：在这个阶段，CMS 垃圾收集器会对根对象进行一次快速的标记，标记出所有与根对象直接关联的存活对象。这个阶段需要暂停用户线程，因为要确保标记的准确性。</li>
+<li>并发标记：在这个阶段，CMS 垃圾收集器会与用户线程并发执行，对整个堆进行标记。垃圾回收线程会在后台标记所有存活对象，而用户线程可以继续执行，不受影响。</li>
+<li>重新标记：在并发标记阶段结束后，CMS 垃圾收集器会进行一次重新标记，来处理在并发标记阶段发生变化的对象。这个阶段需要暂停用户线程，以确保标记的准确性。</li>
+<li>并发清理：在重新标记完成后，CMS 垃圾收集器会与用户线程并发执行，清理未标记的对象。垃圾回收线程会在后台清理不再使用的对象，而用户线程可以继续执行，不受影响。</li>
+</ol>
+<p>通过将垃圾回收过程分为多个阶段，并在其中允许用户线程和垃圾回收线程并发执行，CMS 垃圾收集器成功地减少了用户线程的停顿时间。这种创新的并发垃圾收集策略提高了系统的响应性和用户体验，确保了应用程序的顺畅运行。</p>
+<h2 id="G1"><a href="#G1" class="headerlink" title="G1"></a>G1</h2><p>G1 垃圾收集器的回收流程与 CMS 的逻辑大致相同，包括初始标记、并发标记、重新标记和筛选清除等阶段。但是，与 CMS 不同的是，G1 在最后一个阶段不会直接进行整体的清除。相反，它会根据用户设置的停顿时间进行智能的筛选和局部的回收。</p>
+<ol>
+<li>初始标记：在初始标记阶段，G1 垃圾收集器会对根对象进行一次快速的标记，标记出所有与根对象直接关联的存活对象。这个阶段需要暂停用户线程，以确保标记的准确性。</li>
+<li>并发标记：在并发标记阶段，G1 垃圾收集器会与用户线程并发执行，对整个堆进行标记。垃圾回收线程会在后台标记所有存活对象，而用户线程可以继续执行，不受影响。</li>
+<li>重新标记：在并发标记阶段结束后，G1 垃圾收集器会进行一次重新标记，来处理在并发标记阶段发生变化的对象。这个阶段需要暂停用户线程，以确保标记的准确性。</li>
+<li>筛选清除：在重新标记完成后，G1 垃圾收集器不会立即进行整体的清除操作。相反，它会根据用户设置的停顿时间智能地筛选出需要回收的 Region，并执行局部的回收。这样可以在尽量满足停顿时间的情况下，最大限度地回收垃圾。</li>
+</ol>
+<p>通过这种智能的筛选和局部回收方式，G1 垃圾收集器能够更好地平衡垃圾回收的效率和停顿时间，从而提高系统的响应性和用户体验。</p>
+<h2 id="ZGC"><a href="#ZGC" class="headerlink" title="ZGC"></a>ZGC</h2><p>ZGC 的垃圾回收过程几乎全部都是并发执行的，即与应用程序线程同时进行。</p>
+<ol>
+<li>初始标记（Initial Mark）：在初始标记阶段，ZGC 会标记出根对象以及直接与根对象关联的存活对象。这个阶段需要短暂地暂停所有应用线程，以确保标记的准确性。</li>
+<li>并发标记（Concurrent Mark）：在并发标记阶段，ZGC 与应用程序线程并发执行，标记所有存活对象。这个阶段不会暂停应用程序线程，因此垃圾回收和应用程序可以并发执行。</li>
+<li>最终标记（Final Mark）：在并发标记阶段结束后，ZGC 需要再次短暂地暂停所有应用线程，完成最终的标记工作。这个阶段主要用于标记在并发标记阶段有可能发生变化的对象。</li>
+<li>筛选（Concurrent Sweep）：在最终标记完成后，ZGC 会进行一次筛选，确定哪些对象可以被回收。这个阶段会并发地进行，不会暂停应用程序线程。</li>
+<li>并发清除（Concurrent Cleanup）：在筛选阶段完成后，ZGC 会并发地清除未被标记的对象，释放它们所占用的内存。这个阶段也不会暂停应用程序线程。</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/04/16/Linux/Linux%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E7%A3%81%E7%9B%98%E5%8D%A0%E7%94%A8%E6%83%85%E5%86%B5%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -531,8 +1010,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -789,8 +1268,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -999,8 +1478,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -1208,8 +1687,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -1371,246 +1850,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/04/16/JVM/%E5%B8%B8%E8%A7%81%E7%9A%84jvm%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/04/16/JVM/%E5%B8%B8%E8%A7%81%E7%9A%84jvm%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%EF%BC%9F/" itemprop="url">👌常见的jvm垃圾收集器的工作流程？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-04-16T13:33:41+00:00">
-                2025-04-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌常见的jvm垃圾收集器的工作流程？"><a href="#👌常见的jvm垃圾收集器的工作流程？" class="headerlink" title="👌常见的jvm垃圾收集器的工作流程？"></a>👌常见的jvm垃圾收集器的工作流程？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="Serial"><a href="#Serial" class="headerlink" title="Serial"></a>Serial</h2><p>Serial 垃圾收集过程的简单之处在于其采用了单线程执行的方式，以简化实现并减少资源占用。</p>
-<ol>
-<li>暂停用户线程（Stop the World）：</li>
-</ol>
-<p>在开始垃圾收集过程之前，Serial 垃圾收集器会暂停（停止）所有的用户线程。这是为了确保在垃圾收集过程中对象的状态不会被修改，从而保证垃圾收集的准确性。</p>
-<ol start="2">
-<li>执行垃圾收集：</li>
-</ol>
-<p>一旦用户线程暂停，Serial 垃圾收集器会开启一个单线程来执行垃圾回收操作。这个线程会遍历堆中的对象，标记并清理不再使用的对象，以释放内存空间。</p>
-<ol start="3">
-<li>等待垃圾收集完成：</li>
-</ol>
-<p>在垃圾收集过程中，用户线程会被暂停，直到垃圾收集完毕。这意味着用户线程无法在垃圾收集期间执行任何操作。</p>
-<p>当垃圾收集完成后，Serial 垃圾收集器会恢复用户线程的执行。此时，垃圾已被清理，堆内存中有更多的可用空间供应用程序使用。</p>
-<h2 id="Parallel-Scavenge-和-Parallel-Old"><a href="#Parallel-Scavenge-和-Parallel-Old" class="headerlink" title="Parallel Scavenge 和 Parallel Old"></a>Parallel Scavenge 和 Parallel Old</h2><p>Parallel Scavenge 和 Parallel Old 是 Parallel 收集器系列的两个组成部分，它们的工作机制相似，都是利用多线程并行执行垃圾回收操作，以提高整个垃圾收集过程的效率和吞吐量。以 Parallel Scavenge 为例来说明其工作机制：</p>
-<ol>
-<li>多线程并行执行：Parallel Scavenge 收集器利用了多个线程并行执行新生代的垃圾回收操作。这意味着在进行新生代垃圾回收时，多个线程同时工作，加快了垃圾收集的速度。</li>
-<li>暂停用户线程：与 Serial 收集器类似，Parallel Scavenge 在进行垃圾收集时会暂停用户线程，以确保垃圾回收的准确性。这一阶段通常称为“Stop the World”。</li>
-<li>多线程并发清理：Parallel Scavenge 收集器的特点之一是在新生代垃圾收集过程中采用并发清理的方式。这意味着在暂停用户线程期间，多个线程同时清理新生代中的垃圾对象，从而更快地完成垃圾收集过程。</li>
-</ol>
-<p>通过利用多个线程并行执行垃圾收集操作，Parallel Scavenge 能够充分发挥多核 CPU 的优势，提高了垃圾收集的效率。相比于 Serial 收集器，它能更快地完成垃圾回收操作，从而减少了应用程序的停顿时间，从而提高了整个应用程序的性能。</p>
-<h2 id="ParNew-和-Parallel-Scavenge"><a href="#ParNew-和-Parallel-Scavenge" class="headerlink" title="ParNew 和 Parallel Scavenge"></a>ParNew 和 Parallel Scavenge</h2><p>ParNew 收集器和 Parallel Scavenge 收集器在工作流程上确实非常相似，都是并行垃圾收集器。</p>
-<p><font style="color:rgb(36, 41, 47);">1、 标记阶段</font></p>
-<p><font style="color:rgb(36, 41, 47);">在垃圾收集开始时，ParNew 收集器会暂停所有应用线程（Stop-The-World），然后开始标记所有存活的对象。标记阶段的主要任务是识别哪些对象是存活的，并将它们标记出来。</font></p>
-<p><font style="color:rgb(36, 41, 47);">2、 复制阶段</font></p>
-<p><font style="color:rgb(36, 41, 47);">在标记阶段完成之后，ParNew 收集器会将所有存活的对象从 Eden 区和一个 Survivor 区（例如 S0）复制到另一个 Survivor 区（例如 S1）。如果目标 Survivor 区没有足够的空间容纳所有存活对象，存活对象将被移动到老年代。</font></p>
-<p><font style="color:rgb(36, 41, 47);">3、 清理阶段</font></p>
-<p><font style="color:rgb(36, 41, 47);">复制阶段完成后，Eden 区和之前的 Survivor 区（例如 S0）中的所有对象都被认为是垃圾，并且这些区域的内存可以被清理和重用。</font></p>
-<p><font style="color:rgb(36, 41, 47);">4、 应用程序恢复</font></p>
-<p><font style="color:rgb(36, 41, 47);">在清理阶段完成之后，应用程序线程将被重新启动，继续执行。</font></p>
-<p>ParNew 收集器的工作流程与 Parallel Scavenge 收集器类似，都是通过停止应用程序线程，然后利用多线程并行执行垃圾回收操作，最后恢复用户线程的执行。这种并行执行的方式能够提高垃圾收集的效率，同时在暂停用户线程期间确保垃圾收集的准确性。</p>
-<h2 id="CMS"><a href="#CMS" class="headerlink" title="CMS"></a>CMS</h2><p>CMS垃圾收集器为了尽量减少用户线程的停顿时间，采用了一种创新的策略。这一策略使得在垃圾回收过程的某些阶段，用户线程和垃圾回收线程可以共同工作，从而避免了长时间的垃圾回收导致用户线程一直处于等待状态。</p>
-<p>整个 CMS 垃圾收集过程被划分为四个阶段，它们分别是：</p>
-<ol>
-<li>初始标记：在这个阶段，CMS 垃圾收集器会对根对象进行一次快速的标记，标记出所有与根对象直接关联的存活对象。这个阶段需要暂停用户线程，因为要确保标记的准确性。</li>
-<li>并发标记：在这个阶段，CMS 垃圾收集器会与用户线程并发执行，对整个堆进行标记。垃圾回收线程会在后台标记所有存活对象，而用户线程可以继续执行，不受影响。</li>
-<li>重新标记：在并发标记阶段结束后，CMS 垃圾收集器会进行一次重新标记，来处理在并发标记阶段发生变化的对象。这个阶段需要暂停用户线程，以确保标记的准确性。</li>
-<li>并发清理：在重新标记完成后，CMS 垃圾收集器会与用户线程并发执行，清理未标记的对象。垃圾回收线程会在后台清理不再使用的对象，而用户线程可以继续执行，不受影响。</li>
-</ol>
-<p>通过将垃圾回收过程分为多个阶段，并在其中允许用户线程和垃圾回收线程并发执行，CMS 垃圾收集器成功地减少了用户线程的停顿时间。这种创新的并发垃圾收集策略提高了系统的响应性和用户体验，确保了应用程序的顺畅运行。</p>
-<h2 id="G1"><a href="#G1" class="headerlink" title="G1"></a>G1</h2><p>G1 垃圾收集器的回收流程与 CMS 的逻辑大致相同，包括初始标记、并发标记、重新标记和筛选清除等阶段。但是，与 CMS 不同的是，G1 在最后一个阶段不会直接进行整体的清除。相反，它会根据用户设置的停顿时间进行智能的筛选和局部的回收。</p>
-<ol>
-<li>初始标记：在初始标记阶段，G1 垃圾收集器会对根对象进行一次快速的标记，标记出所有与根对象直接关联的存活对象。这个阶段需要暂停用户线程，以确保标记的准确性。</li>
-<li>并发标记：在并发标记阶段，G1 垃圾收集器会与用户线程并发执行，对整个堆进行标记。垃圾回收线程会在后台标记所有存活对象，而用户线程可以继续执行，不受影响。</li>
-<li>重新标记：在并发标记阶段结束后，G1 垃圾收集器会进行一次重新标记，来处理在并发标记阶段发生变化的对象。这个阶段需要暂停用户线程，以确保标记的准确性。</li>
-<li>筛选清除：在重新标记完成后，G1 垃圾收集器不会立即进行整体的清除操作。相反，它会根据用户设置的停顿时间智能地筛选出需要回收的 Region，并执行局部的回收。这样可以在尽量满足停顿时间的情况下，最大限度地回收垃圾。</li>
-</ol>
-<p>通过这种智能的筛选和局部回收方式，G1 垃圾收集器能够更好地平衡垃圾回收的效率和停顿时间，从而提高系统的响应性和用户体验。</p>
-<h2 id="ZGC"><a href="#ZGC" class="headerlink" title="ZGC"></a>ZGC</h2><p>ZGC 的垃圾回收过程几乎全部都是并发执行的，即与应用程序线程同时进行。</p>
-<ol>
-<li>初始标记（Initial Mark）：在初始标记阶段，ZGC 会标记出根对象以及直接与根对象关联的存活对象。这个阶段需要短暂地暂停所有应用线程，以确保标记的准确性。</li>
-<li>并发标记（Concurrent Mark）：在并发标记阶段，ZGC 与应用程序线程并发执行，标记所有存活对象。这个阶段不会暂停应用程序线程，因此垃圾回收和应用程序可以并发执行。</li>
-<li>最终标记（Final Mark）：在并发标记阶段结束后，ZGC 需要再次短暂地暂停所有应用线程，完成最终的标记工作。这个阶段主要用于标记在并发标记阶段有可能发生变化的对象。</li>
-<li>筛选（Concurrent Sweep）：在最终标记完成后，ZGC 会进行一次筛选，确定哪些对象可以被回收。这个阶段会并发地进行，不会暂停应用程序线程。</li>
-<li>并发清除（Concurrent Cleanup）：在筛选阶段完成后，ZGC 会并发地清除未被标记的对象，释放它们所占用的内存。这个阶段也不会暂停应用程序线程。</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/04/11/%E6%96%B9%E6%B3%95%E8%AE%BA/Mysql%E5%B8%B8%E7%94%A8%E7%9B%91%E6%8E%A7%E6%8C%87%E6%A0%87%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1658,8 +1897,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -1872,8 +2111,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -2072,8 +2311,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -2270,8 +2509,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -2477,8 +2716,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -2732,8 +2971,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -2927,8 +3166,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -3153,8 +3392,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -3357,8 +3596,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -3596,8 +3835,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -3830,8 +4069,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -4041,8 +4280,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -4240,8 +4479,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -4379,213 +4618,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/03/05/Spring/Spring%E4%BA%8B%E5%8A%A1%E4%BC%A0%E6%92%AD%E8%A1%8C%E4%B8%BA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/03/05/Spring/Spring%E4%BA%8B%E5%8A%A1%E4%BC%A0%E6%92%AD%E8%A1%8C%E4%B8%BA/" itemprop="url">👌Spring事务传播行为</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-03-05T13:33:41+00:00">
-                2025-03-05
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌Spring事务传播行为"><a href="#👌Spring事务传播行为" class="headerlink" title="👌Spring事务传播行为"></a>👌Spring事务传播行为</h1><h1 id="口语化回答"><a href="#口语化回答" class="headerlink" title="口语化回答"></a>口语化回答</h1><p>好的，面试官，传播行为主要有几种，REQUIRED，如果当前存在事务，则加入，否则创建一个新的。这是默认的事务传播行为。还有就是其他的不常用的事务形式，比如REQUIRES_NEW，总是创建一个新的事务。如果当前存在事务，则挂起当前事务。SUPPORTS总是创建一个新的事务。使用方式就是@Transactional 里面的propagation 属性进行直接指定即可。其他不常见的就不多提了，就是围绕有事务，无事务，嵌套，以及异常来分不同情况选择事务创建，以上。</p>
-<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>问的比较少，大家就记住前两种就 ok 了。如果全部理解的口诀，就是，有用，没有创建，异常建，没则抛异常。</p>
-<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>required，Transactional</p>
-<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>Spring 事务传播行为定义了在事务方法被调用时，事务如何传播。Spring 提供了多种传播行为，允许开发者定义事务的边界和行为。这些传播行为通过@Transactional注解的propagation属性来配置。</p>
-<h2 id="传播行为类型"><a href="#传播行为类型" class="headerlink" title="传播行为类型"></a>传播行为类型</h2><p><strong>REQUIRED</strong>（默认值）：如果当前存在事务，则加入该事务；如果当前没有事务，则创建一个新的事务。</p>
-<p><strong>REQUIRES_NEW：</strong>总是创建一个新的事务。如果当前存在事务，则挂起当前事务。</p>
-<p><strong>SUPPORTS：</strong>如果当前存在事务，则加入该事务；如果当前没有事务，则以非事务方式继续执行。</p>
-<p><strong>NOT_SUPPORTED：</strong>总是以非事务方式执行，如果当前存在事务，则挂起当前事务。</p>
-<p><strong>MANDATORY：</strong>如果当前存在事务，则加入该事务；如果当前没有事务，则抛出异常。</p>
-<p><strong>NEVER：</strong>总是以非事务方式执行，如果当前存在事务，则抛出异常。</p>
-<p><strong>NESTED：</strong>如果当前存在事务，则在嵌套事务内执行；如果当前没有事务，则创建一个新的事务。</p>
-<h2 id="代码-Demo"><a href="#代码-Demo" class="headerlink" title="代码 Demo"></a>代码 Demo</h2><p>假设有两个服务类ServiceA和ServiceB，可以通过不同的传播行为来控制事务的传播。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">@Service</span><br><span class="line">public class ServiceA &#123;</span><br><span class="line">    </span><br><span class="line">    @Autowired</span><br><span class="line">    private ServiceB serviceB;</span><br><span class="line"></span><br><span class="line">    @Transactional(propagation = Propagation.REQUIRED)</span><br><span class="line">    public void methodA() &#123;</span><br><span class="line">        // Some database operations</span><br><span class="line">        serviceB.methodB();</span><br><span class="line">        // Some more database operations</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Service</span><br><span class="line">public class ServiceB &#123;</span><br><span class="line"></span><br><span class="line">    @Transactional(propagation = Propagation.REQUIRES_NEW)</span><br><span class="line">    public void methodB() &#123;</span><br><span class="line">        // Some database operations</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>ServiceA的methodA方法使用REQUIRED传播行为，这意味着如果methodA被调用时没有事务存在，它将创建一个新的事务。如果methodA被调用时已经有一个事务存在，它将加入该事务。</p>
-<p>ServiceB的methodB方法使用REQUIRES_NEW传播行为，这意味着它总是会创建一个新的事务。如果methodB被调用时已经有一个事务存在，该事务将被挂起，直到methodB的事务完成。</p>
-<h2 id="事务传播行为的选择"><a href="#事务传播行为的选择" class="headerlink" title="事务传播行为的选择"></a>事务传播行为的选择</h2><p><strong>REQUIRED</strong>：大多数情况下使用的默认传播行为，适用于大多数需要事务管理的方法。</p>
-<p><strong>REQUIRES_NEW</strong>：适用于需要独立事务的情况，例如记录日志、审计等操作，即使外层事务回滚，这些操作也应该提交。</p>
-<p><strong>SUPPORTS</strong>：适用于可选事务的情况，例如读取操作，可以在事务内或事务外执行。</p>
-<p><strong>NOT_SUPPORTED</strong>：适用于不需要事务的情况，例如调用外部服务。</p>
-<p><strong>MANDATORY</strong>：适用于必须在事务内执行的方法，例如严格依赖事务上下文的操作。</p>
-<p><strong>NEVER</strong>：适用于必须在非事务上下文中执行的方法。</p>
-<p><strong>NESTED</strong>：适用于需要嵌套事务的情况，例如需要在一个事务内执行多个子事务，并且可以单独回滚子事务。	</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4636,7 +4668,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">225</span>
+                <span class="site-state-item-count">229</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -4658,7 +4690,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-count">26</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

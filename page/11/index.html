@@ -270,6 +270,456 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/%E5%9F%BA%E7%A1%80/%E6%AD%BB%E9%94%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/10/%E5%9F%BA%E7%A1%80/%E6%AD%BB%E9%94%81/" itemprop="url">死锁</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-10T17:33:00+00:00">
+                2024-10-10
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="死锁的定义"><a href="#死锁的定义" class="headerlink" title="死锁的定义"></a>死锁的定义</h2><p>死锁是指两个或两个以上的进程（或线程）在执行过程中，因竞争资源或彼此通信而造成的一种阻塞现象。当这些进程都在等待对方释放资源时，就会形成一个无法打破的僵局，若无外力作用，它们都将无法继续执行。此时，系统处于死锁状态。</p>
+<h3 id="产生死锁的四个必要条件"><a href="#产生死锁的四个必要条件" class="headerlink" title="产生死锁的四个必要条件"></a>产生死锁的四个必要条件</h3><ol>
+<li><strong>互斥条件</strong>：一个资源每次只能被一个进程使用。</li>
+<li><strong>占有且等待</strong>：一个进程因请求资源而阻塞时，对已获得的资源保持不放。</li>
+<li><strong>不可抢占</strong>：进程已获得的资源，在未使用完之前，不能强行剥夺。</li>
+<li><strong>循环等待条件</strong>：若干进程之间形成一种头尾相接的循环等待资源关系。</li>
+</ol>
+<h3 id="如何解决死锁"><a href="#如何解决死锁" class="headerlink" title="如何解决死锁"></a>如何解决死锁</h3><p>解决死锁的方法主要分为预防死锁、避免死锁、检测死锁和解除死锁四种。</p>
+<ol>
+<li><p><strong>预防死锁</strong>：</p>
+<ul>
+<li>破坏互斥条件：允许资源被多个进程同时访问（但某些资源可能无法这样做）。</li>
+<li>破坏占有且等待条件：要求进程一次性申请所有所需资源，或者允许进程在持有资源的同时申请其他资源（但可能降低系统效率）。</li>
+<li>破坏不可抢占条件：允许进程被抢占已分配的资源（但可能导致数据不一致等问题）。</li>
+<li>破坏循环等待条件：对资源编号，要求进程按编号顺序申请资源（但可能增加资源管理的复杂性）。</li>
+</ul>
+</li>
+<li><p><strong>避免死锁</strong>：</p>
+<ul>
+<li>使用银行家算法等算法来动态地检查资源分配的安全性，确保系统不会进入不安全状态。</li>
+<li>在资源分配过程中，采用资源预分配策略或资源按需分配策略，并监控系统的资源使用情况。</li>
+</ul>
+</li>
+<li><p><strong>检测死锁</strong>：</p>
+<ul>
+<li>定期检查系统是否存在死锁现象，如使用资源分配图等方法。</li>
+<li>一旦发现死锁，立即采取措施进行解除。</li>
+</ul>
+</li>
+<li><p><strong>解除死锁</strong>：</p>
+<ul>
+<li>终止一个或多个进程，以打破循环等待条件。</li>
+<li>回滚到安全状态，重新分配资源。</li>
+<li>在数据库系统中，可以采用自动回滚事务、重启事务等方法来解除死锁。</li>
+</ul>
+</li>
+</ol>
+<h3 id="数据库死锁的发生与解决"><a href="#数据库死锁的发生与解决" class="headerlink" title="数据库死锁的发生与解决"></a>数据库死锁的发生与解决</h3><p>在数据库中，死锁通常发生在多个事务并发执行时。当事务A持有资源A的锁并尝试获取资源B的锁时，而事务B持有资源B的锁并尝试获取资源A的锁时，就会发生死锁。</p>
+<p>解决数据库死锁的方法包括：</p>
+<ul>
+<li>避免并发修改：尽量减少多个事务对同一资源的并发访问。</li>
+<li>保证操作顺序：确保多个事务按照相同的顺序访问资源。</li>
+<li>使用锁超时机制：设置锁的超时时间，当事务持有锁超过一定时间时自动释放锁。</li>
+<li>使用乐观锁或悲观锁等锁策略来管理资源访问。</li>
+</ul>
+<p>综上所述，死锁是并发系统中常见的问题之一。通过理解死锁的产生条件、掌握解决死锁的方法以及合理设计资源访问策略，可以有效地预防和解决死锁问题。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/%E5%9F%BA%E7%A1%80/%E7%BA%BF%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/10/%E5%9F%BA%E7%A1%80/%E7%BA%BF%E7%A8%8B/" itemprop="url">线程</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-10T17:33:00+00:00">
+                2024-10-10
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="线程状态的详细解释"><a href="#线程状态的详细解释" class="headerlink" title="线程状态的详细解释"></a>线程状态的详细解释</h3><ol>
+<li><p><strong>初始(NEW)</strong></p>
+<p>线程对象被创建，但尚未调用<code>start()</code>方法。此时线程还未开始执行，只是作为一个对象存在于内存中。</p>
+</li>
+<li><p><strong>运行(RUNNABLE)</strong></p>
+<ul>
+<li><strong>就绪(READY)</strong>: 线程对象创建后，通过调用<code>start()</code>方法启动。此时线程进入就绪状态，等待操作系统的调度，以获取CPU时间片。</li>
+<li><strong>运行中(RUNNING)</strong>: 当就绪状态的线程获得CPU时间片时，开始执行程序代码，进入运行状态。</li>
+</ul>
+<p>在Java中，由于就绪和运行状态的切换非常频繁，且难以准确区分，因此将两者统称为“运行(RUNNABLE)”状态。</p>
+</li>
+<li><p><strong>阻塞(BLOCKED)</strong></p>
+<p>线程尝试获取某个对象的锁（如通过<code>synchronized</code>关键字），但锁已被其他线程持有。此时线程进入阻塞状态，直到锁被释放并成功获取。</p>
+</li>
+<li><p><strong>等待(WAITING)</strong></p>
+<p>线程通过调用<code>Object</code>类的<code>wait()</code>方法或其他等待方法（如<code>Condition</code>的<code>await()</code>方法）进入等待状态。此时线程需要等待其他线程的通知（通过<code>notify()</code>或<code>notifyAll()</code>方法）或中断来唤醒。</p>
+</li>
+<li><p><strong>超时等待(TIMED_WAITING)</strong></p>
+<p>线程通过调用带有超时参数的等待方法（如<code>Thread.sleep(long millis)</code>、<code>Object.wait(long timeout)</code>等）进入超时等待状态。此时线程在指定的时间内等待，如果超时时间到达或收到其他线程的通知，则线程会被唤醒。</p>
+</li>
+<li><p><strong>终止(TERMINATED)</strong></p>
+<p>线程执行完毕或由于异常等原因终止执行，进入终止状态。此时线程不再占用系统资源。</p>
+</li>
+</ol>
+<h3 id="状态流转的细化"><a href="#状态流转的细化" class="headerlink" title="状态流转的细化"></a>状态流转的细化</h3><ul>
+<li>从<strong>初始(NEW)<strong>到</strong>运行(RUNNABLE)</strong>: 调用<code>start()</code>方法。</li>
+<li>从<strong>运行(RUNNABLE)<strong>到</strong>阻塞(BLOCKED)</strong>: 尝试获取锁失败。</li>
+<li>从<strong>阻塞(BLOCKED)<strong>到</strong>运行(RUNNABLE)</strong>: 成功获取锁。</li>
+<li>从<strong>运行(RUNNABLE)<strong>到</strong>等待(WAITING)</strong>: 调用<code>wait()</code>等方法。</li>
+<li>从<strong>等待(WAITING)<strong>到</strong>运行(RUNNABLE)</strong>: 收到其他线程的通知或中断。</li>
+<li>从<strong>运行(RUNNABLE)<strong>到</strong>超时等待(TIMED_WAITING)</strong>: 调用带有超时参数的等待方法。</li>
+<li>从<strong>超时等待(TIMED_WAITING)<strong>到</strong>运行(RUNNABLE)</strong>: 超时时间到达或收到其他线程的通知。</li>
+<li>从<strong>运行(RUNNABLE)<strong>到</strong>终止(TERMINATED)</strong>: 线程执行完毕或异常终止。</li>
+</ul>
+<h3 id="关于RUNNING状态的缺失"><a href="#关于RUNNING状态的缺失" class="headerlink" title="关于RUNNING状态的缺失"></a>关于RUNNING状态的缺失</h3><p>如你所述，由于CPU时间片的分配和线程状态的频繁切换，很难准确区分线程是处于就绪状态还是运行状态。因此，Java将两者统称为“运行(RUNNABLE)”状态，以表示线程当前是可执行的，只要获得CPU时间片就能立即执行。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>了解线程的状态及其流转对于编写高效、可靠的并发程序至关重要。通过合理管理线程状态，可以确保程序的正确性和性能。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/%E5%9F%BA%E7%A1%80/%E7%BA%BF%E7%A8%8B%E6%B1%A0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +767,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -542,8 +992,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -723,6 +1173,456 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/09/16/%E9%9D%A2%E8%AF%95%E9%A2%98/@Autowired%E5%92%8C@Resource%E7%9A%84%E5%8C%BA%E5%88%AB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/09/16/%E9%9D%A2%E8%AF%95%E9%A2%98/@Autowired%E5%92%8C@Resource%E7%9A%84%E5%8C%BA%E5%88%AB/" itemprop="url">Autowired和@Resource的区别？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-09-16T13:33:41+00:00">
+                2024-09-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Autowired和-Resource的区别"><a href="#Autowired和-Resource的区别" class="headerlink" title="@Autowired和@Resource的区别"></a>@Autowired和@Resource的区别</h1><h1 id="口语化答案"><a href="#口语化答案" class="headerlink" title="口语化答案"></a>口语化答案</h1><p>好的，面试官，Autowired 和 Resource 都是依赖注入注解。一个是 spring 框架带的，一个是 javaee 框架带的。Autowired 主要是类型注入，Resource 是按照名称注入，名称找不到的话，会按照类型进行注入。Autowired 当存在多个的时候，可以配合Qualifier 来进行使用。一般在实际工作中比较常用 Resource。以上。</p>
+<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>常考题，面试官喜欢问，其实两者比较好区分，记住一个是类型，一个是名称即可。然后就是提供方的不同。</p>
+<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>类型注入，名称注入，指定名称。</p>
+<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>@Autowired和@Resource都是用于依赖注入的注解。</p>
+<h3 id="Autowired"><a href="#Autowired" class="headerlink" title="@Autowired"></a>@Autowired</h3><p><strong>来源</strong>：Spring 框架。</p>
+<p><strong>注入方式</strong>：默认按类型注入。</p>
+<p><strong>用法</strong>：可以用于字段、构造器、Setter 方法或其他任意方法。</p>
+<p><strong>可选性</strong>：可以与@Qualifier一起使用，以指定具体的 Bean。</p>
+<p><strong>处理机制</strong>：Spring 的AutowiredAnnotationBeanPostProcessor处理@Autowired注解。</p>
+<h3 id="Resource"><a href="#Resource" class="headerlink" title="@Resource"></a>@Resource</h3><p><strong>来源</strong>：由 Java EE 提供。</p>
+<p><strong>注入方式</strong>：默认按名称注入，如果按名称找不到，则按类型注入。</p>
+<p><strong>用法</strong>：可以用于字段或 Setter 方法。</p>
+<p><strong>属性</strong>：可以指定name和type属性。</p>
+<p><strong>处理机制</strong>：Spring 的CommonAnnotationBeanPostProcessor处理@Resource注解。</p>
+<h3 id="详细比较"><a href="#详细比较" class="headerlink" title="详细比较"></a>详细比较</h3><ol>
+<li><strong>注入方式</strong>：</li>
+</ol>
+<p>@Autowired：默认按类型注入。如果需要按名称注入，可以结合@Qualifier注解使用。</p>
+<p>@Resource：默认按名称注入。如果名称匹配失败，则按类型注入。</p>
+<ol start="2">
+<li><strong>属性</strong>：</li>
+</ol>
+<p>@Autowired：没有name和type属性，但可以使用@Qualifier指定名称。</p>
+<p>@Resource：有name和type属性，可以明确指定要注入的 Bean 名称或类型。</p>
+<ol start="3">
+<li><strong>兼容性</strong>：</li>
+</ol>
+<p>@Autowired：是 Spring 框架特有的注解。</p>
+<p>@Resource：是 Java 标准注解，兼容性更广，适用于任何支持 JSR-250 的容器。</p>
+<ol start="4">
+<li><strong>使用场景</strong>：</li>
+</ol>
+<p>@Autowired：在 Spring 应用中更为常见，尤其是在需要按类型注入的场景中。</p>
+<p>@Resource：在需要兼容标准 Java EE 规范的应用中更为常见，或者在需要明确指定 Bean 名称时使用。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/09/16/%E9%9D%A2%E8%AF%95%E9%A2%98/@transactional%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/09/16/%E9%9D%A2%E8%AF%95%E9%A2%98/@transactional%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0%EF%BC%9F/" itemprop="url">Transactional底层实现？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-09-16T13:33:41+00:00">
+                2024-09-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Transactional底层实现？"><a href="#Transactional底层实现？" class="headerlink" title="@Transactional底层实现？"></a>@Transactional底层实现？</h1><ol>
+<li><strong>解析</strong><code>**@Transactional**</code><strong>注解</strong>：<ul>
+<li>Spring在启动时会扫描所有带有<code>@Transactional</code>注解的类和方法，并解析注解中的属性，生成<code>TransactionAttribute</code>对象。</li>
+</ul>
+</li>
+<li><strong>创建代理对象</strong>：<ul>
+<li>Spring使用AOP创建代理对象，代理对象会拦截对目标方法的调用。</li>
+</ul>
+</li>
+<li><strong>事务拦截器拦截方法调用</strong>：<ul>
+<li>当代理对象的方法被调用时，<code>TransactionInterceptor</code>会拦截该调用。</li>
+</ul>
+</li>
+<li><strong>获取事务属性</strong>：<ul>
+<li><code>TransactionInterceptor</code>从<code>TransactionAttributeSource</code>获取当前方法的事务属性。</li>
+</ul>
+</li>
+<li><strong>事务管理器处理事务</strong>：<ul>
+<li>根据事务属性，<code>TransactionInterceptor</code>会通过<code>TransactionManager</code>开启一个新事务或加入一个现有事务。</li>
+</ul>
+</li>
+<li><strong>执行目标方法</strong>：<ul>
+<li>事务开始后，<code>TransactionInterceptor</code>会调用目标方法。</li>
+</ul>
+</li>
+<li><strong>提交或回滚事务</strong>：<ul>
+<li>如果目标方法执行成功，<code>TransactionInterceptor</code>会通过<code>TransactionManager</code>提交事务。</li>
+<li>如果目标方法抛出异常，根据事务属性中的回滚规则，<code>TransactionInterceptor</code>会决定是否回滚事务。</li>
+</ul>
+</li>
+<li><strong>清理事务上下文</strong>：<ul>
+<li>事务提交或回滚后，<code>TransactionSynchronizationManager</code>会清理事务上下文，确保线程的事务状态一致。</li>
+</ul>
+</li>
+</ol>
+<h2 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h2><h3 id="1-AOP（面向切面编程）"><a href="#1-AOP（面向切面编程）" class="headerlink" title="1. AOP（面向切面编程）"></a>1. AOP（面向切面编程）</h3><p>Spring的声明式事务管理主要依靠AOP来实现。AOP允许在方法执行之前和之后添加额外的行为（如事务管理）。</p>
+<h3 id="2-事务管理器（Transaction-Manager）"><a href="#2-事务管理器（Transaction-Manager）" class="headerlink" title="2. 事务管理器（Transaction Manager）"></a>2. 事务管理器（Transaction Manager）</h3><p>Spring提供了多种事务管理器实现，如：</p>
+<ul>
+<li><code>DataSourceTransactionManager</code>：用于JDBC数据源的事务管理。</li>
+<li><code>JpaTransactionManager</code>：用于JPA的事务管理。</li>
+<li><code>HibernateTransactionManager</code>：用于Hibernate的事务管理。</li>
+</ul>
+<p>这些事务管理器负责具体的事务处理逻辑。</p>
+<h3 id="3-事务拦截器（Transaction-Interceptor）"><a href="#3-事务拦截器（Transaction-Interceptor）" class="headerlink" title="3. 事务拦截器（Transaction Interceptor）"></a>3. 事务拦截器（Transaction Interceptor）</h3><p><code>TransactionInterceptor</code>是AOP的一个拦截器，用于拦截带有<code>@Transactional</code>注解的方法。它会在方法执行之前和之后执行事务管理逻辑。</p>
+<h3 id="4-事务属性（Transaction-Attributes）"><a href="#4-事务属性（Transaction-Attributes）" class="headerlink" title="4. 事务属性（Transaction Attributes）"></a>4. 事务属性（Transaction Attributes）</h3><p><code>@Transactional</code>注解的属性（如传播行为、隔离级别、超时、只读等）会被解析为<code>TransactionAttribute</code>对象。这些属性定义了事务的具体行为。</p>
+<h3 id="5-事务同步管理器（Transaction-Synchronization-Manager）"><a href="#5-事务同步管理器（Transaction-Synchronization-Manager）" class="headerlink" title="5. 事务同步管理器（Transaction Synchronization Manager）"></a>5. 事务同步管理器（Transaction Synchronization Manager）</h3><p><code>TransactionSynchronizationManager</code>用于管理事务的同步状态。它维护了当前线程的事务状态，并负责在事务开始、提交或回滚时调用相应的回调。</p>
+<h3 id="6-事务代理（Transaction-Proxy）"><a href="#6-事务代理（Transaction-Proxy）" class="headerlink" title="6. 事务代理（Transaction Proxy）"></a>6. 事务代理（Transaction Proxy）</h3><p>Spring使用代理模式来实现声明式事务管理。代理对象会拦截对目标方法的调用，并在调用目标方法之前和之后执行事务管理逻辑。</p>
+<h3 id="7-事务上下文（Transaction-Context）"><a href="#7-事务上下文（Transaction-Context）" class="headerlink" title="7. 事务上下文（Transaction Context）"></a>7. 事务上下文（Transaction Context）</h3><p>事务上下文包含了当前事务的状态信息，如事务是否已经开始、是否需要回滚等。Spring会在事务开始时创建事务上下文，并在事务结束时清理它。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/09/16/%E9%9D%A2%E8%AF%95%E9%A2%98/LinkedList%E7%9C%9F%E7%9A%84%E6%AF%94ArrayList%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0%E5%BF%AB%E5%90%97_/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -770,8 +1670,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -964,8 +1864,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -1168,8 +2068,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -1386,8 +2286,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -1582,6 +2482,213 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/09/10/%E7%AC%94%E8%AE%B0/Stream/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/09/10/%E7%AC%94%E8%AE%B0/Stream/" itemprop="url">Stream</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-09-10T17:33:00+00:00">
+                2024-09-10
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Stream"><a href="#Stream" class="headerlink" title="Stream"></a>Stream</h1><h3 id="Stream-API的深入理解"><a href="#Stream-API的深入理解" class="headerlink" title="Stream API的深入理解"></a>Stream API的深入理解</h3><p>Stream API是Java 8中引入的一个关键抽象概念，它允许你以声明性方式处理数据集合（包括数组等）。Stream通过一系列的操作（如筛选、转换、聚合等）来构建复杂的数据处理流水线。</p>
+<h4 id="特性及优点详解"><a href="#特性及优点详解" class="headerlink" title="特性及优点详解"></a>特性及优点详解</h4><ol>
+<li><p><strong>无存储</strong>：Stream本身不存储数据，它只是数据源的一个视图。这意味着你可以对原始数据集合进行多次Stream操作，而不会改变原始数据。</p>
+</li>
+<li><p><strong>为函数式编程而生</strong>：Stream API的设计符合函数式编程的范式，它鼓励使用不可变的数据和纯函数（即没有副作用的函数）。这使得代码更加简洁、易于理解和维护。</p>
+</li>
+<li><p><strong>惰式执行</strong>：Stream上的操作是惰式执行的，这意味着只有在需要结果时才会执行操作。这有助于优化性能，因为它允许Stream API在可能的情况下延迟计算，直到真正需要结果为止。</p>
+</li>
+<li><p><strong>可消费性</strong>：Stream只能被消费一次，一旦遍历过就会失效。这是为了保持流的不可变性，并防止在多个线程中同时修改流。</p>
+</li>
+</ol>
+<h4 id="关键性操作"><a href="#关键性操作" class="headerlink" title="关键性操作"></a>关键性操作</h4><ul>
+<li><p><strong>流的创建</strong>：可以通过集合的<code>stream()</code>或<code>parallelStream()</code>方法、<code>Stream.of()</code>方法或<code>Stream.Builder</code>来创建流。</p>
+</li>
+<li><p><strong>中间操作</strong>：这些操作会返回一个新的流，并允许你进行链式调用。常见的中间操作包括<code>filter()</code>（筛选）、<code>map()</code>（转换）、<code>flatMap()</code>（扁平化映射）、<code>sorted()</code>（排序）、<code>distinct()</code>（去重）等。</p>
+</li>
+<li><p><strong>最终操作</strong>：这些操作会触发流的计算，并返回一个结果或副作用。常见的最终操作包括<code>forEach()</code>（遍历）、<code>collect()</code>（收集到集合）、<code>reduce()</code>（归约）、<code>count()</code>（计数）等。</p>
+</li>
+</ul>
+<h4 id="示例分析"><a href="#示例分析" class="headerlink" title="示例分析"></a>示例分析</h4><p>你给出的示例很好地展示了Stream API的使用场景。在这个示例中，你首先通过<code>filter()</code>筛选出非红色的球，然后通过<code>map()</code>将它们融化成随机的三角形，再通过另一个<code>filter()</code>筛选出非小的三角形，最后通过某种方式计算出剩余图形的周长。</p>
+<p>这个示例展示了如何使用Stream API来构建一个复杂的数据处理流水线，并通过链式调用中间操作和最终操作来得到最终结果。</p>
+<h3 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h3><p>Stream API在实际应用中非常有用，特别是在处理大型数据集时。它允许你以声明性方式编写代码，而不需要关心底层实现细节。此外，Stream API还支持并行处理，这使得它能够在多核处理器上更有效地利用计算资源。</p>
+<p>总之，Stream API是Java 8中一个非常重要的特性，它极大地提高了Java程序员的生产力，并使得编写高效、简洁和易于维护的代码变得更加容易。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/09/10/%E7%AC%94%E8%AE%B0/Stream%E7%9A%84%E5%B9%B6%E8%A1%8C%E6%B5%81%E6%98%AF%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%9A%84/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1629,8 +2736,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -1808,213 +2915,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/09/10/%E7%AC%94%E8%AE%B0/Stream/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/09/10/%E7%AC%94%E8%AE%B0/Stream/" itemprop="url">Stream</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-09-10T17:33:00+00:00">
-                2024-09-10
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Stream"><a href="#Stream" class="headerlink" title="Stream"></a>Stream</h1><h3 id="Stream-API的深入理解"><a href="#Stream-API的深入理解" class="headerlink" title="Stream API的深入理解"></a>Stream API的深入理解</h3><p>Stream API是Java 8中引入的一个关键抽象概念，它允许你以声明性方式处理数据集合（包括数组等）。Stream通过一系列的操作（如筛选、转换、聚合等）来构建复杂的数据处理流水线。</p>
-<h4 id="特性及优点详解"><a href="#特性及优点详解" class="headerlink" title="特性及优点详解"></a>特性及优点详解</h4><ol>
-<li><p><strong>无存储</strong>：Stream本身不存储数据，它只是数据源的一个视图。这意味着你可以对原始数据集合进行多次Stream操作，而不会改变原始数据。</p>
-</li>
-<li><p><strong>为函数式编程而生</strong>：Stream API的设计符合函数式编程的范式，它鼓励使用不可变的数据和纯函数（即没有副作用的函数）。这使得代码更加简洁、易于理解和维护。</p>
-</li>
-<li><p><strong>惰式执行</strong>：Stream上的操作是惰式执行的，这意味着只有在需要结果时才会执行操作。这有助于优化性能，因为它允许Stream API在可能的情况下延迟计算，直到真正需要结果为止。</p>
-</li>
-<li><p><strong>可消费性</strong>：Stream只能被消费一次，一旦遍历过就会失效。这是为了保持流的不可变性，并防止在多个线程中同时修改流。</p>
-</li>
-</ol>
-<h4 id="关键性操作"><a href="#关键性操作" class="headerlink" title="关键性操作"></a>关键性操作</h4><ul>
-<li><p><strong>流的创建</strong>：可以通过集合的<code>stream()</code>或<code>parallelStream()</code>方法、<code>Stream.of()</code>方法或<code>Stream.Builder</code>来创建流。</p>
-</li>
-<li><p><strong>中间操作</strong>：这些操作会返回一个新的流，并允许你进行链式调用。常见的中间操作包括<code>filter()</code>（筛选）、<code>map()</code>（转换）、<code>flatMap()</code>（扁平化映射）、<code>sorted()</code>（排序）、<code>distinct()</code>（去重）等。</p>
-</li>
-<li><p><strong>最终操作</strong>：这些操作会触发流的计算，并返回一个结果或副作用。常见的最终操作包括<code>forEach()</code>（遍历）、<code>collect()</code>（收集到集合）、<code>reduce()</code>（归约）、<code>count()</code>（计数）等。</p>
-</li>
-</ul>
-<h4 id="示例分析"><a href="#示例分析" class="headerlink" title="示例分析"></a>示例分析</h4><p>你给出的示例很好地展示了Stream API的使用场景。在这个示例中，你首先通过<code>filter()</code>筛选出非红色的球，然后通过<code>map()</code>将它们融化成随机的三角形，再通过另一个<code>filter()</code>筛选出非小的三角形，最后通过某种方式计算出剩余图形的周长。</p>
-<p>这个示例展示了如何使用Stream API来构建一个复杂的数据处理流水线，并通过链式调用中间操作和最终操作来得到最终结果。</p>
-<h3 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h3><p>Stream API在实际应用中非常有用，特别是在处理大型数据集时。它允许你以声明性方式编写代码，而不需要关心底层实现细节。此外，Stream API还支持并行处理，这使得它能够在多核处理器上更有效地利用计算资源。</p>
-<p>总之，Stream API是Java 8中一个非常重要的特性，它极大地提高了Java程序员的生产力，并使得编写高效、简洁和易于维护的代码变得更加容易。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/09/01/%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2062,8 +2962,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -2263,8 +3163,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -2464,8 +3364,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -2681,8 +3581,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -2877,8 +3777,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -3061,8 +3961,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -3245,8 +4145,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -3434,8 +4334,8 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
+                2025-05-17
               </time>
             
           </span>
@@ -3575,792 +4475,6 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/%E7%AC%94%E8%AE%B0/ftp%E9%97%AE%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2022/07/31/%E7%AC%94%E8%AE%B0/ftp%E9%97%AE%E9%A2%98/" itemprop="url">ftp问题</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-07-31T13:33:41+00:00">
-                2022-07-31
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li><p>问题 ：FTP上传storefile一直返回false的解决，报500<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/LiHuiJUNMate/article/details/124257181">https://blog.csdn.net/LiHuiJUNMate/article/details/124257181</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44901564/article/details/108062627">https://blog.csdn.net/weixin_44901564/article/details/108062627</a></p>
-</li>
-<li><p>553 550<br><a target="_blank" rel="noopener" href="http://www.zzvips.com/article/226409.html+%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E9%97%AE%E9%A2%98">http://www.zzvips.com/article/226409.html+用户权限问题</a></p>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/%E7%AC%94%E8%AE%B0/javacv%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2022/07/31/%E7%AC%94%E8%AE%B0/javacv%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url">javacv学习笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-07-31T13:33:41+00:00">
-                2022-07-31
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="java版opencv之Javacv各种场景使用案例"><a href="#java版opencv之Javacv各种场景使用案例" class="headerlink" title="java版opencv之Javacv各种场景使用案例"></a>java版opencv之Javacv各种场景使用案例</h1><p>————————————————<br>版权声明：本文为CSDN博主「jwolf2」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_39506978/article/details/133251234">https://blog.csdn.net/qq_39506978/article/details/133251234</a></p>
-<h1 id="java-opencv-基本操作6"><a href="#java-opencv-基本操作6" class="headerlink" title="java opencv 基本操作6"></a>java opencv 基本操作6</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/kan_Feng/article/details/126456760">https://blog.csdn.net/kan_Feng/article/details/126456760</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/%E7%AC%94%E8%AE%B0/js%E8%BF%90%E8%A1%8C%E8%BF%9B%E5%88%B6%E7%9A%84%E6%A2%B3%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2022/07/31/%E7%AC%94%E8%AE%B0/js%E8%BF%90%E8%A1%8C%E8%BF%9B%E5%88%B6%E7%9A%84%E6%A2%B3%E7%90%86/" itemprop="url">js运行进制的梳理</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-07-31T13:33:41+00:00">
-                2022-07-31
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>参考连接：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/0tLxTybwJ7NCLBPtQClXoA">https://mp.weixin.qq.com/s/0tLxTybwJ7NCLBPtQClXoA</a></p>
-<h1 id="js运行进制的梳理"><a href="#js运行进制的梳理" class="headerlink" title="js运行进制的梳理"></a>js运行进制的梳理</h1><h2 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h2><ul>
-<li>两者区别<ul>
-<li>简单来讲，能看到的就是进程，例如：资源管理器中的进程列表；看不到的就是线程；</li>
-<li>进程是cpu资源分配的最小单元（系统会给他分配资源，能拥有资源和独立运行的最小单位）；</li>
-<li>线程是cpu调度的最小单位（线程是建立在进程的基础上的一次程序运行单位）；</li>
-</ul>
-</li>
-</ul>
-<h2 id="浏览器是多线程的，它包括哪些进程"><a href="#浏览器是多线程的，它包括哪些进程" class="headerlink" title="浏览器是多线程的，它包括哪些进程"></a>浏览器是多线程的，它包括哪些进程</h2><ul>
-<li>Browser线程：浏览器的主线程，只有一个</li>
-<li>第三方的插件进程：每个类型的插件对应一个进程，使用时才会创建</li>
-<li>GPU进程（最多一个，用于3D绘制等）</li>
-<li>浏览器渲染进程（浏览器内核） Renderer进程，每个tab页面一个进程：用于页面渲染、脚本执行、事件处理</li>
-</ul>
-<h2 id="为什么浏览器是多线程的"><a href="#为什么浏览器是多线程的" class="headerlink" title="为什么浏览器是多线程的"></a>为什么浏览器是多线程的</h2><pre><code>如果是单线程的，某个tab页面崩溃或者插件崩溃，就会影响到整个的浏览器
-</code></pre>
-<h3 id="浏览器内核（渲染进程）多线程的"><a href="#浏览器内核（渲染进程）多线程的" class="headerlink" title="浏览器内核（渲染进程）多线程的"></a>浏览器内核（渲染进程）多线程的</h3><ul>
-<li>GUI渲染线程（渲染页面，解析html、css）</li>
-<li>js引擎线程（js内核，处理js脚本程序，一个tab页面只有一个js线程来运行js程序）</li>
-<li>GUI渲染线程和js线程是互斥的</li>
-<li>事件触发归属于浏览器，用于控制事件循环；js是单线程，事件队列中的任务都是排队等待js引擎处理</li>
-<li>定时触发器线程</li>
-<li>异步http请求线程</li>
-</ul>
-<h3 id="Browser进程和浏览器内核（Renderer进程）的通信过程"><a href="#Browser进程和浏览器内核（Renderer进程）的通信过程" class="headerlink" title="Browser进程和浏览器内核（Renderer进程）的通信过程"></a>Browser进程和浏览器内核（Renderer进程）的通信过程</h3><ul>
-<li>B进程收到用户请求，需要获取页面内容，随后将该任务通过RendererHost接口传递给Renderer进程；<br>Renderer接口收到信息后，交给渲染线程（加载网页开始渲染网页，可能会使用到Brwerer进程获取资源或者GPU进程来帮助渲染-可能会有js线程操作DOM-最后Renderer进程将结果传递给Browser进程），Browser进程收到结果并绘制出来</li>
-</ul>
-<h3 id="浏览器内核线程之间的关系"><a href="#浏览器内核线程之间的关系" class="headerlink" title="浏览器内核线程之间的关系"></a>浏览器内核线程之间的关系</h3><ul>
-<li>GUI渲染线程和js引擎线程互斥<ul>
-<li>js是可以操作DOM的，如果在修改这个元素属性的同时渲染界面，那渲染线程前后获取的元素数据就不一样了；</li>
-</ul>
-</li>
-<li>js阻塞页面加载<ul>
-<li>避免js执行实践过长，这样会造成页面的渲染不连贯，导致渲染加载阻塞，用户体验不佳</li>
-</ul>
-</li>
-<li>WebWorker，js的多线程？</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/%E7%AC%94%E8%AE%B0/springcloud%E4%B8%ADfeign%E8%B0%83%E7%94%A8%E6%97%B6token%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2022/07/31/%E7%AC%94%E8%AE%B0/springcloud%E4%B8%ADfeign%E8%B0%83%E7%94%A8%E6%97%B6token%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98/" itemprop="url">springcloud中feign调用时token丢失问题</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-07-31T13:33:41+00:00">
-                2022-07-31
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-16T01:59:28+00:00">
-                2025-05-16
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_39267497/article/details/119213250">https://blog.csdn.net/weixin_39267497/article/details/119213250</a></li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4411,7 +4525,7 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">225</span>
+                <span class="site-state-item-count">229</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -4433,7 +4547,7 @@ SecurityManager需要进行身份验证就必须从Realm中获取到一个合法
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-count">26</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
