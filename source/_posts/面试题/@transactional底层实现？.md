@@ -1,5 +1,5 @@
 ---
-title: @Transactional底层实现？
+title: Transactional底层实现？
 date: 2024-09-16 13:33:41
 tags:
 	- 事务

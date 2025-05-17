@@ -1,5 +1,5 @@
 ---
-title: @Autowired和@Resource的区别 
+title: Autowired和@Resource的区别 
 date: 2025-03-02 17:33:00
 categories: Spring
 ---

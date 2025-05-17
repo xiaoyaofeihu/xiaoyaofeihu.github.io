@@ -1,5 +1,5 @@
 ---
-title: @Autowired和@Resource的区别？
+title: Autowired和@Resource的区别？
 date: 2024-09-16 13:33:41
 tags:
 	- Spring
