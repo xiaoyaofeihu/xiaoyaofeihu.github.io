@@ -270,6 +270,208 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E7%9A%84%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6%E6%98%AF%E4%BB%80%E4%B9%88_/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E7%9A%84%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6%E6%98%AF%E4%BB%80%E4%B9%88_/" itemprop="url">redis 同步机制</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-02-11T13:33:41+00:00">
+                2025-02-11
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌redis的同步机制是什么"><a href="#👌redis的同步机制是什么" class="headerlink" title="👌redis的同步机制是什么?"></a>👌redis的同步机制是什么?</h1><h1 id="口语化回答"><a href="#口语化回答" class="headerlink" title="口语化回答"></a>口语化回答</h1><p>好的，面试官。redis 的同步机制主要是主从同步，一开始从服务器发送同步命令，主服务器接收到之后，就会生成一个 rdb 的文件，然后传输给从服务器，从服务器接收到之后，立马进行数据的恢复。然后当主服务器再次接收到写命令的时候，会发给从服务器。这个过程是一个异步复制，主服务器不会等待结果。这样就完成了主从复制，主要的核心步骤就是这些。如果同步机制发生问题的话，从服务器可以进行断线重连。还可以做集群、哨兵，来自动切换。以上。</p>
+<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>主要还是考主从同步原理和如何进行配置，还可以带一点故障的处理。面试官主要是想看看你对集群有没有一定的了解，redis 主从的数据复制有没有了解。</p>
+<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>rdb 快照，增量同步，故障机制</p>
+<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>redis的同步机制主要涉及主从复制，主从复制机制允许一个服务器（主服务器）将数据复制到一个或多个服务器（从服务器）。从服务器可以是只读的，也可以接受写操作，但这些写操作不会被同步回主服务器。</p>
+<h3 id="初次同步"><a href="#初次同步" class="headerlink" title="初次同步"></a>初次同步</h3><p>当从服务器第一次连接到主服务器时，或者当从服务器与主服务器的连接中断后重新连接时，会触发一次全量同步过程。</p>
+<ol>
+<li><strong>从服务器发送SYNC命令</strong>：从服务器向主服务器发送SYNC命令，请求进行同步。</li>
+<li><strong>主服务器生成RDB快照</strong>：主服务器接收到SYNC命令后，会生成一个RDB（Redis Database）快照文件，并在生成过程中将所有新写入的命令记录到一个缓冲区中。</li>
+<li><strong>传输RDB文件</strong>：主服务器将生成的RDB文件发送给从服务器。从服务器接收到RDB文件后，会清空自身的数据库并加载这个RDB文件。</li>
+<li><strong>传输缓冲区中的命令</strong>：主服务器将缓冲区中的所有写命令发送给从服务器，从服务器依次执行这些命令，以确保数据完全同步。</li>
+</ol>
+<h3 id="增量同步"><a href="#增量同步" class="headerlink" title="增量同步"></a>增量同步</h3><p>在初次同步完成后，主从服务器会保持连接状态，主服务器会将后续的所有写命令实时发送给从服务器，从服务器执行这些命令以保持数据的一致性。</p>
+<h2 id="同步机制如何配置"><a href="#同步机制如何配置" class="headerlink" title="同步机制如何配置"></a>同步机制如何配置</h2><h3 id="主服务器配置"><a href="#主服务器配置" class="headerlink" title="主服务器配置"></a>主服务器配置</h3><p>主服务器的配置通常不需要特别设置，只需要确保其能够接受从服务器的连接请求。</p>
+<h3 id="从服务器配置"><a href="#从服务器配置" class="headerlink" title="从服务器配置"></a>从服务器配置</h3><p>在从服务器的配置文件中，需要指定主服务器的IP地址和端口号：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">replicaof &lt;master-ip&gt; &lt;master-port&gt;</span><br><span class="line">replicaof 192.168.1.100 6379</span><br></pre></td></tr></table></figure>
+
+<h2 id="同步机制的故障处理"><a href="#同步机制的故障处理" class="headerlink" title="同步机制的故障处理"></a>同步机制的故障处理</h2><h4 id="断线重连"><a href="#断线重连" class="headerlink" title="断线重连"></a>断线重连</h4><p>当从服务器与主服务器的连接中断时，从服务器会自动尝试重连。在重连成功后，从服务器会根据情况选择进行全量同步或增量同步。</p>
+<h4 id="主从切换"><a href="#主从切换" class="headerlink" title="主从切换"></a>主从切换</h4><p>在高可用环境中，可以使用Redis Sentinel或Redis Cluster来实现自动主从切换。当主服务器发生故障时，Sentinel或Cluster会自动选举一个新的主服务器，并通知其他从服务器进行同步。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E7%9A%84%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +519,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -591,8 +793,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -794,8 +996,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -988,8 +1190,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -1180,8 +1382,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -1412,8 +1614,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -1618,8 +1820,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -1867,8 +2069,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -2085,8 +2287,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -2307,8 +2509,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -2521,8 +2723,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -2756,8 +2958,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -2954,8 +3156,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -3181,8 +3383,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -3379,8 +3581,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -3580,8 +3782,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -3786,8 +3988,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -4000,8 +4202,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -4199,8 +4401,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -4365,214 +4567,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/Comparable%E5%92%8CComparator%E7%9A%84%E5%8C%BA%E5%88%AB_/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/Comparable%E5%92%8CComparator%E7%9A%84%E5%8C%BA%E5%88%AB_/" itemprop="url">Comparable 和 Comparator 的区别</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌Comparable-和-Comparator-的区别"><a href="#👌Comparable-和-Comparator-的区别" class="headerlink" title="👌Comparable 和 Comparator 的区别?"></a>👌Comparable 和 Comparator 的区别?</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>Comparable和Comparator是 Java 中用于排序的两个接口，它们有不同的用途和实现方式。</p>
-<h2 id="Comparable接口"><a href="#Comparable接口" class="headerlink" title="Comparable接口"></a>Comparable接口</h2><p>Comparable接口用于定义对象的自然排序顺序。实现此接口的类必须覆盖compareTo方法，该方法用于比较当前对象与指定对象的顺序。</p>
-<p>类实现Comparable接口，并覆盖compareTo方法。</p>
-<h3 id="代码-Demo"><a href="#代码-Demo" class="headerlink" title="代码 Demo"></a>代码 Demo</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">import java.util.*;</span><br><span class="line"></span><br><span class="line">class Person implements Comparable&lt;Person&gt; &#123;</span><br><span class="line">    private String name;</span><br><span class="line">    private int age;</span><br><span class="line"></span><br><span class="line">    public Person(String name, int age) &#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">        this.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int compareTo(Person other) &#123;</span><br><span class="line">        return Integer.compare(this.age, other.age); // 按年龄排序</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String toString() &#123;</span><br><span class="line">        return name + &quot; (&quot; + age + &quot;)&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class ComparableExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        List&lt;Person&gt; people = new ArrayList&lt;&gt;();</span><br><span class="line">        people.add(new Person(&quot;Alice&quot;, 30));</span><br><span class="line">        people.add(new Person(&quot;Bob&quot;, 25));</span><br><span class="line">        people.add(new Person(&quot;Charlie&quot;, 35));</span><br><span class="line"></span><br><span class="line">        Collections.sort(people);</span><br><span class="line"></span><br><span class="line">        for (Person person : people) &#123;</span><br><span class="line">            System.out.println(person);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="Comparator接口"><a href="#Comparator接口" class="headerlink" title="Comparator接口"></a>Comparator接口</h2><p>Comparator接口用于定义对象的自定义排序顺序。它允许你定义多个排序标准，而不需要修改对象的类。</p>
-<p>创建一个或多个实现Comparator接口的类，并覆盖compare方法。</p>
-<h3 id="代码-Demo-1"><a href="#代码-Demo-1" class="headerlink" title="代码 Demo"></a>代码 Demo</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">import java.util.*;</span><br><span class="line"></span><br><span class="line">class Person &#123;</span><br><span class="line">    private String name;</span><br><span class="line">    private int age;</span><br><span class="line"></span><br><span class="line">    public Person(String name, int age) &#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">        this.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getName() &#123;</span><br><span class="line">        return name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int getAge() &#123;</span><br><span class="line">        return age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String toString() &#123;</span><br><span class="line">        return name + &quot; (&quot; + age + &quot;)&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class NameComparator implements Comparator&lt;Person&gt; &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public int compare(Person p1, Person p2) &#123;</span><br><span class="line">        return p1.getName().compareTo(p2.getName()); // 按名字排序</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class AgeComparator implements Comparator&lt;Person&gt; &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public int compare(Person p1, Person p2) &#123;</span><br><span class="line">        return Integer.compare(p1.getAge(), p2.getAge()); // 按年龄排序</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class ComparatorExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        List&lt;Person&gt; people = new ArrayList&lt;&gt;();</span><br><span class="line">        people.add(new Person(&quot;Alice&quot;, 30));</span><br><span class="line">        people.add(new Person(&quot;Bob&quot;, 25));</span><br><span class="line">        people.add(new Person(&quot;Charlie&quot;, 35));</span><br><span class="line"></span><br><span class="line">        // 按名字排序</span><br><span class="line">        Collections.sort(people, new NameComparator());</span><br><span class="line">        System.out.println(&quot;按名字排序:&quot;);</span><br><span class="line">        for (Person person : people) &#123;</span><br><span class="line">            System.out.println(person);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 按年龄排序</span><br><span class="line">        Collections.sort(people, new AgeComparator());</span><br><span class="line">        System.out.println(&quot;按年龄排序:&quot;);</span><br><span class="line">        for (Person person : people) &#123;</span><br><span class="line">            System.out.println(person);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="主要区别"><a href="#主要区别" class="headerlink" title="主要区别"></a>主要区别</h2><p><strong>接口实现位置</strong>：</p>
-<p>Comparable：对象类自身实现Comparable接口，定义其自然排序顺序。</p>
-<p>Comparator：单独的类或匿名类实现Comparator接口，定义自定义排序顺序。</p>
-<p><strong>方法名称</strong>：</p>
-<p>Comparable：实现compareTo方法。</p>
-<p>Comparator：实现compare方法。</p>
-<p><strong>排序标准</strong>：</p>
-<p>Comparable：只能有一个排序标准（自然顺序）。</p>
-<p>Comparator：可以有多个排序标准，可以根据需要定义不同的Comparator实现。</p>
-<p><strong>使用场景</strong>：</p>
-<p>Comparable：适用于单一的自然排序顺序，例如字典顺序、数字顺序等。</p>
-<p>Comparator：适用于需要多个排序标准的场景，例如按名字排序、按年龄排序等。</p>
-<blockquote>
-<p>&#x2F;yz4xnv56p75pof6a&gt;</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4623,7 +4617,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-count">230</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

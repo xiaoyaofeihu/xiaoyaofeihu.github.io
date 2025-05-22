@@ -270,6 +270,213 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/04/27/JVM/Java%E4%BC%9A%E5%AD%98%E5%9C%A8%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E5%90%97_/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/04/27/JVM/Java%E4%BC%9A%E5%AD%98%E5%9C%A8%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E5%90%97_/" itemprop="url">👌Java会存在内存泄露吗</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-04-27T13:33:41+00:00">
+                2025-04-27
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌Java会存在内存泄露吗"><a href="#👌Java会存在内存泄露吗" class="headerlink" title="👌Java会存在内存泄露吗?"></a>👌Java会存在内存泄露吗?</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>内存泄漏指的是程序在运行过程中由于某种原因未能释放不再使用的内存，导致内存使用量不断增加，最终可能耗尽可用内存。通常是由于程序逻辑错误或不当的资源管理引起的。</p>
+<h2 id="常见的内存泄漏情况"><a href="#常见的内存泄漏情况" class="headerlink" title="常见的内存泄漏情况"></a>常见的内存泄漏情况</h2><h3 id="静态集合类（如HashMap、ArrayList）持有对象引用"><a href="#静态集合类（如HashMap、ArrayList）持有对象引用" class="headerlink" title="静态集合类（如HashMap、ArrayList）持有对象引用"></a>静态集合类（如HashMap、ArrayList）持有对象引用</h3><p>静态集合类会在整个应用程序生命周期内存在，如果没有及时清理不再使用的对象引用，这些对象就无法被垃圾回收。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class MemoryLeakExample &#123;</span><br><span class="line">    private static List&lt;Object&gt; list = new ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    public void addToList(Object obj) &#123;</span><br><span class="line">        list.add(obj);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="监听器和回调函数"><a href="#监听器和回调函数" class="headerlink" title="监听器和回调函数"></a>监听器和回调函数</h3><p>如果注册的监听器或回调函数没有及时解除注册，它们持有的对象引用也会导致内存泄漏。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class EventSource &#123;</span><br><span class="line">    private List&lt;EventListener&gt; listeners = new ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    public void registerListener(EventListener listener) &#123;</span><br><span class="line">        listeners.add(listener);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="未关闭的资源"><a href="#未关闭的资源" class="headerlink" title="未关闭的资源"></a>未关闭的资源</h3><p>打开的文件、数据库连接、网络连接等资源如果没有及时关闭，会导致内存泄漏。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public void readFile(String filePath) throws IOException &#123;</span><br><span class="line">    BufferedReader reader = new BufferedReader(new FileReader(filePath));</span><br><span class="line">    // 忘记关闭 reader</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="内部类和匿名类持有外部类引用："><a href="#内部类和匿名类持有外部类引用：" class="headerlink" title="内部类和匿名类持有外部类引用："></a>内部类和匿名类持有外部类引用：</h3><p>内部类和匿名类会持有外部类的引用，如果这些类的实例生命周期较长，会导致外部类无法被垃圾回收。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class OuterClass &#123;</span><br><span class="line">    private String data;</span><br><span class="line"></span><br><span class="line">    public void startThread() &#123;</span><br><span class="line">        new Thread(new Runnable() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void run() &#123;</span><br><span class="line">                System.out.println(data);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="缓存（Cache）没有清理："><a href="#缓存（Cache）没有清理：" class="headerlink" title="缓存（Cache）没有清理："></a>缓存（Cache）没有清理：</h3><p>使用缓存时，如果没有适当的清理策略（如 LRU 缓存），缓存中的对象会一直存在，导致内存泄漏。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class CacheExample &#123;</span><br><span class="line">    private Map&lt;String, Object&gt; cache = new HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    public void addToCache(String key, Object value) &#123;</span><br><span class="line">        cache.put(key, value);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="检测和解决内存泄漏的方法"><a href="#检测和解决内存泄漏的方法" class="headerlink" title="检测和解决内存泄漏的方法"></a>检测和解决内存泄漏的方法</h2><h3 id="使用内存分析工具："><a href="#使用内存分析工具：" class="headerlink" title="使用内存分析工具："></a>使用内存分析工具：</h3><p>工具如 VisualVM、Eclipse MAT（Memory Analyzer Tool）可以帮助分析堆内存，找出可能的内存泄漏点。</p>
+<h3 id="代码审查："><a href="#代码审查：" class="headerlink" title="代码审查："></a>代码审查：</h3><p>仔细审查代码，确保没有不必要的对象引用，及时释放资源。</p>
+<h3 id="使用try-with-resources语句"><a href="#使用try-with-resources语句" class="headerlink" title="使用try-with-resources语句"></a>使用try-with-resources语句</h3><p>确保资源在使用完毕后被及时关闭。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public void readFile(String filePath) throws IOException &#123;</span><br><span class="line">    try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) &#123;</span><br><span class="line">        // 读取文件内容</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="解除监听器注册"><a href="#解除监听器注册" class="headerlink" title="解除监听器注册"></a>解除监听器注册</h3><p>确保在不再需要监听器时解除注册。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class EventSource &#123;</span><br><span class="line">    private List&lt;EventListener&gt; listeners = new ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    public void registerListener(EventListener listener) &#123;</span><br><span class="line">        listeners.add(listener);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void unregisterListener(EventListener listener) &#123;</span><br><span class="line">        listeners.remove(listener);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/04/27/JVM/Java%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E7%9A%84%E4%B8%BB%E8%A6%81%E6%B5%81%E7%A8%8B%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +524,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -527,8 +734,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -738,8 +945,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -934,8 +1141,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -1143,8 +1350,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -1346,8 +1553,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -1543,8 +1750,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -1744,8 +1951,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -1948,8 +2155,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -2156,8 +2363,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -2358,8 +2565,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -2554,8 +2761,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -2757,8 +2964,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -2955,8 +3162,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -3155,8 +3362,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -3352,8 +3559,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -3554,8 +3761,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -3798,8 +4005,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -4010,8 +4217,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -4142,206 +4349,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/04/20/JVM/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%88%86Eden%E5%92%8CSurvivor_/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/04/20/JVM/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%88%86Eden%E5%92%8CSurvivor_/" itemprop="url">👌为什么要分Eden和Survivor?</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-04-20T13:33:41+00:00">
-                2025-04-20
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌为什么要分Eden和Survivor"><a href="#👌为什么要分Eden和Survivor" class="headerlink" title="👌为什么要分Eden和Survivor?"></a>👌为什么要分Eden和Survivor?</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>在 JVM 中将新生代（Young Generation）分为 Eden 区和两个 Survivor 区（S0 和 S1）的主要原因是为了优化垃圾回收的效率和性能。这种分区策略基于对象的生命周期特点，利用复制算法来减少内存碎片和提高垃圾回收的效率。</p>
-<h2 id="优化垃圾回收效率"><a href="#优化垃圾回收效率" class="headerlink" title="优化垃圾回收效率"></a>优化垃圾回收效率</h2><p>新生代的垃圾回收通常使用复制算法，这种算法的核心思想是将存活的对象从一个区域复制到另一个区域，而不是在原地进行标记和清除。复制算法的步骤如下：</p>
-<p><strong>对象分配</strong>：新创建的对象首先分配在 Eden 区。</p>
-<p><strong>Minor GC 触发</strong>：当 Eden 区填满时，会触发一次 Minor GC。</p>
-<p><strong>对象复制</strong>：在 Minor GC 过程中，存活的对象会从 Eden 区和当前使用的 Survivor 区（例如 S0）复制到另一个 Survivor 区（例如 S1）。复制完成后，Eden 区和当前使用的 Survivor 区将被清空。</p>
-<p><strong>区域交换</strong>：两个 Survivor 区在每次 GC 后交替使用。</p>
-<p>假设有一个新生代大小为 1 GB，其中 Eden 区占 80%（800 MB），两个 Survivor 区各占 10%（100 MB）。对象首先分配在 Eden 区，当 Eden 区填满时，触发 Minor GC，将存活对象复制到一个 Survivor 区。下次 GC 时，再将存活对象从当前 Survivor 区复制到另一个 Survivor 区。</p>
-<p>这种算法的优点是：</p>
-<p><strong>减少内存碎片</strong>：复制算法通过将存活对象紧密排列在一起，避免了内存碎片的问题。</p>
-<p><strong>提高回收速度</strong>：复制算法只需要遍历存活对象，而不需要遍历整个内存区域，这使得垃圾回收的速度更快。</p>
-<h2 id="优化内存分配"><a href="#优化内存分配" class="headerlink" title="优化内存分配"></a>优化内存分配</h2><p>将新生代分为 Eden 区和两个 Survivor 区，能够更好地管理对象的生命周期：</p>
-<p><strong>大多数对象生命周期短</strong>：大多数新创建的对象很快就会变得不可达并被回收。Eden 区专门用于存储这些短生命周期对象，提高了内存分配和回收的效率。</p>
-<p><strong>幸存者对象管理</strong>：那些在一次或多次 Minor GC 后仍然存活的对象会被复制到 Survivor 区。通过在两个 Survivor 区之间复制和交换，可以有效管理这些对象的生命周期，直到它们被提升到老年代。</p>
-<h2 id="减少-GC-停顿时间"><a href="#减少-GC-停顿时间" class="headerlink" title="减少 GC 停顿时间"></a>减少 GC 停顿时间</h2><p>复制算法和分区策略有助于减少 GC 停顿时间（GC Pause Time），提高应用程序的响应速度：</p>
-<p><strong>Minor GC 更快速</strong>：由于新生代通常较小，并且复制算法只处理存活对象，Minor GC 的停顿时间通常较短。</p>
-<p><strong>老年代 GC 减少</strong>：通过有效管理新生代的对象，减少了老年代的对象数量和垃圾回收频率，从而减少了 Major GC 或 Full GC 的次数和停顿时间。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4392,7 +4399,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-count">230</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

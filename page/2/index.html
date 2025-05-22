@@ -270,6 +270,198 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/07/redis/Redis%E7%9A%84%E4%BB%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E4%BD%9C%E7%94%A8%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/05/07/redis/Redis%E7%9A%84%E4%BB%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E4%BD%9C%E7%94%A8%EF%BC%9F/" itemprop="url">👌Redis的从服务器的作用？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-05-07T13:33:41+00:00">
+                2025-05-07
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Redis/" itemprop="url" rel="index">
+                    <span itemprop="name">Redis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌Redis的从服务器的作用？"><a href="#👌Redis的从服务器的作用？" class="headerlink" title="👌Redis的从服务器的作用？"></a>👌Redis的从服务器的作用？</h1><h1 id="口语化回答"><a href="#口语化回答" class="headerlink" title="口语化回答"></a>口语化回答</h1><p>好的，面试官，从服务器在 redis 集群模式下，起着非常重要的角色。一方面可以复制数据，保证数据不丢失，当主节点发生故障的时候，可以切换到从服务器继续提供服务，还可以为主服务器分担压力，做读写分离，一般 redis 的都是读多写少，我们可以把从服务器承担读请求，把主服务器承担写请求。还有就是可以通过添加从节点，来提供额外的存储和计算能力。以上。</p>
+<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>业务比较大的情况下，redis 一般都会搭建集群，这道题其实可以考察到，你为什么要选择使用从服务器，看你对于高可用有没有自己的理解，以及集群模式的扩展，故障转移这些有没有一定的考虑。</p>
+<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>数据冗余备份、故障转移、读写分离、高可用</p>
+<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>Redis集群中的从服务器（也称为副本或副本节点）在Redis的高可用性和扩展性中扮演着重要角色。主要的作用有以下几点。</p>
+<h3 id="提供数据冗余和备份"><a href="#提供数据冗余和备份" class="headerlink" title="提供数据冗余和备份"></a>提供数据冗余和备份</h3><p>在集群模式下，Redis集群中的每个主节点可以有一个或多个从节点。这些从节点会复制主节点的数据，从而提供数据的冗余和备份。当主节点出现故障或不可用时，从节点可以接管其工作，确保数据不会丢失，并提高系统的容错能力。</p>
+<h3 id="支持故障自动转移"><a href="#支持故障自动转移" class="headerlink" title="支持故障自动转移"></a>支持故障自动转移</h3><p>在Redis集群中，当主节点发生故障时，系统可以自动将其中一个从节点升级为主节点，继续处理客户端的请求。这种自动转移的过程称为故障转移，可以确保Redis集群在节点故障时仍然保持高可用性和稳定性。</p>
+<h3 id="支持读写分离"><a href="#支持读写分离" class="headerlink" title="支持读写分离"></a>支持读写分离</h3><p>在Redis集群配置中，可以将读请求发送到从节点，而将写请求发送到主节点。这种读写分离的配置可以提高系统的并发处理能力和读性能，因为从节点可以处理更多的读请求，而主节点则可以专注于处理写请求。</p>
+<h3 id="扩展性能和容量："><a href="#扩展性能和容量：" class="headerlink" title="扩展性能和容量："></a>扩展性能和容量：</h3><p>通过添加从节点，Redis集群可以扩展其性能和容量。从节点可以分担主节点的负载，并提供额外的存储和计算能力。在Redis集群中，可以动态地添加或删除从节点，以扩展或缩小系统的规模和容量。这种灵活性使得Redis集群能够适应不同的业务需求和工作负载。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/07/redis/redis%E5%B8%B8%E8%A7%81%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98%E5%92%8C%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88_/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +509,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -537,8 +729,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -731,8 +923,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -942,8 +1134,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -1158,8 +1350,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -1360,8 +1552,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -1634,8 +1826,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -1824,8 +2016,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -2031,8 +2223,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -2235,8 +2427,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -2446,8 +2638,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -2651,8 +2843,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -2848,8 +3040,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -3071,8 +3263,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -3263,8 +3455,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -3463,8 +3655,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -3678,8 +3870,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -3897,8 +4089,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -4096,8 +4288,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -4243,213 +4435,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/03/JVM/Java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%E7%9A%84%E6%9C%BA%E5%88%B6%E6%98%AF%E4%BB%80%E4%B9%88_/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/05/03/JVM/Java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%E7%9A%84%E6%9C%BA%E5%88%B6%E6%98%AF%E4%BB%80%E4%B9%88_/" itemprop="url">👌Java类加载器的机制是什么</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-05-03T13:33:41+00:00">
-                2025-05-03
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌Java类加载器的机制是什么"><a href="#👌Java类加载器的机制是什么" class="headerlink" title="👌Java类加载器的机制是什么?"></a>👌Java类加载器的机制是什么?</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>Java 的类加载机制是 JVM 负责将类文件加载到内存中，并将其转换为Class对象的过程。它包括三个主要步骤：加载（Loading）、链接（Linking）和初始化（Initialization）。以下是详细的描述：</p>
-<h2 id="类加载过程"><a href="#类加载过程" class="headerlink" title="类加载过程"></a>类加载过程</h2><h3 id="加载（Loading）"><a href="#加载（Loading）" class="headerlink" title="加载（Loading）"></a>加载（Loading）</h3><p>加载阶段是将类文件读入内存，并创建一个Class对象的过程。具体步骤如下：</p>
-<p><strong>查找和导入类的二进制数据</strong>：从不同的来源（如文件系统、网络等）获取类的字节码。</p>
-<p><strong>创建Class对象</strong>：将字节码转换为 JVM 能够识别的Class对象。</p>
-<p>加载阶段可以通过系统类加载器（Bootstrap ClassLoader）、扩展类加载器（Extension ClassLoader）和应用程序类加载器（Application ClassLoader）等完成。</p>
-<h3 id="链接（Linking）"><a href="#链接（Linking）" class="headerlink" title="链接（Linking）"></a>链接（Linking）</h3><p>链接阶段将类的二进制数据合并到 JVM 运行时环境中。链接阶段包括三个步骤：</p>
-<p><strong>验证（Verification）</strong>：确保类的字节码符合 JVM 规范，保证不会破坏 JVM 的安全性。</p>
-<p><strong>准备（Preparation）</strong>：为类的静态变量分配内存，并将其初始化为默认值。</p>
-<p><strong>解析（Resolution）</strong>：将常量池中的符号引用转换为直接引用。</p>
-<h3 id="初始化（Initialization）"><a href="#初始化（Initialization）" class="headerlink" title="初始化（Initialization）"></a>初始化（Initialization）</h3><p>初始化阶段是执行类构造器<clinit>方法的过程。该方法是由编译器自动收集类中的所有静态变量的赋值动作和静态代码块（static {}）中的语句合并产生的。初始化阶段是类加载过程的最后一步。</clinit></p>
-<h2 id="类加载器（ClassLoader）"><a href="#类加载器（ClassLoader）" class="headerlink" title="类加载器（ClassLoader）"></a>类加载器（ClassLoader）</h2><p>Java 的类加载器负责加载类文件。Java 中的类加载器遵循双亲委派模型（Parent Delegation Model），即类加载器在加载类时会先委托给父类加载器加载，如果父类加载器无法加载，再尝试自己加载。</p>
-<h3 id="双亲委派模型（Parent-Delegation-Model）"><a href="#双亲委派模型（Parent-Delegation-Model）" class="headerlink" title="双亲委派模型（Parent Delegation Model）"></a>双亲委派模型（Parent Delegation Model）</h3><p>双亲委派模型的工作流程如下：</p>
-<ol>
-<li><strong>检查缓存</strong>：类加载器首先检查缓存中是否已经加载过该类，如果已经加载，则直接返回Class对象。</li>
-<li><strong>委托父类加载</strong>：如果缓存中没有，则委托父类加载器加载。</li>
-<li><strong>父类加载失败</strong>：如果父类加载器加载失败（抛出ClassNotFoundException），则由当前类加载器尝试加载。</li>
-</ol>
-<p>这种模型的好处是避免类的重复加载，确保核心类库不会被自定义类加载器加载和覆盖。</p>
-<h3 id="常见的类加载器"><a href="#常见的类加载器" class="headerlink" title="常见的类加载器"></a>常见的类加载器</h3><p><strong>Bootstrap ClassLoader</strong>：引导类加载器，负责加载核心类库，如rt.jar中的类。它是用原生代码实现的，不是java.lang.ClassLoader的子类。</p>
-<p><strong>Extension ClassLoader</strong>：扩展类加载器，负责加载JAVA_HOME&#x2F;lib&#x2F;ext目录中的类。</p>
-<p><strong>Application ClassLoader</strong>：应用程序类加载器，负责加载应用程序的类路径（classpath）中的类。</p>
-<h2 id="类加载器的示例"><a href="#类加载器的示例" class="headerlink" title="类加载器的示例"></a>类加载器的示例</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">import java.io.IOException;</span><br><span class="line">import java.nio.file.Files;</span><br><span class="line">import java.nio.file.Paths;</span><br><span class="line"></span><br><span class="line">public class MyClassLoader extends ClassLoader &#123;</span><br><span class="line"></span><br><span class="line">    private String classPath;</span><br><span class="line"></span><br><span class="line">    public MyClassLoader(String classPath) &#123;</span><br><span class="line">        this.classPath = classPath;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected Class&lt;?&gt; findClass(String name) throws ClassNotFoundException &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            // 将类名转换为文件路径</span><br><span class="line">            String fileName = classPath + name.replace(&#x27;.&#x27;, &#x27;/&#x27;) + &quot;.class&quot;;</span><br><span class="line">            // 读取类文件的字节码</span><br><span class="line">            byte[] classBytes = Files.readAllBytes(Paths.get(fileName));</span><br><span class="line">            // 将字节码转换为 Class 对象</span><br><span class="line">            return defineClass(name, classBytes, 0, classBytes.length);</span><br><span class="line">        &#125; catch (IOException e) &#123;</span><br><span class="line">            throw new ClassNotFoundException(name, e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class CustomClassLoaderDemo &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            // 创建自定义类加载器，指定类文件所在路径</span><br><span class="line">            MyClassLoader classLoader = new MyClassLoader(&quot;/path/to/classes/&quot;);</span><br><span class="line">            // 加载类</span><br><span class="line">            Class&lt;?&gt; clazz = classLoader.loadClass(&quot;com.example.MyClass&quot;);</span><br><span class="line">            // 创建类的实例</span><br><span class="line">            Object instance = clazz.getDeclaredConstructor().newInstance();</span><br><span class="line">            // 调用方法</span><br><span class="line">            clazz.getMethod(&quot;myMethod&quot;).invoke(instance);</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4500,7 +4485,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-count">230</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

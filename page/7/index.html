@@ -270,6 +270,223 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/20/%E9%9D%A2%E8%AF%95%E9%A2%98/Linux%E4%B8%AD%E6%96%AD%E6%9C%BA%E5%88%B6%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/02/20/%E9%9D%A2%E8%AF%95%E9%A2%98/Linux%E4%B8%AD%E6%96%AD%E6%9C%BA%E5%88%B6%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/" itemprop="url">Linux中断机制是什么？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-02-20T13:33:41+00:00">
+                2025-02-20
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌Linux中断机制是什么？"><a href="#👌Linux中断机制是什么？" class="headerlink" title="👌Linux中断机制是什么？"></a>👌Linux中断机制是什么？</h1><p>Linux中断机制是操作系统处理硬件和软件事件的一种重要方式。中断可以使操作系统及时响应各种事件，如硬件设备的输入输出操作、定时器事件等。</p>
+<h3 id="中断的基本概念"><a href="#中断的基本概念" class="headerlink" title="中断的基本概念"></a>中断的基本概念</h3><h4 id="1-中断类型"><a href="#1-中断类型" class="headerlink" title="1.中断类型"></a>1.<strong>中断类型</strong></h4><ul>
+<li><strong>硬件中断</strong>：由硬件设备（如键盘、网卡、硬盘等）发出的信号，引起CPU中断当前执行的程序，转而执行中断处理程序。</li>
+<li><strong>软件中断</strong>：由软件指令（如系统调用、异常等）引发的中断。</li>
+</ul>
+<h4 id="2-中断向量表"><a href="#2-中断向量表" class="headerlink" title="2.中断向量表"></a>2.<strong>中断向量表</strong></h4><p>中断向量表（Interrupt Vector Table, IVT）是一个包含中断服务程序地址的表。当中断发生时，CPU通过中断向量表找到相应的中断服务程序并执行。</p>
+<h3 id="中断处理流程"><a href="#中断处理流程" class="headerlink" title="中断处理流程"></a>中断处理流程</h3><ol>
+<li><strong>中断发生</strong>：硬件设备或软件事件发出中断信号。</li>
+<li><strong>中断响应</strong>：CPU停止当前执行的程序，保存当前的上下文（如程序计数器、寄存器等），并根据中断向量表找到对应的中断服务程序。</li>
+<li><strong>中断处理</strong>：执行中断服务程序，处理中断事件。</li>
+<li><strong>中断返回</strong>：中断处理完成后，恢复保存的上下文，继续执行被中断的程序。</li>
+</ol>
+<h3 id="中断处理的关键组件"><a href="#中断处理的关键组件" class="headerlink" title="中断处理的关键组件"></a>中断处理的关键组件</h3><h4 id="1-中断控制器"><a href="#1-中断控制器" class="headerlink" title="1.中断控制器"></a>1.<strong>中断控制器</strong></h4><p>中断控制器（如PIC、APIC）负责管理和分配中断请求。它可以屏蔽不需要的中断，并确定中断的优先级。</p>
+<h4 id="2-中断处理程序"><a href="#2-中断处理程序" class="headerlink" title="2.中断处理程序"></a>2.<strong>中断处理程序</strong></h4><p>中断处理程序（Interrupt Service Routine, ISR）是处理特定中断事件的函数。它通常分为顶半部（Top Half）和底半部（Bottom Half）：</p>
+<ul>
+<li><strong>顶半部</strong>：快速响应中断，执行紧急的处理任务。</li>
+<li><strong>底半部</strong>：延迟执行较长时间的任务，以减少顶半部的执行时间，避免阻塞其他中断。</li>
+</ul>
+<h4 id="3-中断上下文"><a href="#3-中断上下文" class="headerlink" title="3.中断上下文"></a>3.<strong>中断上下文</strong></h4><p>中断上下文是指中断发生时CPU的状态，包括程序计数器、寄存器等。保存和恢复中断上下文是中断处理的关键步骤。</p>
+<h3 id="中断处理的实现"><a href="#中断处理的实现" class="headerlink" title="中断处理的实现"></a>中断处理的实现</h3><h4 id="1-注册中断处理程序"><a href="#1-注册中断处理程序" class="headerlink" title="1.注册中断处理程序"></a>1.<strong>注册中断处理程序</strong></h4><p>在Linux内核中，可以使用<code>request_irq</code>函数注册中断处理程序：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;linux/interrupt.h&gt;</span><br><span class="line"></span><br><span class="line">int request_irq(unsigned int irq, irq_handler_t handler, unsigned long flags, const char *name, void *dev);</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-中断处理程序示例"><a href="#2-中断处理程序示例" class="headerlink" title="2.中断处理程序示例"></a>2.<strong>中断处理程序示例</strong></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;linux/module.h&gt;</span><br><span class="line">#include &lt;linux/kernel.h&gt;</span><br><span class="line">#include &lt;linux/interrupt.h&gt;</span><br><span class="line"></span><br><span class="line">static irqreturn_t my_interrupt_handler(int irq, void *dev_id) &#123;</span><br><span class="line">    printk(KERN_INFO &quot;Interrupt occurred!\n&quot;);</span><br><span class="line">    // 中断处理逻辑</span><br><span class="line">    return IRQ_HANDLED;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static int __init my_module_init(void) &#123;</span><br><span class="line">    int irq = 1; // 假设中断号为1</span><br><span class="line">    int result = request_irq(irq, my_interrupt_handler, IRQF_SHARED, &quot;my_interrupt&quot;, NULL);</span><br><span class="line">    if (result) &#123;</span><br><span class="line">        printk(KERN_ERR &quot;Failed to request IRQ\n&quot;);</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static void __exit my_module_exit(void) &#123;</span><br><span class="line">    int irq = 1; // 假设中断号为1</span><br><span class="line">    free_irq(irq, NULL);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">module_init(my_module_init);</span><br><span class="line">module_exit(my_module_exit);</span><br><span class="line"></span><br><span class="line">MODULE_LICENSE(&quot;GPL&quot;);</span><br><span class="line">MODULE_DESCRIPTION(&quot;A simple interrupt handler module&quot;);</span><br><span class="line">MODULE_AUTHOR(&quot;Your Name&quot;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-顶半部和底半部"><a href="#3-顶半部和底半部" class="headerlink" title="3.顶半部和底半部"></a>3.<strong>顶半部和底半部</strong></h4><ul>
+<li><strong>顶半部</strong>：快速处理中断的关键部分。</li>
+<li><strong>底半部</strong>：使用任务队列、工作队列或软中断机制延迟处理较长时间的任务。</li>
+</ul>
+<h3 id="中断的优先级和屏蔽"><a href="#中断的优先级和屏蔽" class="headerlink" title="中断的优先级和屏蔽"></a>中断的优先级和屏蔽</h3><p>中断控制器可以设置中断的优先级和屏蔽某些中断，以确保重要的中断优先得到处理。APIC（Advanced Programmable Interrupt Controller）提供了更高级的中断管理功能，如多级中断优先级和分布式中断处理。</p>
+<h3 id="中断的嵌套和重入"><a href="#中断的嵌套和重入" class="headerlink" title="中断的嵌套和重入"></a>中断的嵌套和重入</h3><p>中断处理程序应尽量短小精悍，以减少中断嵌套的层数。中断处理程序应避免使用可能导致阻塞的操作，如长时间的I&#x2F;O操作和锁定操作。</p>
+<blockquote>
+<p>原文: <a target="_blank" rel="noopener" href="https://www.yuque.com/jsyun/vwxwc6">https://www.yuque.com/jsyun/vwxwc6</a></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/20/%E9%9D%A2%E8%AF%95%E9%A2%98/Linux%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E7%A3%81%E7%9B%98%E5%8D%A0%E7%94%A8%E6%83%85%E5%86%B5%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +534,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -568,8 +785,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -778,8 +995,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -987,8 +1204,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -1200,8 +1417,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -1386,8 +1603,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -1622,8 +1839,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -1830,8 +2047,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -2053,8 +2270,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -2255,8 +2472,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -2488,8 +2705,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -2713,8 +2930,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -2914,8 +3131,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -3172,8 +3389,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -3377,8 +3594,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -3592,8 +3809,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -3792,8 +4009,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -3982,8 +4199,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -4199,8 +4416,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -4360,208 +4577,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E7%9A%84%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6%E6%98%AF%E4%BB%80%E4%B9%88_/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E7%9A%84%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6%E6%98%AF%E4%BB%80%E4%B9%88_/" itemprop="url">redis 同步机制</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-02-11T13:33:41+00:00">
-                2025-02-11
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌redis的同步机制是什么"><a href="#👌redis的同步机制是什么" class="headerlink" title="👌redis的同步机制是什么?"></a>👌redis的同步机制是什么?</h1><h1 id="口语化回答"><a href="#口语化回答" class="headerlink" title="口语化回答"></a>口语化回答</h1><p>好的，面试官。redis 的同步机制主要是主从同步，一开始从服务器发送同步命令，主服务器接收到之后，就会生成一个 rdb 的文件，然后传输给从服务器，从服务器接收到之后，立马进行数据的恢复。然后当主服务器再次接收到写命令的时候，会发给从服务器。这个过程是一个异步复制，主服务器不会等待结果。这样就完成了主从复制，主要的核心步骤就是这些。如果同步机制发生问题的话，从服务器可以进行断线重连。还可以做集群、哨兵，来自动切换。以上。</p>
-<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>主要还是考主从同步原理和如何进行配置，还可以带一点故障的处理。面试官主要是想看看你对集群有没有一定的了解，redis 主从的数据复制有没有了解。</p>
-<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>rdb 快照，增量同步，故障机制</p>
-<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>redis的同步机制主要涉及主从复制，主从复制机制允许一个服务器（主服务器）将数据复制到一个或多个服务器（从服务器）。从服务器可以是只读的，也可以接受写操作，但这些写操作不会被同步回主服务器。</p>
-<h3 id="初次同步"><a href="#初次同步" class="headerlink" title="初次同步"></a>初次同步</h3><p>当从服务器第一次连接到主服务器时，或者当从服务器与主服务器的连接中断后重新连接时，会触发一次全量同步过程。</p>
-<ol>
-<li><strong>从服务器发送SYNC命令</strong>：从服务器向主服务器发送SYNC命令，请求进行同步。</li>
-<li><strong>主服务器生成RDB快照</strong>：主服务器接收到SYNC命令后，会生成一个RDB（Redis Database）快照文件，并在生成过程中将所有新写入的命令记录到一个缓冲区中。</li>
-<li><strong>传输RDB文件</strong>：主服务器将生成的RDB文件发送给从服务器。从服务器接收到RDB文件后，会清空自身的数据库并加载这个RDB文件。</li>
-<li><strong>传输缓冲区中的命令</strong>：主服务器将缓冲区中的所有写命令发送给从服务器，从服务器依次执行这些命令，以确保数据完全同步。</li>
-</ol>
-<h3 id="增量同步"><a href="#增量同步" class="headerlink" title="增量同步"></a>增量同步</h3><p>在初次同步完成后，主从服务器会保持连接状态，主服务器会将后续的所有写命令实时发送给从服务器，从服务器执行这些命令以保持数据的一致性。</p>
-<h2 id="同步机制如何配置"><a href="#同步机制如何配置" class="headerlink" title="同步机制如何配置"></a>同步机制如何配置</h2><h3 id="主服务器配置"><a href="#主服务器配置" class="headerlink" title="主服务器配置"></a>主服务器配置</h3><p>主服务器的配置通常不需要特别设置，只需要确保其能够接受从服务器的连接请求。</p>
-<h3 id="从服务器配置"><a href="#从服务器配置" class="headerlink" title="从服务器配置"></a>从服务器配置</h3><p>在从服务器的配置文件中，需要指定主服务器的IP地址和端口号：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">replicaof &lt;master-ip&gt; &lt;master-port&gt;</span><br><span class="line">replicaof 192.168.1.100 6379</span><br></pre></td></tr></table></figure>
-
-<h2 id="同步机制的故障处理"><a href="#同步机制的故障处理" class="headerlink" title="同步机制的故障处理"></a>同步机制的故障处理</h2><h4 id="断线重连"><a href="#断线重连" class="headerlink" title="断线重连"></a>断线重连</h4><p>当从服务器与主服务器的连接中断时，从服务器会自动尝试重连。在重连成功后，从服务器会根据情况选择进行全量同步或增量同步。</p>
-<h4 id="主从切换"><a href="#主从切换" class="headerlink" title="主从切换"></a>主从切换</h4><p>在高可用环境中，可以使用Redis Sentinel或Redis Cluster来实现自动主从切换。当主服务器发生故障时，Sentinel或Cluster会自动选举一个新的主服务器，并通知其他从服务器进行同步。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4612,7 +4627,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-count">230</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

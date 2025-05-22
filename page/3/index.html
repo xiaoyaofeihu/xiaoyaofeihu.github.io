@@ -270,6 +270,213 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/03/JVM/Java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%E7%9A%84%E6%9C%BA%E5%88%B6%E6%98%AF%E4%BB%80%E4%B9%88_/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/05/03/JVM/Java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%E7%9A%84%E6%9C%BA%E5%88%B6%E6%98%AF%E4%BB%80%E4%B9%88_/" itemprop="url">👌Java类加载器的机制是什么</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-05-03T13:33:41+00:00">
+                2025-05-03
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌Java类加载器的机制是什么"><a href="#👌Java类加载器的机制是什么" class="headerlink" title="👌Java类加载器的机制是什么?"></a>👌Java类加载器的机制是什么?</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>Java 的类加载机制是 JVM 负责将类文件加载到内存中，并将其转换为Class对象的过程。它包括三个主要步骤：加载（Loading）、链接（Linking）和初始化（Initialization）。以下是详细的描述：</p>
+<h2 id="类加载过程"><a href="#类加载过程" class="headerlink" title="类加载过程"></a>类加载过程</h2><h3 id="加载（Loading）"><a href="#加载（Loading）" class="headerlink" title="加载（Loading）"></a>加载（Loading）</h3><p>加载阶段是将类文件读入内存，并创建一个Class对象的过程。具体步骤如下：</p>
+<p><strong>查找和导入类的二进制数据</strong>：从不同的来源（如文件系统、网络等）获取类的字节码。</p>
+<p><strong>创建Class对象</strong>：将字节码转换为 JVM 能够识别的Class对象。</p>
+<p>加载阶段可以通过系统类加载器（Bootstrap ClassLoader）、扩展类加载器（Extension ClassLoader）和应用程序类加载器（Application ClassLoader）等完成。</p>
+<h3 id="链接（Linking）"><a href="#链接（Linking）" class="headerlink" title="链接（Linking）"></a>链接（Linking）</h3><p>链接阶段将类的二进制数据合并到 JVM 运行时环境中。链接阶段包括三个步骤：</p>
+<p><strong>验证（Verification）</strong>：确保类的字节码符合 JVM 规范，保证不会破坏 JVM 的安全性。</p>
+<p><strong>准备（Preparation）</strong>：为类的静态变量分配内存，并将其初始化为默认值。</p>
+<p><strong>解析（Resolution）</strong>：将常量池中的符号引用转换为直接引用。</p>
+<h3 id="初始化（Initialization）"><a href="#初始化（Initialization）" class="headerlink" title="初始化（Initialization）"></a>初始化（Initialization）</h3><p>初始化阶段是执行类构造器<clinit>方法的过程。该方法是由编译器自动收集类中的所有静态变量的赋值动作和静态代码块（static {}）中的语句合并产生的。初始化阶段是类加载过程的最后一步。</clinit></p>
+<h2 id="类加载器（ClassLoader）"><a href="#类加载器（ClassLoader）" class="headerlink" title="类加载器（ClassLoader）"></a>类加载器（ClassLoader）</h2><p>Java 的类加载器负责加载类文件。Java 中的类加载器遵循双亲委派模型（Parent Delegation Model），即类加载器在加载类时会先委托给父类加载器加载，如果父类加载器无法加载，再尝试自己加载。</p>
+<h3 id="双亲委派模型（Parent-Delegation-Model）"><a href="#双亲委派模型（Parent-Delegation-Model）" class="headerlink" title="双亲委派模型（Parent Delegation Model）"></a>双亲委派模型（Parent Delegation Model）</h3><p>双亲委派模型的工作流程如下：</p>
+<ol>
+<li><strong>检查缓存</strong>：类加载器首先检查缓存中是否已经加载过该类，如果已经加载，则直接返回Class对象。</li>
+<li><strong>委托父类加载</strong>：如果缓存中没有，则委托父类加载器加载。</li>
+<li><strong>父类加载失败</strong>：如果父类加载器加载失败（抛出ClassNotFoundException），则由当前类加载器尝试加载。</li>
+</ol>
+<p>这种模型的好处是避免类的重复加载，确保核心类库不会被自定义类加载器加载和覆盖。</p>
+<h3 id="常见的类加载器"><a href="#常见的类加载器" class="headerlink" title="常见的类加载器"></a>常见的类加载器</h3><p><strong>Bootstrap ClassLoader</strong>：引导类加载器，负责加载核心类库，如rt.jar中的类。它是用原生代码实现的，不是java.lang.ClassLoader的子类。</p>
+<p><strong>Extension ClassLoader</strong>：扩展类加载器，负责加载JAVA_HOME&#x2F;lib&#x2F;ext目录中的类。</p>
+<p><strong>Application ClassLoader</strong>：应用程序类加载器，负责加载应用程序的类路径（classpath）中的类。</p>
+<h2 id="类加载器的示例"><a href="#类加载器的示例" class="headerlink" title="类加载器的示例"></a>类加载器的示例</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">import java.io.IOException;</span><br><span class="line">import java.nio.file.Files;</span><br><span class="line">import java.nio.file.Paths;</span><br><span class="line"></span><br><span class="line">public class MyClassLoader extends ClassLoader &#123;</span><br><span class="line"></span><br><span class="line">    private String classPath;</span><br><span class="line"></span><br><span class="line">    public MyClassLoader(String classPath) &#123;</span><br><span class="line">        this.classPath = classPath;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected Class&lt;?&gt; findClass(String name) throws ClassNotFoundException &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            // 将类名转换为文件路径</span><br><span class="line">            String fileName = classPath + name.replace(&#x27;.&#x27;, &#x27;/&#x27;) + &quot;.class&quot;;</span><br><span class="line">            // 读取类文件的字节码</span><br><span class="line">            byte[] classBytes = Files.readAllBytes(Paths.get(fileName));</span><br><span class="line">            // 将字节码转换为 Class 对象</span><br><span class="line">            return defineClass(name, classBytes, 0, classBytes.length);</span><br><span class="line">        &#125; catch (IOException e) &#123;</span><br><span class="line">            throw new ClassNotFoundException(name, e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class CustomClassLoaderDemo &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            // 创建自定义类加载器，指定类文件所在路径</span><br><span class="line">            MyClassLoader classLoader = new MyClassLoader(&quot;/path/to/classes/&quot;);</span><br><span class="line">            // 加载类</span><br><span class="line">            Class&lt;?&gt; clazz = classLoader.loadClass(&quot;com.example.MyClass&quot;);</span><br><span class="line">            // 创建类的实例</span><br><span class="line">            Object instance = clazz.getDeclaredConstructor().newInstance();</span><br><span class="line">            // 调用方法</span><br><span class="line">            clazz.getMethod(&quot;myMethod&quot;).invoke(instance);</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/03/JVM/jvm%E6%96%B0%E7%94%9F%E4%BB%A3%E7%A9%BA%E9%97%B4%E5%A4%A7%E5%B0%8F%E7%9A%84%E6%AF%94%E4%BE%8B%E5%8F%8A%E5%A6%82%E4%BD%95%E8%B0%83%E6%95%B4%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +524,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -532,8 +739,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -721,8 +928,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -930,8 +1137,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -1138,8 +1345,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -1359,8 +1566,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -1570,8 +1777,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -1765,8 +1972,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -1967,8 +2174,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -2178,8 +2385,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -2394,8 +2601,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -2590,8 +2797,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -2789,8 +2996,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -2990,8 +3197,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -3227,8 +3434,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -3431,8 +3638,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -3670,8 +3877,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -3881,8 +4088,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -4079,8 +4286,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
+                2025-05-22
               </time>
             
           </span>
@@ -4217,213 +4424,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/04/27/JVM/Java%E4%BC%9A%E5%AD%98%E5%9C%A8%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E5%90%97_/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/04/27/JVM/Java%E4%BC%9A%E5%AD%98%E5%9C%A8%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E5%90%97_/" itemprop="url">👌Java会存在内存泄露吗</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-04-27T13:33:41+00:00">
-                2025-04-27
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-17T09:01:35+00:00">
-                2025-05-17
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌Java会存在内存泄露吗"><a href="#👌Java会存在内存泄露吗" class="headerlink" title="👌Java会存在内存泄露吗?"></a>👌Java会存在内存泄露吗?</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>内存泄漏指的是程序在运行过程中由于某种原因未能释放不再使用的内存，导致内存使用量不断增加，最终可能耗尽可用内存。通常是由于程序逻辑错误或不当的资源管理引起的。</p>
-<h2 id="常见的内存泄漏情况"><a href="#常见的内存泄漏情况" class="headerlink" title="常见的内存泄漏情况"></a>常见的内存泄漏情况</h2><h3 id="静态集合类（如HashMap、ArrayList）持有对象引用"><a href="#静态集合类（如HashMap、ArrayList）持有对象引用" class="headerlink" title="静态集合类（如HashMap、ArrayList）持有对象引用"></a>静态集合类（如HashMap、ArrayList）持有对象引用</h3><p>静态集合类会在整个应用程序生命周期内存在，如果没有及时清理不再使用的对象引用，这些对象就无法被垃圾回收。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class MemoryLeakExample &#123;</span><br><span class="line">    private static List&lt;Object&gt; list = new ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    public void addToList(Object obj) &#123;</span><br><span class="line">        list.add(obj);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="监听器和回调函数"><a href="#监听器和回调函数" class="headerlink" title="监听器和回调函数"></a>监听器和回调函数</h3><p>如果注册的监听器或回调函数没有及时解除注册，它们持有的对象引用也会导致内存泄漏。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class EventSource &#123;</span><br><span class="line">    private List&lt;EventListener&gt; listeners = new ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    public void registerListener(EventListener listener) &#123;</span><br><span class="line">        listeners.add(listener);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="未关闭的资源"><a href="#未关闭的资源" class="headerlink" title="未关闭的资源"></a>未关闭的资源</h3><p>打开的文件、数据库连接、网络连接等资源如果没有及时关闭，会导致内存泄漏。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public void readFile(String filePath) throws IOException &#123;</span><br><span class="line">    BufferedReader reader = new BufferedReader(new FileReader(filePath));</span><br><span class="line">    // 忘记关闭 reader</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="内部类和匿名类持有外部类引用："><a href="#内部类和匿名类持有外部类引用：" class="headerlink" title="内部类和匿名类持有外部类引用："></a>内部类和匿名类持有外部类引用：</h3><p>内部类和匿名类会持有外部类的引用，如果这些类的实例生命周期较长，会导致外部类无法被垃圾回收。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class OuterClass &#123;</span><br><span class="line">    private String data;</span><br><span class="line"></span><br><span class="line">    public void startThread() &#123;</span><br><span class="line">        new Thread(new Runnable() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void run() &#123;</span><br><span class="line">                System.out.println(data);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="缓存（Cache）没有清理："><a href="#缓存（Cache）没有清理：" class="headerlink" title="缓存（Cache）没有清理："></a>缓存（Cache）没有清理：</h3><p>使用缓存时，如果没有适当的清理策略（如 LRU 缓存），缓存中的对象会一直存在，导致内存泄漏。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class CacheExample &#123;</span><br><span class="line">    private Map&lt;String, Object&gt; cache = new HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    public void addToCache(String key, Object value) &#123;</span><br><span class="line">        cache.put(key, value);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="检测和解决内存泄漏的方法"><a href="#检测和解决内存泄漏的方法" class="headerlink" title="检测和解决内存泄漏的方法"></a>检测和解决内存泄漏的方法</h2><h3 id="使用内存分析工具："><a href="#使用内存分析工具：" class="headerlink" title="使用内存分析工具："></a>使用内存分析工具：</h3><p>工具如 VisualVM、Eclipse MAT（Memory Analyzer Tool）可以帮助分析堆内存，找出可能的内存泄漏点。</p>
-<h3 id="代码审查："><a href="#代码审查：" class="headerlink" title="代码审查："></a>代码审查：</h3><p>仔细审查代码，确保没有不必要的对象引用，及时释放资源。</p>
-<h3 id="使用try-with-resources语句"><a href="#使用try-with-resources语句" class="headerlink" title="使用try-with-resources语句"></a>使用try-with-resources语句</h3><p>确保资源在使用完毕后被及时关闭。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public void readFile(String filePath) throws IOException &#123;</span><br><span class="line">    try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) &#123;</span><br><span class="line">        // 读取文件内容</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="解除监听器注册"><a href="#解除监听器注册" class="headerlink" title="解除监听器注册"></a>解除监听器注册</h3><p>确保在不再需要监听器时解除注册。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class EventSource &#123;</span><br><span class="line">    private List&lt;EventListener&gt; listeners = new ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    public void registerListener(EventListener listener) &#123;</span><br><span class="line">        listeners.add(listener);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void unregisterListener(EventListener listener) &#123;</span><br><span class="line">        listeners.remove(listener);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4474,7 +4474,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">229</span>
+                <span class="site-state-item-count">230</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
