@@ -270,6 +270,403 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/09/redis/redis%E6%98%AF%E5%8D%95%E8%BF%9B%E7%A8%8B%E5%8D%95%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%90%97%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/05/09/redis/redis%E6%98%AF%E5%8D%95%E8%BF%9B%E7%A8%8B%E5%8D%95%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%90%97%EF%BC%9F/" itemprop="url">👌redis是单进程单线程？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-05-09T13:33:41+00:00">
+                2025-05-09
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Redis/" itemprop="url" rel="index">
+                    <span itemprop="name">Redis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌redis是单进程单线程的吗？"><a href="#👌redis是单进程单线程的吗？" class="headerlink" title="👌redis是单进程单线程的吗？"></a>👌redis是单进程单线程的吗？</h1><h1 id="口语化回答"><a href="#口语化回答" class="headerlink" title="口语化回答"></a>口语化回答</h1><p>这个问题其实是两个角度来看，我们通常说 redis 说单线程，是因为从接收到客户端的请求，然后 redis 进行内部操作，再返回结果。这个过程是单线程的。单线程的吞吐量可以达到 10w&#x2F;s，来自 redis 的官方数据，由于 redis 的操作都是在内存中完成，所以性能的瓶颈时内存和带宽，而不是 cpu。如果在这种情况下，使用多线程，反而又要去处理线程安全和数据竞争的问题，还有上下文切换的消耗。那么另一个角度就是除了 redis 执行命令的时候，像持久化数据操作，内存释放操作，这些是由多线程来进行实现的。在 redis6.0 之后，为了减轻网络的性能瓶颈，还增加了多个 io 线程来处理请求。也是一个比较大的优化。所以这个问题，两个角度来看，以上。</p>
+<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>还是问的比较常见的，一道陷阱题。如果你单纯的说，是单线程的，基本就 gg，面试官会认为的你广度是有问题的。所以说大家一定要答出另一个角度。</p>
+<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>操作单线程、多线程异步、多路 io</p>
+<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>Redis核心操作是单线程的。Redis在处理并发请求时有简单、高效和一致性的优点。但是Redis在某些方面使用了额外的线程来处理后台任务。</p>
+<p>Redis的主要操作，包括网络IO和键值对读写，确实是由一个线程来完成的。这保证了Redis在处理客户端请求时的简单性和一致性，避免了多线程可能带来的上下文切换开销和竞争条件。利用队列技术将并发访问变为串行访问，消除了传统数据库串行控制的开销。这意味着，虽然多个客户端可能同时发送请求，但Redis会将这些请求放入队列中，并逐个处理它们。</p>
+<p>Redis 单线程性能高的原因：</p>
+<p>1、 高效的 I&#x2F;O 多路复用：Redis使用网络IO多路复用技术（如epoll）来同时处理多个客户端连接。这使得Redis能够高效地利用系统资源，为大量并发连接提供高性能的服务。官网数据 10w&#x2F;qps。</p>
+<p>2、 由于Redis基于内存操作，并且采用了单线程模型，不需要处理线程切换问题和多线程之间资源竞争，以及锁的问题。</p>
+<p>Redis 多线程主要做的事情：</p>
+<p>持久化（例如，在保存RDB快照时，Redis会自动fork一个子进程去处理）、异步删除和集群数据同步等。这些任务不会阻塞Redis的主线程，从而确保Redis能够持续地为客户端提供服务。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/09/redis/redis%E8%BF%87%E6%9C%9F%E7%AD%96%E7%95%A5%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/05/09/redis/redis%E8%BF%87%E6%9C%9F%E7%AD%96%E7%95%A5%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F/" itemprop="url">👌redis的setnx和setex的区别？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-05-09T13:33:41+00:00">
+                2025-05-09
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Redis/" itemprop="url" rel="index">
+                    <span itemprop="name">Redis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌redis过期策略有哪些？"><a href="#👌redis过期策略有哪些？" class="headerlink" title="👌redis过期策略有哪些？"></a>👌redis过期策略有哪些？</h1><h1 id="口语化回答"><a href="#口语化回答" class="headerlink" title="口语化回答"></a>口语化回答</h1><p>过期策略主要分为主动和被动，主动又分为定时、定期，被动就是常说的惰性清理。先说结论，redis 采取的方案是定期+惰性配合的方式来进行实现。定期策略主要是通过周期性执行的函数来扫描即将过期的键，立马将其进行失效操作。这种方式比较消耗 cpu。于是产生了定期操作，没隔多少 ms 来进行执行，这种减少了 cpu 的消耗。也能比较准时的删除过期的键。算是定时的一种优化，比较难的点就是寻求平衡。最后就是惰性删除，所有的 key 即使过期了也不会立马删除，当这个键过期之后，下一次访问的时候，才会被删除，容易造成内存泄漏的问题。最后 oom 就会触发内存淘汰策略了，优点就是大大减轻了 cpu 的压力。以上两种方式配合，能达到一个平衡。</p>
+<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>常考题，很多人把过期策略和淘汰策略混在一起。二者既不同，当惰性删除的时候，又有联系。大家要注意多层面来回答，注意辩证 cpu 性能的问题处理。</p>
+<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>定期删除，定时删除，惰性删除，主动于被动</p>
+<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>从行为上，我们可以把过期策略分为两大点。主动删除，被动删除。主动删除又分为定时删除和定期删除。</p>
+<h2 id="主动删除"><a href="#主动删除" class="headerlink" title="主动删除"></a>主动删除</h2><h3 id="定时删除"><a href="#定时删除" class="headerlink" title="定时删除"></a><strong>定时删除</strong></h3><p>当设置键的过期时间时，Redis会为该键创建一个定时器，当过期时间到达时自动删除该键。redis.c 下的 activeExpireCycle 函数实现了定期删除粗略，配合 Redis的服务器的 serverCron函数，在服务器周期执行serverCron 的时候，activeExpireCycle函数就会被调用，在一定的时间内，分多次遍历 redis 中的数据库，从数据库的expires字典中检查一部分键的过期时间，此操作是随机性的，然后删除其中的过期键。</p>
+<p>优点：删除操作会在数据到期时立即进行，确保内存及时释放。</p>
+<p>缺点：定时器的管理会消耗系统资源，特别是在大量键设置过期时间的情况下，删除 key 会对响应时间和吞吐量产生影响。</p>
+<h3 id="定期删除"><a href="#定期删除" class="headerlink" title="定期删除"></a><strong>定期删除</strong></h3><p>Redis会定期扫描数据库中的键，并删除其中已过期的键。通过随机抽取一定数量的键，并检查它们是否过期，如果过期就删除，Redis默认每隔100ms（可以通过配置文件中的hz参数进行调整）就执行一次过期扫描任务。</p>
+<blockquote>
+<p>配置redis.conf的hz选项，默认为10，1s刷新的频率。即1秒执行10次，相当于100ms执行一次，hz值越大，说明刷新频率越快，Redis性能损耗也越大</p>
+</blockquote>
+<p>优点：通过限制删除操作执行的时长和频率来减少删除操作对CPU的影响，同时能有效释放过期键占用的内存。</p>
+<p>缺点：难以确定删除操作执行的时长和频率，如果执行的太频繁，会对CPU造成负担，就变成了定时删除；如果执行的太少，则过期键长时间占用的内存没有及时释放，造成内存浪费。</p>
+<h3 id="内存不足"><a href="#内存不足" class="headerlink" title="内存不足"></a>内存不足</h3><p>当Redis的内存达到最大限制时，还会触发内存淘汰策略，策略不同决定哪些数据会被删除以腾出空间。<br>no eviction：禁止淘汰，达到内存限制时拒绝新的写请求。<br>allkeys-lru：从所有键中淘汰最近最少使用的键。<br>volatile-lru：从设置了过期时间的键中驱逐最近最少使用的键。<br>allkeys-random：从所有键中随机驱逐键。<br>volatile-random：从设置了过期时间的键中随机驱逐键。<br>volatile-ttl：从设置了过期时间的键中驱逐剩余时间最短的键。</p>
+<h2 id="被动删除"><a href="#被动删除" class="headerlink" title="被动删除"></a>被动删除</h2><h3 id="惰性删除"><a href="#惰性删除" class="headerlink" title="惰性删除"></a><strong>惰性删除</strong></h3><p>Redis不会在键过期时立即删除它，而是在下一次访问这个键时检查其是否过期，然后删除过期的键。假设这个键已经过期，但是后面一直没有被访问，则会永远存在。不会被删除，这就是惰性删除。</p>
+<p>惰性删除策略由db.c&#x2F;expireIfNeeded函数实现，所有读写数据库的Redis命令在执行之前都会调用expireIfNeeded函数对输入键进行检查。如果输入键已经过期，那么expireIfNeeded函数将输入键从数据库中删除；如果输入键未过期，那么expireIfNeeded函数不做动作。</p>
+<p>优点：惰性删除不会增加额外的系统开销，不浪费 cpu，只在访问时进行检查。</p>
+<p>缺点：如果某个键永远不会被访问，即使设置了过期时间，它也不会被自动删除，造成内存泄漏问题。</p>
+<p>Redis 实际使用的是定期删除+惰性删除的方式！定期删除减少 cpu 消耗和浪费，配合惰性删除，二次检查保险。</p>
+<h3 id><a href="#" class="headerlink" title></a></h3>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/07/redis/Redis%E7%9A%84%E4%BB%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E4%BD%9C%E7%94%A8%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +714,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -509,8 +906,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -729,8 +1126,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -923,8 +1320,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -1134,8 +1531,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -1350,8 +1747,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -1552,8 +1949,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -1826,8 +2223,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -2016,8 +2413,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -2223,8 +2620,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -2427,8 +2824,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -2638,8 +3035,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -2843,8 +3240,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -3040,8 +3437,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -3263,8 +3660,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -3455,8 +3852,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -3655,8 +4052,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -3870,8 +4267,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -4029,412 +4426,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/04/JVM/jvm%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AE%97%E6%B3%95%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/05/04/JVM/jvm%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AE%97%E6%B3%95%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F/" itemprop="url">👌jvm垃圾回收算法有哪些？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-05-04T13:33:41+00:00">
-                2025-05-04
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌jvm垃圾回收算法有哪些？"><a href="#👌jvm垃圾回收算法有哪些？" class="headerlink" title="👌jvm垃圾回收算法有哪些？"></a>👌jvm垃圾回收算法有哪些？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>垃圾回收算法的核心在于解决两个问题：一是确定哪些对象能够被回收（引用计数法、可达性分析法），二是如何回收这些对象。</p>
-<h2 id="引用计数法"><a href="#引用计数法" class="headerlink" title="引用计数法"></a>引用计数法</h2><p>引用计数法（Reference Counting）是一种内存管理技术，用于跟踪对象的引用数量。每个对象都有一个引用计数器，记录着指向该对象的引用数量。</p>
-<p>当一个对象被引用时，引用计数器加一；当一个引用被释放时，引用计数器减一。当引用计数器为零时，表示没有任何引用指向该对象，该对象可以被释放，回收其占用的内存。</p>
-<h3 id="可达性分析法"><a href="#可达性分析法" class="headerlink" title="可达性分析法"></a>可达性分析法</h3><p>可达性分析算法是JVM垃圾回收中的一种算法，它通过分析对象的引用关系，判断对象是否可达，从而决定对象是否可以被回收。</p>
-<h2 id="标记-清除算法"><a href="#标记-清除算法" class="headerlink" title="标记-清除算法"></a>标记-清除算法</h2><p>垃圾收集器首先遍历对象图，标记所有可达的对象，然后清除未标记的对象。简单直接，不需要移动对象。但是会产生内存碎片，可能导致大对象分配失败。</p>
-<h2 id="标记-整理算法"><a href="#标记-整理算法" class="headerlink" title="标记-整理算法"></a>标记-整理算法</h2><p>在标记阶段标记所有可达的对象后，压缩阶段将存活的对象移动到内存的一端，整理出连续的可用内存空间。这种方式消除了内存碎片问题。但是对象移动需要额外的时间和资源。</p>
-<h2 id="复制算法"><a href="#复制算法" class="headerlink" title="复制算法"></a>复制算法</h2><p>将内存分为两个相等的区域，每次只使用其中一个。当这个区域使用完时，将存活的对象复制到另一个区域，然后清空当前区域。这种方式简单高效，没有内存碎片问题。缺点就是需要双倍的内存空间。</p>
-<h2 id="分代收集算法"><a href="#分代收集算法" class="headerlink" title="分代收集算法"></a>分代收集算法</h2><p>根据对象的生命周期将堆内存划分为几代（通常是新生代和老年代），新生代使用复制算法，老年代使用标记-整理或标记-清除算法。优化了垃圾收集性能，因为大部分对象在新生代被收集，减少了老年代的垃圾收集频率。不过需要额外的内存管理和调优。</p>
-<h2 id="分区算法"><a href="#分区算法" class="headerlink" title="分区算法"></a>分区算法</h2><p>将堆内存划分为多个小的独立区域（Region），每个区域可以独立进行垃圾收集。这种方式提高了内存管理的灵活性和效率，适用于大堆内存的应用。缺点是实现较复杂，需要精细的内存管理。</p>
-<h3 id="具体垃圾收集器使用的算法"><a href="#具体垃圾收集器使用的算法" class="headerlink" title="具体垃圾收集器使用的算法"></a>具体垃圾收集器使用的算法</h3><p><strong>Serial GC</strong>：使用标记-整理算法。</p>
-<p><strong>Parallel GC</strong>：新生代使用复制算法，老年代使用标记-整理算法。</p>
-<p><strong>CMS GC</strong>：新生代使用复制算法，老年代使用标记-清除算法，并发标记和清除。</p>
-<p><strong>G1 GC</strong>：分区算法，结合标记-整理和复制算法。</p>
-<p><strong>ZGC</strong>：分区算法，使用染色指针和读屏障技术，实现并发标记和压缩。</p>
-<p><strong>Shenandoah GC</strong>：分区算法，使用并发标记和并发压缩技术。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/03/JVM/Java%E7%B1%BB%E5%88%9D%E5%A7%8B%E5%8C%96%E6%97%B6%E6%9C%BA_/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/05/03/JVM/Java%E7%B1%BB%E5%88%9D%E5%A7%8B%E5%8C%96%E6%97%B6%E6%9C%BA_/" itemprop="url">👌Java类初始化时机</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-05-03T13:33:41+00:00">
-                2025-05-03
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌Java类初始化时机"><a href="#👌Java类初始化时机" class="headerlink" title="👌Java类初始化时机?"></a>👌Java类初始化时机?</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="主动引用"><a href="#主动引用" class="headerlink" title="主动引用"></a>主动引用</h2><h3 id="创建类的实例"><a href="#创建类的实例" class="headerlink" title="创建类的实例"></a>创建类的实例</h3><p>当使用new关键字创建类的实例时，类会被初始化。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MyClass obj = new MyClass();</span><br></pre></td></tr></table></figure>
-
-<h3 id="访问类的静态变量或静态方法"><a href="#访问类的静态变量或静态方法" class="headerlink" title="访问类的静态变量或静态方法"></a>访问类的静态变量或静态方法</h3><p>当访问类的静态变量或调用静态方法时，类会被初始化。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(MyClass.staticVar);</span><br><span class="line">MyClass.staticMethod();</span><br></pre></td></tr></table></figure>
-
-<h3 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h3><p>通过反射 API 对类进行反射调用时，类会被初始化。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class.forName(&quot;com.example.MyClass&quot;);</span><br></pre></td></tr></table></figure>
-
-<h3 id="初始化子类"><a href="#初始化子类" class="headerlink" title="初始化子类"></a>初始化子类</h3><p>当初始化一个类的子类时，父类会被初始化。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class Parent &#123;</span><br><span class="line">    static &#123;</span><br><span class="line">        System.out.println(&quot;Parent initialized&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Child extends Parent &#123;</span><br><span class="line">    static &#123;</span><br><span class="line">        System.out.println(&quot;Child initialized&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Main &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Child child = new Child(); // 输出：Parent initialized, Child initialized</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Java-虚拟机启动时"><a href="#Java-虚拟机启动时" class="headerlink" title="Java 虚拟机启动时"></a>Java 虚拟机启动时</h3><p>包含main方法的类在虚拟机启动时会被初始化。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class Main &#123;</span><br><span class="line">    static &#123;</span><br><span class="line">        System.out.println(&quot;Main class initialized&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        System.out.println(&quot;Hello, World!&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="被动引用"><a href="#被动引用" class="headerlink" title="被动引用"></a>被动引用</h2><h3 id="通过子类引用父类的静态字段"><a href="#通过子类引用父类的静态字段" class="headerlink" title="通过子类引用父类的静态字段"></a>通过子类引用父类的静态字段</h3><p>通过子类引用父类的静态字段，不会导致子类初始化。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">class Parent &#123;</span><br><span class="line">    static int value = 42;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Child extends Parent &#123;</span><br><span class="line">    static &#123;</span><br><span class="line">        System.out.println(&quot;Child initialized&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Main &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        System.out.println(Child.value); // 输出：42，不会触发 Child 的初始化</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="定义对象数组"><a href="#定义对象数组" class="headerlink" title="定义对象数组"></a>定义对象数组</h3><p>定义类的对象数组不会触发类的初始化。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MyClass[] array = newMyClass[10]; // 不会触发 MyClass 的初始化</span><br></pre></td></tr></table></figure>
-
-<h3 id="常量引用"><a href="#常量引用" class="headerlink" title="常量引用"></a>常量引用</h3><p>引用常量不会触发类的初始化，因为常量在编译阶段会存入调用类的常量池中。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class MyClass &#123;</span><br><span class="line">    static final int CONSTANT = 42;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Main &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        System.out.println(MyClass.CONSTANT); // 不会触发 MyClass 的初始化</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4485,7 +4476,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">230</span>
+                <span class="site-state-item-count">232</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

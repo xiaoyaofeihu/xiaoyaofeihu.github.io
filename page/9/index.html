@@ -270,6 +270,431 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E7%9A%84%E6%B7%BB%E5%8A%A0%E4%B8%8E%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0%E4%B8%BA%E4%BB%80%E4%B9%88%E6%85%A2%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E7%9A%84%E6%B7%BB%E5%8A%A0%E4%B8%8E%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0%E4%B8%BA%E4%BB%80%E4%B9%88%E6%85%A2%EF%BC%9F/" itemprop="url">ArrayList的添加与删除元素为什么慢</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌ArrayList的添加与删除元素为什么慢？"><a href="#👌ArrayList的添加与删除元素为什么慢？" class="headerlink" title="👌ArrayList的添加与删除元素为什么慢？"></a>👌ArrayList的添加与删除元素为什么慢？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>主要是由于其内部实现基于数组的特性所导致的。</p>
+<p>ArrayList的添加与删除操作慢，主要是因为其内部实现基于数组，而数组在插入和删除元素时需要移动其他元素来保证连续性和顺序性，这个过程需要耗费较多的时间。</p>
+<p>相对于基于链表的数据结构（如LinkedList），ArrayList的插入和删除操作的时间复杂度是O(n)级别的，而链表的时间复杂度为O(1)。</p>
+<h2 id="添加元素"><a href="#添加元素" class="headerlink" title="添加元素"></a>添加元素</h2><p><strong>尾部添加</strong>：</p>
+<p>当在ArrayList的尾部添加元素时，如果当前数组的容量还未达到最大值，只需要将新元素添加到数组的末尾即可，此时时间复杂度为O(1)。</p>
+<p>但是，当数组容量已满时，需要进行扩容操作。扩容操作通常会将数组的容量增加到当前容量的1.5倍或2倍，并将原数组中的所有元素复制到新的更大的数组中。这一过程的时间复杂度为O(n)，其中n为当前数组中的元素数量。</p>
+<p><strong>指定位置插入</strong>：</p>
+<p>当在ArrayList的指定位置（非尾部）插入元素时，需要将目标位置之后的所有元素向后移动一个位置，然后将新元素插入到指定位置。这个过程涉及到移动元素的操作，时间复杂度为O(n)，在最坏情况下，如头部插入，需要移动所有的元素。</p>
+<h2 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h2><p><strong>尾部删除</strong>：</p>
+<p>当删除的元素位于列表末尾时，只需要将末尾元素移除即可，时间复杂度为O(1)。</p>
+<p><strong>指定位置删除</strong>：</p>
+<p>当在ArrayList的指定位置（非尾部）删除元素时，需要将删除点之后的所有元素向前移动一个位置，以填补被删除元素的位置。这个过程同样涉及到移动元素的操作，时间复杂度为O(n)，在最坏情况下，如头部删除，需要移动除了被删除元素之外的所有元素。</p>
+<blockquote>
+<p>&#x2F;ngcbam50s7fa0twf&gt;</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/BlockingQueue%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/BlockingQueue%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/" itemprop="url">BlockingQueue是什么</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌BlockingQueue是什么？"><a href="#👌BlockingQueue是什么？" class="headerlink" title="👌BlockingQueue是什么？"></a>👌BlockingQueue是什么？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>BlockingQueue是 Java 中定义在java.util.concurrent包下的一个接口，它扩展了Queue接口，并添加了阻塞操作。BlockingQueue提供了一种线程安全的机制，用于在多线程环境中处理生产者-消费者问题。</p>
+<h2 id="特点和功能"><a href="#特点和功能" class="headerlink" title="特点和功能"></a>特点和功能</h2><p><strong>阻塞操作</strong>：BlockingQueue提供了阻塞的put和take方法：</p>
+<p>put(E e)：如果队列已满，则阻塞直到有空间可插入元素。</p>
+<p>take()：如果队列为空，则阻塞直到有元素可取。</p>
+<p><strong>线程安全</strong>：所有方法都使用内部锁或其他同步机制来确保线程安全。</p>
+<p><strong>多种实现</strong>：BlockingQueue有多种实现方式，适用于不同的场景：</p>
+<p>ArrayBlockingQueue：基于数组的有界阻塞队列。</p>
+<p>LinkedBlockingQueue：基于链表的可选有界阻塞队列。</p>
+<p>PriorityBlockingQueue：支持优先级排序的无界阻塞队列。</p>
+<p>DelayQueue：支持延迟元素的无界阻塞队列。</p>
+<p>SynchronousQueue：不存储元素的阻塞队列，每个插入操作必须等待一个对应的移除操作。</p>
+<p>LinkedTransferQueue：基于链表的无界阻塞队列，支持传输操作。</p>
+<h2 id="代码-Demo"><a href="#代码-Demo" class="headerlink" title="代码 Demo"></a>代码 Demo</h2><p>如何使用BlockingQueue实现生产者-消费者模式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">import java.util.concurrent.BlockingQueue;</span><br><span class="line">import java.util.concurrent.LinkedBlockingQueue;</span><br><span class="line"></span><br><span class="line">public class BlockingQueueExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        BlockingQueue&lt;Integer&gt; queue = new LinkedBlockingQueue&lt;&gt;(5);</span><br><span class="line"></span><br><span class="line">        // 生产者线程</span><br><span class="line">        Thread producer = new Thread(() -&gt; &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                for (int i = 0; i &lt; 10; i++) &#123;</span><br><span class="line">                    System.out.println(&quot;Producing: &quot; + i);</span><br><span class="line">                    queue.put(i); // 如果队列已满，阻塞</span><br><span class="line">                    Thread.sleep(100); // 模拟生产时间</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                Thread.currentThread().interrupt();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        // 消费者线程</span><br><span class="line">        Thread consumer = new Thread(() -&gt; &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                for (int i = 0; i &lt; 10; i++) &#123;</span><br><span class="line">                    Integer value = queue.take(); // 如果队列为空，阻塞</span><br><span class="line">                    System.out.println(&quot;Consuming: &quot; + value);</span><br><span class="line">                    Thread.sleep(150); // 模拟消费时间</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                Thread.currentThread().interrupt();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        producer.start();</span><br><span class="line">        consumer.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>LinkedBlockingQueue被用作BlockingQueue的实现。生产者线程不断地向队列中添加元素，而消费者线程不断地从队列中取出元素。如果队列已满，生产者线程会阻塞，直到有空间可插入元素；如果队列为空，消费者线程会阻塞，直到有元素可取。</p>
+<h2 id="主要方法"><a href="#主要方法" class="headerlink" title="主要方法"></a>主要方法</h2><p>BlockingQueue提供了一些常用的方法，这些方法分为四类：</p>
+<ol>
+<li><strong>抛出异常</strong>：</li>
+</ol>
+<p>add(E e)：如果队列已满，抛出IllegalStateException。</p>
+<p>remove()：如果队列为空，抛出NoSuchElementException。</p>
+<p>element()：如果队列为空，抛出NoSuchElementException。</p>
+<ol start="2">
+<li><strong>返回特殊值</strong>：</li>
+</ol>
+<p>offer(E e)：如果队列已满，返回false。</p>
+<p>poll()：如果队列为空，返回null。</p>
+<p>peek()：如果队列为空，返回null。</p>
+<ol start="3">
+<li><strong>阻塞操作</strong>：</li>
+</ol>
+<p>put(E e)：如果队列已满，阻塞直到有空间可插入元素。</p>
+<p>take()：如果队列为空，阻塞直到有元素可取。</p>
+<ol start="4">
+<li><strong>超时操作</strong>：</li>
+</ol>
+<p>offer(E e, long timeout, TimeUnit unit)：在指定的时间内插入元素，如果队列已满，等待直到超时或插入成功。</p>
+<p>poll(long timeout, TimeUnit unit)：在指定的时间内取出元素，如果队列为空，等待直到超时或取出成功。</p>
+<blockquote>
+<p>&#x2F;wuyri8q61obeufmq&gt;</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/Comparable%E5%92%8CComparator%E7%9A%84%E5%8C%BA%E5%88%AB_/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +742,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -525,8 +950,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -742,8 +1167,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -947,8 +1372,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -1158,8 +1583,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -1378,8 +1803,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -1580,8 +2005,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -1778,8 +2203,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -1978,8 +2403,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -2190,8 +2615,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -2394,8 +2819,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -2609,8 +3034,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -2825,8 +3250,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -3040,8 +3465,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -3258,8 +3683,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -3493,8 +3918,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -3692,8 +4117,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -3899,8 +4324,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -4030,440 +4455,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%B8%BA%E4%BB%80%E4%B9%88hashMap%E7%9A%84%E5%AE%B9%E9%87%8F%E6%89%A9%E5%AE%B9%E6%97%B6%E4%B8%80%E5%AE%9A%E6%98%AF2%E7%9A%84%E5%B9%82%E6%AC%A1_/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%B8%BA%E4%BB%80%E4%B9%88hashMap%E7%9A%84%E5%AE%B9%E9%87%8F%E6%89%A9%E5%AE%B9%E6%97%B6%E4%B8%80%E5%AE%9A%E6%98%AF2%E7%9A%84%E5%B9%82%E6%AC%A1_/" itemprop="url">为什么hashMap的容量扩容时一定是2的幂次</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌为什么hashMap的容量扩容时一定是2的幂次"><a href="#👌为什么hashMap的容量扩容时一定是2的幂次" class="headerlink" title="👌为什么hashMap的容量扩容时一定是2的幂次?"></a>👌为什么hashMap的容量扩容时一定是2的幂次?</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>在HashMap中，初始化设置长度时，容量自动转成 2 的幂次长度，这样设计有几个重要原因，主要是为了优化性能和简化计算。</p>
-<h2 id="高效计算索引"><a href="#高效计算索引" class="headerlink" title="高效计算索引"></a>高效计算索引</h2><p>HashMap使用哈希值来确定键值对在哈希表中的位置。为了计算数组索引，HashMap使用按位与操作代替取模运算。具体来说，HashMap通过以下方式计算索引：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int index= (n - 1) &amp; hash;</span><br></pre></td></tr></table></figure>
-
-<p>其中n是哈希表数组的长度。假设n是 2 的幂次，比如 16（2^4），则n - 1是 15（1111 二进制）。这样，(n - 1) &amp; hash操作可以快速地对哈希值进行取模运算，而不需要使用性能较低的取模操作%。</p>
-<p>例如，如果n是 16（2^4）：</p>
-<ul>
-<li>n - 1是 15（1111 二进制）</li>
-<li>按位与操作(n - 1) &amp; hash只保留哈希值的低 4 位，这相当于对 16 取模。</li>
-</ul>
-<p>这种方式不仅计算快速，而且代码简洁。</p>
-<h2 id="减少哈希冲突"><a href="#减少哈希冲突" class="headerlink" title="减少哈希冲突"></a>减少哈希冲突</h2><p>在哈希表中，哈希冲突是一个主要问题。哈希冲突发生时，不同的键计算出的索引相同，导致它们被存储在同一个桶中。通过将容量设置为 2 的幂次，哈希表能够更均匀地分布哈希值，减少冲突。</p>
-<p>具体来说，当容量是 2 的幂次时，哈希值的低位和高位都能均匀地影响最终索引。这是因为扰动函数hash &#x3D; h ^ (h &gt;&gt;&gt; 16)将高位和低位混合在一起，使得哈希值的分布更均匀。</p>
-<p>假设我们有一个HashMap，其容量为 10（不是 2 的幂次），并且我们有一组键，它们的哈希值分别为：</p>
-<ul>
-<li>键 A 的哈希值：35</li>
-<li>键 B 的哈希值：45</li>
-<li>键 C 的哈希值：55</li>
-</ul>
-<p>（1）使用非 2 的幂次容量</p>
-<p>如果容量为 10，我们计算索引的方法是取模运算：</p>
-<ul>
-<li>键 A 的索引：35 % 10 &#x3D; 5</li>
-<li>键 B 的索引：45 % 10 &#x3D; 5</li>
-<li>键 C 的索引：55 % 10 &#x3D; 5</li>
-</ul>
-<p>可以看到，这些不同的键在取模运算后都映射到同一个索引 5，导致了哈希冲突。</p>
-<p>（2）使用 2 的幂次容量</p>
-<p>现在假设我们将容量设置为 16（2^4），并使用按位与操作来计算索引：</p>
-<ul>
-<li>键 A 的索引：35 &amp; (16 - 1) &#x3D; 35 &amp; 15 &#x3D; 3</li>
-<li>键 B 的索引：45 &amp; (16 - 1) &#x3D; 45 &amp; 15 &#x3D; 13</li>
-<li>键 C 的索引：55 &amp; (16 - 1) &#x3D; 55 &amp; 15 &#x3D; 7</li>
-</ul>
-<p>在这种情况下，这些键映射到不同的索引（3、13 和 7），没有发生哈希冲突。</p>
-<h2 id="简化扩容"><a href="#简化扩容" class="headerlink" title="简化扩容"></a>简化扩容</h2><p>HashMap在需要扩容时，通常会将容量加倍。如果容量总是 2 的幂次，那么加倍后的容量仍然是 2 的幂次，这样可以简化扩容过程中的计算和重新哈希操作。</p>
-<h2 id="内存对齐和效率"><a href="#内存对齐和效率" class="headerlink" title="内存对齐和效率"></a>内存对齐和效率</h2><p>计算机内存分配通常更高效地处理 2 的幂次大小的内存块。使用 2 的幂次长度可以更好地利用内存对齐，提高内存访问效率。</p>
-<h2 id="实现细节"><a href="#实现细节" class="headerlink" title="实现细节"></a>实现细节</h2><p>当你初始化HashMap时，指定的初始容量会被调整为大于或等于该值的最小的 2 的幂次。例如，如果你指定的初始容量是 10，HashMap会将其调整为 16（2^4）。</p>
-<p>具体实现如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">static final int tableSizeFor(int cap) &#123;</span><br><span class="line">    int n = cap - 1;</span><br><span class="line">    n |= n &gt;&gt;&gt; 1;</span><br><span class="line">    n |= n &gt;&gt;&gt; 2;</span><br><span class="line">    n |= n &gt;&gt;&gt; 4;</span><br><span class="line">    n |= n &gt;&gt;&gt; 8;</span><br><span class="line">    n |= n &gt;&gt;&gt; 16;</span><br><span class="line">    return (n &lt; 0) ? 1 : (n &gt;= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这个方法通过一系列的位移和按位或操作，将任意整数调整为大于或等于它的最小 2 的幂次。但是还有一种特殊情况套用以上公式不行，这些数字就是2的幂自身。如果数字4 套用公式的话。得到的会是 8 ，为了解决这个问题，JDK的工程师把所有用户传进来的数在进行计算之前先-1。</p>
-<blockquote>
-<p>&#x2F;yfxseowdd8g5hm0e&gt;</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%B8%BA%E4%BB%80%E4%B9%88hashmap%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%BC%9A%E8%BF%9B%E5%85%A5%E6%AD%BB%E5%BE%AA%E7%8E%AF%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%B8%BA%E4%BB%80%E4%B9%88hashmap%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%BC%9A%E8%BF%9B%E5%85%A5%E6%AD%BB%E5%BE%AA%E7%8E%AF%EF%BC%9F/" itemprop="url">为什么hashmap多线程会进入死循环？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌为什么hashmap多线程会进入死循环？"><a href="#👌为什么hashmap多线程会进入死循环？" class="headerlink" title="👌为什么hashmap多线程会进入死循环？"></a>👌为什么hashmap多线程会进入死循环？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>HashMap在多线程环境中可能会进入死循环，主要是由于其非线程安全的设计导致的。</p>
-<h2 id="并发修改导致的链表环"><a href="#并发修改导致的链表环" class="headerlink" title="并发修改导致的链表环"></a>并发修改导致的链表环</h2><p>在HashMap中，当发生哈希冲突时，使用链地址法（链表）来存储冲突的键值对。如果多个线程同时对HashMap进行修改（例如插入或删除操作），可能会导致链表结构被破坏，形成环形链表。这种情况下，当遍历链表时，会陷入死循环。</p>
-<h4 id="原因分析"><a href="#原因分析" class="headerlink" title="原因分析"></a>原因分析</h4><p>当两个或多个线程同时修改HashMap，例如在同一个桶中插入元素，可能会导致链表的指针被错误地更新。例如，一个线程正在将一个新的节点插入链表中，而另一个线程正在重新排列链表的顺序。这种竞争条件可能导致链表中出现环形结构。</p>
-<h4 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">import java.util.HashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line"></span><br><span class="line">public class HashMapInfiniteLoop &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        final Map&lt;Integer, Integer&gt; map = new HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        // 创建两个线程同时对 HashMap 进行插入操作</span><br><span class="line">        Thread t1 = new Thread(() -&gt; &#123;</span><br><span class="line">            for (int i = 0; i &lt; 10000; i++) &#123;</span><br><span class="line">                map.put(i, i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        Thread t2 = new Thread(() -&gt; &#123;</span><br><span class="line">            for (int i = 10000; i &lt; 20000; i++) &#123;</span><br><span class="line">                map.put(i, i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line"></span><br><span class="line">        try &#123;</span><br><span class="line">            t1.join();</span><br><span class="line">            t2.join();</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 遍历 HashMap，可能会陷入死循环</span><br><span class="line">        for (Map.Entry&lt;Integer, Integer&gt; entry : map.entrySet()) &#123;</span><br><span class="line">            System.out.println(entry.getKey() + &quot; : &quot; + entry.getValue());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在上述代码中，两个线程同时对HashMap进行插入操作，可能会导致链表结构被破坏，形成环形链表，从而在遍历时陷入死循环。</p>
-<h2 id="扩容导致的并发问题"><a href="#扩容导致的并发问题" class="headerlink" title="扩容导致的并发问题"></a>扩容导致的并发问题</h2><p>HashMap在容量达到一定阈值时会进行扩容（rehash），即重新分配桶数组，并重新哈希所有键值对。如果在扩容过程中，有其他线程同时进行插入操作，可能会导致重新哈希过程中的数据不一致，进而引发死循环。</p>
-<h4 id="原因分析-1"><a href="#原因分析-1" class="headerlink" title="原因分析"></a>原因分析</h4><p>扩容过程中，HashMap会创建一个新的、更大的桶数组，并将所有旧的键值对重新哈希并放入新的桶中。如果在这个过程中有其他线程插入新的键值对，可能会导致旧桶和新桶的数据结构不一致，进而引起死循环。</p>
-<h4 id="示例代码-1"><a href="#示例代码-1" class="headerlink" title="示例代码"></a>示例代码</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">import java.util.HashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line"></span><br><span class="line">public class HashMapResizeInfiniteLoop &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        final Map&lt;Integer, Integer&gt; map = new HashMap&lt;&gt;(2);</span><br><span class="line"></span><br><span class="line">        // 创建两个线程同时对 HashMap 进行插入操作</span><br><span class="line">        Thread t1 = new Thread(() -&gt; &#123;</span><br><span class="line">            for (int i = 0; i &lt; 10000; i++) &#123;</span><br><span class="line">                map.put(i, i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        Thread t2 = new Thread(() -&gt; &#123;</span><br><span class="line">            for (int i = 10000; i &lt; 20000; i++) &#123;</span><br><span class="line">                map.put(i, i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line"></span><br><span class="line">        try &#123;</span><br><span class="line">            t1.join();</span><br><span class="line">            t2.join();</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 遍历 HashMap，可能会陷入死循环</span><br><span class="line">        for (Map.Entry&lt;Integer, Integer&gt; entry : map.entrySet()) &#123;</span><br><span class="line">            System.out.println(entry.getKey() + &quot; : &quot; + entry.getValue());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在上述代码中，HashMap初始容量设置为 2，两个线程同时插入大量元素，可能会导致扩容过程中数据不一致，从而引发死循环。</p>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h3 id="使用线程安全的数据结构"><a href="#使用线程安全的数据结构" class="headerlink" title="使用线程安全的数据结构"></a>使用线程安全的数据结构</h3><p>在多线程环境中，使用ConcurrentHashMap代替HashMap。ConcurrentHashMap通过分段锁机制来保证线程安全，并发性能更好。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">import java.util.concurrent.ConcurrentHashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line"></span><br><span class="line">public class ConcurrentHashMapExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        final Map&lt;Integer, Integer&gt; map = new ConcurrentHashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        Thread t1 = new Thread(() -&gt; &#123;</span><br><span class="line">            for (int i = 0; i &lt; 10000; i++) &#123;</span><br><span class="line">                map.put(i, i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        Thread t2 = new Thread(() -&gt; &#123;</span><br><span class="line">            for (int i = 10000; i &lt; 20000; i++) &#123;</span><br><span class="line">                map.put(i, i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line"></span><br><span class="line">        try &#123;</span><br><span class="line">            t1.join();</span><br><span class="line">            t2.join();</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        for (Map.Entry&lt;Integer, Integer&gt; entry : map.entrySet()) &#123;</span><br><span class="line">            System.out.println(entry.getKey() + &quot; : &quot; + entry.getValue());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="外部同步"><a href="#外部同步" class="headerlink" title="外部同步"></a>外部同步</h3><p>如果必须使用HashMap，可以在外部进行同步，确保同时只有一个线程对HashMap进行修改。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">import java.util.HashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line"></span><br><span class="line">public class SynchronizedHashMapExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        final Map&lt;Integer, Integer&gt; map = new HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        Thread t1 = new Thread(() -&gt; &#123;</span><br><span class="line">            synchronized (map) &#123;</span><br><span class="line">                for (int i = 0; i &lt; 10000; i++) &#123;</span><br><span class="line">                    map.put(i, i);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        Thread t2 = new Thread(() -&gt; &#123;</span><br><span class="line">            synchronized (map) &#123;</span><br><span class="line">                for (int i = 10000; i &lt; 20000; i++) &#123;</span><br><span class="line">                    map.put(i, i);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line"></span><br><span class="line">        try &#123;</span><br><span class="line">            t1.join();</span><br><span class="line">            t2.join();</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        synchronized (map) &#123;</span><br><span class="line">            for (Map.Entry&lt;Integer, Integer&gt; entry : map.entrySet()) &#123;</span><br><span class="line">                System.out.println(entry.getKey() + &quot; : &quot; + entry.getValue());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>通过使用ConcurrentHashMap或外部同步，可以避免HashMap在多线程环境中出现死循环的问题。</p>
-<blockquote>
-<p>&#x2F;dhuaw13mlcgfpa9k&gt;</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4514,7 +4505,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">230</span>
+                <span class="site-state-item-count">232</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

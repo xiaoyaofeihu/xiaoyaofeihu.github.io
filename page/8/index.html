@@ -270,6 +270,444 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E5%B8%B8%E8%A7%81%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98%E5%92%8C%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88_/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E5%B8%B8%E8%A7%81%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98%E5%92%8C%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88_/" itemprop="url">redis 常见性能问题和解决方案</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-02-11T13:33:41+00:00">
+                2025-02-11
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌redis常见性能问题和解决方案"><a href="#👌redis常见性能问题和解决方案" class="headerlink" title="👌redis常见性能问题和解决方案?"></a>👌redis常见性能问题和解决方案?</h1><h1 id="口语化回答"><a href="#口语化回答" class="headerlink" title="口语化回答"></a>口语化回答</h1><p>好的，面试官，redis 常见性能问题主要有内存空间不足，大 key 问题，阻塞操作等等。像内存空间问题，主要发生在大规模的数据量下产生，针对这种我们可以采取数据结构层面的优化，或者集群模式的水平扩。大 key 问题一般就是最初设计的时候，没有考虑清楚，导致业务日积月累，一个小的 key 变成了大 key。会导致我们的性能下降，耗时增加，这种需要从根上进行业务的梳理和处理拆分。还有就是阻塞，如果执行一些 keys 命令会大致阻塞，生产要避免进行这些操作。以上</p>
+<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>这道题大家主要是从以下的几个问题中，选取常见的 3 个即可。建议大家选择空间不足，大 key 和阻塞，这三点比较好回答，也好解释和扩展。</p>
+<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>内存不足，大 key，阻塞，网络延迟，慢查询，持久化性能</p>
+<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="问题一、redis-内存空间不足"><a href="#问题一、redis-内存空间不足" class="headerlink" title="问题一、redis 内存空间不足"></a>问题一、redis 内存空间不足</h2><p>****由于Redis的数据存储在内存中，当数据量增大时，可能会出现内存不足的情况，导致性能下降或服务不可用。</p>
+<p><strong>解决方案</strong>：</p>
+<p><strong>内存优化</strong>：使用更高效的数据结构（如哈希表、压缩列表）来存储数据，减少内存占用。</p>
+<p><strong>水平扩展</strong>：使用Redis集群模式，将数据分片存储在多个节点上，扩展内存容量。</p>
+<h2 id="问题二、redis-的大-key"><a href="#问题二、redis-的大-key" class="headerlink" title="问题二、redis 的大 key"></a>问题二、redis 的大 key</h2><p>****某些键可能存储了大量数据（如大列表、大哈希表），操作这些大键可能导致阻塞，影响性能。</p>
+<p><strong>解决方案</strong>：</p>
+<p><strong>拆分大键</strong>：将大键拆分成多个小键，减少单个键的操作时间。</p>
+<p><strong>分批处理</strong>：对于需要迭代处理的大键，使用SCAN、SSCAN、HSCAN、ZSCAN等命令进行分批处理，避免单次操作时间过长。</p>
+<p><strong>监控和预警</strong>：定期监控Redis中的大键，及时发现并处理。</p>
+<h2 id="问题三、阻塞操作"><a href="#问题三、阻塞操作" class="headerlink" title="问题三、阻塞操作"></a>问题三、阻塞操作</h2><p>某些Redis命令（如KEYS、FLUSHALL、SAVE等）会阻塞服务器，导致其他操作无法执行。</p>
+<p><strong>解决方案</strong>：</p>
+<p><strong>避免阻塞命令</strong>：尽量避免使用阻塞命令，使用非阻塞的替代命令（如SCAN代替KEYS）。</p>
+<p><strong>异步操作</strong>：对于需要执行的阻塞操作，尽量使用异步方式（如FLUSHALL ASYNC）。</p>
+<h2 id="问题四、网络延迟"><a href="#问题四、网络延迟" class="headerlink" title="问题四、网络延迟"></a>问题四、网络延迟</h2><p>Redis是基于TCP协议的网络服务，高网络延迟会影响Redis的性能。</p>
+<p><strong>解决方案</strong>：</p>
+<p><strong>本地部署</strong>：尽量将Redis服务器部署在与应用服务器同一内网，减少网络延迟。</p>
+<p><strong>连接池</strong>：使用连接池来复用Redis连接，减少连接建立和关闭的开销。</p>
+<h2 id="问题五、慢查询"><a href="#问题五、慢查询" class="headerlink" title="问题五、慢查询"></a>问题五、慢查询</h2><p>****某些复杂的查询或数据操作可能会导致Redis响应变慢，影响整体性能。</p>
+<p><strong>解决方案</strong>：</p>
+<p><strong>慢查询日志</strong>：启用Redis的慢查询日志功能，定期检查慢查询并优化。</p>
+<p><strong>索引优化</strong>：合理使用Redis的数据结构和索引，优化查询性能。</p>
+<h2 id="问题六、主从复制延迟"><a href="#问题六、主从复制延迟" class="headerlink" title="问题六、主从复制延迟"></a>问题六、主从复制延迟</h2><p>****在主从复制架构中，从服务器可能会因为网络或负载问题导致复制延迟，影响数据一致性。</p>
+<p><strong>解决方案</strong>：</p>
+<p><strong>优化网络</strong>：确保主从服务器之间的网络连接稳定，带宽充足。</p>
+<p><strong>调整复制参数</strong>：优化Redis的复制参数（如repl-backlog-size、repl-timeout等），减少复制延迟。</p>
+<p><strong>监控复制状态</strong>：定期监控主从复制状态，及时发现并处理延迟问题。</p>
+<h2 id="问题七、持久化性能问题"><a href="#问题七、持久化性能问题" class="headerlink" title="问题七、持久化性能问题"></a>问题七、持久化性能问题</h2><p>****Redis的持久化操作（如RDB快照和AOF日志）可能会影响性能，尤其是在大数据量或高并发情况下。</p>
+<p><strong>解决方案</strong>：</p>
+<p><strong>合理配置持久化策略</strong>：根据业务需求配置合理的持久化策略，平衡性能和数据安全性。</p>
+<p><strong>异步持久化</strong>：使用异步持久化方式（如AOF的fsync策略），减少对主线程的影响。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E7%9A%84%E5%86%85%E5%AD%98%E7%94%A8%E5%AE%8C%E4%BA%86%E4%BC%9A%E5%8F%91%E7%94%9F%E4%BB%80%E4%B9%88%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E7%9A%84%E5%86%85%E5%AD%98%E7%94%A8%E5%AE%8C%E4%BA%86%E4%BC%9A%E5%8F%91%E7%94%9F%E4%BB%80%E4%B9%88%EF%BC%9F/" itemprop="url">redis 内存用完之后会发生什么</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-02-11T13:33:41+00:00">
+                2025-02-11
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌redis的内存用完了会发生什么？"><a href="#👌redis的内存用完了会发生什么？" class="headerlink" title="👌redis的内存用完了会发生什么？"></a>👌redis的内存用完了会发生什么？</h1><h1 id="口语化回答"><a href="#口语化回答" class="headerlink" title="口语化回答"></a>口语化回答</h1><p>好的，面试官。redis 内存用完之后发生的现象主要取决于我们配置的内存回收策略。默认是noeviction，这个策略不会删除任何的键，当内存不足的时候，就会报错。这种策略，我们一般不使用。常见使用的就是 lru，回收最近最少使用的有过期时间的键。其他的策略还比如 randow，可以回收随机的键。ttl 按照最短的过期时间来进行回收。以上。</p>
+<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>这道题还算是比较常问的一道题，大家需要理解其中的策略，然后答题的时候，能说上几种就可以了。最后再说一下方案的选择优点就可以了。</p>
+<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>lru，lfu，random，无过期</p>
+<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>当Redis的内存用完时，会根据配置的内存回收策略采取不同的措施。可以在内存达到限制时决定如何处理新的写请求。主要的策略有如下 8 种。</p>
+<h3 id="内存回收策略"><a href="#内存回收策略" class="headerlink" title="内存回收策略"></a>内存回收策略</h3><ol>
+<li><strong>noeviction</strong>：不删除任何键，当内存不足时返回错误。这是默认策略。</li>
+</ol>
+<p>当内存达到限制时，Redis将不再接受任何写请求，并返回错误。例如，客户端尝试设置新键时，会收到类似以下的错误信息：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(error) OOM command not allowed when used memory &gt; &#x27;maxmemory&#x27;.</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><strong>allkeys-lru</strong>：使用最近最少使用（LRU）算法回收所有键。</li>
+<li><strong>volatile-lru</strong>：使用最近最少使用（LRU）算法回收设置了过期时间的键。</li>
+</ol>
+<p>Redis将根据LRU算法选择最近最少使用的键进行删除，以腾出空间存储新的数据。allkeys-lru会在所有键中选择，volatile-lru只会在设置了过期时间的键中选择。</p>
+<ol start="4">
+<li><strong>allkeys-random</strong>：随机回收所有键。</li>
+<li><strong>volatile-random</strong>：随机回收设置了过期时间的键。</li>
+</ol>
+<p>Redis会随机选择一些键进行删除，以腾出空间。allkeys-random会在所有键中选择，volatile-random只会在设置了过期时间的键中选择。</p>
+<ol start="6">
+<li><strong>volatile-ttl</strong>：回收那些剩余生存时间（TTL）最短的键。</li>
+</ol>
+<p>Redis将选择那些剩余生存时间（TTL）最短的键进行删除。</p>
+<ol start="7">
+<li><strong>volatile-lfu</strong>：使用最长时间没有被使用（LFU）算法回收设置了过期时间的键。</li>
+<li><strong>allkeys-lfu</strong>：使用最长时间没有被使用（LFU）算法回收所有键。</li>
+</ol>
+<p>Redis将根据LFU算法选择最近最少使用的键进行删除。volatile-lfu只会在设置了过期时间的键中选择，allkeys-lfu会在所有键中选择。</p>
+<h3 id="配置内存回收策略的方式"><a href="#配置内存回收策略的方式" class="headerlink" title="配置内存回收策略的方式"></a>配置内存回收策略的方式</h3><p>redis.conf文件中配置内存回收策略，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">maxmemory 100mb</span><br><span class="line">maxmemory-policy allkeys-lru</span><br></pre></td></tr></table></figure>
+
+<p>也可通过命令行参数设置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-server --maxmemory 100mb --maxmemory-policy allkeys-lru</span><br></pre></td></tr></table></figure>
+
+
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E7%9A%84%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6%E6%98%AF%E4%BB%80%E4%B9%88_/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +755,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -519,8 +957,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -793,8 +1231,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -996,8 +1434,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -1190,8 +1628,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -1382,8 +1820,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -1614,8 +2052,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -1820,8 +2258,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -2069,8 +2507,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -2287,8 +2725,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -2509,8 +2947,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -2723,8 +3161,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -2958,8 +3396,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -3156,8 +3594,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -3383,8 +3821,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -3581,8 +4019,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -3782,8 +4220,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -3988,8 +4426,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-05-31T06:48:52+00:00">
+                2025-05-31
               </time>
             
           </span>
@@ -4142,431 +4580,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E7%9A%84%E6%B7%BB%E5%8A%A0%E4%B8%8E%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0%E4%B8%BA%E4%BB%80%E4%B9%88%E6%85%A2%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E7%9A%84%E6%B7%BB%E5%8A%A0%E4%B8%8E%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0%E4%B8%BA%E4%BB%80%E4%B9%88%E6%85%A2%EF%BC%9F/" itemprop="url">ArrayList的添加与删除元素为什么慢</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌ArrayList的添加与删除元素为什么慢？"><a href="#👌ArrayList的添加与删除元素为什么慢？" class="headerlink" title="👌ArrayList的添加与删除元素为什么慢？"></a>👌ArrayList的添加与删除元素为什么慢？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>主要是由于其内部实现基于数组的特性所导致的。</p>
-<p>ArrayList的添加与删除操作慢，主要是因为其内部实现基于数组，而数组在插入和删除元素时需要移动其他元素来保证连续性和顺序性，这个过程需要耗费较多的时间。</p>
-<p>相对于基于链表的数据结构（如LinkedList），ArrayList的插入和删除操作的时间复杂度是O(n)级别的，而链表的时间复杂度为O(1)。</p>
-<h2 id="添加元素"><a href="#添加元素" class="headerlink" title="添加元素"></a>添加元素</h2><p><strong>尾部添加</strong>：</p>
-<p>当在ArrayList的尾部添加元素时，如果当前数组的容量还未达到最大值，只需要将新元素添加到数组的末尾即可，此时时间复杂度为O(1)。</p>
-<p>但是，当数组容量已满时，需要进行扩容操作。扩容操作通常会将数组的容量增加到当前容量的1.5倍或2倍，并将原数组中的所有元素复制到新的更大的数组中。这一过程的时间复杂度为O(n)，其中n为当前数组中的元素数量。</p>
-<p><strong>指定位置插入</strong>：</p>
-<p>当在ArrayList的指定位置（非尾部）插入元素时，需要将目标位置之后的所有元素向后移动一个位置，然后将新元素插入到指定位置。这个过程涉及到移动元素的操作，时间复杂度为O(n)，在最坏情况下，如头部插入，需要移动所有的元素。</p>
-<h2 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h2><p><strong>尾部删除</strong>：</p>
-<p>当删除的元素位于列表末尾时，只需要将末尾元素移除即可，时间复杂度为O(1)。</p>
-<p><strong>指定位置删除</strong>：</p>
-<p>当在ArrayList的指定位置（非尾部）删除元素时，需要将删除点之后的所有元素向前移动一个位置，以填补被删除元素的位置。这个过程同样涉及到移动元素的操作，时间复杂度为O(n)，在最坏情况下，如头部删除，需要移动除了被删除元素之外的所有元素。</p>
-<blockquote>
-<p>&#x2F;ngcbam50s7fa0twf&gt;</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/BlockingQueue%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/BlockingQueue%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/" itemprop="url">BlockingQueue是什么</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-05-22T06:41:58+00:00">
-                2025-05-22
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌BlockingQueue是什么？"><a href="#👌BlockingQueue是什么？" class="headerlink" title="👌BlockingQueue是什么？"></a>👌BlockingQueue是什么？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>BlockingQueue是 Java 中定义在java.util.concurrent包下的一个接口，它扩展了Queue接口，并添加了阻塞操作。BlockingQueue提供了一种线程安全的机制，用于在多线程环境中处理生产者-消费者问题。</p>
-<h2 id="特点和功能"><a href="#特点和功能" class="headerlink" title="特点和功能"></a>特点和功能</h2><p><strong>阻塞操作</strong>：BlockingQueue提供了阻塞的put和take方法：</p>
-<p>put(E e)：如果队列已满，则阻塞直到有空间可插入元素。</p>
-<p>take()：如果队列为空，则阻塞直到有元素可取。</p>
-<p><strong>线程安全</strong>：所有方法都使用内部锁或其他同步机制来确保线程安全。</p>
-<p><strong>多种实现</strong>：BlockingQueue有多种实现方式，适用于不同的场景：</p>
-<p>ArrayBlockingQueue：基于数组的有界阻塞队列。</p>
-<p>LinkedBlockingQueue：基于链表的可选有界阻塞队列。</p>
-<p>PriorityBlockingQueue：支持优先级排序的无界阻塞队列。</p>
-<p>DelayQueue：支持延迟元素的无界阻塞队列。</p>
-<p>SynchronousQueue：不存储元素的阻塞队列，每个插入操作必须等待一个对应的移除操作。</p>
-<p>LinkedTransferQueue：基于链表的无界阻塞队列，支持传输操作。</p>
-<h2 id="代码-Demo"><a href="#代码-Demo" class="headerlink" title="代码 Demo"></a>代码 Demo</h2><p>如何使用BlockingQueue实现生产者-消费者模式：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">import java.util.concurrent.BlockingQueue;</span><br><span class="line">import java.util.concurrent.LinkedBlockingQueue;</span><br><span class="line"></span><br><span class="line">public class BlockingQueueExample &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        BlockingQueue&lt;Integer&gt; queue = new LinkedBlockingQueue&lt;&gt;(5);</span><br><span class="line"></span><br><span class="line">        // 生产者线程</span><br><span class="line">        Thread producer = new Thread(() -&gt; &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                for (int i = 0; i &lt; 10; i++) &#123;</span><br><span class="line">                    System.out.println(&quot;Producing: &quot; + i);</span><br><span class="line">                    queue.put(i); // 如果队列已满，阻塞</span><br><span class="line">                    Thread.sleep(100); // 模拟生产时间</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                Thread.currentThread().interrupt();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        // 消费者线程</span><br><span class="line">        Thread consumer = new Thread(() -&gt; &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                for (int i = 0; i &lt; 10; i++) &#123;</span><br><span class="line">                    Integer value = queue.take(); // 如果队列为空，阻塞</span><br><span class="line">                    System.out.println(&quot;Consuming: &quot; + value);</span><br><span class="line">                    Thread.sleep(150); // 模拟消费时间</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                Thread.currentThread().interrupt();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        producer.start();</span><br><span class="line">        consumer.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>LinkedBlockingQueue被用作BlockingQueue的实现。生产者线程不断地向队列中添加元素，而消费者线程不断地从队列中取出元素。如果队列已满，生产者线程会阻塞，直到有空间可插入元素；如果队列为空，消费者线程会阻塞，直到有元素可取。</p>
-<h2 id="主要方法"><a href="#主要方法" class="headerlink" title="主要方法"></a>主要方法</h2><p>BlockingQueue提供了一些常用的方法，这些方法分为四类：</p>
-<ol>
-<li><strong>抛出异常</strong>：</li>
-</ol>
-<p>add(E e)：如果队列已满，抛出IllegalStateException。</p>
-<p>remove()：如果队列为空，抛出NoSuchElementException。</p>
-<p>element()：如果队列为空，抛出NoSuchElementException。</p>
-<ol start="2">
-<li><strong>返回特殊值</strong>：</li>
-</ol>
-<p>offer(E e)：如果队列已满，返回false。</p>
-<p>poll()：如果队列为空，返回null。</p>
-<p>peek()：如果队列为空，返回null。</p>
-<ol start="3">
-<li><strong>阻塞操作</strong>：</li>
-</ol>
-<p>put(E e)：如果队列已满，阻塞直到有空间可插入元素。</p>
-<p>take()：如果队列为空，阻塞直到有元素可取。</p>
-<ol start="4">
-<li><strong>超时操作</strong>：</li>
-</ol>
-<p>offer(E e, long timeout, TimeUnit unit)：在指定的时间内插入元素，如果队列已满，等待直到超时或插入成功。</p>
-<p>poll(long timeout, TimeUnit unit)：在指定的时间内取出元素，如果队列为空，等待直到超时或取出成功。</p>
-<blockquote>
-<p>&#x2F;wuyri8q61obeufmq&gt;</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4617,7 +4630,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">230</span>
+                <span class="site-state-item-count">232</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
