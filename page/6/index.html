@@ -270,217 +270,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/03/10/Spring/%E8%A7%A3%E9%87%8A%E4%B8%80%E4%B8%8BSpring%E7%9A%84ioc%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/03/10/Spring/%E8%A7%A3%E9%87%8A%E4%B8%80%E4%B8%8BSpring%E7%9A%84ioc%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC%EF%BC%9F/" itemprop="url">👌解释一下 Spring 的 ioc 控制反转</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-03-10T13:33:41+00:00">
-                2025-03-10
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌解释一下-Spring-的-ioc-控制反转？"><a href="#👌解释一下-Spring-的-ioc-控制反转？" class="headerlink" title="👌解释一下 Spring 的 ioc 控制反转？"></a>👌解释一下 Spring 的 ioc 控制反转？</h1><h1 id="口语化回答"><a href="#口语化回答" class="headerlink" title="口语化回答"></a>口语化回答</h1><p>好的，面试官，控制反转通过将对象的创建和依赖关系的管理交给Spring IoC容器，极大地提高了代码的模块化和可维护性。IoC的主要实现方式是依赖注入，其中通过构造函数注入、Setter方法注入和字段注入等形式来注入，这样 Spring容器能够自动管理对象的依赖关系，使得应用程序代码更加简洁。以上。</p>
-<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>重点高频题。主要思路就是聊 ioc 是什么，再说说 di 的形式，最后说一下好处即可。</p>
-<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>反转，解耦，注入</p>
-<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="什么是控制反转（IoC）？"><a href="#什么是控制反转（IoC）？" class="headerlink" title="什么是控制反转（IoC）？"></a>什么是控制反转（IoC）？</h2><p>在传统的编程模型中，应用程序代码通常直接控制对象的创建和依赖关系。例如，一个对象需要依赖另一个对象时，通常会在代码中直接创建依赖对象。这种方式使得代码紧密耦合，不利于测试和维护。</p>
-<p>控制反转的理念是将这种控制权从应用程序代码中移除，转而交给一个容器来管理。这个容器就是Spring IoC容器。通过这种方式，对象的创建和依赖关系的管理被反转了，应用程序代码不再负责这些任务，而是由容器来处理。</p>
-<h2 id="依赖注入（DI）"><a href="#依赖注入（DI）" class="headerlink" title="依赖注入（DI）"></a>依赖注入（DI）</h2><p>依赖注入是实现控制反转的一种方式。它主要有以下几种形式：</p>
-<p><strong>构造函数注入</strong>：通过构造函数将依赖对象传递给被依赖对象。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class Service &#123;</span><br><span class="line">    private final Repository repository;</span><br><span class="line"></span><br><span class="line">    public Service(Repository repository) &#123;</span><br><span class="line">        this.repository = repository;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>Setter方法注入</strong>：通过Setter方法将依赖对象注入到被依赖对象中。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class Service &#123;</span><br><span class="line">    private Repository repository;</span><br><span class="line"></span><br><span class="line">    public void setRepository(Repository repository) &#123;</span><br><span class="line">        this.repository = repository;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>字段注入</strong>：直接在字段上使用注解进行注入。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public class Service &#123;</span><br><span class="line">    @Autowired</span><br><span class="line">    private Repository repository;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="Spring-IoC-容器"><a href="#Spring-IoC-容器" class="headerlink" title="Spring IoC 容器"></a>Spring IoC 容器</h2><p>Spring IoC容器负责管理应用程序中对象的生命周期和依赖关系。它的主要职责包括：</p>
-<p><strong>对象的创建</strong>：根据配置文件或注解创建对象。</p>
-<p><strong>依赖注入</strong>：将对象的依赖注入到相应的对象中。</p>
-<p><strong>对象的销毁</strong>：在适当的时候销毁对象，释放资源。</p>
-<h3 id="配置方式"><a href="#配置方式" class="headerlink" title="配置方式"></a>配置方式</h3><p>Spring IoC容器可以通过多种方式进行配置：</p>
-<p><strong>XML配置</strong>：通过XML文件定义Bean及其依赖关系。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;beans&gt;</span><br><span class="line">    &lt;bean id=&quot;repository&quot; class=&quot;com.example.Repository&quot;/&gt;</span><br><span class="line">    &lt;bean id=&quot;service&quot; class=&quot;com.example.Service&quot;&gt;</span><br><span class="line">        &lt;constructor-arg ref=&quot;repository&quot;/&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
-
-<p><strong>Java配置</strong>：通过Java类和注解定义Bean及其依赖关系。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">public class AppConfig &#123;</span><br><span class="line">    @Bean</span><br><span class="line">    public Repository repository() &#123;</span><br><span class="line">        return new Repository();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Bean</span><br><span class="line">    public Service service() &#123;</span><br><span class="line">        return new Service(repository());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>注解配置</strong>：通过注解（如@Component,@Autowired）自动扫描和注入Bean。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">public class Repository &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Component</span><br><span class="line">public class Service &#123;</span><br><span class="line">    @Autowired</span><br><span class="line">    private Repository repository;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/03/09/Spring/%E4%BB%80%E4%B9%88%E6%98%AF%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -528,8 +317,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -727,8 +516,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -926,8 +715,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -1133,8 +922,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -1356,8 +1145,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -1577,8 +1366,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -1781,8 +1570,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -1994,8 +1783,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -2199,8 +1988,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -2404,8 +2193,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -2627,8 +2416,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -2858,8 +2647,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -3068,8 +2857,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -3263,8 +3052,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -3476,8 +3265,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -3681,8 +3470,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -3893,8 +3682,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -4129,8 +3918,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -4341,8 +4130,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -4500,6 +4289,242 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/03/02/Spring/%E8%AF%B4%E8%AF%B4Spring%E5%B8%B8%E7%94%A8%E7%9A%84%E6%B3%A8%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/03/02/Spring/%E8%AF%B4%E8%AF%B4Spring%E5%B8%B8%E7%94%A8%E7%9A%84%E6%B3%A8%E8%A7%A3/" itemprop="url">👌说说Spring常用的注解</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-03-02T13:33:41+00:00">
+                2025-03-02
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌说说Spring常用的注解"><a href="#👌说说Spring常用的注解" class="headerlink" title="👌说说Spring常用的注解"></a>👌说说Spring常用的注解</h1><h1 id="口语化回答"><a href="#口语化回答" class="headerlink" title="口语化回答"></a>口语化回答</h1><p>好的，面试官，比较常用的就是Component，将类放到容器管理，autowired，resource，来装配 bean。还有就是 configuration 和 bean 进行配合，装载 bean 进入容器。以及一些扩展的注解比如 aop 的 aspect 切面，事务相关的 transsactional。以上。</p>
+<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>基本不会考，这个没啥意义，不排除小公司或应届会问到这个问题。</p>
+<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>随便搞下面的 3～4 个注解说出来即可。</p>
+<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="核心注解"><a href="#核心注解" class="headerlink" title="核心注解"></a>核心注解</h2><p>@Component：将一个类标记为 Spring 组件类，表示这个类的实例将由 Spring 容器管理。</p>
+<p>@Autowired：自动注入依赖对象。可以用于构造器、字段、Setter 方法或其他任意方法。</p>
+<p>@Qualifier：在有多个候选 Bean 时，指定要注入的 Bean。通常与@Autowired一起使用。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">public class MyComponent &#123;</span><br><span class="line">    @Autowired</span><br><span class="line">    @Qualifier(&quot;specificBean&quot;)</span><br><span class="line">    private Dependency dependency;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>@Value：注入外部化的值，例如配置文件中的属性值、系统属性或环境变量。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">public class MyComponent &#123;</span><br><span class="line">    @Value(&quot;$&#123;my.property&#125;&quot;)</span><br><span class="line">    private String myProperty;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>@Configuration：标记一个类为 Spring 配置类，该类可以包含一个或多个@Bean方法。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">public class AppConfig &#123;</span><br><span class="line">    @Bean</span><br><span class="line">    public MyComponent myComponent() &#123;</span><br><span class="line">        return new MyComponent();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>@Bean：定义一个方法，返回一个要注册为 Spring 容器管理的 Bean。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Bean</span><br><span class="line">public MyComponent myComponent() &#123;</span><br><span class="line">    return new MyComponent();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>@ComponentScan：指定要扫描的包，以查找带有@Component、@Service、@Repository和@Controller注解的类，并将它们注册为 Spring Bean。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">@ComponentScan(basePackages = &quot;com.example&quot;)</span><br><span class="line">public class AppConfig &#123;</span><br><span class="line">    // 配置类内容</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>@Primary：标记一个 Bean 为首选 Bean，当有多个候选 Bean 时，Spring 会优先注入带有@Primary注解的 Bean。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">@Primary</span><br><span class="line">public class PrimaryBean implements Dependency &#123;</span><br><span class="line">    // 实现</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>@Scope：指定 Bean 的作用域，例如单例（singleton）、原型（prototype）等。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">@Scope(&quot;prototype&quot;)</span><br><span class="line">public class PrototypeBean &#123;</span><br><span class="line">    // 实现</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="特定用途注解"><a href="#特定用途注解" class="headerlink" title="特定用途注解"></a>特定用途注解</h2><p>@Service：标记一个类为服务层组件，实际上是@Component的特殊化。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Service</span><br><span class="line">public class MyService &#123;</span><br><span class="line">    // 服务逻辑</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>@Repository：标记一个类为数据访问层组件，实际上是@Component的特殊化，并且支持持久化异常转换。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Repository</span><br><span class="line">public class MyRepository &#123;</span><br><span class="line">    // 数据访问逻辑</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>@Controller：标记一个类为 Spring MVC 控制器，实际上是@Component的特殊化</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Controller</span><br><span class="line">public class MyController &#123;</span><br><span class="line">    // 控制器逻辑</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>@RestController：标记一个类为 RESTful Web 服务的控制器，等同于@Controller和@ResponseBody的组合。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@RestController</span><br><span class="line">public class MyRestController &#123;</span><br><span class="line">    @GetMapping(&quot;/hello&quot;)</span><br><span class="line">    public String hello() &#123;</span><br><span class="line">        return &quot;Hello, World!&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="AOP（面向切面编程）相关注解"><a href="#AOP（面向切面编程）相关注解" class="headerlink" title="AOP（面向切面编程）相关注解"></a>AOP（面向切面编程）相关注解</h2><p>@Aspect：标记一个类为切面类。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Aspect</span><br><span class="line">@Component</span><br><span class="line">public class MyAspect &#123;</span><br><span class="line">    // 切面逻辑</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>@Before：定义一个方法，在目标方法执行之前执行。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@Aspect</span><br><span class="line">@Component</span><br><span class="line">public class MyAspect &#123;</span><br><span class="line">    @Before(&quot;execution(* com.example.service.*.*(..))&quot;)</span><br><span class="line">    public void beforeMethod(JoinPoint joinPoint) &#123;</span><br><span class="line">        // 前置逻辑</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>@After：定义一个方法，在目标方法执行之后执行。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@Aspect</span><br><span class="line">@Component</span><br><span class="line">public class MyAspect &#123;</span><br><span class="line">    @After(&quot;execution(* com.example.service.*.*(..))&quot;)</span><br><span class="line">    public void afterMethod(JoinPoint joinPoint) &#123;</span><br><span class="line">        // 后置逻辑</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>@Around：定义一个方法，包围目标方法的执行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@Aspect</span><br><span class="line">@Component</span><br><span class="line">public class MyAspect &#123;</span><br><span class="line">    @Around(&quot;execution(* com.example.service.*.*(..))&quot;)</span><br><span class="line">    public Object aroundMethod(ProceedingJoinPoint joinPoint) throws Throwable &#123;</span><br><span class="line">        // 环绕逻辑</span><br><span class="line">        return joinPoint.proceed();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="事务管理相关注解"><a href="#事务管理相关注解" class="headerlink" title="事务管理相关注解"></a>事务管理相关注解</h2><p>@Transactional：标记一个方法或类，表示该方法或类中的所有方法都需要事务管理。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Service</span><br><span class="line">public class MyService &#123;</span><br><span class="line">    @Transactional</span><br><span class="line">    public void performTransaction() &#123;</span><br><span class="line">        // 事务逻辑</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -4550,7 +4575,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">232</span>
+                <span class="site-state-item-count">231</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -4572,7 +4597,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-count">29</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>

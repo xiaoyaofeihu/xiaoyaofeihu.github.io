@@ -270,242 +270,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/03/02/Spring/%E8%AF%B4%E8%AF%B4Spring%E5%B8%B8%E7%94%A8%E7%9A%84%E6%B3%A8%E8%A7%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/03/02/Spring/%E8%AF%B4%E8%AF%B4Spring%E5%B8%B8%E7%94%A8%E7%9A%84%E6%B3%A8%E8%A7%A3/" itemprop="url">👌说说Spring常用的注解</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-03-02T13:33:41+00:00">
-                2025-03-02
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌说说Spring常用的注解"><a href="#👌说说Spring常用的注解" class="headerlink" title="👌说说Spring常用的注解"></a>👌说说Spring常用的注解</h1><h1 id="口语化回答"><a href="#口语化回答" class="headerlink" title="口语化回答"></a>口语化回答</h1><p>好的，面试官，比较常用的就是Component，将类放到容器管理，autowired，resource，来装配 bean。还有就是 configuration 和 bean 进行配合，装载 bean 进入容器。以及一些扩展的注解比如 aop 的 aspect 切面，事务相关的 transsactional。以上。</p>
-<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>基本不会考，这个没啥意义，不排除小公司或应届会问到这个问题。</p>
-<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>随便搞下面的 3～4 个注解说出来即可。</p>
-<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="核心注解"><a href="#核心注解" class="headerlink" title="核心注解"></a>核心注解</h2><p>@Component：将一个类标记为 Spring 组件类，表示这个类的实例将由 Spring 容器管理。</p>
-<p>@Autowired：自动注入依赖对象。可以用于构造器、字段、Setter 方法或其他任意方法。</p>
-<p>@Qualifier：在有多个候选 Bean 时，指定要注入的 Bean。通常与@Autowired一起使用。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">public class MyComponent &#123;</span><br><span class="line">    @Autowired</span><br><span class="line">    @Qualifier(&quot;specificBean&quot;)</span><br><span class="line">    private Dependency dependency;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>@Value：注入外部化的值，例如配置文件中的属性值、系统属性或环境变量。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">public class MyComponent &#123;</span><br><span class="line">    @Value(&quot;$&#123;my.property&#125;&quot;)</span><br><span class="line">    private String myProperty;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>@Configuration：标记一个类为 Spring 配置类，该类可以包含一个或多个@Bean方法。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">public class AppConfig &#123;</span><br><span class="line">    @Bean</span><br><span class="line">    public MyComponent myComponent() &#123;</span><br><span class="line">        return new MyComponent();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>@Bean：定义一个方法，返回一个要注册为 Spring 容器管理的 Bean。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Bean</span><br><span class="line">public MyComponent myComponent() &#123;</span><br><span class="line">    return new MyComponent();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>@ComponentScan：指定要扫描的包，以查找带有@Component、@Service、@Repository和@Controller注解的类，并将它们注册为 Spring Bean。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">@ComponentScan(basePackages = &quot;com.example&quot;)</span><br><span class="line">public class AppConfig &#123;</span><br><span class="line">    // 配置类内容</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>@Primary：标记一个 Bean 为首选 Bean，当有多个候选 Bean 时，Spring 会优先注入带有@Primary注解的 Bean。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">@Primary</span><br><span class="line">public class PrimaryBean implements Dependency &#123;</span><br><span class="line">    // 实现</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>@Scope：指定 Bean 的作用域，例如单例（singleton）、原型（prototype）等。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">@Scope(&quot;prototype&quot;)</span><br><span class="line">public class PrototypeBean &#123;</span><br><span class="line">    // 实现</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="特定用途注解"><a href="#特定用途注解" class="headerlink" title="特定用途注解"></a>特定用途注解</h2><p>@Service：标记一个类为服务层组件，实际上是@Component的特殊化。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Service</span><br><span class="line">public class MyService &#123;</span><br><span class="line">    // 服务逻辑</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>@Repository：标记一个类为数据访问层组件，实际上是@Component的特殊化，并且支持持久化异常转换。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Repository</span><br><span class="line">public class MyRepository &#123;</span><br><span class="line">    // 数据访问逻辑</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>@Controller：标记一个类为 Spring MVC 控制器，实际上是@Component的特殊化</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Controller</span><br><span class="line">public class MyController &#123;</span><br><span class="line">    // 控制器逻辑</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>@RestController：标记一个类为 RESTful Web 服务的控制器，等同于@Controller和@ResponseBody的组合。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@RestController</span><br><span class="line">public class MyRestController &#123;</span><br><span class="line">    @GetMapping(&quot;/hello&quot;)</span><br><span class="line">    public String hello() &#123;</span><br><span class="line">        return &quot;Hello, World!&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="AOP（面向切面编程）相关注解"><a href="#AOP（面向切面编程）相关注解" class="headerlink" title="AOP（面向切面编程）相关注解"></a>AOP（面向切面编程）相关注解</h2><p>@Aspect：标记一个类为切面类。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Aspect</span><br><span class="line">@Component</span><br><span class="line">public class MyAspect &#123;</span><br><span class="line">    // 切面逻辑</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>@Before：定义一个方法，在目标方法执行之前执行。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@Aspect</span><br><span class="line">@Component</span><br><span class="line">public class MyAspect &#123;</span><br><span class="line">    @Before(&quot;execution(* com.example.service.*.*(..))&quot;)</span><br><span class="line">    public void beforeMethod(JoinPoint joinPoint) &#123;</span><br><span class="line">        // 前置逻辑</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>@After：定义一个方法，在目标方法执行之后执行。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@Aspect</span><br><span class="line">@Component</span><br><span class="line">public class MyAspect &#123;</span><br><span class="line">    @After(&quot;execution(* com.example.service.*.*(..))&quot;)</span><br><span class="line">    public void afterMethod(JoinPoint joinPoint) &#123;</span><br><span class="line">        // 后置逻辑</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>@Around：定义一个方法，包围目标方法的执行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@Aspect</span><br><span class="line">@Component</span><br><span class="line">public class MyAspect &#123;</span><br><span class="line">    @Around(&quot;execution(* com.example.service.*.*(..))&quot;)</span><br><span class="line">    public Object aroundMethod(ProceedingJoinPoint joinPoint) throws Throwable &#123;</span><br><span class="line">        // 环绕逻辑</span><br><span class="line">        return joinPoint.proceed();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="事务管理相关注解"><a href="#事务管理相关注解" class="headerlink" title="事务管理相关注解"></a>事务管理相关注解</h2><p>@Transactional：标记一个方法或类，表示该方法或类中的所有方法都需要事务管理。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Service</span><br><span class="line">public class MyService &#123;</span><br><span class="line">    @Transactional</span><br><span class="line">    public void performTransaction() &#123;</span><br><span class="line">        // 事务逻辑</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/22/%E7%AC%94%E8%AE%B0/MyBatis%E6%8B%A6%E6%88%AA%E5%99%A8%E5%AE%9E%E7%8E%B0%E5%88%86%E8%A1%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -553,8 +317,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -761,8 +525,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -978,8 +742,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -1229,8 +993,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -1439,8 +1203,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -1648,8 +1412,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -1861,8 +1625,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -2047,8 +1811,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -2283,8 +2047,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -2491,8 +2255,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -2714,8 +2478,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -2916,8 +2680,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -3149,8 +2913,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -3374,8 +3138,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -3575,8 +3339,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -3833,8 +3597,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -4038,8 +3802,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -4253,8 +4017,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -4453,8 +4217,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -4583,6 +4347,223 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E5%B8%B8%E8%A7%81%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98%E5%92%8C%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88_/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E5%B8%B8%E8%A7%81%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98%E5%92%8C%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88_/" itemprop="url">redis 常见性能问题和解决方案</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-02-11T13:33:41+00:00">
+                2025-02-11
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌redis常见性能问题和解决方案"><a href="#👌redis常见性能问题和解决方案" class="headerlink" title="👌redis常见性能问题和解决方案?"></a>👌redis常见性能问题和解决方案?</h1><h1 id="口语化回答"><a href="#口语化回答" class="headerlink" title="口语化回答"></a>口语化回答</h1><p>好的，面试官，redis 常见性能问题主要有内存空间不足，大 key 问题，阻塞操作等等。像内存空间问题，主要发生在大规模的数据量下产生，针对这种我们可以采取数据结构层面的优化，或者集群模式的水平扩。大 key 问题一般就是最初设计的时候，没有考虑清楚，导致业务日积月累，一个小的 key 变成了大 key。会导致我们的性能下降，耗时增加，这种需要从根上进行业务的梳理和处理拆分。还有就是阻塞，如果执行一些 keys 命令会大致阻塞，生产要避免进行这些操作。以上</p>
+<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>这道题大家主要是从以下的几个问题中，选取常见的 3 个即可。建议大家选择空间不足，大 key 和阻塞，这三点比较好回答，也好解释和扩展。</p>
+<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>内存不足，大 key，阻塞，网络延迟，慢查询，持久化性能</p>
+<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="问题一、redis-内存空间不足"><a href="#问题一、redis-内存空间不足" class="headerlink" title="问题一、redis 内存空间不足"></a>问题一、redis 内存空间不足</h2><p>****由于Redis的数据存储在内存中，当数据量增大时，可能会出现内存不足的情况，导致性能下降或服务不可用。</p>
+<p><strong>解决方案</strong>：</p>
+<p><strong>内存优化</strong>：使用更高效的数据结构（如哈希表、压缩列表）来存储数据，减少内存占用。</p>
+<p><strong>水平扩展</strong>：使用Redis集群模式，将数据分片存储在多个节点上，扩展内存容量。</p>
+<h2 id="问题二、redis-的大-key"><a href="#问题二、redis-的大-key" class="headerlink" title="问题二、redis 的大 key"></a>问题二、redis 的大 key</h2><p>****某些键可能存储了大量数据（如大列表、大哈希表），操作这些大键可能导致阻塞，影响性能。</p>
+<p><strong>解决方案</strong>：</p>
+<p><strong>拆分大键</strong>：将大键拆分成多个小键，减少单个键的操作时间。</p>
+<p><strong>分批处理</strong>：对于需要迭代处理的大键，使用SCAN、SSCAN、HSCAN、ZSCAN等命令进行分批处理，避免单次操作时间过长。</p>
+<p><strong>监控和预警</strong>：定期监控Redis中的大键，及时发现并处理。</p>
+<h2 id="问题三、阻塞操作"><a href="#问题三、阻塞操作" class="headerlink" title="问题三、阻塞操作"></a>问题三、阻塞操作</h2><p>某些Redis命令（如KEYS、FLUSHALL、SAVE等）会阻塞服务器，导致其他操作无法执行。</p>
+<p><strong>解决方案</strong>：</p>
+<p><strong>避免阻塞命令</strong>：尽量避免使用阻塞命令，使用非阻塞的替代命令（如SCAN代替KEYS）。</p>
+<p><strong>异步操作</strong>：对于需要执行的阻塞操作，尽量使用异步方式（如FLUSHALL ASYNC）。</p>
+<h2 id="问题四、网络延迟"><a href="#问题四、网络延迟" class="headerlink" title="问题四、网络延迟"></a>问题四、网络延迟</h2><p>Redis是基于TCP协议的网络服务，高网络延迟会影响Redis的性能。</p>
+<p><strong>解决方案</strong>：</p>
+<p><strong>本地部署</strong>：尽量将Redis服务器部署在与应用服务器同一内网，减少网络延迟。</p>
+<p><strong>连接池</strong>：使用连接池来复用Redis连接，减少连接建立和关闭的开销。</p>
+<h2 id="问题五、慢查询"><a href="#问题五、慢查询" class="headerlink" title="问题五、慢查询"></a>问题五、慢查询</h2><p>****某些复杂的查询或数据操作可能会导致Redis响应变慢，影响整体性能。</p>
+<p><strong>解决方案</strong>：</p>
+<p><strong>慢查询日志</strong>：启用Redis的慢查询日志功能，定期检查慢查询并优化。</p>
+<p><strong>索引优化</strong>：合理使用Redis的数据结构和索引，优化查询性能。</p>
+<h2 id="问题六、主从复制延迟"><a href="#问题六、主从复制延迟" class="headerlink" title="问题六、主从复制延迟"></a>问题六、主从复制延迟</h2><p>****在主从复制架构中，从服务器可能会因为网络或负载问题导致复制延迟，影响数据一致性。</p>
+<p><strong>解决方案</strong>：</p>
+<p><strong>优化网络</strong>：确保主从服务器之间的网络连接稳定，带宽充足。</p>
+<p><strong>调整复制参数</strong>：优化Redis的复制参数（如repl-backlog-size、repl-timeout等），减少复制延迟。</p>
+<p><strong>监控复制状态</strong>：定期监控主从复制状态，及时发现并处理延迟问题。</p>
+<h2 id="问题七、持久化性能问题"><a href="#问题七、持久化性能问题" class="headerlink" title="问题七、持久化性能问题"></a>问题七、持久化性能问题</h2><p>****Redis的持久化操作（如RDB快照和AOF日志）可能会影响性能，尤其是在大数据量或高并发情况下。</p>
+<p><strong>解决方案</strong>：</p>
+<p><strong>合理配置持久化策略</strong>：根据业务需求配置合理的持久化策略，平衡性能和数据安全性。</p>
+<p><strong>异步持久化</strong>：使用异步持久化方式（如AOF的fsync策略），减少对主线程的影响。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -4633,7 +4614,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">232</span>
+                <span class="site-state-item-count">231</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -4655,7 +4636,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-count">29</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>

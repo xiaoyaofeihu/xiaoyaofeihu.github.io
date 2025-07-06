@@ -270,223 +270,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E5%B8%B8%E8%A7%81%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98%E5%92%8C%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88_/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E5%B8%B8%E8%A7%81%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98%E5%92%8C%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88_/" itemprop="url">redis 常见性能问题和解决方案</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-02-11T13:33:41+00:00">
-                2025-02-11
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌redis常见性能问题和解决方案"><a href="#👌redis常见性能问题和解决方案" class="headerlink" title="👌redis常见性能问题和解决方案?"></a>👌redis常见性能问题和解决方案?</h1><h1 id="口语化回答"><a href="#口语化回答" class="headerlink" title="口语化回答"></a>口语化回答</h1><p>好的，面试官，redis 常见性能问题主要有内存空间不足，大 key 问题，阻塞操作等等。像内存空间问题，主要发生在大规模的数据量下产生，针对这种我们可以采取数据结构层面的优化，或者集群模式的水平扩。大 key 问题一般就是最初设计的时候，没有考虑清楚，导致业务日积月累，一个小的 key 变成了大 key。会导致我们的性能下降，耗时增加，这种需要从根上进行业务的梳理和处理拆分。还有就是阻塞，如果执行一些 keys 命令会大致阻塞，生产要避免进行这些操作。以上</p>
-<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>这道题大家主要是从以下的几个问题中，选取常见的 3 个即可。建议大家选择空间不足，大 key 和阻塞，这三点比较好回答，也好解释和扩展。</p>
-<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>内存不足，大 key，阻塞，网络延迟，慢查询，持久化性能</p>
-<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="问题一、redis-内存空间不足"><a href="#问题一、redis-内存空间不足" class="headerlink" title="问题一、redis 内存空间不足"></a>问题一、redis 内存空间不足</h2><p>****由于Redis的数据存储在内存中，当数据量增大时，可能会出现内存不足的情况，导致性能下降或服务不可用。</p>
-<p><strong>解决方案</strong>：</p>
-<p><strong>内存优化</strong>：使用更高效的数据结构（如哈希表、压缩列表）来存储数据，减少内存占用。</p>
-<p><strong>水平扩展</strong>：使用Redis集群模式，将数据分片存储在多个节点上，扩展内存容量。</p>
-<h2 id="问题二、redis-的大-key"><a href="#问题二、redis-的大-key" class="headerlink" title="问题二、redis 的大 key"></a>问题二、redis 的大 key</h2><p>****某些键可能存储了大量数据（如大列表、大哈希表），操作这些大键可能导致阻塞，影响性能。</p>
-<p><strong>解决方案</strong>：</p>
-<p><strong>拆分大键</strong>：将大键拆分成多个小键，减少单个键的操作时间。</p>
-<p><strong>分批处理</strong>：对于需要迭代处理的大键，使用SCAN、SSCAN、HSCAN、ZSCAN等命令进行分批处理，避免单次操作时间过长。</p>
-<p><strong>监控和预警</strong>：定期监控Redis中的大键，及时发现并处理。</p>
-<h2 id="问题三、阻塞操作"><a href="#问题三、阻塞操作" class="headerlink" title="问题三、阻塞操作"></a>问题三、阻塞操作</h2><p>某些Redis命令（如KEYS、FLUSHALL、SAVE等）会阻塞服务器，导致其他操作无法执行。</p>
-<p><strong>解决方案</strong>：</p>
-<p><strong>避免阻塞命令</strong>：尽量避免使用阻塞命令，使用非阻塞的替代命令（如SCAN代替KEYS）。</p>
-<p><strong>异步操作</strong>：对于需要执行的阻塞操作，尽量使用异步方式（如FLUSHALL ASYNC）。</p>
-<h2 id="问题四、网络延迟"><a href="#问题四、网络延迟" class="headerlink" title="问题四、网络延迟"></a>问题四、网络延迟</h2><p>Redis是基于TCP协议的网络服务，高网络延迟会影响Redis的性能。</p>
-<p><strong>解决方案</strong>：</p>
-<p><strong>本地部署</strong>：尽量将Redis服务器部署在与应用服务器同一内网，减少网络延迟。</p>
-<p><strong>连接池</strong>：使用连接池来复用Redis连接，减少连接建立和关闭的开销。</p>
-<h2 id="问题五、慢查询"><a href="#问题五、慢查询" class="headerlink" title="问题五、慢查询"></a>问题五、慢查询</h2><p>****某些复杂的查询或数据操作可能会导致Redis响应变慢，影响整体性能。</p>
-<p><strong>解决方案</strong>：</p>
-<p><strong>慢查询日志</strong>：启用Redis的慢查询日志功能，定期检查慢查询并优化。</p>
-<p><strong>索引优化</strong>：合理使用Redis的数据结构和索引，优化查询性能。</p>
-<h2 id="问题六、主从复制延迟"><a href="#问题六、主从复制延迟" class="headerlink" title="问题六、主从复制延迟"></a>问题六、主从复制延迟</h2><p>****在主从复制架构中，从服务器可能会因为网络或负载问题导致复制延迟，影响数据一致性。</p>
-<p><strong>解决方案</strong>：</p>
-<p><strong>优化网络</strong>：确保主从服务器之间的网络连接稳定，带宽充足。</p>
-<p><strong>调整复制参数</strong>：优化Redis的复制参数（如repl-backlog-size、repl-timeout等），减少复制延迟。</p>
-<p><strong>监控复制状态</strong>：定期监控主从复制状态，及时发现并处理延迟问题。</p>
-<h2 id="问题七、持久化性能问题"><a href="#问题七、持久化性能问题" class="headerlink" title="问题七、持久化性能问题"></a>问题七、持久化性能问题</h2><p>****Redis的持久化操作（如RDB快照和AOF日志）可能会影响性能，尤其是在大数据量或高并发情况下。</p>
-<p><strong>解决方案</strong>：</p>
-<p><strong>合理配置持久化策略</strong>：根据业务需求配置合理的持久化策略，平衡性能和数据安全性。</p>
-<p><strong>异步持久化</strong>：使用异步持久化方式（如AOF的fsync策略），减少对主线程的影响。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E7%9A%84%E5%86%85%E5%AD%98%E7%94%A8%E5%AE%8C%E4%BA%86%E4%BC%9A%E5%8F%91%E7%94%9F%E4%BB%80%E4%B9%88%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -534,8 +317,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -755,8 +538,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -957,8 +740,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -1231,8 +1014,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -1434,8 +1217,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -1628,8 +1411,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -1820,8 +1603,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -2052,8 +1835,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -2258,8 +2041,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -2507,8 +2290,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -2725,8 +2508,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -2947,8 +2730,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -3161,8 +2944,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -3396,8 +3179,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -3594,8 +3377,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -3821,8 +3604,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -4019,8 +3802,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -4220,8 +4003,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -4426,8 +4209,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-06-22T09:27:59+00:00">
-                2025-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
               </time>
             
           </span>
@@ -4580,6 +4363,205 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E7%9A%84%E6%B7%BB%E5%8A%A0%E4%B8%8E%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0%E4%B8%BA%E4%BB%80%E4%B9%88%E6%85%A2%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/ArrayList%E7%9A%84%E6%B7%BB%E5%8A%A0%E4%B8%8E%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0%E4%B8%BA%E4%BB%80%E4%B9%88%E6%85%A2%EF%BC%9F/" itemprop="url">ArrayList的添加与删除元素为什么慢</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+                2025-07-06
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌ArrayList的添加与删除元素为什么慢？"><a href="#👌ArrayList的添加与删除元素为什么慢？" class="headerlink" title="👌ArrayList的添加与删除元素为什么慢？"></a>👌ArrayList的添加与删除元素为什么慢？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>主要是由于其内部实现基于数组的特性所导致的。</p>
+<p>ArrayList的添加与删除操作慢，主要是因为其内部实现基于数组，而数组在插入和删除元素时需要移动其他元素来保证连续性和顺序性，这个过程需要耗费较多的时间。</p>
+<p>相对于基于链表的数据结构（如LinkedList），ArrayList的插入和删除操作的时间复杂度是O(n)级别的，而链表的时间复杂度为O(1)。</p>
+<h2 id="添加元素"><a href="#添加元素" class="headerlink" title="添加元素"></a>添加元素</h2><p><strong>尾部添加</strong>：</p>
+<p>当在ArrayList的尾部添加元素时，如果当前数组的容量还未达到最大值，只需要将新元素添加到数组的末尾即可，此时时间复杂度为O(1)。</p>
+<p>但是，当数组容量已满时，需要进行扩容操作。扩容操作通常会将数组的容量增加到当前容量的1.5倍或2倍，并将原数组中的所有元素复制到新的更大的数组中。这一过程的时间复杂度为O(n)，其中n为当前数组中的元素数量。</p>
+<p><strong>指定位置插入</strong>：</p>
+<p>当在ArrayList的指定位置（非尾部）插入元素时，需要将目标位置之后的所有元素向后移动一个位置，然后将新元素插入到指定位置。这个过程涉及到移动元素的操作，时间复杂度为O(n)，在最坏情况下，如头部插入，需要移动所有的元素。</p>
+<h2 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h2><p><strong>尾部删除</strong>：</p>
+<p>当删除的元素位于列表末尾时，只需要将末尾元素移除即可，时间复杂度为O(1)。</p>
+<p><strong>指定位置删除</strong>：</p>
+<p>当在ArrayList的指定位置（非尾部）删除元素时，需要将删除点之后的所有元素向前移动一个位置，以填补被删除元素的位置。这个过程同样涉及到移动元素的操作，时间复杂度为O(n)，在最坏情况下，如头部删除，需要移动除了被删除元素之外的所有元素。</p>
+<blockquote>
+<p>&#x2F;ngcbam50s7fa0twf&gt;</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -4630,7 +4612,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">232</span>
+                <span class="site-state-item-count">231</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -4652,7 +4634,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-count">29</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
