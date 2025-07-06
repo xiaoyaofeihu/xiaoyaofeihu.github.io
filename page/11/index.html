@@ -270,6 +270,233 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/%E5%9F%BA%E7%A1%80/%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%96%B9%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/10/%E5%9F%BA%E7%A1%80/%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%96%B9%E5%BC%8F/" itemprop="url">创建线程的方式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-10T17:33:00+00:00">
+                2024-10-10
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
+                2025-07-06
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ol>
+<li><p><strong>继承<code>Thread</code>类创建线程</strong>：</p>
+<ul>
+<li>这种方式是通过创建一个新的类，该类继承自<code>Thread</code>类，并重写<code>run</code>方法。然后，通过创建该类的实例并调用其<code>start</code>方法来启动线程。</li>
+<li>优点：代码简单，易于理解。</li>
+<li>缺点：由于Java是单继承的，继承<code>Thread</code>类后就不能再继承其他类了，这在一定程度上限制了类的扩展性。</li>
+</ul>
+</li>
+<li><p><strong>实现<code>Runnable</code>接口创建线程</strong>：</p>
+<ul>
+<li>这种方式是通过创建一个实现了<code>Runnable</code>接口的类，并实现其<code>run</code>方法。然后，将该类的实例作为参数传递给<code>Thread</code>类的构造器，创建<code>Thread</code>对象并调用其<code>start</code>方法来启动线程。</li>
+<li>优点：由于Java支持接口的多实现，因此这种方式更具灵活性，可以继承其他类并实现<code>Runnable</code>接口。</li>
+<li>缺点：相对于继承<code>Thread</code>类，代码稍显复杂。</li>
+</ul>
+</li>
+<li><p><strong>通过<code>Callable</code>和<code>FutureTask</code>创建线程</strong>：</p>
+<ul>
+<li><code>Callable</code>接口类似于<code>Runnable</code>接口，但它可以返回结果并且可以抛出受检异常（checked exception）。</li>
+<li><code>FutureTask</code>是<code>Future</code>接口的一个实现，它包装了一个<code>Callable</code>对象，可以提交给<code>Executor</code>（如线程池）来执行。</li>
+<li>这种方式通常用于需要获取线程执行结果或处理受检异常的场景。</li>
+</ul>
+</li>
+<li><p><strong>通过线程池创建线程</strong>：</p>
+<ul>
+<li>线程池是提前创建好一批线程，并保存在池中。当有任务需要执行时，从池中取出一个线程来执行任务。这种方式可以显著提高资源的利用率和性能。</li>
+<li>Java中的<code>ExecutorService</code>接口提供了管理线程池的方法，如<code>newFixedThreadPool</code>、<code>newCachedThreadPool</code>等。</li>
+<li>优点：提高资源利用率、性能；简化线程管理。</li>
+<li>缺点：增加了代码的复杂性；需要合理配置线程池的大小以避免资源耗尽或性能下降。</li>
+</ul>
+</li>
+</ol>
+<p>关于<code>Runnable</code>和<code>Callable</code>的区别：</p>
+<ul>
+<li><code>Runnable</code>的<code>run</code>方法无返回值，而<code>Callable</code>的<code>call</code>方法有返回值。</li>
+<li><code>Callable</code>中可以抛出受检异常，而<code>Runnable</code>不可以。</li>
+<li><code>Callable</code>和<code>Runnable</code>都可以应用于<code>executors</code>（执行器），但<code>Thread</code>类只支持<code>Runnable</code>。</li>
+</ul>
+<p>关于<code>Future</code>和<code>FutureTask</code>：</p>
+<ul>
+<li><code>Future</code>是一个接口，代表了一个异步执行的结果。它提供了检查执行是否完成、等待完成和获取执行结果的方法。</li>
+<li><code>FutureTask</code>是<code>Future</code>接口的一个实现，它实现了一个可以提交给<code>Executor</code>执行的任务，并且可以用来检查任务的执行状态和获取任务的执行结果。</li>
+</ul>
+<p>最后，线程池是池化技术的一种典型实现，用于提高资源的利用率和性能。在编程中，线程池通常用于管理大量并发任务的执行。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/%E5%9F%BA%E7%A1%80/%E5%B9%B6%E5%8F%91/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,7 +544,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
                 2025-07-06
               </time>
             
@@ -677,7 +904,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
                 2025-07-06
               </time>
             
@@ -900,7 +1127,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
                 2025-07-06
               </time>
             
@@ -1130,7 +1357,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
                 2025-07-06
               </time>
             
@@ -1350,7 +1577,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
                 2025-07-06
               </time>
             
@@ -1575,7 +1802,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
                 2025-07-06
               </time>
             
@@ -1803,7 +2030,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
                 2025-07-06
               </time>
             
@@ -2021,7 +2248,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
                 2025-07-06
               </time>
             
@@ -2253,7 +2480,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
                 2025-07-06
               </time>
             
@@ -2447,7 +2674,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
                 2025-07-06
               </time>
             
@@ -2651,7 +2878,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
                 2025-07-06
               </time>
             
@@ -2869,7 +3096,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
                 2025-07-06
               </time>
             
@@ -3112,7 +3339,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
                 2025-07-06
               </time>
             
@@ -3319,7 +3546,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
                 2025-07-06
               </time>
             
@@ -3545,7 +3772,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
                 2025-07-06
               </time>
             
@@ -3746,7 +3973,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
                 2025-07-06
               </time>
             
@@ -3947,7 +4174,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
                 2025-07-06
               </time>
             
@@ -4164,7 +4391,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
                 2025-07-06
               </time>
             
@@ -4360,7 +4587,7 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
                 2025-07-06
               </time>
             
@@ -4484,190 +4711,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2022/07/31/%E7%AC%94%E8%AE%B0/Date%E8%8E%B7%E5%8F%967%E5%A4%A9%E5%90%8E%E7%9A%84%E6%97%A5%E6%9C%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2022/07/31/%E7%AC%94%E8%AE%B0/Date%E8%8E%B7%E5%8F%967%E5%A4%A9%E5%90%8E%E7%9A%84%E6%97%A5%E6%9C%9F/" itemprop="url">Date获取7天后的日期</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-07-31T13:33:41+00:00">
-                2022-07-31
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:00:36+00:00">
-                2025-07-06
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1、 DateUtils.addDays();</span><br><span class="line">2、 private static Date getAfterDay(Date date, int diff) &#123;</span><br><span class="line">        Calendar calendar = Calendar.getInstance();</span><br><span class="line">        calendar.setTime(date == null ? new Date() : date);</span><br><span class="line">        calendar.add(Calendar.DATE, diff);</span><br><span class="line">        return calendar.getTime();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4718,7 +4761,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">231</span>
+                <span class="site-state-item-count">232</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -4729,7 +4772,7 @@
             
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">19</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
