@@ -270,6 +270,640 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/06/redis/%E7%9C%8B%E9%97%A8%E7%8B%97%E6%9C%BA%E5%88%B6%E7%9A%84%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/05/06/redis/%E7%9C%8B%E9%97%A8%E7%8B%97%E6%9C%BA%E5%88%B6%E7%9A%84%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/" itemprop="url">👌看门狗机制的原理是什么？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-05-06T13:33:41+00:00">
+                2025-05-06
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Redis/" itemprop="url" rel="index">
+                    <span itemprop="name">Redis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌看门狗机制的原理是什么？"><a href="#👌看门狗机制的原理是什么？" class="headerlink" title="👌看门狗机制的原理是什么？"></a>👌看门狗机制的原理是什么？</h1><h1 id="口语化答案"><a href="#口语化答案" class="headerlink" title="口语化答案"></a>口语化答案</h1><p>在我们平常使用分布式锁的时候，一般会设置一个锁的过期时间，那么如果锁过期的时候，业务还没执行完怎么办，于是就有了看门狗。看门狗机制是一种用于自动续约分布式锁的机制，确保在持有锁的客户端处理完业务逻辑之前，锁不会过期。当客户端获取到锁时，会在 Redis 中设置一个键和一个过期时间（默认30秒）。同时，Redisson 会启动一个后台任务，这个任务会定期检查锁的状态。看门狗任务会每隔一段时间，默认是锁的过期时间的1&#x2F;3，即10秒，检查锁的状态。如果锁仍然被持有，看门狗任务会将锁的过期时间重置为初始值。这样，锁的过期时间不断被延长，直到客户端明确释放锁或者客户端挂掉。以上。</p>
+<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>看门狗机制非常常问，一旦问到分布式锁的问题，就会产生这个问题，当你说出异常情况下，传统的分布式锁，采取过期时间释放，防止死锁的时候，就会引入到这个问题。</p>
+<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>后台任务续约，高可靠，自动管理</p>
+<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>Redisson 的看门狗机制是一种用于自动续约分布式锁的机制，确保在持有锁的客户端处理完业务逻辑之前，锁不会过期。比如，我们平时使用分布式锁的时候，一般会设置一个锁的过期时间，那么如果锁过期的时候，业务还没执行完怎么办，于是就有了看门狗。</p>
+<h2 id="看门狗机制的原理"><a href="#看门狗机制的原理" class="headerlink" title="看门狗机制的原理"></a>看门狗机制的原理</h2><p><strong>初始锁定</strong>：</p>
+<p>当客户端获取到锁时，会在 Redis 中设置一个键（代表锁）和一个过期时间（默认30秒）。同时，Redisson 会启动一个后台任务（看门狗），这个任务会定期检查锁的状态。</p>
+<p><strong>自动续约</strong>：</p>
+<p>看门狗任务会每隔一段时间（默认是锁的过期时间的1&#x2F;3，即10秒）检查锁的状态。如果锁仍然被持有（即客户端还在持有锁且没有释放），看门狗任务会将锁的过期时间重置为初始值（例如，再次设置为30秒）。这样，锁的过期时间不断被延长，直到客户端明确释放锁或者客户端挂掉。</p>
+<p><strong>释放锁</strong>：</p>
+<p>当客户端完成业务逻辑后，会显式地调用<code>unlock()</code>方法释放锁。一旦锁被释放，看门狗任务会停止续约，锁在 Redis 中的键会被删除或自然过期。</p>
+<h3 id="看门狗机制的工作流程"><a href="#看门狗机制的工作流程" class="headerlink" title="看门狗机制的工作流程"></a>看门狗机制的工作流程</h3><p><strong>获取锁</strong>：客户端请求获取锁，Redis 中创建一个键表示锁，并设置一个过期时间（例如30秒）。启动看门狗任务，定期检查锁的状态。</p>
+<p><strong>定期续约</strong>：看门狗任务每隔一定时间（例如10秒）检查锁的状态。如果锁仍然被持有（即客户端还在处理业务逻辑），看门狗任务会重置锁的过期时间（例如，再次设置为30秒）。</p>
+<p><strong>锁的释放</strong>：客户端业务逻辑完成后，调用<code>unlock()</code>方法释放锁。看门狗任务停止续约，锁在 Redis 中的键被删除或自然过期。</p>
+<h3 id="看门狗机制的优势"><a href="#看门狗机制的优势" class="headerlink" title="看门狗机制的优势"></a>看门狗机制的优势</h3><p><strong>高可靠性</strong>：通过自动续约机制，确保锁在持有者处理完业务逻辑之前不会过期，避免了锁意外过期导致的并发问题。</p>
+<p><strong>自动管理</strong>：无需手动续约锁的过期时间，简化了分布式锁的使用和管理。</p>
+<p><strong>容错性</strong>：如果客户端在持有锁期间崩溃或断开连接，锁会在过期时间后自动释放，避免了死锁问题。</p>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.redisson.api.RLock;</span><br><span class="line"><span class="keyword">import</span> org.redisson.api.RedissonClient;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeUnit;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RedissonLockExample</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">RedissonClient</span> <span class="variable">redissonClient</span> <span class="operator">=</span> RedissonConfig.createClient();</span><br><span class="line">        <span class="type">RLock</span> <span class="variable">lock</span> <span class="operator">=</span> redissonClient.getLock(<span class="string">&quot;myLock&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 尝试获取锁，等待时间为100秒，锁的过期时间为10秒</span></span><br><span class="line">            <span class="keyword">if</span> (lock.tryLock(<span class="number">100</span>, <span class="number">10</span>, TimeUnit.SECONDS)) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="comment">// 业务逻辑</span></span><br><span class="line">                    System.out.println(<span class="string">&quot;Lock acquired, executing business logic&quot;</span>);</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// 模拟长时间运行的任务</span></span><br><span class="line">                    Thread.sleep(<span class="number">20000</span>);</span><br><span class="line"></span><br><span class="line">                &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                    lock.unlock();</span><br><span class="line">                    System.out.println(<span class="string">&quot;Lock released&quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;Could not acquire lock&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            redissonClient.shutdown();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/05/redis/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E7%89%B9%E7%82%B9%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/05/05/redis/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E7%89%B9%E7%82%B9%EF%BC%9F/" itemprop="url">👌分布式锁的特点？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-05-05T13:33:41+00:00">
+                2025-05-05
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Redis/" itemprop="url" rel="index">
+                    <span itemprop="name">Redis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌分布式锁的特点？"><a href="#👌分布式锁的特点？" class="headerlink" title="👌分布式锁的特点？"></a>👌分布式锁的特点？</h1><p> 实现，zookeeper 的实现。数据库的实现方案基本不常见，这种方式性能很低，还容易影响业务。redis 比较常见使用，主要是用 setnx 的特性来做。成功 set 进去，意味着上锁成功。失败意味着没有获取到锁，业务执行完成后，在通过 del 来释放锁。一般会配合看门狗机制，来做异常的续约处理。以上。</p>
+<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>分布式锁主要有三个特点，是我们要时刻进行注意的。</p>
+<ol>
+<li><strong>互斥性</strong>：在某一时刻，只有一个客户端可以持有锁。</li>
+<li><strong>容错性</strong>：即使某个持有锁的客户端崩溃或失去连接，锁也能够被其他客户端重新获取。</li>
+<li><strong>高可用性</strong>：锁服务需要高可用，通常需要在分布式环境中实现。</li>
+</ol>
+<h2 id="分布式锁的实现方式"><a href="#分布式锁的实现方式" class="headerlink" title="分布式锁的实现方式"></a>分布式锁的实现方式</h2><h3 id="基于数据库"><a href="#基于数据库" class="headerlink" title="基于数据库"></a>基于数据库</h3><p>使用数据库的SELECT … FOR UPDATE 语句或类似的行级锁机制来实现分布式锁。优点是实现简单，缺点是性能较低，依赖于数据库的高可用性。高并发情况下也会对数据库造成非常大的压力。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-- 获取锁</span><br><span class="line">SELECT * FROM locks WHERE resource = &#x27;resource_name&#x27; FOR UPDATE;</span><br><span class="line"></span><br><span class="line">-- 释放锁</span><br><span class="line">DELETE FROM locks WHERE resource = &#x27;resource_name&#x27;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="基于-Redis"><a href="#基于-Redis" class="headerlink" title="基于 Redis"></a>基于 Redis</h2><p>Redis 提供了原子操作和高性能的特性，非常适合用来实现分布式锁。通常使用SETNX命令来实现。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 获取锁</span><br><span class="line">String result = jedis.set(&quot;lock_key&quot;, &quot;lock_value&quot;, &quot;NX&quot;, &quot;PX&quot;, 30000);</span><br><span class="line">if (&quot;OK&quot;.equals(result)) &#123;</span><br><span class="line">    // 锁获取成功</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 释放锁</span><br><span class="line">if (lock_value.equals(jedis.get(&quot;lock_key&quot;))) &#123;</span><br><span class="line">    jedis.del(&quot;lock_key&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="基于-Zookeeper"><a href="#基于-Zookeeper" class="headerlink" title="基于 Zookeeper"></a>基于 Zookeeper</h2><p>Zookeeper 提供了分布式协调服务，可以用来实现分布式锁。通过创建临时顺序节点来实现锁机制。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 创建一个临时顺序节点</span><br><span class="line">String path = zookeeper.create(&quot;/locks/lock-&quot;, null, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL);</span><br><span class="line"></span><br><span class="line">// 检查是否获取到锁</span><br><span class="line">List&lt;String&gt; children = zookeeper.getChildren(&quot;/locks&quot;, false);</span><br><span class="line">Collections.sort(children);</span><br><span class="line">if (path.equals(&quot;/locks/&quot; + children.get(0))) &#123;</span><br><span class="line">    // 获取到锁</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="分布式锁的使用场景"><a href="#分布式锁的使用场景" class="headerlink" title="分布式锁的使用场景"></a>分布式锁的使用场景</h2><ol>
+<li><strong>分布式事务</strong>：在分布式系统中，需要确保多个节点上的操作在同一事务中执行。</li>
+<li><strong>资源共享</strong>：如分布式系统中的限流、分布式任务调度等场景。</li>
+<li><strong>数据一致性</strong>：在多个节点并发访问同一资源时，确保数据一致性。</li>
+</ol>
+<h2 id="分布式锁的常见常见问题"><a href="#分布式锁的常见常见问题" class="headerlink" title="分布式锁的常见常见问题"></a>分布式锁的常见常见问题</h2><ol>
+<li><strong>死锁</strong>：如果某个节点在持有锁期间崩溃或失去连接，可能会导致其他节点无法获取锁。</li>
+<li><strong>性能</strong>：分布式锁的实现需要考虑性能问题，尤其是在高并发场景下。</li>
+<li><strong>可靠性</strong>：锁服务需要高可用，通常需要在分布式环境中实现。</li>
+</ol>
+<h2 id="分布式锁的改进"><a href="#分布式锁的改进" class="headerlink" title="分布式锁的改进"></a>分布式锁的改进</h2><ol>
+<li><strong>锁过期时间</strong>：设置锁的过期时间，避免死锁问题。</li>
+<li><strong>租约机制</strong>：使用租约机制，定期续约锁，确保锁在持有期间不会被其他节点获取。</li>
+<li><strong>锁竞争优化</strong>：使用合适的锁竞争算法，减少锁竞争的开销。</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/04/JVM/JVM%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%9A%84%E6%8C%87%E9%92%88%E7%A2%B0%E6%92%9E%E4%B8%8E%E7%A9%BA%E9%97%B2%E5%88%97%E8%A1%A8%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/05/04/JVM/JVM%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%9A%84%E6%8C%87%E9%92%88%E7%A2%B0%E6%92%9E%E4%B8%8E%E7%A9%BA%E9%97%B2%E5%88%97%E8%A1%A8%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/" itemprop="url">👌JVM内存分配的指针碰撞与空闲列表是什么？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-05-04T13:33:41+00:00">
+                2025-05-04
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌JVM内存分配的指针碰撞与空闲列表是什么？"><a href="#👌JVM内存分配的指针碰撞与空闲列表是什么？" class="headerlink" title="👌JVM内存分配的指针碰撞与空闲列表是什么？"></a>👌JVM内存分配的指针碰撞与空闲列表是什么？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>指针碰撞（Bump-the-pointer）和空闲列表（Free-list）是两种常见的内存分配策略。</p>
+<h2 id="指针碰撞（Bump-the-pointer）"><a href="#指针碰撞（Bump-the-pointer）" class="headerlink" title="指针碰撞（Bump-the-pointer）"></a>指针碰撞（Bump-the-pointer）</h2><p>指针碰撞是一种高效的内存分配策略，适用于堆内存是连续且规整的情况。这种方法的基本思想是通过移动一个指针来分配内存。具体步骤如下：</p>
+<ol>
+<li><strong>内存布局</strong>：堆内存被划分为已使用的内存和空闲的内存，中间有一个指针（称为分配指针）作为分界线。</li>
+<li><strong>分配内存</strong>：当需要为新对象分配内存时，只需将分配指针向空闲内存方向移动一段与对象大小相等的距离。</li>
+<li><strong>更新指针</strong>：分配指针更新后，新的对象内存区域就被标记为已使用。</li>
+</ol>
+<p>这种方法的优点是分配速度非常快，只需简单的指针移动操作。然而，它的缺点是在堆内存不规整（例如存在内存碎片）的情况下无法使用。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">| 已使用内存 | 分配指针 | 空闲内存 |</span><br><span class="line">|------------|----------|----------|</span><br></pre></td></tr></table></figure>
+
+<p>当分配一个对象时，分配指针向右移动：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">| 已使用内存 | 已使用内存 | 分配指针 | 空闲内存 |</span><br><span class="line">|------------|------------|----------|----------|</span><br></pre></td></tr></table></figure>
+
+<h2 id="空闲列表（Free-list）"><a href="#空闲列表（Free-list）" class="headerlink" title="空闲列表（Free-list）"></a>空闲列表（Free-list）</h2><p>空闲列表是一种适用于堆内存不规整的情况下的内存分配策略。它通过维护一个列表来记录所有可用的空闲内存块。具体步骤如下：</p>
+<ol>
+<li><strong>空闲列表</strong>：JVM 维护一个空闲列表，记录所有可用的内存块及其大小。</li>
+<li><strong>查找空闲块</strong>：当需要为新对象分配内存时，JVM 会在空闲列表中查找一个足够大的内存块。</li>
+<li><strong>分配内存</strong>：找到合适的内存块后，将其从空闲列表中移除，并将其标记为已使用。如果内存块大于所需大小，可能会将剩余部分重新放回空闲列表中。</li>
+<li><strong>回收内存</strong>：当对象被垃圾回收器回收后，JVM 会将其内存块重新添加到空闲列表中。</li>
+</ol>
+<p>这种方法的优点是能够更好地利用内存，适用于内存碎片较多的情况。然而，它的缺点是分配速度较慢，因为需要在空闲列表中查找合适的内存块。</p>
+<h4 id><a href="#" class="headerlink" title></a></h4><p>假设空闲列表如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">空闲列表: [块1(大小: 32), 块2(大小: 64), 块3(大小: 128)]</span><br></pre></td></tr></table></figure>
+
+<p>当需要分配一个大小为 50 的对象时，JVM 会在空闲列表中查找：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">找到块2(大小: 64)</span><br></pre></td></tr></table></figure>
+
+<p>将块2分成两部分：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">分配块2的前50个单位，剩余部分重新放回空闲列表</span><br><span class="line">空闲列表: [块1(大小: 32), 块2剩余部分(大小: 14), 块3(大小: 128)]</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>指针碰撞（Bump-the-pointer）</strong>：适用于堆内存规整的情况，分配速度快，但不适用于内存碎片较多的情况。</p>
+<p><strong>空闲列表（Free-list）</strong>：适用于堆内存不规整的情况，能够更好地利用内存，但分配速度较慢。</p>
+<p>这两种内存分配策略各有优缺点，JVM 会根据具体情况选择合适的策略，以优化内存分配和垃圾回收的效率。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/04/JVM/jvm%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AE%97%E6%B3%95%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +951,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -516,8 +1150,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -723,8 +1357,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -930,8 +1564,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -1145,8 +1779,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -1334,8 +1968,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -1543,8 +2177,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -1751,8 +2385,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -1972,8 +2606,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -2183,8 +2817,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -2378,8 +3012,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -2580,8 +3214,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -2791,8 +3425,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -3007,8 +3641,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -3203,8 +3837,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -3402,8 +4036,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -3603,8 +4237,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -3780,660 +4414,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/04/27/JVM/JVM%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%97%B6%E5%80%99%EF%BC%8C%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E5%B9%B6%E5%8F%91%E5%A4%84%E7%90%86%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/04/27/JVM/JVM%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%97%B6%E5%80%99%EF%BC%8C%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E5%B9%B6%E5%8F%91%E5%A4%84%E7%90%86%EF%BC%9F/" itemprop="url">👌JVM创建对象的时候，如何进行并发处理？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-04-27T13:33:41+00:00">
-                2025-04-27
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌JVM创建对象的时候，如何进行并发处理？"><a href="#👌JVM创建对象的时候，如何进行并发处理？" class="headerlink" title="👌JVM创建对象的时候，如何进行并发处理？"></a>👌JVM创建对象的时候，如何进行并发处理？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>在 JVM 中，为了支持高效的并发处理，特别是在创建对象时，JVM 采用了多种技术和优化策略。这些技术和策略旨在确保在多线程环境下对象创建的安全性和效率。</p>
-<h2 id="TLAB（Thread-Local-Allocation-Buffers）"><a href="#TLAB（Thread-Local-Allocation-Buffers）" class="headerlink" title="TLAB（Thread-Local Allocation Buffers）"></a>TLAB（Thread-Local Allocation Buffers）</h2><p>TLAB 是 JVM 中的一种优化技术，用于减少线程间的内存分配冲突。每个线程都会被分配一个小的、私有的堆内存空间，称为 TLAB。对象首先尝试在 TLAB 中分配内存。如果 TLAB 中有足够的空间，内存分配可以在没有锁竞争的情况下完成，从而提高性能。</p>
-<h3 id="TLAB-工作流程"><a href="#TLAB-工作流程" class="headerlink" title="TLAB 工作流程"></a>TLAB 工作流程</h3><ol>
-<li><strong>分配 TLAB</strong>：每个线程在创建时都会被分配一个 TLAB。</li>
-<li><strong>对象分配</strong>：当线程需要分配对象时，首先尝试在其 TLAB 中分配内存。</li>
-<li><strong>TLAB 用尽</strong>：如果 TLAB 中没有足够的空间，线程会请求分配新的 TLAB。如果堆内存不足以分配新的 TLAB，线程将直接在全局堆中分配内存，这时可能需要进行同步操作。</li>
-</ol>
-<h2 id="锁机制"><a href="#锁机制" class="headerlink" title="锁机制"></a>锁机制</h2><p>在某些情况下，特别是当 TLAB 用尽或者需要直接在全局堆中分配内存时，JVM 需要使用锁机制来确保线程安全。常见的锁机制包括：</p>
-<p><strong>轻量级锁（Lightweight Locking）</strong>：通过使用 CAS（Compare-And-Swap）操作来实现快速锁定和解锁，适用于竞争不激烈的场景。</p>
-<p><strong>偏向锁（Biased Locking）</strong>：当锁倾向于被同一个线程持有时，JVM 会减少锁的开销，适用于单线程访问的情况。</p>
-<p><strong>重量级锁（Heavyweight Locking）</strong>：当锁竞争激烈时，JVM 会使用操作系统的互斥锁（如synchronized关键字），这会导致较高的开销。</p>
-<h2 id="并发垃圾回收器"><a href="#并发垃圾回收器" class="headerlink" title="并发垃圾回收器"></a>并发垃圾回收器</h2><p>并发垃圾回收器（如 G1、ZGC 和 Shenandoah）在进行垃圾回收时，尽量减少对应用线程的暂停时间。它们通过并发标记、并发清理和增量压缩等技术，确保在多线程环境下高效地管理堆内存。</p>
-<h2 id="内存屏障（Memory-Barriers）"><a href="#内存屏障（Memory-Barriers）" class="headerlink" title="内存屏障（Memory Barriers）"></a>内存屏障（Memory Barriers）</h2><p>JVM 使用内存屏障来确保内存操作的顺序性和可见性。内存屏障是一种低级同步原语，用于防止编译器和 CPU 重新排序内存操作，从而确保在多线程环境下的内存一致性。</p>
-<h2 id="CAS（Compare-And-Swap）"><a href="#CAS（Compare-And-Swap）" class="headerlink" title="CAS（Compare-And-Swap）"></a>CAS（Compare-And-Swap）</h2><p>CAS 是一种无锁的同步机制，广泛用于 JVM 的并发处理。它允许线程在不使用锁的情况下进行原子操作，从而提高并发性能。CAS 操作包括以下步骤：</p>
-<ol>
-<li><strong>读取内存位置的当前值</strong>。</li>
-<li><strong>比较当前值和预期值</strong>。</li>
-<li><strong>如果当前值等于预期值，则写入新值</strong>。</li>
-</ol>
-<p>如果在写入过程中发现当前值已被其他线程修改，CAS 操作会失败，线程可以选择重试或采取其他措施。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/04/27/JVM/JVM%E5%A0%86%E5%92%8C%E6%A0%88%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/04/27/JVM/JVM%E5%A0%86%E5%92%8C%E6%A0%88%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F/" itemprop="url">👌JVM堆和栈的区别？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-04-27T13:33:41+00:00">
-                2025-04-27
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌JVM堆和栈的区别？"><a href="#👌JVM堆和栈的区别？" class="headerlink" title="👌JVM堆和栈的区别？"></a>👌JVM堆和栈的区别？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>在 JVM（Java Virtual Machine）中，堆（Heap）和栈（Stack）是两种不同的内存区域，它们在内存管理和程序执行中扮演着不同的角色。</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>堆</th>
-<th>栈</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>存储内容</td>
-<td>用于存储所有的对象实例和数组，都在堆中分配内存。</td>
-<td>用于存储方法的局部变量、方法调用的参数和方法的调用信息（如返回地址）。每个线程都有自己的栈，栈中的数据与线程一一对应。</td>
-</tr>
-<tr>
-<td>内存管理方式</td>
-<td>由垃圾收集器进行自动管理，负责分配和回收对象内存。堆内存是全局共享的，所有线程都可以访问堆中的对象。</td>
-<td>由编译器自动管理，内存分配和释放按照方法调用的顺序进行。栈内存是线程私有的，每个线程都有自己的栈，互不干扰。</td>
-</tr>
-<tr>
-<td>生命周期</td>
-<td>对象在堆中的生命周期由垃圾收集器决定，只要有引用指向对象，对象就会存在。</td>
-<td></td>
-</tr>
-<tr>
-<td>对象的生命周期可以跨越多个方法调用，直到没有引用指向它时才会被垃圾收集器回收。</td>
-<td>局部变量的生命周期与方法调用的生命周期一致，方法调用结束时，栈帧被销毁，局部变量也随之销毁。</td>
-<td></td>
-</tr>
-<tr>
-<td>栈中的数据在方法调用结束后立即释放。</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>内存大小</td>
-<td>通常较大，可以通过 JVM 参数（如-Xms和-Xmx）进行配置。适合存储需要较长生命周期的大量对象。</td>
-<td>通常较小，每个线程的栈大小可以通过 JVM 参数（如-Xss）进行配置。适合存储短生命周期的小数据。</td>
-</tr>
-<tr>
-<td>线程安全</td>
-<td>由于是全局共享的，堆中的对象在多线程环境下需要进行同步控制，以避免线程安全问题。</td>
-<td>线程私有的，栈中的数据天然是线程安全的，不需要额外的同步控制。</td>
-</tr>
-<tr>
-<td>访问速度</td>
-<td>访问速度相对较慢，因为需要通过引用进行访问，并且涉及到垃圾收集器的管理。</td>
-<td>访问速度相对较快，因为栈中数据直接通过栈帧进行访问，且栈的内存分配和释放效率高。</td>
-</tr>
-<tr>
-<td>内存溢出</td>
-<td>如果堆内存不足，会抛出OutOfMemoryError（如java.lang.OutOfMemoryError: Java heap space）。</td>
-<td>如果栈内存不足，会抛出StackOverflowError（如java.lang.StackOverflowError）。</td>
-</tr>
-</tbody></table>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/04/27/JVM/JVM%E7%9A%84%E4%B8%89%E8%89%B2%E6%A0%87%E8%AE%B0%E7%AE%97%E6%B3%95%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E8%A7%A3%E5%86%B3%E4%BA%86%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/04/27/JVM/JVM%E7%9A%84%E4%B8%89%E8%89%B2%E6%A0%87%E8%AE%B0%E7%AE%97%E6%B3%95%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E8%A7%A3%E5%86%B3%E4%BA%86%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%EF%BC%9F/" itemprop="url">👌JVM的三色标记算法是什么？解决了什么问题？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-04-27T13:33:41+00:00">
-                2025-04-27
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌JVM的三色标记算法是什么？解决了什么问题？"><a href="#👌JVM的三色标记算法是什么？解决了什么问题？" class="headerlink" title="👌JVM的三色标记算法是什么？解决了什么问题？"></a>👌JVM的三色标记算法是什么？解决了什么问题？</h1><h1 id="口语化回答"><a href="#口语化回答" class="headerlink" title="口语化回答"></a>口语化回答</h1><p>三色标记算法通过颜色标记和处理队列，解决了并发垃圾收集过程中对象引用变化导致的标记不准确问题。它确保所有存活对象都能被正确标记，从而避免了存活对象被错误回收。同时，写屏障技术的使用进一步保证了颜色不变性，确保算法在并发环境下的正确性。</p>
-<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>三色标记算法是一种用于垃圾回收的标记算法，通过将对象分为三种颜色（白色、灰色和黑色）来管理垃圾收集过程。它主要解决了在并发垃圾收集过程中如何正确标记存活对象的问题，避免了遗漏存活对象或错误标记对象的情况。</p>
-<h2 id="三色标记算法的基本概念"><a href="#三色标记算法的基本概念" class="headerlink" title="三色标记算法的基本概念"></a>三色标记算法的基本概念</h2><p><strong>白色</strong>：表示对象尚未被垃圾收集器访问到。如果垃圾收集过程结束时对象仍然是白色，它将被视为不可达对象，随后被回收。</p>
-<p><strong>灰色</strong>：表示对象已被访问到，但其引用的对象尚未全部访问。灰色对象需要进一步扫描其引用的对象。</p>
-<p><strong>黑色</strong>：表示对象及其引用的对象都已被访问到。黑色对象不需要再扫描。</p>
-<h2 id="三色标记算法的工作流程"><a href="#三色标记算法的工作流程" class="headerlink" title="三色标记算法的工作流程"></a>三色标记算法的工作流程</h2><ol>
-<li><strong>初始化</strong>：所有对象开始时都是白色的。</li>
-<li><strong>标记根对象</strong>：将根对象（GC Roots）标记为灰色，并将它们放入一个待处理队列。</li>
-<li><strong>处理灰色对象</strong>：</li>
-</ol>
-<p>从队列中取出一个灰色对象，将其标记为黑色，将该对象引用的所有白色对象标记为灰色，并将这些灰色对象加入队列。</p>
-<ol start="4">
-<li><strong>重复步骤 3</strong>，直到队列为空。</li>
-<li><strong>清除白色对象</strong>：所有剩余的白色对象都是不可达的，可以被回收。</li>
-</ol>
-<h2 id="解决的问题"><a href="#解决的问题" class="headerlink" title="解决的问题"></a>解决的问题</h2><p>三色标记算法主要解决了以下问题：</p>
-<ol>
-<li><strong>并发标记的准确性</strong>：在并发垃圾收集过程中，应用线程可能会修改对象引用，导致垃圾收集器标记不准确。三色标记算法通过颜色标记和处理队列，确保所有存活对象都能被正确标记。</li>
-<li><strong>避免重复标记</strong>：通过将对象分为三种颜色，垃圾收集器能有效避免重复标记对象，提高标记效率。</li>
-<li><strong>处理对象引用变化</strong>：在并发标记阶段，应用线程可能会增加或删除对象引用。三色标记算法通过维护颜色状态和处理队列，确保引用变化不会导致存活对象被错误回收。</li>
-</ol>
-<h2 id="颜色不变性"><a href="#颜色不变性" class="headerlink" title="颜色不变性"></a>颜色不变性</h2><p>为了确保三色标记算法在并发环境下的正确性，通常需要维护以下两种不变性之一：</p>
-<ol>
-<li><strong>强三色不变性</strong>：黑色对象不能直接引用白色对象。这意味着如果一个黑色对象引用了一个白色对象，白色对象必须先被标记为灰色。</li>
-<li><strong>弱三色不变性</strong>：在标记阶段，白色对象只能通过灰色对象直接或间接引用。这意味着如果一个白色对象被引用，它一定会通过一个灰色对象。</li>
-</ol>
-<h2 id="写屏障"><a href="#写屏障" class="headerlink" title="写屏障"></a>写屏障</h2><p>为了维护颜色不变性，垃圾收集器通常会使用写屏障技术。在对象引用发生变化时，写屏障会执行特定的操作，确保颜色不变性不被破坏。例如，在引用赋值操作时，写屏障可能会将目标对象标记为灰色，确保其不会被错误回收。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4484,7 +4464,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">232</span>
+                <span class="site-state-item-count">235</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -4495,7 +4475,7 @@
             
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -4506,7 +4486,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-count">30</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>

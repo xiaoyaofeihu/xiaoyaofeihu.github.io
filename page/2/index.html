@@ -270,6 +270,589 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/09/redis/redis%E4%BA%8B%E5%8A%A1%E4%BF%9D%E8%AF%81%E5%8E%9F%E5%AD%90%E6%80%A7%E5%90%97%EF%BC%8C%E6%94%AF%E6%8C%81%E5%9B%9E%E6%BB%9A%E5%90%97_/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/05/09/redis/redis%E4%BA%8B%E5%8A%A1%E4%BF%9D%E8%AF%81%E5%8E%9F%E5%AD%90%E6%80%A7%E5%90%97%EF%BC%8C%E6%94%AF%E6%8C%81%E5%9B%9E%E6%BB%9A%E5%90%97_/" itemprop="url">👌redis事务支持原子性，支持回滚？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-05-09T13:33:41+00:00">
+                2025-05-09
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Redis/" itemprop="url" rel="index">
+                    <span itemprop="name">Redis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌redis事务保证原子性吗，支持回滚吗"><a href="#👌redis事务保证原子性吗，支持回滚吗" class="headerlink" title="👌redis事务保证原子性吗，支持回滚吗?"></a>👌redis事务保证原子性吗，支持回滚吗?</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>不支持。</p>
+<p>先来回顾两个命令：</p>
+<p>MULTI：开启一个事务。之后的所有命令都会被放入一个队列中，直到EXEC命令执行。</p>
+<p>EXEC：执行之前队列中的所有命令。</p>
+<p>在MULTI和EXEC之间的命令会被放入一个队列中，直到EXEC命令执行时，这些命令才会按顺序执行。</p>
+<p>在EXEC命令执行时，所有被MULTI命令包裹的命令会按顺序一次性执行。意味着在EXEC执行时，Redis会将所有命令作为一个整体进行处理。Redis保证单个命令的原子性，即每个命令在执行时是不可分割的。</p>
+<p>但是，Redis事务并不完全等同于传统关系型数据库的事务。</p>
+<p>如果在EXEC执行过程中某个命令失败（例如，命令语法错误），该命令会被跳过，但其他命令仍然会继续执行。这与关系型数据库的事务不同，后者通常会在某个命令失败时回滚整个事务。</p>
+<p>Redis事务没有回滚机制。如果某个命令执行失败，已经执行的命令不会被撤销。</p>
+<p>redis再执行lua脚本的时候，会封装为一个事务，不可中断；</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/09/redis/redis%E5%9B%9E%E6%94%B6%E8%BF%9B%E7%A8%8B%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84_/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/05/09/redis/redis%E5%9B%9E%E6%94%B6%E8%BF%9B%E7%A8%8B%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84_/" itemprop="url">👌redis回收进程是如何工作的？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-05-09T13:33:41+00:00">
+                2025-05-09
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Redis/" itemprop="url" rel="index">
+                    <span itemprop="name">Redis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌redis回收进程如何工作的"><a href="#👌redis回收进程如何工作的" class="headerlink" title="👌redis回收进程如何工作的?"></a>👌redis回收进程如何工作的?</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>Redis的回收进程负责定期扫描和删除过期键。服务器运行时自动执行。主要就是定期回收和惰性回收，其实也可以看之前的 redis 过期策略。来进行合二为一，其实二者答案差不多，就是内容有一定区别。</p>
+<h2 id="定期回收任务"><a href="#定期回收任务" class="headerlink" title="定期回收任务"></a>定期回收任务</h2><p>Redis回收进程的核心是一个定期任务，这个任务在Redis的事件循环中执行。</p>
+<p><strong>事件循环</strong>：Redis使用一个单线程的事件循环模型来处理所有的客户端请求和后台任务。</p>
+<p><strong>定期任务</strong>：在事件循环中，Redis会定期触发一个函数来执行过期键的检查和删除操作。这个函数默认每100毫秒运行一次。</p>
+<p>实现步骤如下：</p>
+<ol>
+<li><strong>选择数据库</strong>：每次执行定期任务时，Redis会遍历所有的数据库（默认16个）。</li>
+<li><strong>随机抽样</strong>：对于每个数据库，Redis会随机选择一部分带有过期时间的键进行检查（默认20个）。</li>
+<li><strong>检查过期键</strong>：检查这些键是否已经过期，如果过期则删除。</li>
+<li><strong>重复检查</strong>：如果发现超过一定比例的键是过期的（默认25%），则继续进行更多次的检查和删除，直到过期键的比例下降到合理范围内。</li>
+</ol>
+<h2 id="惰性回收"><a href="#惰性回收" class="headerlink" title="惰性回收"></a>惰性回收</h2><p>惰性回收不是一个独立的进程，而是每次客户端访问键时触发的检查机制。它的工作原理如下：</p>
+<ol>
+<li><strong>访问键</strong>：每当客户端访问一个键时，Redis会检查该键是否设置了过期时间。</li>
+<li><strong>检查过期</strong>：如果该键已经过期，Redis会立即删除该键，并返回空结果或相应的错误信息。</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/09/redis/redis%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%BB%B6%E6%97%B6%E9%98%9F%E5%88%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/05/09/redis/redis%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%BB%B6%E6%97%B6%E9%98%9F%E5%88%97/" itemprop="url">👌redis如何实现延迟队列？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-05-09T13:33:41+00:00">
+                2025-05-09
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Redis/" itemprop="url" rel="index">
+                    <span itemprop="name">Redis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌redis如何实现延时队列"><a href="#👌redis如何实现延时队列" class="headerlink" title="👌redis如何实现延时队列"></a>👌redis如何实现延时队列</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>可以使用有序集合（Sorted Set）来实现延时队列。有序集合中的每个元素有一个关联的分数，可以用来表示任务的执行时间戳。具体的步骤如下，非常简单</p>
+<h2 id="添加任务到延时队列"><a href="#添加任务到延时队列" class="headerlink" title="添加任务到延时队列"></a>添加任务到延时队列</h2><p>将任务添加到有序集合中，使用任务的执行时间作为分数（score）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 示例代码：添加任务到延时队列</span><br><span class="line">String queueName = &quot;delay_queue&quot;;</span><br><span class="line">String taskId=&quot;task_1&quot;;</span><br><span class="line">long delay=5000; // 延迟时间（毫秒）</span><br><span class="line">long executionTime= System.currentTimeMillis() + delay;</span><br><span class="line">Jedis jedis = newJedis(&quot;localhost&quot;);</span><br><span class="line">jedis.zadd(queueName, executionTime, taskId);</span><br><span class="line">jedis.close();</span><br></pre></td></tr></table></figure>
+
+<h2 id="轮询延时队列并执行任务"><a href="#轮询延时队列并执行任务" class="headerlink" title="轮询延时队列并执行任务"></a>轮询延时队列并执行任务</h2><p>定期检查有序集合中的任务，找到那些执行时间已经到达或超过当前时间的任务，并执行这些任务。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">// 示例代码：轮询延时队列并执行任务</span><br><span class="line">String queueName = &quot;delay_queue&quot;;</span><br><span class="line">Jedis jedis=new Jedis(&quot;localhost&quot;);</span><br><span class="line">while (true) &#123;</span><br><span class="line">    long currentTime= System.currentTimeMillis();</span><br><span class="line">    Set&lt;Tuple&gt; tasks = jedis.zrangeByScoreWithScores(queueName, 0, currentTime, 0, 1);</span><br><span class="line"></span><br><span class="line">    if (tasks.isEmpty()) &#123;</span><br><span class="line">        // 没有任务需要执行，休眠一段时间</span><br><span class="line">        Thread.sleep(1000);</span><br><span class="line">        continue;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    for (Tuple task : tasks) &#123;</span><br><span class="line">        StringtaskId= task.getElement();</span><br><span class="line">        // 执行任务</span><br><span class="line">        executeTask(taskId);</span><br><span class="line"></span><br><span class="line">        // 从队列中移除已执行的任务</span><br><span class="line">        jedis.zrem(queueName, taskId);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">jedis.close();</span><br><span class="line">private static void executeTask(String taskId) &#123;</span><br><span class="line">    // 实现任务执行逻辑</span><br><span class="line">    System.out.println(&quot;Executing task: &quot; + taskId);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/09/redis/redis%E6%98%AF%E5%8D%95%E8%BF%9B%E7%A8%8B%E5%8D%95%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%90%97%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +900,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -511,8 +1094,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -714,8 +1297,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -906,8 +1489,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -1126,8 +1709,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -1320,8 +1903,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -1531,8 +2114,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -1747,8 +2330,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -1949,8 +2532,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -2223,8 +2806,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -2413,8 +2996,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -2620,8 +3203,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -2824,8 +3407,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -3035,8 +3618,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -3240,8 +3823,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -3437,8 +4020,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -3660,8 +4243,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -3792,640 +4375,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/06/redis/%E7%9C%8B%E9%97%A8%E7%8B%97%E6%9C%BA%E5%88%B6%E7%9A%84%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/05/06/redis/%E7%9C%8B%E9%97%A8%E7%8B%97%E6%9C%BA%E5%88%B6%E7%9A%84%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/" itemprop="url">👌看门狗机制的原理是什么？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-05-06T13:33:41+00:00">
-                2025-05-06
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Redis/" itemprop="url" rel="index">
-                    <span itemprop="name">Redis</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌看门狗机制的原理是什么？"><a href="#👌看门狗机制的原理是什么？" class="headerlink" title="👌看门狗机制的原理是什么？"></a>👌看门狗机制的原理是什么？</h1><h1 id="口语化答案"><a href="#口语化答案" class="headerlink" title="口语化答案"></a>口语化答案</h1><p>在我们平常使用分布式锁的时候，一般会设置一个锁的过期时间，那么如果锁过期的时候，业务还没执行完怎么办，于是就有了看门狗。看门狗机制是一种用于自动续约分布式锁的机制，确保在持有锁的客户端处理完业务逻辑之前，锁不会过期。当客户端获取到锁时，会在 Redis 中设置一个键和一个过期时间（默认30秒）。同时，Redisson 会启动一个后台任务，这个任务会定期检查锁的状态。看门狗任务会每隔一段时间，默认是锁的过期时间的1&#x2F;3，即10秒，检查锁的状态。如果锁仍然被持有，看门狗任务会将锁的过期时间重置为初始值。这样，锁的过期时间不断被延长，直到客户端明确释放锁或者客户端挂掉。以上。</p>
-<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>看门狗机制非常常问，一旦问到分布式锁的问题，就会产生这个问题，当你说出异常情况下，传统的分布式锁，采取过期时间释放，防止死锁的时候，就会引入到这个问题。</p>
-<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>后台任务续约，高可靠，自动管理</p>
-<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>Redisson 的看门狗机制是一种用于自动续约分布式锁的机制，确保在持有锁的客户端处理完业务逻辑之前，锁不会过期。比如，我们平时使用分布式锁的时候，一般会设置一个锁的过期时间，那么如果锁过期的时候，业务还没执行完怎么办，于是就有了看门狗。</p>
-<h2 id="看门狗机制的原理"><a href="#看门狗机制的原理" class="headerlink" title="看门狗机制的原理"></a>看门狗机制的原理</h2><p><strong>初始锁定</strong>：</p>
-<p>当客户端获取到锁时，会在 Redis 中设置一个键（代表锁）和一个过期时间（默认30秒）。同时，Redisson 会启动一个后台任务（看门狗），这个任务会定期检查锁的状态。</p>
-<p><strong>自动续约</strong>：</p>
-<p>看门狗任务会每隔一段时间（默认是锁的过期时间的1&#x2F;3，即10秒）检查锁的状态。如果锁仍然被持有（即客户端还在持有锁且没有释放），看门狗任务会将锁的过期时间重置为初始值（例如，再次设置为30秒）。这样，锁的过期时间不断被延长，直到客户端明确释放锁或者客户端挂掉。</p>
-<p><strong>释放锁</strong>：</p>
-<p>当客户端完成业务逻辑后，会显式地调用<code>unlock()</code>方法释放锁。一旦锁被释放，看门狗任务会停止续约，锁在 Redis 中的键会被删除或自然过期。</p>
-<h3 id="看门狗机制的工作流程"><a href="#看门狗机制的工作流程" class="headerlink" title="看门狗机制的工作流程"></a>看门狗机制的工作流程</h3><p><strong>获取锁</strong>：客户端请求获取锁，Redis 中创建一个键表示锁，并设置一个过期时间（例如30秒）。启动看门狗任务，定期检查锁的状态。</p>
-<p><strong>定期续约</strong>：看门狗任务每隔一定时间（例如10秒）检查锁的状态。如果锁仍然被持有（即客户端还在处理业务逻辑），看门狗任务会重置锁的过期时间（例如，再次设置为30秒）。</p>
-<p><strong>锁的释放</strong>：客户端业务逻辑完成后，调用<code>unlock()</code>方法释放锁。看门狗任务停止续约，锁在 Redis 中的键被删除或自然过期。</p>
-<h3 id="看门狗机制的优势"><a href="#看门狗机制的优势" class="headerlink" title="看门狗机制的优势"></a>看门狗机制的优势</h3><p><strong>高可靠性</strong>：通过自动续约机制，确保锁在持有者处理完业务逻辑之前不会过期，避免了锁意外过期导致的并发问题。</p>
-<p><strong>自动管理</strong>：无需手动续约锁的过期时间，简化了分布式锁的使用和管理。</p>
-<p><strong>容错性</strong>：如果客户端在持有锁期间崩溃或断开连接，锁会在过期时间后自动释放，避免了死锁问题。</p>
-<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.redisson.api.RLock;</span><br><span class="line"><span class="keyword">import</span> org.redisson.api.RedissonClient;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeUnit;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RedissonLockExample</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">RedissonClient</span> <span class="variable">redissonClient</span> <span class="operator">=</span> RedissonConfig.createClient();</span><br><span class="line">        <span class="type">RLock</span> <span class="variable">lock</span> <span class="operator">=</span> redissonClient.getLock(<span class="string">&quot;myLock&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 尝试获取锁，等待时间为100秒，锁的过期时间为10秒</span></span><br><span class="line">            <span class="keyword">if</span> (lock.tryLock(<span class="number">100</span>, <span class="number">10</span>, TimeUnit.SECONDS)) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="comment">// 业务逻辑</span></span><br><span class="line">                    System.out.println(<span class="string">&quot;Lock acquired, executing business logic&quot;</span>);</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// 模拟长时间运行的任务</span></span><br><span class="line">                    Thread.sleep(<span class="number">20000</span>);</span><br><span class="line"></span><br><span class="line">                &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                    lock.unlock();</span><br><span class="line">                    System.out.println(<span class="string">&quot;Lock released&quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;Could not acquire lock&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            redissonClient.shutdown();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/05/redis/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E7%89%B9%E7%82%B9%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/05/05/redis/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E7%89%B9%E7%82%B9%EF%BC%9F/" itemprop="url">👌分布式锁的特点？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-05-05T13:33:41+00:00">
-                2025-05-05
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Redis/" itemprop="url" rel="index">
-                    <span itemprop="name">Redis</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌分布式锁的特点？"><a href="#👌分布式锁的特点？" class="headerlink" title="👌分布式锁的特点？"></a>👌分布式锁的特点？</h1><p> 实现，zookeeper 的实现。数据库的实现方案基本不常见，这种方式性能很低，还容易影响业务。redis 比较常见使用，主要是用 setnx 的特性来做。成功 set 进去，意味着上锁成功。失败意味着没有获取到锁，业务执行完成后，在通过 del 来释放锁。一般会配合看门狗机制，来做异常的续约处理。以上。</p>
-<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>分布式锁主要有三个特点，是我们要时刻进行注意的。</p>
-<ol>
-<li><strong>互斥性</strong>：在某一时刻，只有一个客户端可以持有锁。</li>
-<li><strong>容错性</strong>：即使某个持有锁的客户端崩溃或失去连接，锁也能够被其他客户端重新获取。</li>
-<li><strong>高可用性</strong>：锁服务需要高可用，通常需要在分布式环境中实现。</li>
-</ol>
-<h2 id="分布式锁的实现方式"><a href="#分布式锁的实现方式" class="headerlink" title="分布式锁的实现方式"></a>分布式锁的实现方式</h2><h3 id="基于数据库"><a href="#基于数据库" class="headerlink" title="基于数据库"></a>基于数据库</h3><p>使用数据库的SELECT … FOR UPDATE 语句或类似的行级锁机制来实现分布式锁。优点是实现简单，缺点是性能较低，依赖于数据库的高可用性。高并发情况下也会对数据库造成非常大的压力。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-- 获取锁</span><br><span class="line">SELECT * FROM locks WHERE resource = &#x27;resource_name&#x27; FOR UPDATE;</span><br><span class="line"></span><br><span class="line">-- 释放锁</span><br><span class="line">DELETE FROM locks WHERE resource = &#x27;resource_name&#x27;;</span><br></pre></td></tr></table></figure>
-
-<h2 id="基于-Redis"><a href="#基于-Redis" class="headerlink" title="基于 Redis"></a>基于 Redis</h2><p>Redis 提供了原子操作和高性能的特性，非常适合用来实现分布式锁。通常使用SETNX命令来实现。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 获取锁</span><br><span class="line">String result = jedis.set(&quot;lock_key&quot;, &quot;lock_value&quot;, &quot;NX&quot;, &quot;PX&quot;, 30000);</span><br><span class="line">if (&quot;OK&quot;.equals(result)) &#123;</span><br><span class="line">    // 锁获取成功</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 释放锁</span><br><span class="line">if (lock_value.equals(jedis.get(&quot;lock_key&quot;))) &#123;</span><br><span class="line">    jedis.del(&quot;lock_key&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="基于-Zookeeper"><a href="#基于-Zookeeper" class="headerlink" title="基于 Zookeeper"></a>基于 Zookeeper</h2><p>Zookeeper 提供了分布式协调服务，可以用来实现分布式锁。通过创建临时顺序节点来实现锁机制。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 创建一个临时顺序节点</span><br><span class="line">String path = zookeeper.create(&quot;/locks/lock-&quot;, null, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL);</span><br><span class="line"></span><br><span class="line">// 检查是否获取到锁</span><br><span class="line">List&lt;String&gt; children = zookeeper.getChildren(&quot;/locks&quot;, false);</span><br><span class="line">Collections.sort(children);</span><br><span class="line">if (path.equals(&quot;/locks/&quot; + children.get(0))) &#123;</span><br><span class="line">    // 获取到锁</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="分布式锁的使用场景"><a href="#分布式锁的使用场景" class="headerlink" title="分布式锁的使用场景"></a>分布式锁的使用场景</h2><ol>
-<li><strong>分布式事务</strong>：在分布式系统中，需要确保多个节点上的操作在同一事务中执行。</li>
-<li><strong>资源共享</strong>：如分布式系统中的限流、分布式任务调度等场景。</li>
-<li><strong>数据一致性</strong>：在多个节点并发访问同一资源时，确保数据一致性。</li>
-</ol>
-<h2 id="分布式锁的常见常见问题"><a href="#分布式锁的常见常见问题" class="headerlink" title="分布式锁的常见常见问题"></a>分布式锁的常见常见问题</h2><ol>
-<li><strong>死锁</strong>：如果某个节点在持有锁期间崩溃或失去连接，可能会导致其他节点无法获取锁。</li>
-<li><strong>性能</strong>：分布式锁的实现需要考虑性能问题，尤其是在高并发场景下。</li>
-<li><strong>可靠性</strong>：锁服务需要高可用，通常需要在分布式环境中实现。</li>
-</ol>
-<h2 id="分布式锁的改进"><a href="#分布式锁的改进" class="headerlink" title="分布式锁的改进"></a>分布式锁的改进</h2><ol>
-<li><strong>锁过期时间</strong>：设置锁的过期时间，避免死锁问题。</li>
-<li><strong>租约机制</strong>：使用租约机制，定期续约锁，确保锁在持有期间不会被其他节点获取。</li>
-<li><strong>锁竞争优化</strong>：使用合适的锁竞争算法，减少锁竞争的开销。</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/04/JVM/JVM%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%9A%84%E6%8C%87%E9%92%88%E7%A2%B0%E6%92%9E%E4%B8%8E%E7%A9%BA%E9%97%B2%E5%88%97%E8%A1%A8%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/05/04/JVM/JVM%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%9A%84%E6%8C%87%E9%92%88%E7%A2%B0%E6%92%9E%E4%B8%8E%E7%A9%BA%E9%97%B2%E5%88%97%E8%A1%A8%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/" itemprop="url">👌JVM内存分配的指针碰撞与空闲列表是什么？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-05-04T13:33:41+00:00">
-                2025-05-04
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌JVM内存分配的指针碰撞与空闲列表是什么？"><a href="#👌JVM内存分配的指针碰撞与空闲列表是什么？" class="headerlink" title="👌JVM内存分配的指针碰撞与空闲列表是什么？"></a>👌JVM内存分配的指针碰撞与空闲列表是什么？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>指针碰撞（Bump-the-pointer）和空闲列表（Free-list）是两种常见的内存分配策略。</p>
-<h2 id="指针碰撞（Bump-the-pointer）"><a href="#指针碰撞（Bump-the-pointer）" class="headerlink" title="指针碰撞（Bump-the-pointer）"></a>指针碰撞（Bump-the-pointer）</h2><p>指针碰撞是一种高效的内存分配策略，适用于堆内存是连续且规整的情况。这种方法的基本思想是通过移动一个指针来分配内存。具体步骤如下：</p>
-<ol>
-<li><strong>内存布局</strong>：堆内存被划分为已使用的内存和空闲的内存，中间有一个指针（称为分配指针）作为分界线。</li>
-<li><strong>分配内存</strong>：当需要为新对象分配内存时，只需将分配指针向空闲内存方向移动一段与对象大小相等的距离。</li>
-<li><strong>更新指针</strong>：分配指针更新后，新的对象内存区域就被标记为已使用。</li>
-</ol>
-<p>这种方法的优点是分配速度非常快，只需简单的指针移动操作。然而，它的缺点是在堆内存不规整（例如存在内存碎片）的情况下无法使用。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">| 已使用内存 | 分配指针 | 空闲内存 |</span><br><span class="line">|------------|----------|----------|</span><br></pre></td></tr></table></figure>
-
-<p>当分配一个对象时，分配指针向右移动：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">| 已使用内存 | 已使用内存 | 分配指针 | 空闲内存 |</span><br><span class="line">|------------|------------|----------|----------|</span><br></pre></td></tr></table></figure>
-
-<h2 id="空闲列表（Free-list）"><a href="#空闲列表（Free-list）" class="headerlink" title="空闲列表（Free-list）"></a>空闲列表（Free-list）</h2><p>空闲列表是一种适用于堆内存不规整的情况下的内存分配策略。它通过维护一个列表来记录所有可用的空闲内存块。具体步骤如下：</p>
-<ol>
-<li><strong>空闲列表</strong>：JVM 维护一个空闲列表，记录所有可用的内存块及其大小。</li>
-<li><strong>查找空闲块</strong>：当需要为新对象分配内存时，JVM 会在空闲列表中查找一个足够大的内存块。</li>
-<li><strong>分配内存</strong>：找到合适的内存块后，将其从空闲列表中移除，并将其标记为已使用。如果内存块大于所需大小，可能会将剩余部分重新放回空闲列表中。</li>
-<li><strong>回收内存</strong>：当对象被垃圾回收器回收后，JVM 会将其内存块重新添加到空闲列表中。</li>
-</ol>
-<p>这种方法的优点是能够更好地利用内存，适用于内存碎片较多的情况。然而，它的缺点是分配速度较慢，因为需要在空闲列表中查找合适的内存块。</p>
-<h4 id><a href="#" class="headerlink" title></a></h4><p>假设空闲列表如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">空闲列表: [块1(大小: 32), 块2(大小: 64), 块3(大小: 128)]</span><br></pre></td></tr></table></figure>
-
-<p>当需要分配一个大小为 50 的对象时，JVM 会在空闲列表中查找：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">找到块2(大小: 64)</span><br></pre></td></tr></table></figure>
-
-<p>将块2分成两部分：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">分配块2的前50个单位，剩余部分重新放回空闲列表</span><br><span class="line">空闲列表: [块1(大小: 32), 块2剩余部分(大小: 14), 块3(大小: 128)]</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>指针碰撞（Bump-the-pointer）</strong>：适用于堆内存规整的情况，分配速度快，但不适用于内存碎片较多的情况。</p>
-<p><strong>空闲列表（Free-list）</strong>：适用于堆内存不规整的情况，能够更好地利用内存，但分配速度较慢。</p>
-<p>这两种内存分配策略各有优缺点，JVM 会根据具体情况选择合适的策略，以优化内存分配和垃圾回收的效率。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4476,7 +4425,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">232</span>
+                <span class="site-state-item-count">235</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -4487,7 +4436,7 @@
             
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -4498,7 +4447,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-count">30</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>

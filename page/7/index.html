@@ -270,6 +270,673 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/03/02/Spring/bean%E7%9A%84%E4%BD%9C%E7%94%A8%E8%8C%83%E5%9B%B4%E5%92%8C%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/03/02/Spring/bean%E7%9A%84%E4%BD%9C%E7%94%A8%E8%8C%83%E5%9B%B4%E5%92%8C%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%EF%BC%9F/" itemprop="url">👌bean 的作用范围和生命周期？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-03-02T13:33:41+00:00">
+                2025-03-02
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌bean-的作用范围和生命周期？"><a href="#👌bean-的作用范围和生命周期？" class="headerlink" title="👌bean 的作用范围和生命周期？"></a>👌bean 的作用范围和生命周期？</h1><h1 id="口语化答案"><a href="#口语化答案" class="headerlink" title="口语化答案"></a>口语化答案</h1><p>好的，面试官。bean 的作用范围主要用 singleton，prototype，request，session，globalsession，application。常用的就是 singleton，singleton 是单例的，当 bean 是无状态的时候，singleton 是最好的使用方式，如果说 bean 里面涉及共享数据，singleton 就不够安全了，这个时候需要使用 prototype。bean 的生命周期从实例化创建 bean 开始，然后进行属性设置。再之后，调用 bean 的一些初始化方法，如果有则执行，这样处理完之后，bean 就可以被使用了。最终当 bean 要被销毁的时候，就会调用 destroy 方法进行 bean 的后置处理，以上。</p>
+<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>非常常考，一定要熟悉要 singleton 和 prototype 的区别。这个重点要的是状态问题。bean 的生命周期就比较好答，按照顺序来说就可以了。</p>
+<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>singleton，prototype，无状态，实例化，属性设置，初始方法，销毁</p>
+<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>Bean的作用范围（Scope）和生命周期（Lifecycle）决定了Bean的创建、使用和销毁方式。</p>
+<h2 id="Bean的作用范围（Scope）"><a href="#Bean的作用范围（Scope）" class="headerlink" title="Bean的作用范围（Scope）"></a>Bean的作用范围（Scope）</h2><p><strong>singleton：</strong>默认作用范围，整个Spring容器中只有一个实例，所有对该Bean的引用都指向同一个实例。适用于无状态的Bean。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;myBean&quot; class=&quot;com.example.MyBean&quot; scope=&quot;singleton&quot;/&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>prototype：</strong>每次请求该Bean时都会创建一个新的实例。适用于有状态的Bean。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;myBean&quot; class=&quot;com.example.MyBean&quot; scope=&quot;prototype&quot;/&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>request：</strong>每次HTTP请求都会创建一个新的实例，仅适用于Web应用。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;myBean&quot; class=&quot;com.example.MyBean&quot; scope=&quot;request&quot;/&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>session：</strong>每个HTTP会话都会创建一个新的实例，仅适用于Web应用。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;myBean&quot; class=&quot;com.example.MyBean&quot; scope=&quot;session&quot;/&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>globalSession：</strong>每个全局HTTP会话都会创建一个新的实例，仅适用于Portlet应用。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;myBean&quot; class=&quot;com.example.MyBean&quot; scope=&quot;globalSession&quot;/&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>application：</strong>每个ServletContext会创建一个新的实例，适用于Web应用。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;myBean&quot; class=&quot;com.example.MyBean&quot; scope=&quot;application&quot;/&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Bean的生命周期"><a href="#Bean的生命周期" class="headerlink" title="Bean的生命周期"></a>Bean的生命周期</h2><p><img src="/2025/03/02/Spring/bean%E7%9A%84%E4%BD%9C%E7%94%A8%E8%8C%83%E5%9B%B4%E5%92%8C%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%EF%BC%9F/DUD24bv6N1y1lj5S/1724754790092-94de9a92-f85f-4b0f-851d-62174f065951-178583.png" alt="1724754790092-94de9a92-f85f-4b0f-851d-62174f065951.png"></p>
+<h3 id="实例化（Instantiation）"><a href="#实例化（Instantiation）" class="headerlink" title="实例化（Instantiation）"></a>实例化（Instantiation）</h3><p>Spring容器根据配置创建Bean实例。</p>
+<h3 id="属性设置（Property-Population）"><a href="#属性设置（Property-Population）" class="headerlink" title="属性设置（Property Population）"></a>属性设置（Property Population）</h3><p>Spring容器进行依赖注入，设置Bean的属性。</p>
+<h3 id="初始化（Initialization）"><a href="#初始化（Initialization）" class="headerlink" title="初始化（Initialization）"></a>初始化（Initialization）</h3><p>如果Bean实现了InitializingBean接口，Spring会调用其afterPropertiesSet()方法。</p>
+<p>如果在XML配置中指定了init-method属性，Spring会调用指定的初始化方法。</p>
+<p>如果Bean使用了@PostConstruct注解，Spring会调用标注的方法。</p>
+<h3 id="使用（Usage）"><a href="#使用（Usage）" class="headerlink" title="使用（Usage）"></a>使用（Usage）</h3><p>Bean处于就绪状态，可以被应用程序使用。</p>
+<h3 id="销毁（Destruction）"><a href="#销毁（Destruction）" class="headerlink" title="销毁（Destruction）"></a>销毁（Destruction）</h3><p>如果Bean实现了DisposableBean接口，Spring会调用其destroy()方法。</p>
+<p>如果在XML配置中指定了destroy-method属性，Spring会调用指定的销毁方法。</p>
+<p>如果Bean使用了@PreDestroy注解，Spring会调用标注的方法。</p>
+<h2 id="生命周期回调接口和注解"><a href="#生命周期回调接口和注解" class="headerlink" title="生命周期回调接口和注解"></a>生命周期回调接口和注解</h2><p><strong>InitializingBean接口</strong></p>
+<p>方法：afterPropertiesSet()</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class MyBean implements InitializingBean &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void afterPropertiesSet() throws Exception &#123;</span><br><span class="line">        // 初始化逻辑</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>DisposableBean接口</strong></p>
+<p>方法：destroy()</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class MyBean implements DisposableBean &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void destroy() throws Exception &#123;</span><br><span class="line">        // 销毁逻辑</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>@PostConstruct注解</strong></p>
+<p>用于标注初始化方法。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class MyBean &#123;</span><br><span class="line">    @PostConstruct</span><br><span class="line">    public void init() &#123;</span><br><span class="line">        // 初始化逻辑</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>@PreDestroy注解</strong></p>
+<p>用于标注销毁方法。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class MyBean &#123;</span><br><span class="line">    @PreDestroy</span><br><span class="line">    public void cleanup() &#123;</span><br><span class="line">        // 销毁逻辑</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="代码-Demo"><a href="#代码-Demo" class="headerlink" title="代码 Demo"></a>代码 Demo</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;myBean&quot; class=&quot;com.example.MyBean&quot; scope=&quot;singleton&quot; init-method=&quot;customInit&quot; destroy-method=&quot;customDestroy&quot;/&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">public class MyBean implements InitializingBean, DisposableBean &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void afterPropertiesSet() throws Exception &#123;</span><br><span class="line">        // 初始化逻辑</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void destroy() throws Exception &#123;</span><br><span class="line">        // 销毁逻辑</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @PostConstruct</span><br><span class="line">    public void init() &#123;</span><br><span class="line">        // 初始化逻辑</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @PreDestroy</span><br><span class="line">    public void cleanup() &#123;</span><br><span class="line">        // 销毁逻辑</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void customInit() &#123;</span><br><span class="line">        // 自定义初始化逻辑</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void customDestroy() &#123;</span><br><span class="line">        // 自定义销毁逻辑</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id><a href="#" class="headerlink" title></a></h1>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/03/02/Spring/jdk%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/03/02/Spring/jdk%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0/" itemprop="url">👌jdk动态代理如何实现</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-03-02T13:33:41+00:00">
+                2025-03-02
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌jdk动态代理如何实现"><a href="#👌jdk动态代理如何实现" class="headerlink" title="👌jdk动态代理如何实现"></a>👌jdk动态代理如何实现</h1><h1 id="口语化答案"><a href="#口语化答案" class="headerlink" title="口语化答案"></a>口语化答案</h1><p>好的，面试官。jdk 的动态代理主要是依赖Proxy 和InvocationHandler 接口。jdk 动态代理要求类必须有接口。在进行实现的时候，首先要定义接口，比如MyService，这个接口就是我们的正常功能的实现。但是希望在不更改MyService 的情况下增加，那么我们需要定义一个实现InvocationHandler 接口的实现类，同时在方法实现上面增加额外的逻辑。最后通过 Proxy 的 newProxyInstance 将二者结合到一起。就实现了动态代理。以上。</p>
+<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>大家不要觉得动态代理很难理解，按照这个步骤其实你发现很简单。记忆的过程和 cglib 对比着看，就很轻松，面试也是属于常考一点的题目。</p>
+<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>InvocationHandler 增强，Proxy 创建代理</p>
+<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>JDK 动态代理主要依赖于java.lang.reflect.Proxy类和java.lang.reflect.InvocationHandler接口来实现。</p>
+<h2 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h2><p><strong>定义接口</strong>：定义需要代理的接口。</p>
+<p><strong>实现接口</strong>：创建接口的实现类。</p>
+<p><strong>创建调用处理器</strong>：实现InvocationHandler接口，并在invoke方法中定义代理逻辑。</p>
+<p><strong>创建代理对象</strong>：通过Proxy.newProxyInstance方法创建代理对象。</p>
+<h2 id="代码-Demo"><a href="#代码-Demo" class="headerlink" title="代码 Demo"></a>代码 Demo</h2><p>假设我们有一个简单的服务接口MyService和它的实现类MyServiceImpl，我们将通过 JDK 动态代理为MyService创建一个代理对象，并在方法调用前后添加日志。</p>
+<h4 id="1-定义接口"><a href="#1-定义接口" class="headerlink" title="1. 定义接口"></a>1. 定义接口</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface MyService &#123;</span><br><span class="line">    void performTask();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-实现接口"><a href="#2-实现接口" class="headerlink" title="2. 实现接口"></a>2. 实现接口</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class MyServiceImpl implements MyService &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void performTask() &#123;</span><br><span class="line">        System.out.println(&quot;Performing task&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-创建调用处理器"><a href="#3-创建调用处理器" class="headerlink" title="3. 创建调用处理器"></a>3. 创建调用处理器</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">import java.lang.reflect.InvocationHandler;</span><br><span class="line">import java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line">public class LoggingInvocationHandler implements InvocationHandler &#123;</span><br><span class="line">    private final Object target;</span><br><span class="line"></span><br><span class="line">    public LoggingInvocationHandler(Object target) &#123;</span><br><span class="line">        this.target = target;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable &#123;</span><br><span class="line">        System.out.println(&quot;Logging before method execution: &quot; + method.getName());</span><br><span class="line">        Object result = method.invoke(target, args);</span><br><span class="line">        System.out.println(&quot;Logging after method execution: &quot; + method.getName());</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-创建代理对象并使用"><a href="#4-创建代理对象并使用" class="headerlink" title="4. 创建代理对象并使用"></a>4. 创建代理对象并使用</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">import java.lang.reflect.Proxy;</span><br><span class="line"></span><br><span class="line">public class MainApp &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        // 创建目标对象</span><br><span class="line">        MyService myService = new MyServiceImpl();</span><br><span class="line"></span><br><span class="line">        // 创建调用处理器</span><br><span class="line">        LoggingInvocationHandler handler = new LoggingInvocationHandler(myService);</span><br><span class="line"></span><br><span class="line">        // 创建代理对象</span><br><span class="line">        MyService proxyInstance = (MyService) Proxy.newProxyInstance(</span><br><span class="line">                myService.getClass().getClassLoader(),</span><br><span class="line">                myService.getClass().getInterfaces(),</span><br><span class="line">                handler</span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        // 调用代理对象的方法</span><br><span class="line">        proxyInstance.performTask();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="详细解释"><a href="#详细解释" class="headerlink" title="详细解释"></a>详细解释</h2><p><strong>1、 接口定义和实现</strong>：</p>
+<p>MyService是一个简单的接口，定义了一个方法performTask。</p>
+<p>MyServiceImpl是MyService的实现类，实现了performTask方法。</p>
+<p><strong>2、 调用处理器</strong>：</p>
+<p>LoggingInvocationHandler实现了InvocationHandler接口。它的invoke方法在代理对象的方法调用时被调用。invoke方法接收三个参数：proxy：代理对象。method：被调用的方法。args：方法参数。在invoke方法中，我们在方法调用前后添加了日志打印。</p>
+<p><strong>3、 创建代理对象</strong>：</p>
+<p>使用Proxy.newProxyInstance方法创建代理对象。</p>
+<p>newProxyInstance方法接收三个参数：类加载器：通常使用目标对象的类加载器。接口数组：目标对象实现的所有接口。调用处理器：实现了InvocationHandler接口的实例。</p>
+<p><strong>4、 使用代理对象</strong>：</p>
+<p>通过代理对象调用方法时，实际调用的是LoggingInvocationHandler的invoke方法。</p>
+<p>在invoke方法中，首先打印日志，然后通过反射调用目标对象的方法，最后再打印日志。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/03/02/Spring/%E4%BB%80%E4%B9%88%E6%98%AFaop%EF%BC%8Caop%E7%9A%84%E4%BD%9C%E7%94%A8%E5%92%8C%E4%BC%98%E5%8A%BF%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/03/02/Spring/%E4%BB%80%E4%B9%88%E6%98%AFaop%EF%BC%8Caop%E7%9A%84%E4%BD%9C%E7%94%A8%E5%92%8C%E4%BC%98%E5%8A%BF%EF%BC%9F/" itemprop="url">👌什么是aop，aop的作用和优势</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-03-02T13:33:41+00:00">
+                2025-03-02
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌什么是aop，aop的作用和优势？"><a href="#👌什么是aop，aop的作用和优势？" class="headerlink" title="👌什么是aop，aop的作用和优势？"></a>👌什么是aop，aop的作用和优势？</h1><h1 id="口语化回答"><a href="#口语化回答" class="headerlink" title="口语化回答"></a>口语化回答</h1><p>好的，面试官。aop 是 spring 框架的一个核心。常见的可以做日志记录，事务管理等公共性的处理。当我们想要统一做一些水平统一的操作的时候，就常用 aop。aop 的核心概念就是面向切面变成。通过 aop 可以在范围内的类方法执行之前，执行之后，或者异常的时候，做统一的操作。aop 可以提高代码的可维护性，任何修改只需要在切面中进行，而不需要修改业务逻辑代码。基于动态代理机制，还可以在不修改源代码的情况下为现有代码添加功能。在 boot 应用使用中，只需要配合Aspect 注解，即可实现功能，以上。</p>
+<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>aop 是核心问题，spring 里面的比较好的一个特性，因为实际工作中非常常用，面试官就会问你，是否有用过这一块的东西。</p>
+<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>面向切面，模块化，减少重复代码</p>
+<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>AOP（面向切面编程）是一种编程范式，它旨在通过分离横切关注点来提高代码的模块化。AOP 在传统的面向对象编程（OOP）基础上，提供了一种处理系统级关注点（如日志记录、事务管理、安全性等）的机制，而这些关注点通常会散布在多个模块中。</p>
+<h2 id="AOP-的基本概念"><a href="#AOP-的基本概念" class="headerlink" title="AOP 的基本概念"></a>AOP 的基本概念</h2><p><strong>Aspect（切面）</strong>：切面是模块化的横切关注点。它可以包含多个 advice（通知）和 pointcut（切入点）。</p>
+<p><strong>Advice（通知）</strong>：通知是切面在特定的切入点执行的动作。通知有几种类型：</p>
+<ul>
+<li><strong>Before</strong>：在方法执行之前执行。</li>
+<li><strong>After</strong>：在方法执行之后执行。</li>
+<li><strong>AfterReturning</strong>：在方法成功执行之后执行。</li>
+<li><strong>AfterThrowing</strong>：在方法抛出异常后执行。</li>
+<li><strong>Around</strong>：包围一个方法的执行，能够控制方法的执行前后。</li>
+</ul>
+<p><strong>Pointcut（切入点）</strong>：切入点定义了通知应该应用到哪些连接点上。连接点是程序执行的特定点，如方法调用或异常抛出。</p>
+<p><strong>Join Point（连接点）</strong>：程序执行的特定点，例如方法调用或异常抛出。</p>
+<p><strong>Weaving（织入）</strong>：将切面应用到目标对象创建代理对象的过程。织入可以在编译时、类加载时、运行时进行。</p>
+<h2 id="AOP-的作用和优势"><a href="#AOP-的作用和优势" class="headerlink" title="AOP 的作用和优势"></a>AOP 的作用和优势</h2><p><strong>模块化横切关注点</strong>：AOP 允许将横切关注点（如日志记录、事务管理、安全性等）从业务逻辑中分离出来，从而提高代码的模块化和可维护性。</p>
+<p><strong>减少重复代码</strong>：通过将通用功能提取到切面中，可以减少代码的重复，提高代码的可读性和可维护性。</p>
+<p><strong>提高代码的可维护性</strong>：由于横切关注点被模块化为切面，任何修改只需要在切面中进行，而不需要修改业务逻辑代码，从而提高了代码的可维护性。</p>
+<p><strong>动态代理</strong>：AOP 使用动态代理机制，可以在不修改源代码的情况下为现有代码添加功能。</p>
+<p><strong>增强代码的可测试性</strong>：由于横切关注点被分离成切面，业务逻辑代码变得更加简洁和专注，从而提高了代码的可测试性。</p>
+<h2 id="AOP-的应用场景"><a href="#AOP-的应用场景" class="headerlink" title="AOP 的应用场景"></a>AOP 的应用场景</h2><p><strong>日志记录</strong>：在方法调用前后记录日志。</p>
+<p><strong>事务管理</strong>：在方法执行前开启事务，在方法执行后提交事务，在方法抛出异常时回滚事务。</p>
+<p><strong>安全性检查</strong>：在方法执行前进行权限检查。</p>
+<p><strong>性能监控</strong>：在方法执行前后记录执行时间。</p>
+<p><strong>缓存</strong>：在方法调用前检查缓存，在方法调用后更新缓存。</p>
+<h2 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h2><h4 id="定义切面"><a href="#定义切面" class="headerlink" title="定义切面"></a>定义切面</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import org.aspectj.lang.annotation.Aspect;</span><br><span class="line">import org.aspectj.lang.annotation.Before;</span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line">@Aspect</span><br><span class="line">@Component</span><br><span class="line">public class LoggingAspect &#123;</span><br><span class="line">    @Before(&quot;execution(* com.example.service.*.*(..))&quot;)</span><br><span class="line">    public void logBefore() &#123;</span><br><span class="line">        System.out.println(&quot;Logging before method execution&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="配置-Spring-应用"><a href="#配置-Spring-应用" class="headerlink" title="配置 Spring 应用"></a>配置 Spring 应用</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import org.springframework.context.annotation.ComponentScan;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line">import org.springframework.context.annotation.EnableAspectJAutoProxy;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">@ComponentScan(basePackages = &quot;com.example&quot;)</span><br><span class="line">@EnableAspectJAutoProxy</span><br><span class="line">public class AppConfig &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="使用-AOP-的服务类"><a href="#使用-AOP-的服务类" class="headerlink" title="使用 AOP 的服务类"></a>使用 AOP 的服务类</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line">@Service</span><br><span class="line">public class MyService &#123;</span><br><span class="line">    public void performTask() &#123;</span><br><span class="line">        System.out.println(&quot;Performing task&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="主应用"><a href="#主应用" class="headerlink" title="主应用"></a>主应用</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import org.springframework.context.ApplicationContext;</span><br><span class="line">import org.springframework.context.annotation.AnnotationConfigApplicationContext;</span><br><span class="line"></span><br><span class="line">public class MainApp &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);</span><br><span class="line">        MyService myService = context.getBean(MyService.class);</span><br><span class="line">        myService.performTask();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>LoggingAspect切面会在每次调用MyService中的方法时记录日志，而无需修改MyService的源代码。 AOP 通过分离横切关注点来提高代码的模块化和可维护性。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/03/02/Spring/%E8%AF%B4%E8%AF%B4Spring%E5%B8%B8%E7%94%A8%E7%9A%84%E6%B3%A8%E8%A7%A3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +984,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -553,8 +1220,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -761,8 +1428,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -978,8 +1645,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -1229,8 +1896,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -1392,215 +2059,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/20/%E9%9D%A2%E8%AF%95%E9%A2%98/linux%E5%86%85%E5%AD%98%E6%9C%89%E9%97%AE%E9%A2%98%E6%80%8E%E4%B9%88%E6%9F%A5%E7%9C%8B%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/02/20/%E9%9D%A2%E8%AF%95%E9%A2%98/linux%E5%86%85%E5%AD%98%E6%9C%89%E9%97%AE%E9%A2%98%E6%80%8E%E4%B9%88%E6%9F%A5%E7%9C%8B%EF%BC%9F/" itemprop="url">linux 内存有问题怎么查看</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-02-20T13:33:41+00:00">
-                2025-02-20
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌linux-内存有问题怎么查看？"><a href="#👌linux-内存有问题怎么查看？" class="headerlink" title="👌linux 内存有问题怎么查看？"></a>👌linux 内存有问题怎么查看？</h1><p>如果怀疑内存有问题，可以通过以下步骤进行检查和诊断：</p>
-<h3 id="1-使用free命令查看内存使用情况"><a href="#1-使用free命令查看内存使用情况" class="headerlink" title="1. 使用free命令查看内存使用情况"></a>1. 使用<code>free</code>命令查看内存使用情况</h3><p><code>free</code>命令可以显示系统的内存使用情况，包括总内存、已使用内存、空闲内存和缓存等信息。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">free -h</span><br></pre></td></tr></table></figure>
-
-<p>输出示例：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:           7.8G        3.2G        1.5G        200M        3.1G        4.1G</span><br><span class="line">Swap:          2.0G        0.0K        2.0G</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-使用top或htop命令查看内存使用情况"><a href="#2-使用top或htop命令查看内存使用情况" class="headerlink" title="2. 使用top或htop命令查看内存使用情况"></a>2. 使用<code>top</code>或<code>htop</code>命令查看内存使用情况</h3><p><code>top</code>和<code>htop</code>命令可以实时显示系统的资源使用情况，包括内存使用情况。</p>
-<ul>
-<li><code>top</code>命令：</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">top</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>htop</code>命令（需要安装）：</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install htop</span><br><span class="line">htop</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-使用vmstat命令查看内存和系统性能"><a href="#3-使用vmstat命令查看内存和系统性能" class="headerlink" title="3. 使用vmstat命令查看内存和系统性能"></a>3. 使用<code>vmstat</code>命令查看内存和系统性能</h3><p><code>vmstat</code>命令可以报告虚拟内存、进程、CPU 活动等信息。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vmstat 1 5</span><br></pre></td></tr></table></figure>
-
-<p>输出示例：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----</span><br><span class="line"> r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st</span><br><span class="line"> 1  0      0 1576828  72464 2192160    0    0     8    11   64  150  1  0 99  0  0</span><br><span class="line"> 0  0      0 1576820  72464 2192160    0    0     0     0   59  144  0  0 100  0  0</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-检查内存使用情况的日志"><a href="#4-检查内存使用情况的日志" class="headerlink" title="4. 检查内存使用情况的日志"></a>4. 检查内存使用情况的日志</h3><p>查看系统日志，如<code>/var/log/syslog</code>或<code>/var/log/messages</code>，看看是否有与内存相关的错误或警告。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo grep -i memory /var/log/syslog</span><br><span class="line">sudo grep -i memory /var/log/messages</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/20/%E9%9D%A2%E8%AF%95%E9%A2%98/linux%E7%9A%84%E4%B8%AD%E6%96%AD%E6%9C%BA%E5%88%B6%E7%94%A8%E6%9D%A5%E5%B9%B2%E4%BB%80%E4%B9%88%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1648,8 +2106,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -1814,6 +2272,215 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/20/%E9%9D%A2%E8%AF%95%E9%A2%98/linux%E5%86%85%E5%AD%98%E6%9C%89%E9%97%AE%E9%A2%98%E6%80%8E%E4%B9%88%E6%9F%A5%E7%9C%8B%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/02/20/%E9%9D%A2%E8%AF%95%E9%A2%98/linux%E5%86%85%E5%AD%98%E6%9C%89%E9%97%AE%E9%A2%98%E6%80%8E%E4%B9%88%E6%9F%A5%E7%9C%8B%EF%BC%9F/" itemprop="url">linux 内存有问题怎么查看</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-02-20T13:33:41+00:00">
+                2025-02-20
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌linux-内存有问题怎么查看？"><a href="#👌linux-内存有问题怎么查看？" class="headerlink" title="👌linux 内存有问题怎么查看？"></a>👌linux 内存有问题怎么查看？</h1><p>如果怀疑内存有问题，可以通过以下步骤进行检查和诊断：</p>
+<h3 id="1-使用free命令查看内存使用情况"><a href="#1-使用free命令查看内存使用情况" class="headerlink" title="1. 使用free命令查看内存使用情况"></a>1. 使用<code>free</code>命令查看内存使用情况</h3><p><code>free</code>命令可以显示系统的内存使用情况，包括总内存、已使用内存、空闲内存和缓存等信息。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">free -h</span><br></pre></td></tr></table></figure>
+
+<p>输出示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:           7.8G        3.2G        1.5G        200M        3.1G        4.1G</span><br><span class="line">Swap:          2.0G        0.0K        2.0G</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-使用top或htop命令查看内存使用情况"><a href="#2-使用top或htop命令查看内存使用情况" class="headerlink" title="2. 使用top或htop命令查看内存使用情况"></a>2. 使用<code>top</code>或<code>htop</code>命令查看内存使用情况</h3><p><code>top</code>和<code>htop</code>命令可以实时显示系统的资源使用情况，包括内存使用情况。</p>
+<ul>
+<li><code>top</code>命令：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">top</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>htop</code>命令（需要安装）：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install htop</span><br><span class="line">htop</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-使用vmstat命令查看内存和系统性能"><a href="#3-使用vmstat命令查看内存和系统性能" class="headerlink" title="3. 使用vmstat命令查看内存和系统性能"></a>3. 使用<code>vmstat</code>命令查看内存和系统性能</h3><p><code>vmstat</code>命令可以报告虚拟内存、进程、CPU 活动等信息。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vmstat 1 5</span><br></pre></td></tr></table></figure>
+
+<p>输出示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----</span><br><span class="line"> r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st</span><br><span class="line"> 1  0      0 1576828  72464 2192160    0    0     8    11   64  150  1  0 99  0  0</span><br><span class="line"> 0  0      0 1576820  72464 2192160    0    0     0     0   59  144  0  0 100  0  0</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-检查内存使用情况的日志"><a href="#4-检查内存使用情况的日志" class="headerlink" title="4. 检查内存使用情况的日志"></a>4. 检查内存使用情况的日志</h3><p>查看系统日志，如<code>/var/log/syslog</code>或<code>/var/log/messages</code>，看看是否有与内存相关的错误或警告。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo grep -i memory /var/log/syslog</span><br><span class="line">sudo grep -i memory /var/log/messages</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/16/%E5%9C%BA%E6%99%AF%E9%A2%98/%E4%BC%98%E6%83%A0%E5%88%B8%E7%A7%92%E6%9D%80/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1861,8 +2528,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -2047,8 +2714,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -2283,8 +2950,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -2491,8 +3158,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -2714,8 +3381,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -2916,8 +3583,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -3149,8 +3816,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -3374,8 +4041,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -3575,8 +4242,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -3833,8 +4500,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
+              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
+                2025-07-13
               </time>
             
           </span>
@@ -3978,611 +4645,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/rediskey%E7%9A%84%E8%BF%87%E6%9C%9F%E6%97%B6%E9%97%B4%E5%92%8C%E6%B0%B8%E4%B9%85%E6%9C%89%E6%95%88%E5%88%86%E5%88%AB%E6%80%8E%E4%B9%88%E8%AE%BE%E7%BD%AE_/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/rediskey%E7%9A%84%E8%BF%87%E6%9C%9F%E6%97%B6%E9%97%B4%E5%92%8C%E6%B0%B8%E4%B9%85%E6%9C%89%E6%95%88%E5%88%86%E5%88%AB%E6%80%8E%E4%B9%88%E8%AE%BE%E7%BD%AE_/" itemprop="url">redis key的过期时间和永久有效分别怎么设置</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-02-11T13:33:41+00:00">
-                2025-02-11
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="redis-key的过期时间和永久有效分别怎么设置"><a href="#redis-key的过期时间和永久有效分别怎么设置" class="headerlink" title="redis key的过期时间和永久有效分别怎么设置?"></a>redis key的过期时间和永久有效分别怎么设置?</h1><h1 id="在Redis中，你可以使用多种命令来设置键的过期时间或将键设置为永久有效。"><a href="#在Redis中，你可以使用多种命令来设置键的过期时间或将键设置为永久有效。" class="headerlink" title="在Redis中，你可以使用多种命令来设置键的过期时间或将键设置为永久有效。"></a>在Redis中，你可以使用多种命令来设置键的过期时间或将键设置为永久有效。</h1><ol>
-<li><strong>使用<strong><strong>EXPIRE</strong></strong>命令，</strong>EXPIRE命令用于设置键的过期时间，以秒为单位。</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">EXPIRE key seconds</span><br><span class="line">例如：</span><br><span class="line">EXPIRE mykey 60  # 设置 mykey 的过期时间为60秒</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li><strong>使用<strong><strong>PEXPIRE</strong></strong>命令，</strong>PEXPIRE命令用于设置键的过期时间，以毫秒为单位。</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PEXPIRE key milliseconds</span><br><span class="line">例如：</span><br><span class="line">PEXPIRE mykey 60000  # 设置 mykey 的过期时间为60000毫秒（即60秒）</span><br></pre></td></tr></table></figure>
-
-<p>以上的两个区别就是秒级和毫秒级的区别。</p>
-<ol start="3">
-<li><strong>使用<strong><strong>EXPIREAT</strong></strong>命令，</strong>EXPIREAT命令用于设置键的过期时间为指定的 Unix 时间戳，以秒为单位。</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">EXPIREAT key timestamp</span><br><span class="line">例如：</span><br><span class="line">EXPIREAT mykey 1672531199  # 设置 mykey 的过期时间为指定的 Unix 时间戳</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li><strong>使用<strong><strong>PEXPIREAT</strong></strong>命令，</strong>PEXPIREAT命令用于设置键的过期时间为指定的 Unix 时间戳，以毫秒为单位。</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PEXPIREAT key milliseconds-timestamp</span><br><span class="line">例如：</span><br><span class="line">PEXPIREAT mykey 1672531199000  # 设置 mykey 的过期时间为指定的 Unix 时间戳（毫秒）</span><br></pre></td></tr></table></figure>
-
-<ol start="5">
-<li><strong>使用<strong><strong>SET</strong></strong>命令带选项，</strong>SET命令可以在设置键值的同时指定过期时间。</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SET key value EX seconds</span><br><span class="line">SET key value PX milliseconds</span><br><span class="line">例如：</span><br><span class="line">SET mykey &quot;value&quot; EX 60  # 设置 mykey 的值为 &quot;value&quot; 并使其在60秒后过期</span><br><span class="line">SET mykey &quot;value&quot; PX 60000  # 设置 mykey 的值为 &quot;value&quot; 并使其在60000毫秒（即60秒）后过期</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="设置键为永久有效"><a href="#设置键为永久有效" class="headerlink" title="设置键为永久有效"></a>设置键为永久有效</h3><ol>
-<li><strong>使用<strong><strong>PERSIST</strong></strong>命令，</strong>PERSIST命令用于移除键的过期时间，使其变为永久有效。</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PERSIST key</span><br><span class="line">例如：</span><br><span class="line">PERSIST mykey  # 移除 mykey 的过期时间，使其变为永久有效</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E5%9B%9E%E6%94%B6%E8%BF%9B%E7%A8%8B%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84_/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E5%9B%9E%E6%94%B6%E8%BF%9B%E7%A8%8B%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84_/" itemprop="url">redis 回收进程如何工作</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-02-11T13:33:41+00:00">
-                2025-02-11
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌redis回收进程如何工作的"><a href="#👌redis回收进程如何工作的" class="headerlink" title="👌redis回收进程如何工作的?"></a>👌redis回收进程如何工作的?</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>Redis的回收进程负责定期扫描和删除过期键。服务器运行时自动执行。主要就是定期回收和惰性回收，其实也可以看之前的 redis 过期策略。来进行合二为一，其实二者答案差不多，就是内容有一定区别。</p>
-<h2 id="定期回收任务"><a href="#定期回收任务" class="headerlink" title="定期回收任务"></a>定期回收任务</h2><p>Redis回收进程的核心是一个定期任务，这个任务在Redis的事件循环中执行。</p>
-<p><strong>事件循环</strong>：Redis使用一个单线程的事件循环模型来处理所有的客户端请求和后台任务。</p>
-<p><strong>定期任务</strong>：在事件循环中，Redis会定期触发一个函数来执行过期键的检查和删除操作。这个函数默认每100毫秒运行一次。</p>
-<p>实现步骤如下：</p>
-<ol>
-<li><strong>选择数据库</strong>：每次执行定期任务时，Redis会遍历所有的数据库（默认16个）。</li>
-<li><strong>随机抽样</strong>：对于每个数据库，Redis会随机选择一部分带有过期时间的键进行检查（默认20个）。</li>
-<li><strong>检查过期键</strong>：检查这些键是否已经过期，如果过期则删除。</li>
-<li><strong>重复检查</strong>：如果发现超过一定比例的键是过期的（默认25%），则继续进行更多次的检查和删除，直到过期键的比例下降到合理范围内。</li>
-</ol>
-<h2 id="惰性回收"><a href="#惰性回收" class="headerlink" title="惰性回收"></a>惰性回收</h2><p>惰性回收不是一个独立的进程，而是每次客户端访问键时触发的检查机制。它的工作原理如下：</p>
-<ol>
-<li><strong>访问键</strong>：每当客户端访问一个键时，Redis会检查该键是否设置了过期时间。</li>
-<li><strong>检查过期</strong>：如果该键已经过期，Redis会立即删除该键，并返回空结果或相应的错误信息。</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%BB%B6%E6%97%B6%E9%98%9F%E5%88%97/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/02/11/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%BB%B6%E6%97%B6%E9%98%9F%E5%88%97/" itemprop="url">redis 如何实现延迟队列</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-02-11T13:33:41+00:00">
-                2025-02-11
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-06T11:04:31+00:00">
-                2025-07-06
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌redis如何实现延时队列"><a href="#👌redis如何实现延时队列" class="headerlink" title="👌redis如何实现延时队列"></a>👌redis如何实现延时队列</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>可以使用有序集合（Sorted Set）来实现延时队列。有序集合中的每个元素有一个关联的分数，可以用来表示任务的执行时间戳。具体的步骤如下，非常简单</p>
-<h2 id="添加任务到延时队列"><a href="#添加任务到延时队列" class="headerlink" title="添加任务到延时队列"></a>添加任务到延时队列</h2><p>将任务添加到有序集合中，使用任务的执行时间作为分数（score）。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 示例代码：添加任务到延时队列</span><br><span class="line">String queueName = &quot;delay_queue&quot;;</span><br><span class="line">String taskId=&quot;task_1&quot;;</span><br><span class="line">long delay=5000; // 延迟时间（毫秒）</span><br><span class="line">long executionTime= System.currentTimeMillis() + delay;</span><br><span class="line">Jedis jedis = newJedis(&quot;localhost&quot;);</span><br><span class="line">jedis.zadd(queueName, executionTime, taskId);</span><br><span class="line">jedis.close();</span><br></pre></td></tr></table></figure>
-
-<h2 id="轮询延时队列并执行任务"><a href="#轮询延时队列并执行任务" class="headerlink" title="轮询延时队列并执行任务"></a>轮询延时队列并执行任务</h2><p>定期检查有序集合中的任务，找到那些执行时间已经到达或超过当前时间的任务，并执行这些任务。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">// 示例代码：轮询延时队列并执行任务</span><br><span class="line">String queueName = &quot;delay_queue&quot;;</span><br><span class="line">Jedis jedis=new Jedis(&quot;localhost&quot;);</span><br><span class="line">while (true) &#123;</span><br><span class="line">    long currentTime= System.currentTimeMillis();</span><br><span class="line">    Set&lt;Tuple&gt; tasks = jedis.zrangeByScoreWithScores(queueName, 0, currentTime, 0, 1);</span><br><span class="line"></span><br><span class="line">    if (tasks.isEmpty()) &#123;</span><br><span class="line">        // 没有任务需要执行，休眠一段时间</span><br><span class="line">        Thread.sleep(1000);</span><br><span class="line">        continue;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    for (Tuple task : tasks) &#123;</span><br><span class="line">        StringtaskId= task.getElement();</span><br><span class="line">        // 执行任务</span><br><span class="line">        executeTask(taskId);</span><br><span class="line"></span><br><span class="line">        // 从队列中移除已执行的任务</span><br><span class="line">        jedis.zrem(queueName, taskId);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">jedis.close();</span><br><span class="line">private static void executeTask(String taskId) &#123;</span><br><span class="line">    // 实现任务执行逻辑</span><br><span class="line">    System.out.println(&quot;Executing task: &quot; + taskId);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4633,7 +4695,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">232</span>
+                <span class="site-state-item-count">235</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -4644,7 +4706,7 @@
             
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -4655,7 +4717,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-count">30</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
