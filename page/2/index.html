@@ -270,6 +270,426 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/10/redis/redis%E7%9B%B8%E6%AF%94memcached%E6%9C%89%E5%93%AA%E4%BA%9B%E4%BC%98%E5%8A%BF%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/05/10/redis/redis%E7%9B%B8%E6%AF%94memcached%E6%9C%89%E5%93%AA%E4%BA%9B%E4%BC%98%E5%8A%BF%EF%BC%9F/" itemprop="url">👌redis相比memcached有哪些优势？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-05-10T13:33:41+00:00">
+                2025-05-10
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Redis/" itemprop="url" rel="index">
+                    <span itemprop="name">Redis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌redis相比memcached有哪些优势？"><a href="#👌redis相比memcached有哪些优势？" class="headerlink" title="👌redis相比memcached有哪些优势？"></a>👌redis相比memcached有哪些优势？</h1><h1 id="口语化回答"><a href="#口语化回答" class="headerlink" title="口语化回答"></a>口语化回答</h1><p>redis 相比 memcached，主要提供了丰富的数据类型和各种高级操作。memcached 仅仅支持字符串类型，redis 支持 5 种基础+4 种高级，非常丰富。还有就是 redis 提供了 rdb 和 aof 的持久化机制，memcached 一旦重启，数据就会直接丢失。分布式相关，redis 天然支持主从复制，哨兵，集群，memcached 还需要靠一些第三方库和工具类实现。再高级一点的就是 redis 支持像 lua，事务，发布订阅这些，memcached 统统不支持。</p>
+<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>最近几年基本上不会考这道题了，这道题在早些时候，memcached 还用的时候，问的比较多。除非碰到还在用memcached 的公司，否则不会被问到。大家稍微了解即可，比较的过程也是了解历史的过程。</p>
+<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>丰富数据类型，持久化，分布式，lua，事务</p>
+<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>通过一个表格来进行对比</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>redis</th>
+<th>Memcached</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>数据类型</td>
+<td>Redis 支持字符串、哈希、列表、集合、有序集合、位图、HyperLogLog、地理空间和流等多种数据类型</td>
+<td>Memcached 仅支持字符串类型的键值对。</td>
+</tr>
+<tr>
+<td>持久化机制</td>
+<td>Redis 支持将数据持久化到磁盘，可以通过 RDB 快照和 AOF 日志来保存数据，确保在系统重启后数据不会丢失</td>
+<td>Memcached不支持持久化，数据仅保存在内存中，一旦服务器重启或宕机，数据就会丢失。</td>
+</tr>
+<tr>
+<td>分布式</td>
+<td>支持主从，哨兵，集群</td>
+<td>Memcached也支持分布式部署，但通常需要依赖第三方库或工具来实现</td>
+</tr>
+<tr>
+<td>脚本功能</td>
+<td>Redis 支持在服务器端执行 Lua 脚本，能够将多个操作合并为一个原子操作</td>
+<td>不支持</td>
+</tr>
+<tr>
+<td>事务</td>
+<td>Redis 提供 MULTI、EXEC、WATCH 等命令，支持简单的事务操作</td>
+<td>不支持事务</td>
+</tr>
+<tr>
+<td>内存淘汰策略</td>
+<td>Redis 提供多种内存淘汰策略，如 LRU、LFU 等</td>
+<td>Memcached 仅支持 LRU 淘汰策略。</td>
+</tr>
+</tbody></table>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/09/redis/redis%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B9%88%E5%BF%AB%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/05/09/redis/redis%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B9%88%E5%BF%AB%EF%BC%9F/" itemprop="url">👌redis是单进程单线程？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-05-09T13:33:41+00:00">
+                2025-05-09
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Redis/" itemprop="url" rel="index">
+                    <span itemprop="name">Redis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌redis为什么这么快？"><a href="#👌redis为什么这么快？" class="headerlink" title="👌redis为什么这么快？"></a>👌redis为什么这么快？</h1><h1 id="口语化回答"><a href="#口语化回答" class="headerlink" title="口语化回答"></a>口语化回答</h1><p>redis 的快主要得益于以下几个点，第一个就是纯内存的操作，相比磁盘来说，纯内存带来的速度提升非常大。其次就是合理的数据结构和数据编码设计。像不同的数据类型所对应的底层结构都会有变化，基本上作者让我们在 o1 的复杂度内就可以读取到我们想要的值。还有就是单线程，因为在内存，所以压力瓶颈一般在网络和 cpu，单线程完全足够，这使得 redis 不需要考虑切换的消耗。以及 redis 采取了 io 多路复用，减少了网络压力，提高了吞吐量。以上就是 redis 这么快的原因。</p>
+<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>经典题目了，主要是看你对内存的速度有没有一个思考性的了解，知道内存比磁盘快的多，有这种思维，可以在平时开发的时候多注意。还有就是考察单线程不需要考虑切换和争抢的性能问题。io 多路复用是 redis 的比较特色的东西。再深一点就是要考察你对数据类型的底层结构有没有具体的了解了。</p>
+<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>内存，数据结构，单线程，io 多路复用</p>
+<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>redis 巨快，巨快，操作毫秒级，qps 可达 10w+。</p>
+<h2 id="主要原因"><a href="#主要原因" class="headerlink" title="主要原因"></a>主要原因</h2><h3 id="纯内存"><a href="#纯内存" class="headerlink" title="纯内存"></a>纯内存</h3><p>Redis将数据存储在内存中，避免了大量访问数据库和直接读取磁盘数据的操作。内存的读写速度远超过磁盘I&#x2F;O，使得Redis的数据访问非常迅速。</p>
+<h3 id="数据结构合理"><a href="#数据结构合理" class="headerlink" title="数据结构合理"></a>数据结构合理</h3><p>Redis内部的数据结构都是为快速读写而设计的，如跳跃表、SDS（简单动态字符串）、链表和Hash等。基本都能够在 o（1）复杂度下完成大部分操作，比如 hash 的结构，想获取其中一个属性的值，非常的方便，不像数据库查询需要磁盘寻找。</p>
+<h3 id="单线程操作"><a href="#单线程操作" class="headerlink" title="单线程操作"></a>单线程操作</h3><p>Redis采用单线程模型来处理客户端请求，避免了多线程带来的上下文切换和竞争条件。单线程模型使得Redis不需要考虑各种锁的问题，减少了性能消耗。但是持久化，异步删除等等是异步线程处理，但这不影响性能。不过要注意一个点，因为单线程，某个命令如果耗时太大，可能会产生阻塞，也就是我们经常说的，不要使用 keys，或者直接读整个 hash 大 key。</p>
+<h3 id="io-多路复用模型"><a href="#io-多路复用模型" class="headerlink" title="io 多路复用模型"></a>io 多路复用模型</h3><p><font style="color:rgb(25, 27, 31);">Redis在网络通信和磁盘写入方面采用了异步式的IO处理，即使用epoll</font>多路复用技术<font style="color:rgb(25, 27, 31);">同时处理多个网络请求，减少了I&#x2F;O阻塞及</font>上下文切换<font style="color:rgb(25, 27, 31);">开销，提高了系统的吞吐量和响应时间。</font></p>
+<h3 id="专门设计的数据结构"><a href="#专门设计的数据结构" class="headerlink" title="专门设计的数据结构"></a>专门设计的数据结构</h3><p>redis 的每种数据类型对应的底层存储结构都不一样，经历过多种方式的设计。拿 string 类型来进行说，如果存储数字的话，是用int类型的编码。如果存储非数字，小于等于39字节的字符串，是embstr。大于39个字节，则是raw编码。这种根据类型和字节数的设计，在 key 越多的场景下，占用空间越少。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/09/redis/redis%E4%BA%8B%E5%8A%A1%E4%BF%9D%E8%AF%81%E5%8E%9F%E5%AD%90%E6%80%A7%E5%90%97%EF%BC%8C%E6%94%AF%E6%8C%81%E5%9B%9E%E6%BB%9A%E5%90%97_/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +737,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -511,8 +931,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -711,8 +1131,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -900,8 +1320,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -1094,8 +1514,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -1297,8 +1717,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -1489,8 +1909,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -1709,8 +2129,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -1903,8 +2323,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -2067,6 +2487,208 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/06/redis/redis%E7%9A%84%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6%E6%98%AF%E4%BB%80%E4%B9%88_/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/05/06/redis/redis%E7%9A%84%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6%E6%98%AF%E4%BB%80%E4%B9%88_/" itemprop="url">👌redis的同步机制是什么</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-05-06T13:33:41+00:00">
+                2025-05-06
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Redis/" itemprop="url" rel="index">
+                    <span itemprop="name">Redis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌redis的同步机制是什么"><a href="#👌redis的同步机制是什么" class="headerlink" title="👌redis的同步机制是什么?"></a>👌redis的同步机制是什么?</h1><h1 id="口语化回答"><a href="#口语化回答" class="headerlink" title="口语化回答"></a>口语化回答</h1><p>redis 的同步机制主要是主从同步，一开始从服务器发送同步命令，主服务器接收到之后，就会生成一个 rdb 的文件，然后传输给从服务器，从服务器接收到之后，立马进行数据的恢复。然后当主服务器再次接收到写命令的时候，会发给从服务器。这个过程是一个异步复制，主服务器不会等待结果。这样就完成了主从复制，主要的核心步骤就是这些。如果同步机制发生问题的话，从服务器可以进行断线重连。还可以做集群、哨兵，来自动切换。以上。</p>
+<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>主要还是考主从同步原理和如何进行配置，还可以带一点故障的处理。面试官主要是想看看你对集群有没有一定的了解，redis 主从的数据复制有没有了解。</p>
+<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>rdb 快照，增量同步，故障机制</p>
+<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>redis的同步机制主要涉及主从复制，主从复制机制允许一个服务器（主服务器）将数据复制到一个或多个服务器（从服务器）。从服务器可以是只读的，也可以接受写操作，但这些写操作不会被同步回主服务器。</p>
+<h3 id="初次同步"><a href="#初次同步" class="headerlink" title="初次同步"></a>初次同步</h3><p>当从服务器第一次连接到主服务器时，或者当从服务器与主服务器的连接中断后重新连接时，会触发一次全量同步过程。</p>
+<ol>
+<li><strong>从服务器发送SYNC命令</strong>：从服务器向主服务器发送SYNC命令，请求进行同步。</li>
+<li><strong>主服务器生成RDB快照</strong>：主服务器接收到SYNC命令后，会生成一个RDB（Redis Database）快照文件，并在生成过程中将所有新写入的命令记录到一个缓冲区中。</li>
+<li><strong>传输RDB文件</strong>：主服务器将生成的RDB文件发送给从服务器。从服务器接收到RDB文件后，会清空自身的数据库并加载这个RDB文件。</li>
+<li><strong>传输缓冲区中的命令</strong>：主服务器将缓冲区中的所有写命令发送给从服务器，从服务器依次执行这些命令，以确保数据完全同步。</li>
+</ol>
+<h3 id="增量同步"><a href="#增量同步" class="headerlink" title="增量同步"></a>增量同步</h3><p>在初次同步完成后，主从服务器会保持连接状态，主服务器会将后续的所有写命令实时发送给从服务器，从服务器执行这些命令以保持数据的一致性。</p>
+<h2 id="同步机制如何配置"><a href="#同步机制如何配置" class="headerlink" title="同步机制如何配置"></a>同步机制如何配置</h2><h3 id="主服务器配置"><a href="#主服务器配置" class="headerlink" title="主服务器配置"></a>主服务器配置</h3><p>主服务器的配置通常不需要特别设置，只需要确保其能够接受从服务器的连接请求。</p>
+<h3 id="从服务器配置"><a href="#从服务器配置" class="headerlink" title="从服务器配置"></a>从服务器配置</h3><p>在从服务器的配置文件中，需要指定主服务器的IP地址和端口号：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">replicaof &lt;master-ip&gt; &lt;master-port&gt;</span><br><span class="line">replicaof 192.168.1.100 6379</span><br></pre></td></tr></table></figure>
+
+<h2 id="同步机制的故障处理"><a href="#同步机制的故障处理" class="headerlink" title="同步机制的故障处理"></a>同步机制的故障处理</h2><h4 id="断线重连"><a href="#断线重连" class="headerlink" title="断线重连"></a>断线重连</h4><p>当从服务器与主服务器的连接中断时，从服务器会自动尝试重连。在重连成功后，从服务器会根据情况选择进行全量同步或增量同步。</p>
+<h4 id="主从切换"><a href="#主从切换" class="headerlink" title="主从切换"></a>主从切换</h4><p>在高可用环境中，可以使用Redis Sentinel或Redis Cluster来实现自动主从切换。当主服务器发生故障时，Sentinel或Cluster会自动选举一个新的主服务器，并通知其他从服务器进行同步。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/06/redis/redis%E7%9A%84%E5%86%85%E5%AD%98%E7%94%A8%E5%AE%8C%E4%BA%86%E4%BC%9A%E5%8F%91%E7%94%9F%E4%BB%80%E4%B9%88%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2114,8 +2736,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -2283,208 +2905,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/06/redis/redis%E7%9A%84%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6%E6%98%AF%E4%BB%80%E4%B9%88_/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/05/06/redis/redis%E7%9A%84%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6%E6%98%AF%E4%BB%80%E4%B9%88_/" itemprop="url">👌redis的同步机制是什么</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-05-06T13:33:41+00:00">
-                2025-05-06
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Redis/" itemprop="url" rel="index">
-                    <span itemprop="name">Redis</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌redis的同步机制是什么"><a href="#👌redis的同步机制是什么" class="headerlink" title="👌redis的同步机制是什么?"></a>👌redis的同步机制是什么?</h1><h1 id="口语化回答"><a href="#口语化回答" class="headerlink" title="口语化回答"></a>口语化回答</h1><p>redis 的同步机制主要是主从同步，一开始从服务器发送同步命令，主服务器接收到之后，就会生成一个 rdb 的文件，然后传输给从服务器，从服务器接收到之后，立马进行数据的恢复。然后当主服务器再次接收到写命令的时候，会发给从服务器。这个过程是一个异步复制，主服务器不会等待结果。这样就完成了主从复制，主要的核心步骤就是这些。如果同步机制发生问题的话，从服务器可以进行断线重连。还可以做集群、哨兵，来自动切换。以上。</p>
-<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>主要还是考主从同步原理和如何进行配置，还可以带一点故障的处理。面试官主要是想看看你对集群有没有一定的了解，redis 主从的数据复制有没有了解。</p>
-<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>rdb 快照，增量同步，故障机制</p>
-<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>redis的同步机制主要涉及主从复制，主从复制机制允许一个服务器（主服务器）将数据复制到一个或多个服务器（从服务器）。从服务器可以是只读的，也可以接受写操作，但这些写操作不会被同步回主服务器。</p>
-<h3 id="初次同步"><a href="#初次同步" class="headerlink" title="初次同步"></a>初次同步</h3><p>当从服务器第一次连接到主服务器时，或者当从服务器与主服务器的连接中断后重新连接时，会触发一次全量同步过程。</p>
-<ol>
-<li><strong>从服务器发送SYNC命令</strong>：从服务器向主服务器发送SYNC命令，请求进行同步。</li>
-<li><strong>主服务器生成RDB快照</strong>：主服务器接收到SYNC命令后，会生成一个RDB（Redis Database）快照文件，并在生成过程中将所有新写入的命令记录到一个缓冲区中。</li>
-<li><strong>传输RDB文件</strong>：主服务器将生成的RDB文件发送给从服务器。从服务器接收到RDB文件后，会清空自身的数据库并加载这个RDB文件。</li>
-<li><strong>传输缓冲区中的命令</strong>：主服务器将缓冲区中的所有写命令发送给从服务器，从服务器依次执行这些命令，以确保数据完全同步。</li>
-</ol>
-<h3 id="增量同步"><a href="#增量同步" class="headerlink" title="增量同步"></a>增量同步</h3><p>在初次同步完成后，主从服务器会保持连接状态，主服务器会将后续的所有写命令实时发送给从服务器，从服务器执行这些命令以保持数据的一致性。</p>
-<h2 id="同步机制如何配置"><a href="#同步机制如何配置" class="headerlink" title="同步机制如何配置"></a>同步机制如何配置</h2><h3 id="主服务器配置"><a href="#主服务器配置" class="headerlink" title="主服务器配置"></a>主服务器配置</h3><p>主服务器的配置通常不需要特别设置，只需要确保其能够接受从服务器的连接请求。</p>
-<h3 id="从服务器配置"><a href="#从服务器配置" class="headerlink" title="从服务器配置"></a>从服务器配置</h3><p>在从服务器的配置文件中，需要指定主服务器的IP地址和端口号：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">replicaof &lt;master-ip&gt; &lt;master-port&gt;</span><br><span class="line">replicaof 192.168.1.100 6379</span><br></pre></td></tr></table></figure>
-
-<h2 id="同步机制的故障处理"><a href="#同步机制的故障处理" class="headerlink" title="同步机制的故障处理"></a>同步机制的故障处理</h2><h4 id="断线重连"><a href="#断线重连" class="headerlink" title="断线重连"></a>断线重连</h4><p>当从服务器与主服务器的连接中断时，从服务器会自动尝试重连。在重连成功后，从服务器会根据情况选择进行全量同步或增量同步。</p>
-<h4 id="主从切换"><a href="#主从切换" class="headerlink" title="主从切换"></a>主从切换</h4><p>在高可用环境中，可以使用Redis Sentinel或Redis Cluster来实现自动主从切换。当主服务器发生故障时，Sentinel或Cluster会自动选举一个新的主服务器，并通知其他从服务器进行同步。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/06/redis/redis%E7%9A%84%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2532,8 +2952,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -2806,8 +3226,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -2996,8 +3416,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -3203,8 +3623,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -3407,8 +3827,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -3618,8 +4038,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -3823,8 +4243,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -3960,421 +4380,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/06/redis/%E4%BD%BF%E7%94%A8redis%E7%BB%9F%E8%AE%A1%E7%BD%91%E7%AB%99%E7%9A%84uv%EF%BC%8C%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E5%81%9A/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/05/06/redis/%E4%BD%BF%E7%94%A8redis%E7%BB%9F%E8%AE%A1%E7%BD%91%E7%AB%99%E7%9A%84uv%EF%BC%8C%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E5%81%9A/" itemprop="url">👌使用redis统计网站的uv，应该怎么做</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-05-06T13:33:41+00:00">
-                2025-05-06
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Redis/" itemprop="url" rel="index">
-                    <span itemprop="name">Redis</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌使用redis统计网站的uv，应该怎么做"><a href="#👌使用redis统计网站的uv，应该怎么做" class="headerlink" title="👌使用redis统计网站的uv，应该怎么做"></a>👌使用redis统计网站的uv，应该怎么做</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>常见的是使用Set数据结构和HyperLogLog数据结构。</p>
-<h2 id="使用Set统计UV"><a href="#使用Set统计UV" class="headerlink" title="使用Set统计UV"></a>使用Set统计UV</h2><p>Set是一种集合数据结构，可以存储不重复的元素。将每个访客的唯一标识（如用户ID或IP地址）添加到Set中，可以很方便地统计独立访客数。</p>
-<ol>
-<li><strong>记录访客访问</strong>：每次有访客访问时，将其唯一标识添加到当天的Set中。</li>
-<li><strong>获取UV</strong>：使用SCARD命令获取Set中元素的数量，即为独立访客数。</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">import redis.clients.jedis.Jedis;</span><br><span class="line">import java.time.LocalDate;</span><br><span class="line">import java.time.format.DateTimeFormatter;</span><br><span class="line">public class UVTrackerSet &#123;</span><br><span class="line">    private Jedis jedis;</span><br><span class="line">    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd&quot;);</span><br><span class="line"></span><br><span class="line">    public UVTrackerSet(String redisHost, int redisPort) &#123;</span><br><span class="line">        this.jedis = newJedis(redisHost, redisPort);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void recordVisit(String userId) &#123;</span><br><span class="line">        String date= LocalDate.now().format(DATE_FORMATTER);</span><br><span class="line">        String key=&quot;uv:set:&quot; + date;</span><br><span class="line">        jedis.sadd(key, userId);</span><br><span class="line">        // 设置键的过期时间为30天，防止内存无限增长</span><br><span class="line">        jedis.expire(key, 30 * 24 * 60 * 60);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public long getUV(String date) &#123;</span><br><span class="line">        String key=&quot;uv:set:&quot; + date;</span><br><span class="line">        return jedis.scard(key);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public long getUVRange(String startDate, String endDate) &#123;</span><br><span class="line">        LocalDatestart= LocalDate.parse(startDate, DATE_FORMATTER);</span><br><span class="line">        LocalDateend= LocalDate.parse(endDate, DATE_FORMATTER);</span><br><span class="line"></span><br><span class="line">        String[] keys = start.datesUntil(end.plusDays(1))</span><br><span class="line">                .map(date -&gt; &quot;uv:set:&quot; + date.format(DATE_FORMATTER))</span><br><span class="line">                .toArray(String[]::new);</span><br><span class="line"></span><br><span class="line">        StringtempKey=&quot;uv:set:range&quot;;</span><br><span class="line">        jedis.sunionstore(tempKey, keys);</span><br><span class="line">        longuvCount= jedis.scard(tempKey);</span><br><span class="line">        jedis.del(tempKey);</span><br><span class="line">        return uvCount;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        UVTrackerSet tracker = new UVTrackerSet(&quot;localhost&quot;, 6379);</span><br><span class="line"></span><br><span class="line">        // 记录访客访问</span><br><span class="line">        tracker.recordVisit(&quot;user_123&quot;);</span><br><span class="line">        tracker.recordVisit(&quot;user_456&quot;);</span><br><span class="line"></span><br><span class="line">        // 获取指定日期的UV</span><br><span class="line">        Stringtoday= LocalDate.now().format(DATE_FORMATTER);</span><br><span class="line">        System.out.println(&quot;UV for &quot; + today + &quot;: &quot; + tracker.getUV(today));</span><br><span class="line"></span><br><span class="line">        // 获取一段时间内的UV</span><br><span class="line">        StringstartDate=&quot;2023-07-01&quot;;</span><br><span class="line">        StringendDate=&quot;2023-07-07&quot;;</span><br><span class="line">        System.out.println(&quot;UV from &quot; + startDate + &quot; to &quot; + endDate + &quot;: &quot; + tracker.getUVRange(startDate, endDate));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="使用HyperLogLog统计UV"><a href="#使用HyperLogLog统计UV" class="headerlink" title="使用HyperLogLog统计UV"></a>使用HyperLogLog统计UV</h2><p>HyperLogLog是一种概率性数据结构，可以在固定的内存空间内提供高效的基数估计。它适合处理大规模数据。</p>
-<ol>
-<li><strong>记录访客访问</strong>：每次有访客访问时，将其唯一标识添加到当天的HyperLogLog中。</li>
-<li><strong>获取UV</strong>：使用PFCOUNT命令获取HyperLogLog的基数估计。</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">import redis.clients.jedis.Jedis;</span><br><span class="line">import java.time.LocalDate;</span><br><span class="line">import java.time.format.DateTimeFormatter;</span><br><span class="line">public class UVTrackerHLL &#123;</span><br><span class="line"></span><br><span class="line">    private Jedis jedis;</span><br><span class="line">    private static final DateTimeFormatter DATE_FORMATTER= DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd&quot;);</span><br><span class="line"></span><br><span class="line">    public UVTrackerHLL(String redisHost, int redisPort) &#123;</span><br><span class="line">        this.jedis = newJedis(redisHost, redisPort);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void recordVisit(String userId) &#123;</span><br><span class="line">        Stringdate= LocalDate.now().format(DATE_FORMATTER);</span><br><span class="line">        Stringkey=&quot;uv:hll:&quot; + date;</span><br><span class="line">        jedis.pfadd(key, userId);</span><br><span class="line">        // 设置键的过期时间为30天，防止内存无限增长</span><br><span class="line">        jedis.expire(key, 30 * 24 * 60 * 60);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public long getUV(String date) &#123;</span><br><span class="line">        Stringkey=&quot;uv:hll:&quot; + date;</span><br><span class="line">        return jedis.pfcount(key);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public long getUVRange(String startDate, String endDate) &#123;</span><br><span class="line">        LocalDatestart= LocalDate.parse(startDate, DATE_FORMATTER);</span><br><span class="line">        LocalDateend= LocalDate.parse(endDate, DATE_FORMATTER);</span><br><span class="line"></span><br><span class="line">        String[] keys = start.datesUntil(end.plusDays(1))</span><br><span class="line">                .map(date -&gt; &quot;uv:hll:&quot; + date.format(DATE_FORMATTER))</span><br><span class="line">                .toArray(String[]::new);</span><br><span class="line"></span><br><span class="line">        StringtempKey=&quot;uv:hll:range&quot;;</span><br><span class="line">        jedis.pfmerge(tempKey, keys);</span><br><span class="line">        longuvCount= jedis.pfcount(tempKey);</span><br><span class="line">        jedis.del(tempKey);</span><br><span class="line">        return uvCount;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        UVTrackerHLLtracker=newUVTrackerHLL(&quot;localhost&quot;, 6379);</span><br><span class="line"></span><br><span class="line">        // 记录访客访问</span><br><span class="line">        tracker.recordVisit(&quot;user_123&quot;);</span><br><span class="line">        tracker.recordVisit(&quot;user_456&quot;);</span><br><span class="line"></span><br><span class="line">        // 获取指定日期的UV</span><br><span class="line">        Stringtoday= LocalDate.now().format(DATE_FORMATTER);</span><br><span class="line">        System.out.println(&quot;UV for &quot; + today + &quot;: &quot; + tracker.getUV(today));</span><br><span class="line"></span><br><span class="line">        // 获取一段时间内的UV</span><br><span class="line">        StringstartDate=&quot;2023-07-01&quot;;</span><br><span class="line">        StringendDate=&quot;2023-07-07&quot;;</span><br><span class="line">        System.out.println(&quot;UV from &quot; + startDate + &quot; to &quot; + endDate + &quot;: &quot; + tracker.getUVRange(startDate, endDate));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="优缺点对比"><a href="#优缺点对比" class="headerlink" title="优缺点对比"></a>优缺点对比</h2><table>
-<thead>
-<tr>
-<th></th>
-<th>set</th>
-<th>hyperloglog</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>精准度</td>
-<td>精确统计，无误差</td>
-<td>存在一定误差（通常在0.81%左右）</td>
-</tr>
-<tr>
-<td>占用内存</td>
-<td>内存占用较大，尤其是当访客数量很大时</td>
-<td>内存占用小，通常只需要12KB内存。</td>
-</tr>
-<tr>
-<td>内存占用情况</td>
-<td>小数据量，同时对内存不敏感可以</td>
-<td>适合大规模数据</td>
-</tr>
-</tbody></table>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/06/redis/%E5%A6%82%E6%9E%9C%E6%9C%89%E5%A4%A7%E9%87%8F%E7%9A%84key%E9%9C%80%E8%A6%81%E8%AE%BE%E7%BD%AE%E5%90%8C%E4%B8%80%E6%97%B6%E9%97%B4%E8%BF%87%E6%9C%9F%EF%BC%8C%E4%B8%80%E8%88%AC%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E4%BB%80%E4%B9%88%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/05/06/redis/%E5%A6%82%E6%9E%9C%E6%9C%89%E5%A4%A7%E9%87%8F%E7%9A%84key%E9%9C%80%E8%A6%81%E8%AE%BE%E7%BD%AE%E5%90%8C%E4%B8%80%E6%97%B6%E9%97%B4%E8%BF%87%E6%9C%9F%EF%BC%8C%E4%B8%80%E8%88%AC%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E4%BB%80%E4%B9%88%EF%BC%9F/" itemprop="url">👌如果有大量的key需要设置同一时间过期，一般需要注意什么？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-05-06T13:33:41+00:00">
-                2025-05-06
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Redis/" itemprop="url" rel="index">
-                    <span itemprop="name">Redis</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌如果有大量的key需要设置同一时间过期，一般需要注意什么？"><a href="#👌如果有大量的key需要设置同一时间过期，一般需要注意什么？" class="headerlink" title="👌如果有大量的key需要设置同一时间过期，一般需要注意什么？"></a>👌如果有大量的key需要设置同一时间过期，一般需要注意什么？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>大量的 key 同一时间过期，就是非常常见的缓存雪崩场景。</p>
-<p>缓存雪崩是指在同一时间大量缓存key同时失效，导致大量请求直接涌向数据库或后端服务，可能引发系统崩溃或性能严重下降。</p>
-<h2 id="雪崩解决方案"><a href="#雪崩解决方案" class="headerlink" title="雪崩解决方案"></a>雪崩解决方案</h2><p><strong>过期时间随机化</strong>：在设置过期时间时，添加一个随机的偏移量，使得不同key的过期时间稍微不同，避免在同一时刻大量key同时失效。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Random random=<span class="keyword">new</span> <span class="title class_">Random</span>();</span><br><span class="line"><span class="type">int</span> baseExpiry=<span class="number">3600</span>; <span class="comment">// 基础过期时间，单位为秒</span></span><br><span class="line"><span class="type">int</span> randomOffset= random.nextInt(<span class="number">300</span>); <span class="comment">// 随机偏移量，最大300秒</span></span><br><span class="line"><span class="type">int</span> finalExpiry= baseExpiry + randomOffset;</span><br><span class="line">redisClient.set(key, value, finalExpiry);</span><br></pre></td></tr></table></figure>
-
-<p><strong>分散过期时间</strong>：根据业务逻辑，将key的过期时间分散在不同的时间段内。例如，可以根据key的某些属性（如用户ID、商品ID等）分散设置过期时间。</p>
-<p><strong>缓存预热</strong>：在缓存失效前，提前预热缓存，确保缓存中始终有数据。</p>
-<h2 id="监控报警机制"><a href="#监控报警机制" class="headerlink" title="监控报警机制"></a>监控报警机制</h2><p>使用Redis自身的监控工具或第三方监控工具（如Prometheus、Grafana等）监控缓存的命中率、延迟、内存使用等指标。设置报警规则，当缓存命中率下降或延迟增加时，及时发送报警通知，便于快速定位和解决问题。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4425,7 +4430,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">235</span>
+                <span class="site-state-item-count">237</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -4436,7 +4441,7 @@
             
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>

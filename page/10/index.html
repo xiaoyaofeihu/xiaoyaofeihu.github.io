@@ -270,6 +270,459 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/jdk7%E7%9A%84hashmap%E5%AE%9E%E7%8E%B0%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/jdk7%E7%9A%84hashmap%E5%AE%9E%E7%8E%B0%EF%BC%9F/" itemprop="url">jdk7的hashmap实现？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌jdk7的hashmap实现？"><a href="#👌jdk7的hashmap实现？" class="headerlink" title="👌jdk7的hashmap实现？"></a>👌jdk7的hashmap实现？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>HashMap在 JDK 7 中的实现其实并不复杂，它主要依靠两个数据结构：数组和链表。</p>
+<p>首先，HashMap内部有一个数组，这个数组用来存储所有的键值对。每个数组的元素其实是一个链表的头节点。也就是说，如果两个或多个键计算出来的哈希值相同，它们会被存储在同一个数组位置的链表中。</p>
+<p>当我们往HashMap里放一个键值对时，HashMap会先根据键的hashCode计算出一个哈希值，然后用这个哈希值决定键值对应该放在数组的哪个位置。如果那个位置是空的，键值对就直接放进去；如果那个位置已经有其他键值对了（也就是发生了哈希冲突），HashMap会把新的键值对放到那个位置的链表上。</p>
+<p>举个例子吧，假设我们有一个HashMap，我们要往里面放一个键值对(“apple”, 1)。HashMap会先计算”apple”的哈希值，然后用这个哈希值决定应该把它放到数组的哪个位置。假如计算出来的位置是 5，如果数组的第 5 个位置是空的，它就直接放进去；如果已经有其他键值对了，比如(“banana”, 2)，它就会把(“apple”, 1)加到(“banana”, 2)的链表上。</p>
+<p>取值的时候也类似。假设我们要取”apple”对应的值，HashMap会先计算”apple”的哈希值，然后找到数组的对应位置，再沿着链表找到”apple”对应的节点，最后返回它的值。</p>
+<p>需要注意的是，HashMap不是线程安全的。如果多个线程同时修改HashMap，可能会导致一些奇怪的问题，比如死循环。所以在多线程环境下，建议使用ConcurrentHashMap。</p>
+<p>总结一下，HashMap在 JDK 7 中主要是通过数组和链表来存储数据，使用哈希值来决定存储位置，并通过链表来解决哈希冲突。它的设计让我们在大多数情况下能够快速地存取数据，但在多线程环境下需要小心使用。</p>
+<p>JDK 7 中的HashMap底层实现方式主要基于数组和链表。它通过哈希函数将键映射到数组中的索引位置，从而实现快速的查找和存储操作。</p>
+<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><p>HashMap主要由以下几部分组成：</p>
+<p><strong>数组（table）</strong>：存储HashMap的核心数据结构。每个数组元素是一个链表的头节点。</p>
+<p><strong>链表（Entry）</strong>：处理哈希冲突的结构。当多个键的哈希值映射到同一个数组索引时，这些键值对会被存储在该索引位置的链表中。</p>
+<h2 id="Entry-类"><a href="#Entry-类" class="headerlink" title="Entry 类"></a>Entry 类</h2><p>在 JDK 7 中，HashMap使用一个内部类Entry来表示键值对。Entry类的定义如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">static class Entry&lt;K, V&gt; implements Map.Entry&lt;K, V&gt; &#123;</span><br><span class="line">    final K key;</span><br><span class="line">    V value;</span><br><span class="line">    Entry&lt;K, V&gt; next;</span><br><span class="line">    final int hash;</span><br><span class="line"></span><br><span class="line">    Entry(int h, K k, V v, Entry&lt;K, V&gt; n) &#123;</span><br><span class="line">        value = v;</span><br><span class="line">        next = n;</span><br><span class="line">        key = k;</span><br><span class="line">        hash = h;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public final K getKey() &#123;</span><br><span class="line">        return key;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public final V getValue() &#123;</span><br><span class="line">        return value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public final V setValue(V newValue) &#123;</span><br><span class="line">        V oldValue = value;</span><br><span class="line">        value = newValue;</span><br><span class="line">        return oldValue;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public final boolean equals(Object o) &#123;</span><br><span class="line">        if (!(o instanceof Map.Entry))</span><br><span class="line">            return false;</span><br><span class="line">        Map.Entry e = (Map.Entry) o;</span><br><span class="line">        Object k1 = getKey();</span><br><span class="line">        Object k2 = e.getKey();</span><br><span class="line">        if (k1 == k2 || (k1 != null &amp;&amp; k1.equals(k2))) &#123;</span><br><span class="line">            Object v1 = getValue();</span><br><span class="line">            Object v2 = e.getValue();</span><br><span class="line">            if (v1 == v2 || (v1 != null &amp;&amp; v1.equals(v2)))</span><br><span class="line">                return true;</span><br><span class="line">        &#125;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public final int hashCode() &#123;</span><br><span class="line">        return (key == null ? 0 : key.hashCode()) ^</span><br><span class="line">               (value == null ? 0 : value.hashCode());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public final String toString() &#123;</span><br><span class="line">        return getKey() + &quot;=&quot; + getValue();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="存储过程"><a href="#存储过程" class="headerlink" title="存储过程"></a>存储过程</h2><p>当向HashMap中存储一个键值对时，主要步骤如下：</p>
+<ol>
+<li><strong>计算哈希值</strong>：通过键的hashCode()方法计算哈希值，并进一步处理以减少冲突。</li>
+<li><strong>确定数组索引</strong>：通过哈希值计算数组索引位置。</li>
+<li><strong>插入节点</strong>：如果数组索引位置为空，则直接插入。如果不为空，则需要处理哈希冲突。</li>
+</ol>
+<h2 id="处理哈希冲突"><a href="#处理哈希冲突" class="headerlink" title="处理哈希冲突"></a>处理哈希冲突</h2><p>在 JDK 7 中，HashMap通过链表法处理哈希冲突。当多个键的哈希值映射到同一个数组索引时，这些键值对会被存储在该索引位置的链表中。插入时，新节点会被插入到链表的头部。</p>
+<h2 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h2><p>以下是put方法的简化版本，展示了HashMap的存储过程：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">public V put(K key, V value) &#123;</span><br><span class="line">    if (key == null)</span><br><span class="line">        return putForNullKey(value);</span><br><span class="line">    int hash = hash(key.hashCode());</span><br><span class="line">    int i = indexFor(hash, table.length);</span><br><span class="line">    for (Entry&lt;K, V&gt; e = table[i]; e != null; e = e.next) &#123;</span><br><span class="line">        Object k;</span><br><span class="line">        if (e.hash == hash &amp;&amp; ((k = e.key) == key || key.equals(k))) &#123;</span><br><span class="line">            V oldValue = e.value;</span><br><span class="line">            e.value = value;</span><br><span class="line">            e.recordAccess(this);</span><br><span class="line">            return oldValue;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    modCount++;</span><br><span class="line">    addEntry(hash, key, value, i);</span><br><span class="line">    return null;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void addEntry(int hash, K key, V value, int bucketIndex) &#123;</span><br><span class="line">    if ((size &gt;= threshold) &amp;&amp; (null != table[bucketIndex])) &#123;</span><br><span class="line">        resize(2 * table.length);</span><br><span class="line">        hash = (null != key) ? hash(key.hashCode()) : 0;</span><br><span class="line">        bucketIndex = indexFor(hash, table.length);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    createEntry(hash, key, value, bucketIndex);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void createEntry(int hash, K key, V value, int bucketIndex) &#123;</span><br><span class="line">    Entry&lt;K, V&gt; e = table[bucketIndex];</span><br><span class="line">    table[bucketIndex] = new Entry&lt;&gt;(hash, key, value, e);</span><br><span class="line">    size++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="取值过程"><a href="#取值过程" class="headerlink" title="取值过程"></a>取值过程</h2><p>取值时，通过键计算哈希值和数组索引，然后在链表中查找对应的键值对。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public V get(Object key) &#123;</span><br><span class="line">    if (key == null)</span><br><span class="line">        return getForNullKey();</span><br><span class="line">    int hash = hash(key.hashCode());</span><br><span class="line">    for (Entry&lt;K, V&gt; e = table[indexFor(hash, table.length)];</span><br><span class="line">         e != null;</span><br><span class="line">         e = e.next) &#123;</span><br><span class="line">        Object k;</span><br><span class="line">        if (e.hash == hash &amp;&amp; ((k = e.key) == key || key.equals(k)))</span><br><span class="line">            return e.value;</span><br><span class="line">    &#125;</span><br><span class="line">    return null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<blockquote>
+<p>&#x2F;yafahumkqtgcnav4&gt;</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/jdk8%E7%9A%84hashmap%E7%9A%84put%E8%BF%87%E7%A8%8B%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/jdk8%E7%9A%84hashmap%E7%9A%84put%E8%BF%87%E7%A8%8B%EF%BC%9F/" itemprop="url">jdk8的hashmap的put过程</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌jdk8的hashmap的put过程？"><a href="#👌jdk8的hashmap的put过程？" class="headerlink" title="👌jdk8的hashmap的put过程？"></a>👌jdk8的hashmap的put过程？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="put方法的实现"><a href="#put方法的实现" class="headerlink" title="put方法的实现"></a>put方法的实现</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public V put(K key, V value) &#123;</span><br><span class="line">    return putVal(hash(key), key, value, false, true);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>put方法调用了putVal方法。这里的hash(key)是计算键的哈希值。</p>
+<h2 id="计算哈希值"><a href="#计算哈希值" class="headerlink" title="计算哈希值"></a>计算哈希值</h2><p>hash方法用于计算键的哈希值并进行扰动处理，以减少冲突。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">static final int hash(Object key) &#123;</span><br><span class="line">    int h;</span><br><span class="line">    return (key == null) ? 0 : (h = key.hashCode()) ^ (h &gt;&gt;&gt; 16);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="putVal方法的实现"><a href="#putVal方法的实现" class="headerlink" title="putVal方法的实现"></a>putVal方法的实现</h2><p>putVal方法是HashMap中实际执行插入操作的核心方法。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">final V putVal(int hash, K key, V value, boolean onlyIfAbsent, boolean evict) &#123;</span><br><span class="line">    Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; p; int n, i;</span><br><span class="line">    if ((tab = table) == null || (n = tab.length) == 0)</span><br><span class="line">        n = (tab = resize()).length;</span><br><span class="line">    if ((p = tab[i = (n - 1) &amp; hash]) == null)</span><br><span class="line">        tab[i] = newNode(hash, key, value, null);</span><br><span class="line">    else &#123;</span><br><span class="line">        Node&lt;K,V&gt; e; K k;</span><br><span class="line">        if (p.hash == hash &amp;&amp;</span><br><span class="line">            ((k = p.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">            e = p;</span><br><span class="line">        else if (p instanceof TreeNode)</span><br><span class="line">            e = ((TreeNode&lt;K,V&gt;)p).putTreeVal(this, tab, hash, key, value);</span><br><span class="line">        else &#123;</span><br><span class="line">            for (int binCount = 0; ; ++binCount) &#123;</span><br><span class="line">                if ((e = p.next) == null) &#123;</span><br><span class="line">                    p.next = newNode(hash, key, value, null);</span><br><span class="line">                    if (binCount &gt;= TREEIFY_THRESHOLD - 1) // -1 for 1st</span><br><span class="line">                        treeifyBin(tab, hash);</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">                if (e.hash == hash &amp;&amp;</span><br><span class="line">                    ((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">                    break;</span><br><span class="line">                p = e;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        if (e != null) &#123; // existing mapping for key</span><br><span class="line">            V oldValue = e.value;</span><br><span class="line">            if (!onlyIfAbsent || oldValue == null)</span><br><span class="line">                e.value = value;</span><br><span class="line">            afterNodeAccess(e);</span><br><span class="line">            return oldValue;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ++modCount;</span><br><span class="line">    if (++size &gt; threshold)</span><br><span class="line">        resize();</span><br><span class="line">    afterNodeInsertion(evict);</span><br><span class="line">    return null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="详细步骤解析"><a href="#详细步骤解析" class="headerlink" title="详细步骤解析"></a>详细步骤解析</h2><ol>
+<li><strong>初始化表</strong>：如果哈希表还没有初始化或长度为0，则进行初始化（扩容）。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if ((tab = table) == null || (n = tab.length) == 0)</span><br><span class="line">    n = (tab = resize()).length;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><strong>计算索引</strong>：通过哈希值和数组长度计算出索引位置。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if ((p = tab[i = (n - 1) &amp; hash]) == null)</span><br><span class="line">    tab[i] = newNode(hash, key, value, null);</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><strong>插入新节点</strong>：如果索引位置为空，直接插入新节点。</li>
+<li><strong>处理哈希冲突</strong>：如果索引位置不为空，需要处理冲突。</li>
+</ol>
+<p><strong>检查是否存在相同的键</strong>：如果找到相同的键，替换其值。</p>
+<p><strong>红黑树处理</strong>：如果当前节点是红黑树节点，则调用putTreeVal方法插入。</p>
+<p><strong>链表处理</strong>：如果当前节点是链表节点，遍历链表插入新节点。</p>
+<ol start="5">
+<li><strong>转换为红黑树</strong>：如果链表长度超过阈值（8）且数组长度大于 64，则将链表转换为红黑树。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if (binCount &gt;= TREEIFY_THRESHOLD - 1) // -1 for 1st</span><br><span class="line">    treeifyBin(tab, hash);</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li><strong>更新节点值</strong>：如果存在相同的键，更新其值。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">if (e != null) &#123; // existing mapping for key</span><br><span class="line">    VoldValue= e.value;</span><br><span class="line">    if (!onlyIfAbsent || oldValue == null)</span><br><span class="line">        e.value = value;</span><br><span class="line">    afterNodeAccess(e);</span><br><span class="line">    return oldValue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="7">
+<li><strong>调整大小</strong>：插入新节点后，增加元素数量。如果超过阈值，则进行扩容。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">++modCount;if (++size &gt; threshold)</span><br><span class="line">    resize();</span><br></pre></td></tr></table></figure>
+
+<ol start="8">
+<li><strong>插入后的处理</strong>：进行一些插入后的处理操作。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">afterNodeInsertion(evict);</span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>&#x2F;cvh030rky8ki5bhi&gt;</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/linkedHashMap%E4%B8%BA%E4%BB%80%E4%B9%88%E8%83%BD%E7%94%A8%E6%9D%A5%E5%81%9ALRUCache%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +770,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -516,8 +969,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -723,8 +1176,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -914,8 +1367,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -1143,8 +1596,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -1348,8 +1801,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -1557,8 +2010,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -1753,8 +2206,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -1957,8 +2410,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -2161,8 +2614,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -2356,8 +2809,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -2555,8 +3008,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -2773,8 +3226,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -2967,8 +3420,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -3164,8 +3617,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -3364,8 +3817,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -3565,8 +4018,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -3761,8 +4214,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -3904,413 +4357,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E9%87%8D%E6%96%B0%E8%B0%83%E6%95%B4HashMap%E5%A4%A7%E5%B0%8F%E5%AD%98%E5%9C%A8%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%E5%90%97%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E9%87%8D%E6%96%B0%E8%B0%83%E6%95%B4HashMap%E5%A4%A7%E5%B0%8F%E5%AD%98%E5%9C%A8%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%E5%90%97%EF%BC%9F/" itemprop="url">重新调整HashMap大小存在什么问题吗？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌重新调整HashMap大小存在什么问题吗？"><a href="#👌重新调整HashMap大小存在什么问题吗？" class="headerlink" title="👌重新调整HashMap大小存在什么问题吗？"></a>👌重新调整HashMap大小存在什么问题吗？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="性能影响"><a href="#性能影响" class="headerlink" title="性能影响"></a>性能影响</h2><p><strong>时间复杂度</strong>：扩容是一个相对昂贵的操作，因为它需要重新计算所有现有键值对的哈希值，并将它们重新分配到新的桶数组中。这个过程的时间复杂度为 (O(n))，其中 (n) 是哈希表中元素的数量。因此，在扩容期间，可能会导致性能的短暂下降，尤其是在插入大量数据时。</p>
-<p><strong>阻塞操作</strong>：在单线程环境中，扩容会阻塞其他操作（如查找、插入、删除），直到扩容完成。在多线程环境中，如果没有适当的同步机制，扩容可能会导致数据不一致或其他并发问题。</p>
-<h2 id="内存使用"><a href="#内存使用" class="headerlink" title="内存使用"></a>内存使用</h2><p><strong>临时内存消耗</strong>：扩容期间，HashMap需要分配一个新的桶数组，同时保留旧的桶数组，直到重新哈希完成。这会导致临时的内存消耗增加。如果哈希表非常大，可能会导致内存不足的问题。</p>
-<p><strong>内存碎片</strong>：频繁的扩容和缩容可能导致内存碎片化，降低内存利用效率。</p>
-<h2 id="并发问题"><a href="#并发问题" class="headerlink" title="并发问题"></a>并发问题</h2><p><strong>线程安全</strong>：默认的HashMap不是线程安全的。在多线程环境中，如果一个线程在进行扩容操作，而另一个线程在进行插入或删除操作，可能会导致数据不一致或程序崩溃。为了解决这个问题，可以使用ConcurrentHashMap或在外部进行同步。</p>
-<p><strong>扩容期间的数据一致性</strong>：在扩容过程中，如果有其他线程在进行读写操作，可能会导致数据不一致。因此，在多线程环境中，必须确保扩容操作是原子的，或者使用并发安全的数据结构。</p>
-<h2 id="重新哈希的成本"><a href="#重新哈希的成本" class="headerlink" title="重新哈希的成本"></a>重新哈希的成本</h2><p><strong>哈希函数的复杂性</strong>：重新哈希所有键值对需要调用哈希函数。如果哈希函数较为复杂，重新哈希的成本也会增加。</p>
-<p><strong>哈希冲突的处理</strong>：在扩容过程中，哈希冲突的处理（如链地址法中的链表或红黑树）也会增加额外的开销。</p>
-<h2 id="应用层面的影响"><a href="#应用层面的影响" class="headerlink" title="应用层面的影响"></a>应用层面的影响</h2><p><strong>实时性要求</strong>：在某些实时性要求较高的应用中，扩容操作可能导致短暂的性能下降，影响系统的响应时间。</p>
-<p><strong>数据一致性要求</strong>：在某些应用中，数据的一致性要求较高，扩容过程中可能会导致短暂的数据不一致，需要额外的机制来保证一致性。</p>
-<h2 id="解决方案和优化"><a href="#解决方案和优化" class="headerlink" title="解决方案和优化"></a>解决方案和优化</h2><ol>
-<li><strong>预估初始容量</strong>：如果可以预估数据量，尽量在创建HashMap时设置合适的初始容量，减少扩容次数。</li>
-<li><strong>使用并发数据结构</strong>：在多线程环境中，使用ConcurrentHashMap代替HashMap，它采用了分段锁机制，减少了扩容带来的并发问题。</li>
-<li><strong>动态调整负载因子</strong>：根据应用需求，动态调整负载因子以适应数据量的变化。</li>
-</ol>
-<blockquote>
-<p>&#x2F;gifnny9n0u67fo68&gt;</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E9%98%BB%E5%A1%9E%E9%98%9F%E5%88%97%E5%8E%9F%E7%90%86%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E9%98%BB%E5%A1%9E%E9%98%9F%E5%88%97%E5%8E%9F%E7%90%86%EF%BC%9F/" itemprop="url">阻塞队列原理？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌阻塞队列原理？"><a href="#👌阻塞队列原理？" class="headerlink" title="👌阻塞队列原理？"></a>👌阻塞队列原理？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>阻塞队列是一种线程安全的队列，它在插入和删除操作上可以阻塞线程，以实现生产者-消费者模式等并发编程需求。阻塞队列的核心原理包括锁机制和条件变量。</p>
-<h2 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h2><h3 id="锁机制"><a href="#锁机制" class="headerlink" title="锁机制"></a>锁机制</h3><p>阻塞队列使用锁（如ReentrantLock）来确保线程安全。锁保证了同一时间只有一个线程可以执行插入或删除操作，从而避免并发问题。</p>
-<h3 id="条件变量"><a href="#条件变量" class="headerlink" title="条件变量"></a>条件变量</h3><p>阻塞队列使用条件变量（Condition）来管理线程的等待和通知。条件变量是与锁关联的，可以在特定条件下阻塞线程并在条件满足时唤醒线程。例如，notEmpty和notFull是常见的条件变量，分别用于表示队列是否为空和是否已满。</p>
-<h3 id="等待和通知机制："><a href="#等待和通知机制：" class="headerlink" title="等待和通知机制："></a>等待和通知机制：</h3><p>当线程试图执行插入操作而队列已满时，它会在notFull条件变量上等待，直到队列中有空闲空间。</p>
-<p>当线程试图执行删除操作而队列为空时，它会在notEmpty条件变量上等待，直到队列中有可用的元素。</p>
-<p>当插入或删除操作成功后，相应的条件变量会被通知（唤醒），以便其他等待的线程可以继续执行。</p>
-<h2 id="具体实现-Demo"><a href="#具体实现-Demo" class="headerlink" title="具体实现 Demo"></a>具体实现 Demo</h2><p>LinkedBlockingQueue是一个基于链表实现的可选有界阻塞队列。它的基本原理如下：</p>
-<p><strong>内部结构</strong>：使用一个链表来存储元素。使用两个锁：takeLock和putLock，分别用于控制删除和插入操作。使用两个条件变量：notEmpty和notFull，分别用于表示队列是否为空和是否已满。</p>
-<p><strong>插入操作（put）</strong>：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public void put(E e) throws InterruptedException &#123;</span><br><span class="line">    if (e == null) throw new NullPointerException();</span><br><span class="line">    int c = -1;</span><br><span class="line">    Node&lt;E&gt; node = new Node&lt;E&gt;(e);</span><br><span class="line">    final ReentrantLock putLock = this.putLock;</span><br><span class="line">    final AtomicInteger count = this.count;</span><br><span class="line">    putLock.lockInterruptibly();</span><br><span class="line">    try &#123;</span><br><span class="line">        while (count.get() == capacity) &#123;</span><br><span class="line">            notFull.await();</span><br><span class="line">        &#125;</span><br><span class="line">        enqueue(node);</span><br><span class="line">        c = count.getAndIncrement();</span><br><span class="line">        if (c + 1 &lt; capacity) &#123;</span><br><span class="line">            notFull.signal();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; finally &#123;</span><br><span class="line">        putLock.unlock();</span><br><span class="line">    &#125;</span><br><span class="line">    if (c == 0) &#123;</span><br><span class="line">        signalNotEmpty();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>删除操作（take）</strong>：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public E take() throws InterruptedException &#123;</span><br><span class="line">    E x;</span><br><span class="line">    int c = -1;</span><br><span class="line">    final AtomicInteger count = this.count;</span><br><span class="line">    final ReentrantLock takeLock = this.takeLock;</span><br><span class="line">    takeLock.lockInterruptibly();</span><br><span class="line">    try &#123;</span><br><span class="line">        while (count.get() == 0) &#123;</span><br><span class="line">            notEmpty.await();</span><br><span class="line">        &#125;</span><br><span class="line">        x = dequeue();</span><br><span class="line">        c = count.getAndDecrement();</span><br><span class="line">        if (c &gt; 1) &#123;</span><br><span class="line">            notEmpty.signal();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; finally &#123;</span><br><span class="line">        takeLock.unlock();</span><br><span class="line">    &#125;</span><br><span class="line">    if (c == capacity) &#123;</span><br><span class="line">        signalNotFull();</span><br><span class="line">    &#125;</span><br><span class="line">    return x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>等待和通知</strong>：</p>
-<p>在插入操作中，如果队列已满，线程会在notFull条件变量上等待。</p>
-<p>在删除操作中，如果队列为空，线程会在notEmpty条件变量上等待。</p>
-<p>插入或删除操作成功后，会相应地通知等待的线程。</p>
-<h3 id><a href="#" class="headerlink" title></a></h3><blockquote>
-<p>&#x2F;rizcvgg0mxqp9iv7&gt;</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4361,7 +4407,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">235</span>
+                <span class="site-state-item-count">237</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -4372,7 +4418,7 @@
             
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>

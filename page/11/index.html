@@ -270,6 +270,413 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E9%87%8D%E6%96%B0%E8%B0%83%E6%95%B4HashMap%E5%A4%A7%E5%B0%8F%E5%AD%98%E5%9C%A8%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%E5%90%97%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E9%87%8D%E6%96%B0%E8%B0%83%E6%95%B4HashMap%E5%A4%A7%E5%B0%8F%E5%AD%98%E5%9C%A8%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%E5%90%97%EF%BC%9F/" itemprop="url">重新调整HashMap大小存在什么问题吗？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌重新调整HashMap大小存在什么问题吗？"><a href="#👌重新调整HashMap大小存在什么问题吗？" class="headerlink" title="👌重新调整HashMap大小存在什么问题吗？"></a>👌重新调整HashMap大小存在什么问题吗？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="性能影响"><a href="#性能影响" class="headerlink" title="性能影响"></a>性能影响</h2><p><strong>时间复杂度</strong>：扩容是一个相对昂贵的操作，因为它需要重新计算所有现有键值对的哈希值，并将它们重新分配到新的桶数组中。这个过程的时间复杂度为 (O(n))，其中 (n) 是哈希表中元素的数量。因此，在扩容期间，可能会导致性能的短暂下降，尤其是在插入大量数据时。</p>
+<p><strong>阻塞操作</strong>：在单线程环境中，扩容会阻塞其他操作（如查找、插入、删除），直到扩容完成。在多线程环境中，如果没有适当的同步机制，扩容可能会导致数据不一致或其他并发问题。</p>
+<h2 id="内存使用"><a href="#内存使用" class="headerlink" title="内存使用"></a>内存使用</h2><p><strong>临时内存消耗</strong>：扩容期间，HashMap需要分配一个新的桶数组，同时保留旧的桶数组，直到重新哈希完成。这会导致临时的内存消耗增加。如果哈希表非常大，可能会导致内存不足的问题。</p>
+<p><strong>内存碎片</strong>：频繁的扩容和缩容可能导致内存碎片化，降低内存利用效率。</p>
+<h2 id="并发问题"><a href="#并发问题" class="headerlink" title="并发问题"></a>并发问题</h2><p><strong>线程安全</strong>：默认的HashMap不是线程安全的。在多线程环境中，如果一个线程在进行扩容操作，而另一个线程在进行插入或删除操作，可能会导致数据不一致或程序崩溃。为了解决这个问题，可以使用ConcurrentHashMap或在外部进行同步。</p>
+<p><strong>扩容期间的数据一致性</strong>：在扩容过程中，如果有其他线程在进行读写操作，可能会导致数据不一致。因此，在多线程环境中，必须确保扩容操作是原子的，或者使用并发安全的数据结构。</p>
+<h2 id="重新哈希的成本"><a href="#重新哈希的成本" class="headerlink" title="重新哈希的成本"></a>重新哈希的成本</h2><p><strong>哈希函数的复杂性</strong>：重新哈希所有键值对需要调用哈希函数。如果哈希函数较为复杂，重新哈希的成本也会增加。</p>
+<p><strong>哈希冲突的处理</strong>：在扩容过程中，哈希冲突的处理（如链地址法中的链表或红黑树）也会增加额外的开销。</p>
+<h2 id="应用层面的影响"><a href="#应用层面的影响" class="headerlink" title="应用层面的影响"></a>应用层面的影响</h2><p><strong>实时性要求</strong>：在某些实时性要求较高的应用中，扩容操作可能导致短暂的性能下降，影响系统的响应时间。</p>
+<p><strong>数据一致性要求</strong>：在某些应用中，数据的一致性要求较高，扩容过程中可能会导致短暂的数据不一致，需要额外的机制来保证一致性。</p>
+<h2 id="解决方案和优化"><a href="#解决方案和优化" class="headerlink" title="解决方案和优化"></a>解决方案和优化</h2><ol>
+<li><strong>预估初始容量</strong>：如果可以预估数据量，尽量在创建HashMap时设置合适的初始容量，减少扩容次数。</li>
+<li><strong>使用并发数据结构</strong>：在多线程环境中，使用ConcurrentHashMap代替HashMap，它采用了分段锁机制，减少了扩容带来的并发问题。</li>
+<li><strong>动态调整负载因子</strong>：根据应用需求，动态调整负载因子以适应数据量的变化。</li>
+</ol>
+<blockquote>
+<p>&#x2F;gifnny9n0u67fo68&gt;</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E9%98%BB%E5%A1%9E%E9%98%9F%E5%88%97%E5%8E%9F%E7%90%86%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/%E9%98%BB%E5%A1%9E%E9%98%9F%E5%88%97%E5%8E%9F%E7%90%86%EF%BC%9F/" itemprop="url">阻塞队列原理？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
+                2024-10-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌阻塞队列原理？"><a href="#👌阻塞队列原理？" class="headerlink" title="👌阻塞队列原理？"></a>👌阻塞队列原理？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>阻塞队列是一种线程安全的队列，它在插入和删除操作上可以阻塞线程，以实现生产者-消费者模式等并发编程需求。阻塞队列的核心原理包括锁机制和条件变量。</p>
+<h2 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h2><h3 id="锁机制"><a href="#锁机制" class="headerlink" title="锁机制"></a>锁机制</h3><p>阻塞队列使用锁（如ReentrantLock）来确保线程安全。锁保证了同一时间只有一个线程可以执行插入或删除操作，从而避免并发问题。</p>
+<h3 id="条件变量"><a href="#条件变量" class="headerlink" title="条件变量"></a>条件变量</h3><p>阻塞队列使用条件变量（Condition）来管理线程的等待和通知。条件变量是与锁关联的，可以在特定条件下阻塞线程并在条件满足时唤醒线程。例如，notEmpty和notFull是常见的条件变量，分别用于表示队列是否为空和是否已满。</p>
+<h3 id="等待和通知机制："><a href="#等待和通知机制：" class="headerlink" title="等待和通知机制："></a>等待和通知机制：</h3><p>当线程试图执行插入操作而队列已满时，它会在notFull条件变量上等待，直到队列中有空闲空间。</p>
+<p>当线程试图执行删除操作而队列为空时，它会在notEmpty条件变量上等待，直到队列中有可用的元素。</p>
+<p>当插入或删除操作成功后，相应的条件变量会被通知（唤醒），以便其他等待的线程可以继续执行。</p>
+<h2 id="具体实现-Demo"><a href="#具体实现-Demo" class="headerlink" title="具体实现 Demo"></a>具体实现 Demo</h2><p>LinkedBlockingQueue是一个基于链表实现的可选有界阻塞队列。它的基本原理如下：</p>
+<p><strong>内部结构</strong>：使用一个链表来存储元素。使用两个锁：takeLock和putLock，分别用于控制删除和插入操作。使用两个条件变量：notEmpty和notFull，分别用于表示队列是否为空和是否已满。</p>
+<p><strong>插入操作（put）</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public void put(E e) throws InterruptedException &#123;</span><br><span class="line">    if (e == null) throw new NullPointerException();</span><br><span class="line">    int c = -1;</span><br><span class="line">    Node&lt;E&gt; node = new Node&lt;E&gt;(e);</span><br><span class="line">    final ReentrantLock putLock = this.putLock;</span><br><span class="line">    final AtomicInteger count = this.count;</span><br><span class="line">    putLock.lockInterruptibly();</span><br><span class="line">    try &#123;</span><br><span class="line">        while (count.get() == capacity) &#123;</span><br><span class="line">            notFull.await();</span><br><span class="line">        &#125;</span><br><span class="line">        enqueue(node);</span><br><span class="line">        c = count.getAndIncrement();</span><br><span class="line">        if (c + 1 &lt; capacity) &#123;</span><br><span class="line">            notFull.signal();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; finally &#123;</span><br><span class="line">        putLock.unlock();</span><br><span class="line">    &#125;</span><br><span class="line">    if (c == 0) &#123;</span><br><span class="line">        signalNotEmpty();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>删除操作（take）</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public E take() throws InterruptedException &#123;</span><br><span class="line">    E x;</span><br><span class="line">    int c = -1;</span><br><span class="line">    final AtomicInteger count = this.count;</span><br><span class="line">    final ReentrantLock takeLock = this.takeLock;</span><br><span class="line">    takeLock.lockInterruptibly();</span><br><span class="line">    try &#123;</span><br><span class="line">        while (count.get() == 0) &#123;</span><br><span class="line">            notEmpty.await();</span><br><span class="line">        &#125;</span><br><span class="line">        x = dequeue();</span><br><span class="line">        c = count.getAndDecrement();</span><br><span class="line">        if (c &gt; 1) &#123;</span><br><span class="line">            notEmpty.signal();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; finally &#123;</span><br><span class="line">        takeLock.unlock();</span><br><span class="line">    &#125;</span><br><span class="line">    if (c == capacity) &#123;</span><br><span class="line">        signalNotFull();</span><br><span class="line">    &#125;</span><br><span class="line">    return x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>等待和通知</strong>：</p>
+<p>在插入操作中，如果队列已满，线程会在notFull条件变量上等待。</p>
+<p>在删除操作中，如果队列为空，线程会在notEmpty条件变量上等待。</p>
+<p>插入或删除操作成功后，会相应地通知等待的线程。</p>
+<h3 id><a href="#" class="headerlink" title></a></h3><blockquote>
+<p>&#x2F;rizcvgg0mxqp9iv7&gt;</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/10/%E5%9F%BA%E7%A1%80/HashMap/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +724,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -522,8 +929,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -745,8 +1152,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -949,8 +1356,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -1176,8 +1583,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -1536,8 +1943,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -1759,8 +2166,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -1989,8 +2396,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -2209,8 +2616,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -2434,8 +2841,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -2662,8 +3069,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -2880,8 +3287,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -3112,8 +3519,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -3306,8 +3713,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -3510,8 +3917,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -3728,8 +4135,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -3971,8 +4378,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -4178,8 +4585,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
+                2025-08-03
               </time>
             
           </span>
@@ -4344,408 +4751,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/09/01/%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/09/01/%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/" itemprop="url">微服务教程笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-09-01T13:33:41+00:00">
-                2024-09-01
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="CouponType-枚举类"><a href="#CouponType-枚举类" class="headerlink" title="CouponType 枚举类"></a>CouponType 枚举类</h1><pre><code>public static CouponType convert(String code) &#123;
-    return Stream.of(values())
-    .filter(bean -&gt; bean.code.equalsIgnoreCase(code))
-    .findFirst()
-    .orElse(UNKNOWN);
-&#125;
-</code></pre>
-<ul>
-<li><p>使用Long表示金额，金额通常以分为单位，比如100代表100分，比使用Double转 BigDecimal 有效</p>
-</li>
-<li><p>JPA支持一对多、多对多的级联关系，但是过深的级联层级带来的DB层压力可能在洪峰流量下太大，所以尽量减少级联配置，用单表查询取代；如果一个查询需要join多张表，最好的做法是通过重构业务逻辑来简化DB查询的复杂度；</p>
-</li>
-</ul>
-<p>思考：java动态更新枚举类；</p>
-<ul>
-<li>stream 根据门店分组计算每个门店下商品价格（key&#x3D;shopId，value&#x3D;门店商品总价）<br>  public Map&lt;String,Long&gt; getTotal(List<Product> products){<br>  Map&lt;String, Long&gt; collect &#x3D; products.stream()<br>          .collect(Collectors.groupingBy(x -&gt; x.getProductId(),<br>                  Collectors.summingLong(x -&gt; x.getPrice() * x.getCount()))<br>          );<br>  return collect;<br>  }</Product></li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/02/22/%E9%9D%A2%E8%AF%95%E9%A2%98/InnoDB%E5%BC%95%E6%93%8E%E7%9A%844%E5%A4%A7%E7%89%B9%E6%80%A7%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/02/22/%E9%9D%A2%E8%AF%95%E9%A2%98/InnoDB%E5%BC%95%E6%93%8E%E7%9A%844%E5%A4%A7%E7%89%B9%E6%80%A7%EF%BC%9F/" itemprop="url">InnoDB引擎的4大特性？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-22T13:33:41+00:00">
-                2024-02-22
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-07-13T14:11:22+00:00">
-                2025-07-13
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌InnoDB引擎的4大特性？"><a href="#👌InnoDB引擎的4大特性？" class="headerlink" title="👌InnoDB引擎的4大特性？"></a>👌InnoDB引擎的4大特性？</h1><p><strong>插入缓冲（insert buffer)</strong></p>
-<p>插入缓冲（Insert Buffer&#x2F;Change Buffer）：提升插入性能，change buffering是insert buffer的加强，insert buffer只针对insert有效，change buffering对insert、delete、update(delete+insert)、purge都有效</p>
-<p>只对于非聚集索引（非唯一）的插入和更新有效，对于每一次的插入不是写到索引页中，而是先判断插入的非聚集索引页是否在缓冲池中，如果在则直接插入；若不在，则先放到Insert Buffer 中，再按照一定的频率进行合并操作，再写回disk。这样通常能将多个插入合并到一个操作中，目的还是为了减少随机IO带来性能损耗。</p>
-<p><strong>二次写(double write)</strong></p>
-<p>Doublewrite缓存是位于系统表空间的存储区域，用来缓存InnoDB的数据页从innodb buffer pool中flush之后并写入到数据文件之前，所以当操作系统或者数据库进程在数据页写磁盘的过程中崩溃，Innodb可以在doublewrite缓存中找到数据页的备份而用来执行crash恢复。数据页写入到doublewrite缓存的动作所需要的IO消耗要小于写入到数据文件的消耗，因为此写入操作会以一次大的连续块的方式写入</p>
-<p>在应用（apply）重做日志前，用户需要一个页的副本，当写入失效发生时，先通过页的副本来还原该页，再进行重做，这就是double write。</p>
-<p><strong>自适应哈希索引(Adaptive Hash index)</strong></p>
-<p>Adaptive Hash index属性使得InnoDB更像是内存数据库。该属性通过innodb_adapitve_hash_index开启，也可以通过—skip-innodb_adaptive_hash_index参数关闭；</p>
-<p>Innodb存储引擎会监控对表上二级索引的查找，如果发现某二级索引被频繁访问，二级索引成为热数据，建立哈希索引可以带来速度的提升</p>
-<p>经常访问的二级索引数据会自动被生成到hash索引里面去(最近连续被访问三次的数据)，自适应哈希索引通过缓冲池的B+树构造而来，因此建立的速度很快。哈希（hash）是一种非常快的等值查找方法，在一般情况下这种查找的时间复杂度为O(1)，即一般仅需要一次查找就能定位数据。而B+树的查找次数，取决于B+树的高度，在生产环境中，B+树的高度一般3-4层，故需要3-4次的查询。</p>
-<p>innodb会监控对表上个索引页的查询。如果观察到建立哈希索引可以带来速度提升，则自动建立哈希索引，称之为自适应哈希索引（Adaptive Hash Index，AHI）。AHI有一个要求，就是对这个页的连续访问模式必须是一样的。</p>
-<p><strong>预读(read ahead)</strong></p>
-<p>InnoDB使用两种预读算法来提高I&#x2F;O性能：线性预读（linear read-ahead）和随机预读（randomread-ahead）为了区分这两种预读的方式，我们可以把线性预读放到以extent为单位，而随机预读放到以extent中的page为单位。线性预读着眼于将下一个extent提前读取到buffer pool中，而随机预读着眼于将当前extent中的剩余的page提前读取到buffer pool中。</p>
-<p>（1）线性预读（linear read-ahead）</p>
-<p>方式有一个很重要的变量控制是否将下一个extent预读到buffer pool中，通过使用配置参数innodb_read_ahead_threshold，可以控制Innodb执行预读操作的时间。如果一个extent中的被顺序读取的page超过或者等于该参数变量时，Innodb将会异步的将下一个extent读取到buffer pool中，innodb_read_ahead_threshold可以设置为0-64的任何值，默认值为56，值越高，访问模式检查越严格例如，如果将值设置为48，则InnoDB只有在顺序访问当前extent中的48个pages时才触发线性预读请求，将下一个extent读到内存中。如果值为8，InnoDB触发异步预读，即使程序段中只有8页被顺序访问。你可以在MySQL配置文件中设置此参数的值，或者使用SET GLOBAL需要该SUPER权限的命令动态更改该参数。在没有该变量之前，当访问到extent的最后一个page的时候，Innodb会决定是否将下一个extent放入到buffer pool中。</p>
-<p>（2）随机预读（randomread-ahead）</p>
-<p>随机预读方式则是表示当同一个extent中的一些page在buffer pool中发现时，Innodb会将该extent中的剩余page一并读到buffer pool中，由于随机预读方式给Innodb code带来了一些不必要的复杂性，同时在性能也存在不稳定性，在5.5中已经将这种预读方式废弃。要启用此功能，请将配置变量设置innodb_random_read_ahead为ON。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4796,7 +4801,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">235</span>
+                <span class="site-state-item-count">237</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -4807,7 +4812,7 @@
             
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
