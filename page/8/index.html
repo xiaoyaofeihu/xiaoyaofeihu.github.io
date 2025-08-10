@@ -270,6 +270,432 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/15/%E9%9D%A2%E8%AF%95%E9%A2%98/for%E5%BE%AA%E7%8E%AF%E8%B0%83%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9C%89%E4%BB%80%E4%B9%88%E9%A3%8E%E9%99%A9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/02/15/%E9%9D%A2%E8%AF%95%E9%A2%98/for%E5%BE%AA%E7%8E%AF%E8%B0%83%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9C%89%E4%BB%80%E4%B9%88%E9%A3%8E%E9%99%A9/" itemprop="url">for循环调数据库有什么风险</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-02-15T13:33:41+00:00">
+                2025-02-15
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌for循环调数据库有什么风险"><a href="#👌for循环调数据库有什么风险" class="headerlink" title="👌for循环调数据库有什么风险"></a>👌for循环调数据库有什么风险</h1><h3 id="1-性能问题"><a href="#1-性能问题" class="headerlink" title="1. 性能问题"></a>1. 性能问题</h3><h4 id="风险："><a href="#风险：" class="headerlink" title="风险："></a>风险：</h4><ul>
+<li><strong>高延迟</strong>：每次数据库调用都涉及网络通信和数据库处理时间，频繁调用会导致整体延迟增加。</li>
+<li><strong>低效率</strong>：大量的小批量操作比单次大批量操作效率低，增加了数据库的负载。</li>
+</ul>
+<h4 id="应对措施："><a href="#应对措施：" class="headerlink" title="应对措施："></a>应对措施：</h4><ul>
+<li><strong>批量操作</strong>：尽量将多个操作合并为一个批量操作，如使用批量插入、批量更新等。</li>
+<li><strong>缓存</strong>：在内存中缓存数据，减少数据库访问次数。</li>
+<li><strong>异步处理</strong>：使用异步处理或消息队列，将数据库操作分散到后台任务中执行。</li>
+</ul>
+<h3 id="2-资源消耗"><a href="#2-资源消耗" class="headerlink" title="2. 资源消耗"></a>2. 资源消耗</h3><h4 id="风险：-1"><a href="#风险：-1" class="headerlink" title="风险："></a>风险：</h4><ul>
+<li><strong>连接耗尽</strong>：频繁的数据库连接和断开会消耗大量的数据库连接资源，可能导致连接池耗尽。</li>
+<li><strong>内存和CPU负载</strong>：大量的数据库操作会增加数据库服务器的内存和CPU负载，影响其他操作的性能。</li>
+</ul>
+<h4 id="应对措施：-1"><a href="#应对措施：-1" class="headerlink" title="应对措施："></a>应对措施：</h4><ul>
+<li><strong>连接池优化</strong>：使用连接池并适当配置连接池参数，以减少连接创建和销毁的开销。</li>
+<li><strong>合并请求</strong>：将多个查询合并为一个查询，减少数据库连接次数。</li>
+</ul>
+<h3 id="3-事务处理复杂性"><a href="#3-事务处理复杂性" class="headerlink" title="3. 事务处理复杂性"></a>3. 事务处理复杂性</h3><h4 id="风险：-2"><a href="#风险：-2" class="headerlink" title="风险："></a>风险：</h4><ul>
+<li><strong>事务管理困难</strong>：在for循环中处理事务可能导致事务管理复杂化，增加了出错的可能性。</li>
+<li><strong>锁争用</strong>：长时间持有锁或频繁锁定资源可能导致锁争用，影响系统性能。</li>
+</ul>
+<h4 id="应对措施：-2"><a href="#应对措施：-2" class="headerlink" title="应对措施："></a>应对措施：</h4><ul>
+<li><strong>事务分段</strong>：将大事务分解为多个小事务，减少单个事务的持有时间。</li>
+<li><strong>乐观锁和悲观锁</strong>：根据具体情况选择合适的锁策略，避免不必要的锁争用。</li>
+</ul>
+<h3 id="4-数据一致性"><a href="#4-数据一致性" class="headerlink" title="4. 数据一致性"></a>4. 数据一致性</h3><h4 id="风险：-3"><a href="#风险：-3" class="headerlink" title="风险："></a>风险：</h4><ul>
+<li><strong>部分失败</strong>：for循环中的某些操作可能失败，导致数据不一致。</li>
+<li><strong>并发问题</strong>：多个并发操作可能导致数据竞态条件，影响数据一致性。</li>
+</ul>
+<h4 id="应对措施：-3"><a href="#应对措施：-3" class="headerlink" title="应对措施："></a>应对措施：</h4><ul>
+<li><strong>重试机制</strong>：实现重试机制，确保操作在失败时能重新执行。</li>
+<li><strong>并发控制</strong>：使用合适的并发控制策略，如乐观锁、悲观锁或分布式锁，确保数据一致性。</li>
+</ul>
+<h3 id="5-可维护性和可读性"><a href="#5-可维护性和可读性" class="headerlink" title="5. 可维护性和可读性"></a>5. 可维护性和可读性</h3><h4 id="风险：-4"><a href="#风险：-4" class="headerlink" title="风险："></a>风险：</h4><ul>
+<li><strong>代码复杂</strong>：在for循环中嵌入大量的数据库操作代码，会使代码变得复杂且难以维护。</li>
+<li><strong>错误处理困难</strong>：错误处理逻辑复杂，增加了代码的维护成本。</li>
+</ul>
+<h4 id="应对措施：-4"><a href="#应对措施：-4" class="headerlink" title="应对措施："></a>应对措施：</h4><ul>
+<li><strong>抽象和封装</strong>：将数据库操作抽象和封装到独立的方法或类中，提高代码的可读性和可维护性。</li>
+<li><strong>日志和监控</strong>：添加日志记录和监控，方便排查问题。</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/15/%E9%9D%A2%E8%AF%95%E9%A2%98/mysql%E4%B8%AD%E5%B7%B2%E7%BB%8F%E5%AD%98%E5%9C%A8%E7%9A%84%E8%A1%A8%EF%BC%8C%E5%8A%A0%E7%B4%A2%E5%BC%95%EF%BC%8C%E4%BC%9A%E4%B8%8D%E4%BC%9A%E4%BA%A7%E7%94%9F%E9%94%81%E8%A1%A8%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/02/15/%E9%9D%A2%E8%AF%95%E9%A2%98/mysql%E4%B8%AD%E5%B7%B2%E7%BB%8F%E5%AD%98%E5%9C%A8%E7%9A%84%E8%A1%A8%EF%BC%8C%E5%8A%A0%E7%B4%A2%E5%BC%95%EF%BC%8C%E4%BC%9A%E4%B8%8D%E4%BC%9A%E4%BA%A7%E7%94%9F%E9%94%81%E8%A1%A8%EF%BC%9F/" itemprop="url">mysql中已经存在的表，加索引，会不会产生锁表</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-02-15T13:33:41+00:00">
+                2025-02-15
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌mysql中已经存在的表，加索引，会不会产生锁表？"><a href="#👌mysql中已经存在的表，加索引，会不会产生锁表？" class="headerlink" title="👌mysql中已经存在的表，加索引，会不会产生锁表？"></a>👌mysql中已经存在的表，加索引，会不会产生锁表？</h1><h3 id="在线DDL添加索引"><a href="#在线DDL添加索引" class="headerlink" title="在线DDL添加索引"></a>在线DDL添加索引</h3><p>在MySQL 5.5及更早版本，InnoDB不支持在线DDL操作，添加索引会锁定表，阻止任何读写操作，直到索引创建完成。</p>
+<p>在MySQL 5.6及以上版本中，InnoDB存储引擎支持在线添加索引，这意味着在大多数情况下，表仍然可以被读取和写入。只有在索引创建的初始和最终阶段会短暂锁定表。</p>
+<h4 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h4><p>要在线添加索引，你可以使用标准的<code>ALTER TABLE</code>语句。MySQL会自动决定是否可以在线完成操作。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTERTABLE table_name ADD INDEX index_name (column_name);</span><br></pre></td></tr></table></figure>
+
+<h4 id="行为"><a href="#行为" class="headerlink" title="行为"></a>行为</h4><ul>
+<li><strong>初始和最终阶段锁定</strong>：在索引创建的开始和结束阶段，表会被短暂锁定。</li>
+<li><strong>中间阶段无锁定</strong>：在索引创建的中间阶段，表可以继续进行读写操作。</li>
+</ul>
+<h3 id="使用Percona-Toolkit的pt-online-schema-change（主流）"><a href="#使用Percona-Toolkit的pt-online-schema-change（主流）" class="headerlink" title="使用Percona Toolkit的pt-online-schema-change（主流）"></a>使用Percona Toolkit的pt-online-schema-change（主流）</h3><p>对于一些复杂的DDL操作或者在不支持在线DDL的环境中，可以使用Percona Toolkit的<code>pt-online-schema-change</code>工具进行在线模式变更。这是一个强大的工具，可以在不中断服务的情况下进行DDL操作。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pt-online-schema-change --alter &quot;ADD INDEX idx_last_name (last_name)&quot; D=database_name,t=employees --execute</span><br></pre></td></tr></table></figure>
+
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ol>
+<li><strong>性能影响</strong>：虽然在线DDL操作不会完全锁定表，但仍然会对性能产生一定影响，特别是在高负载的环境中。</li>
+<li><strong>空间需求</strong>：在线添加索引可能需要额外的磁盘空间，因为MySQL会创建一个临时表来构建新的索引。</li>
+<li><strong>版本要求</strong>：确保你的MySQL版本在5.6及以上，并且使用InnoDB存储引擎，以支持在线DDL操作。</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/02/15/%E9%9D%A2%E8%AF%95%E9%A2%98/redis%E4%BB%80%E4%B9%88%E6%83%85%E5%86%B5%E4%BC%9A%E5%8F%98%E6%85%A2_/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +743,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -575,8 +1001,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -780,8 +1206,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -995,8 +1421,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -1195,8 +1621,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -1385,8 +1811,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -1602,8 +2028,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -1823,8 +2249,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -2025,8 +2451,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -2299,8 +2725,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -2502,8 +2928,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -2696,8 +3122,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -2888,8 +3314,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -3120,8 +3546,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -3326,8 +3752,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -3575,8 +4001,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -3793,8 +4219,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -4015,8 +4441,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -4169,439 +4595,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/11/10/Mysql/Mysql%E7%B4%A2%E5%BC%95%E4%B8%8B%E6%8E%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/11/10/Mysql/Mysql%E7%B4%A2%E5%BC%95%E4%B8%8B%E6%8E%A8/" itemprop="url">Mysql事务</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-11-10T17:33:00+00:00">
-                2024-11-10
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index">
-                    <span itemprop="name">数据库</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="什么是索引下推"><a href="#什么是索引下推" class="headerlink" title="什么是索引下推"></a>什么是索引下推</h2><h3 id="官方索引条件下推："><a href="#官方索引条件下推：" class="headerlink" title="官方索引条件下推："></a>官方索引条件下推：</h3><blockquote>
-<p>Index Condition Pushdown，简称ICP。是MySQL5.6对使用索引从表中检索行的<br>一种优化。ICP可以减少存储引擎必须访问基表的次数以及MySQL服务器必须访问存储引擎的次数。可<br>用于 InnoDB 和 MyISAM 表，对于InnoDB表ICP仅用于辅助索引。<br>可以通过参数optimizer_switch控制ICP的开始和关闭。</p>
-</blockquote>
-<h3 id="索引下推和覆盖索引是减少回表的一种手段"><a href="#索引下推和覆盖索引是减少回表的一种手段" class="headerlink" title="索引下推和覆盖索引是减少回表的一种手段"></a>索引下推和覆盖索引是减少回表的一种手段</h3><ul>
-<li>ICP可以有效减少回表查询次数和返回给服务层的记录数，从而<br>减少了磁盘IO次数和服务层与存储引擎的交互次数。</li>
-</ul>
-<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>以InnoDB的辅助索引为例，来讲解ICP的作用：MySQl在使用组合索引在检索数据时是使用最左前缀原<br>则来定位记录，左侧前缀之后不匹配的后缀，MySQL会怎么处理？</p>
-<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>#optimizer_switch优化相关参数开关<br>mysql&gt; show VARIABLES like ‘optimizer_switch’;<br>#关闭ICP<br>SET optimizer_switch &#x3D; ‘index_condition_pushdown&#x3D;off’;<br>#开启ICP<br>SET optimizer_switch &#x3D; ‘index_condition_pushdown&#x3D;on’;</p>
-<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE `test1`  (</span><br><span class="line">  `id` int NOT NULL,</span><br><span class="line">  `id1` int NULL DEFAULT NULL,</span><br><span class="line">  `id2` int NULL DEFAULT NULL,</span><br><span class="line">  `id3` int NULL DEFAULT NULL,</span><br><span class="line">  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,</span><br><span class="line">  PRIMARY KEY (`id`) USING BTREE,</span><br><span class="line">  INDEX `id1`(`id1`, `id2`, `id3`) USING BTREE</span><br><span class="line">) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;</span><br><span class="line"></span><br><span class="line">-- ----------------------------</span><br><span class="line">-- Records of test1</span><br><span class="line">-- ----------------------------</span><br><span class="line">INSERT INTO `test1` VALUES (1, 2, 3, 4, &#x27;zhangsan &#x27;);</span><br><span class="line">INSERT INTO `test1` VALUES (2, 2, 3, 5, &#x27;lisi&#x27;);</span><br><span class="line">INSERT INTO `test1` VALUES (3, 2, 4, 5, &#x27;wangwu &#x27;);</span><br><span class="line"></span><br><span class="line">SET FOREIGN_KEY_CHECKS = 1;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">EXPLAIN SELECT * FROM `test1` WHERE id1 = 1 AND id2 &gt; 1 AND id3 = 3;</span><br></pre></td></tr></table></figure>
-<p>如果使用了索引下推，Extra 中是Using index condition</p>
-<h3 id="注意！！！"><a href="#注意！！！" class="headerlink" title="注意！！！"></a>注意！！！</h3><p>如果你的 EXPLAIN 输出显示：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Extra: Using where; Using index</span><br><span class="line">Using where：表示部分条件是在 MySQL 层处理的，而不是完全依赖索引。</span><br><span class="line">Using index：说明查询是覆盖索引的（即所有查询的数据都可以从索引中获取，避免回表）。</span><br></pre></td></tr></table></figure>
-<p>这说明，虽然联合索引 (id1, id2, id3) 被使用，但优化器可能认为使用 索引覆盖扫描 比触发索引下推更高效。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/11/10/Mysql/Mysql%E4%BA%8B%E5%8A%A1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/11/10/Mysql/Mysql%E4%BA%8B%E5%8A%A1/" itemprop="url">Mysql事务</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-11-10T17:33:00+00:00">
-                2024-11-10
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index">
-                    <span itemprop="name">数据库</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="一、事务"><a href="#一、事务" class="headerlink" title="一、事务"></a>一、事务</h2><p><strong>事务指的是逻辑上的一组操作，组成这组操作的各个单元要么全都成功，要么全都失败。</strong><br><strong>事务作用：保证在一个事务中多次SQL操作要么全都成功，要么全都失败。</strong></p>
-<h3 id="1、特性"><a href="#1、特性" class="headerlink" title="1、特性"></a>1、特性</h3><ul>
-<li>原子性：事务的操作要么都发生，要么都不发生；</li>
-<li>一致性：事务前后数据的完整性必须保持一致；</li>
-<li>隔离性：一个用户的事务不能被其他用户的事务干扰；多个并发事务之间的数据相互隔离；隔离性由隔离级别保障！</li>
-<li>持久性：事务一旦提交，对数据的修改时永久性的；</li>
-</ul>
-<h3 id="2、事务并发问题"><a href="#2、事务并发问题" class="headerlink" title="2、事务并发问题"></a>2、事务并发问题</h3><ul>
-<li>脏读：一个事务读到了另一个事务未提交的数据</li>
-<li>不可重复读：一个事务读到了另一个事务已经提交(update)的数据。引发事务中的多次查询结果不<br>一致</li>
-<li>虚读 &#x2F;幻读：一个事务读到了另一个事务已经插入(insert)的数据。导致事务中多次查询的结果不一<br>致</li>
-<li>丢失更新的问题！</li>
-</ul>
-<h3 id="3、隔离级别"><a href="#3、隔离级别" class="headerlink" title="3、隔离级别"></a>3、隔离级别</h3><ul>
-<li>read uncommitted 读未提交【RU】，一个事务读到另一个事务没有提交的数据<br>存在：3个问题（脏读、不可重复读、幻读）。</li>
-<li>read committed 读已提交【RC】，一个事务读到另一个事务已经提交的数据<br>存在：2个问题（不可重复读、幻读）。<br>解决：1个问题（脏读）</li>
-<li>repeatable read:可重复读【RR】，在一个事务中读到的数据始终保持一致，无论另一个事务是<br>否提交<br>解决：3个问题（脏读、不可重复读、幻读）</li>
-<li>serializable 串行化，同时只能执行一个事务，相当于事务中的单线程<br>解决：3个问题（脏读、不可重复读、幻读）</li>
-</ul>
-<h2 id="二、事务底层"><a href="#二、事务底层" class="headerlink" title="二、事务底层"></a>二、事务底层</h2><h3 id="1、丢失更新问题"><a href="#1、丢失更新问题" class="headerlink" title="1、丢失更新问题"></a>1、丢失更新问题</h3><ul>
-<li>两个事务针对同一个数据进行修改操作时会丢失更新！</li>
-<li>解决方案：<ul>
-<li>基于锁并发控制LBCC</li>
-<li>基于版本并发控制MVCC</li>
-</ul>
-</li>
-</ul>
-<h2 id="三、MVCC"><a href="#三、MVCC" class="headerlink" title="三、MVCC"></a>三、MVCC</h2><h3 id="核心思想是读不加锁，读写不冲突"><a href="#核心思想是读不加锁，读写不冲突" class="headerlink" title="核心思想是读不加锁，读写不冲突"></a>核心思想是读不加锁，读写不冲突</h3><p><strong>MVCC 实现原理关键在于数据快照，不同的事务访问不同版本的数据快照，从而实现事务下对数据的隔离级别</strong></p>
-<p>MVCC，全称Multiversion Concurrency Control，即多版本并发控制，是数据库领域中一种用于管理并发数据访问的机制。与数据库锁相似，MVCC也是一种并发控制的解决方案，但它侧重于通过维护数据的多个版本来避免读写冲突，从而提高并发性能。</p>
-<h3 id="MVCC的基本原理"><a href="#MVCC的基本原理" class="headerlink" title="MVCC的基本原理"></a>MVCC的基本原理</h3><p>在数据库中，对数据的操作主要分为读和写两种。在并发场景下，会出现读-读并发、读-写并发和写-写并发三种情况。其中，读-读并发通常不会引发问题，写-写并发则常通过加锁来解决，而读-写并发则可以通过MVCC机制来高效处理。</p>
-<p>MVCC的核心思想是，对于同一份数据，每个事务在读取时都会看到一个特定的、一致的数据版本，这个版本是在该事务开始时刻生成的。这样，即使有其他事务在修改数据，也不会影响到当前事务的读取结果。</p>
-<h3 id="快照读与当前读"><a href="#快照读与当前读" class="headerlink" title="快照读与当前读"></a>快照读与当前读</h3><p>MVCC的实现依赖于快照读的概念。快照读是指读取的是快照数据，即快照生成时的数据状态。在MySQL中，普通的SELECT语句（不加锁）通常就是快照读。与快照读相对应的是当前读，它读取的是最新数据，通常用于加锁的SELECT操作或数据的增删改操作。</p>
-<h3 id="Undo-Log与快照"><a href="#Undo-Log与快照" class="headerlink" title="Undo Log与快照"></a>Undo Log与快照</h3><p>Undo Log是MySQL中用于回退的事务日志。在事务提交之前，MySQL会先记录更新前的数据到Undo Log中。这些“更新前的数据”实际上就是快照数据。因此，Undo Log是MVCC实现的重要手段。</p>
-<p>每当一条记录发生变更时，MySQL都会先将其快照存储到Undo Log中，并更新记录中的隐式字段。这些隐式字段包括：</p>
-<ul>
-<li><code>db_row_id</code>：隐藏主键，用于创建聚簇索引。</li>
-<li><code>db_trx_id</code>：对这条记录做了最新一次修改的事务的ID。</li>
-<li><code>db_roll_ptr</code>：回滚指针，指向这条记录的上一个版本（即Undo Log中的上一个快照的地址）。</li>
-</ul>
-<p>这样，每个快照都通过<code>db_trx_id</code>和<code>db_roll_ptr</code>字段形成了一个快照链表。</p>
-<h3 id="Read-View与可见性"><a href="#Read-View与可见性" class="headerlink" title="Read View与可见性"></a>Read View与可见性</h3><p>然而，即使有了Undo Log和快照链表，我们仍然需要确定在当前事务中应该读取哪个快照。这时，就需要用到Read View了。</p>
-<p>Read View是InnoDB中一个至关重要的概念，它是实现MVCC的基础。Read View主要用来解决可见性问题，即它会告诉当前事务应该看到哪个版本的数据。具体来说，Read View会根据当前事务的ID和其他活跃事务的ID来构建一个视图，然后基于这个视图来确定哪些数据版本对当前事务是可见的。</p>
-<p>通过Read View，InnoDB能够确保每个事务在读取数据时都能看到一个一致的快照，从而避免了读写冲突，提高了并发性能。</p>
-<p>综上所述，MVCC通过维护数据的多个版本、利用快照读和Undo Log以及Read View等机制，实现了高效的并发控制。这使得数据库能够在高并发环境下保持数据的一致性和完整性，同时提高了系统的性能和吞吐量。</p>
-<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><ul>
-<li>MVCC指在使用RC、RR隔离级别下，使不同事务的 读-写 、 写-读 操作并发执行，提升系统性能</li>
-<li>MVCC核心思想是读不加锁，读写不冲突。</li>
-<li>RC、RR这两个隔离级别的一个很大不同就是生成 ReadView 的时机不同</li>
-<li>RC在每一次进行普通 SELECT 操作前都会生成一个 ReadView</li>
-<li>RR在第一次进行普通 SELECT 操作前生成一个 ReadView ，之后的查询操作都重复这个ReadView</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4652,7 +4645,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">237</span>
+                <span class="site-state-item-count">239</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -4663,7 +4656,7 @@
             
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>

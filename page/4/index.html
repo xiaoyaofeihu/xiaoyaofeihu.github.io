@@ -270,6 +270,401 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/04/29/JVM/Jvm%E7%9A%84%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/04/29/JVM/Jvm%E7%9A%84%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/" itemprop="url">👌Jvm的垃圾回收是什么？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-04-29T13:33:41+00:00">
+                2025-04-29
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌Jvm的垃圾回收是什么？"><a href="#👌Jvm的垃圾回收是什么？" class="headerlink" title="👌Jvm的垃圾回收是什么？"></a>👌Jvm的垃圾回收是什么？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="什么是垃圾回收？"><a href="#什么是垃圾回收？" class="headerlink" title="什么是垃圾回收？"></a>什么是垃圾回收？</h2><p>所谓垃圾回收机制（Garbage Collection， 简称GC），指自动管理动态分配的内存空间的机制，自动回收不再使用的内存，不定时去堆内存中清理不可达对象，以避免内存泄漏和内存溢出的问题。最早是在1960年代提出的。</p>
+<p>垃圾回收是 java相较于c、c++语言的优势之一。其他编程语言，如C#、Python和Ruby等，也都提供了垃圾回收机制。不可达的对象并不会马上就会直接回收， 垃圾收集器在一个Java程序中的执行是自动的，不能强制执行，程序员唯一能做的就是通过调用System.gc 方法来建议执行垃圾收集器，但其是否可以执行，什么时候执行却都是不可知的。</p>
+<p>这也是垃圾收集器的最主要的缺点。</p>
+<h2 id="为什么需要垃圾回收？"><a href="#为什么需要垃圾回收？" class="headerlink" title="为什么需要垃圾回收？"></a>为什么需要垃圾回收？</h2><p>如果不进行垃圾回收，内存迟早都会被消耗空，因为我们在不断的分配内存空间而不进行回收。除非内存无限大，我们可以任性的分配而不回收，但是事实并非如此。所以，垃圾回收是必须的。</p>
+<p>优点：</p>
+<p>减少了程序员的工作量，不需要手动管理内存</p>
+<p>动态地管理内存，根据应用程序的需要进行分配和回收，提高了内存利用率</p>
+<p>避免内存泄漏和野指针等问题，增加程序的稳定性和可靠</p>
+<p>缺点：</p>
+<p>垃圾回收会占用一定的系统资源，可能会影响程序的性能</p>
+<p>垃圾回收过程中会停止程序的执行，可能会导致程序出现卡顿等问题</p>
+<p>不一定能够完全解决内存泄漏等问题，需要在编写代码时注意内存管理和编码规范</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/04/29/JVM/jvm%E4%B8%89%E8%89%B2%E6%A0%87%E8%AE%B0%E6%B3%95%E7%9A%84%E4%BC%98%E7%82%B9%E5%92%8C%E7%BC%BA%E7%82%B9%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/04/29/JVM/jvm%E4%B8%89%E8%89%B2%E6%A0%87%E8%AE%B0%E6%B3%95%E7%9A%84%E4%BC%98%E7%82%B9%E5%92%8C%E7%BC%BA%E7%82%B9%EF%BC%9F/" itemprop="url">三色标记法的优点和缺点？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-04-29T13:33:41+00:00">
+                2025-04-29
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌jvm-三色标记法的优点和缺点？"><a href="#👌jvm-三色标记法的优点和缺点？" class="headerlink" title="👌jvm 三色标记法的优点和缺点？"></a>👌jvm 三色标记法的优点和缺点？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>三色标记法是一种用于垃圾回收的标记算法，通过将对象分为三种颜色（白色、灰色和黑色）来管理垃圾收集过程。它在并发垃圾收集器中尤其有用，因为它能够有效处理对象引用的变化。</p>
+<h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><p><strong>并发性</strong>：</p>
+<p><strong>减少停顿时间</strong>：三色标记法允许垃圾收集器在应用线程运行的同时进行标记，这大大减少了应用程序的停顿时间，提高了应用的响应性。</p>
+<p><strong>并发标记</strong>：通过颜色标记和写屏障技术，三色标记法能够在并发环境下准确标记存活对象，避免遗漏或错误标记。</p>
+<p><strong>精确性</strong>：</p>
+<p><strong>准确标记存活对象</strong>：三色标记法通过颜色状态和处理队列，确保所有存活对象都能被正确标记，从而避免存活对象被错误回收。</p>
+<p><strong>处理对象引用变化</strong>：在并发标记阶段，三色标记法能够处理对象引用的变化，确保引用变化不会导致存活对象被错误回收。</p>
+<h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2><p><strong>复杂性</strong>：</p>
+<p><strong>实现复杂</strong>：三色标记法的实现相对复杂，尤其是在维护颜色不变性和处理并发标记时，需要额外的机制（如写屏障）来确保正确性。</p>
+<p><strong>写屏障开销</strong>：维护颜色不变性需要使用写屏障技术，这会增加一定的运行时开销，可能对性能产生影响。</p>
+<p><strong>内存开销</strong>：</p>
+<p><strong>颜色状态维护</strong>：三色标记法需要为每个对象维护颜色状态，这会增加一定的内存开销。</p>
+<p><strong>处理队列</strong>：需要额外的内存来维护灰色对象的处理队列。</p>
+<p><strong>复杂的边界条件</strong>：</p>
+<p><strong>颜色不变性维护</strong>：在并发环境下，维护颜色不变性（如强三色不变性或弱三色不变性）可能会遇到复杂的边界条件，需要仔细处理以确保算法的正确性。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/04/29/JVM/jvm%E7%9A%84%E5%9B%9B%E7%A7%8D%E5%BC%95%E7%94%A8%E5%8C%BA%E5%88%AB%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +712,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -518,8 +913,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -755,8 +1150,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -959,8 +1354,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -1198,8 +1593,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -1409,8 +1804,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -1607,8 +2002,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -1805,8 +2200,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -2012,8 +2407,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -2222,8 +2617,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -2433,8 +2828,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -2629,8 +3024,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -2838,8 +3233,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -3041,8 +3436,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -3238,8 +3633,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -3439,8 +3834,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -3643,8 +4038,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -3851,8 +4246,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -3993,405 +4388,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/04/26/JVM/%E8%BD%AF%E5%BC%95%E7%94%A8%E5%92%8C%E8%99%9A%E5%BC%95%E7%94%A8%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/04/26/JVM/%E8%BD%AF%E5%BC%95%E7%94%A8%E5%92%8C%E8%99%9A%E5%BC%95%E7%94%A8%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/" itemprop="url">👌软引用和虚引用适用场景</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-04-26T13:33:41+00:00">
-                2025-04-26
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌软引用和虚引用适用场景"><a href="#👌软引用和虚引用适用场景" class="headerlink" title="👌软引用和虚引用适用场景"></a>👌软引用和虚引用适用场景</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="软引用"><a href="#软引用" class="headerlink" title="软引用"></a>软引用</h2><p>软引用主要用于实现内存敏感的缓存。</p>
-<p>软引用可以用于缓存那些可以在内存不足时安全回收的对象。例如，图片缓存、数据缓存等场景。在内存充足时，缓存的对象不会被回收；当内存不足时，缓存的对象会被回收以释放内存。这种机制可以在不影响应用程序功能的前提下，最大限度地利用可用内存。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">import java.lang.ref.SoftReference;</span><br><span class="line">import java.util.HashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line"></span><br><span class="line">public class SoftReferenceCache&lt;K, V&gt; &#123;</span><br><span class="line">    private final Map&lt;K, SoftReference&lt;V&gt;&gt; cache = new HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    public void put(K key, V value) &#123;</span><br><span class="line">        cache.put(key, new SoftReference&lt;&gt;(value));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public V get(K key) &#123;</span><br><span class="line">        SoftReference&lt;V&gt; ref = cache.get(key);</span><br><span class="line">        if (ref != null) &#123;</span><br><span class="line">            return ref.get();</span><br><span class="line">        &#125;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>SoftReferenceCache使用软引用来缓存对象，当内存不足时，缓存的对象可能会被回收。</p>
-<h2 id="虚引用"><a href="#虚引用" class="headerlink" title="虚引用"></a>虚引用</h2><p>虚引用主要用于跟踪对象被垃圾收集器回收的时间，通常用于实现特殊的清理机制。</p>
-<p>虚引用可以用于管理那些需要在对象被回收后进行清理的资源，例如直接内存（Direct Memory）、文件句柄等。</p>
-<p>当对象被垃圾收集器回收时，虚引用会被放入引用队列（ReferenceQueue），通过处理这个队列，可以执行必要的清理操作。</p>
-<p>虚引用可以用于监控对象何时被回收，从而在对象回收时执行一些特定的操作，例如记录日志、更新状态等。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">import java.lang.ref.PhantomReference;</span><br><span class="line">import java.lang.ref.ReferenceQueue;</span><br><span class="line"></span><br><span class="line">public class PhantomReferenceExample &#123;</span><br><span class="line">    public static void main(String[] args) throws InterruptedException &#123;</span><br><span class="line">        ReferenceQueue&lt;Object&gt; refQueue = new ReferenceQueue&lt;&gt;();</span><br><span class="line">        Object obj = new Object();</span><br><span class="line">        PhantomReference&lt;Object&gt; phantomRef = new PhantomReference&lt;&gt;(obj, refQueue);</span><br><span class="line"></span><br><span class="line">        obj = null; // 允许 obj 对象被垃圾收集器回收</span><br><span class="line"></span><br><span class="line">        // 强制垃圾收集</span><br><span class="line">        System.gc();</span><br><span class="line"></span><br><span class="line">        // 检查引用队列</span><br><span class="line">        if (refQueue.poll() != null) &#123;</span><br><span class="line">            System.out.println(&quot;Object has been collected&quot;);</span><br><span class="line">            // 执行清理操作</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>当obj被垃圾收集器回收时，phantomRef会被放入refQueue中，可以通过检查refQueue来执行清理操作。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/04/25/JVM/Gcroot%E5%AF%B9%E8%B1%A1%E9%83%BD%E5%8C%85%E5%90%AB%E5%93%AA%E4%BA%9B%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/04/25/JVM/Gcroot%E5%AF%B9%E8%B1%A1%E9%83%BD%E5%8C%85%E5%90%AB%E5%93%AA%E4%BA%9B%EF%BC%9F/" itemprop="url">👌Gc root对象都包含哪些？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-04-25T13:33:41+00:00">
-                2025-04-25
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌Gc-root对象都包含哪些？"><a href="#👌Gc-root对象都包含哪些？" class="headerlink" title="👌Gc root对象都包含哪些？"></a>👌Gc root对象都包含哪些？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="什么是GC-Root"><a href="#什么是GC-Root" class="headerlink" title="什么是GC Root"></a>什么是GC Root</h2><p>GC Root是垃圾回收器确定对象是否可达的起始点。在Java中，GC Root是一组特殊的对象，GC Root对象保证了这些对象及其引用链不会被垃圾回收器回收，因为它们是程序的起始点，其他对象通过它们间接可达，它确保了内存中的对象能够正确地被管理和清理，避免内存泄漏和无效引用的问题。</p>
-<h2 id="gcroot-对象"><a href="#gcroot-对象" class="headerlink" title="gcroot 对象"></a>gcroot 对象</h2><p><strong>虚拟机栈（栈帧中的本地变量表）中的引用</strong>：</p>
-<p>每个线程都有一个虚拟机栈，栈帧中的本地变量表（Local Variable Table）包含了方法执行过程中用到的所有局部变量。这些局部变量可能包含对对象的引用。</p>
-<p><strong>方法区中的类静态变量引用</strong>：</p>
-<p>方法区中存储了类的元数据，包括类的静态变量。这些静态变量可能引用对象。</p>
-<p><strong>方法区中的常量引用</strong>：</p>
-<p>方法区还包含运行时常量池（Runtime Constant Pool），其中可能有对对象的引用。</p>
-<p><strong>本地方法栈中的 JNI（Java Native Interface）引用</strong>：</p>
-<p>本地方法栈（Native Method Stack）用于本地方法的调用。本地方法可以通过 JNI 引用 Java 对象，这些引用也是 GC Roots。</p>
-<p><strong>活动线程</strong>：</p>
-<p>所有正在运行的线程本身也是 GC Roots。</p>
-<p><strong>类加载器</strong>：</p>
-<p>类加载器本身也是 GC Roots，因为它们负责加载类，而类加载器的引用链可以追溯到所有被加载的类及其静态变量。</p>
-<p><strong>系统类</strong>：</p>
-<p>一些系统级的类，比如java.lang.Thread，java.lang.System等，也被视为 GC Roots。</p>
-<p><strong>JNI 全局引用</strong>：</p>
-<p>JNI 中的全局引用（Global References）也是 GC Roots。</p>
-<p><strong>JVM 内部的某些数据结构</strong>：</p>
-<p>JVM 内部的一些数据结构（如 JIT 编译器生成的代码中的引用）也可能被视为 GC Roots。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4442,7 +4438,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">237</span>
+                <span class="site-state-item-count">239</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -4453,7 +4449,7 @@
             
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>

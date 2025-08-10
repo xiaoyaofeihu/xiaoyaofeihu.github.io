@@ -270,6 +270,408 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/06/redis/%E4%BB%80%E4%B9%88%E6%98%AF%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F_/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/05/06/redis/%E4%BB%80%E4%B9%88%E6%98%AF%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F_/" itemprop="url">👌什么是缓存穿透</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-05-06T13:33:41+00:00">
+                2025-05-06
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Redis/" itemprop="url" rel="index">
+                    <span itemprop="name">Redis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌什么是缓存穿透"><a href="#👌什么是缓存穿透" class="headerlink" title="👌什么是缓存穿透?"></a>👌什么是缓存穿透?</h1><h1 id="口语化回答"><a href="#口语化回答" class="headerlink" title="口语化回答"></a>口语化回答</h1><p>好的，面试官，缓存穿透的最核心就是当高并发请求来的时候，但是 key 在缓存中不存在的时候，就会请求数据库，如果数据库还是没有的话，就会返回，但是这个时候，由于没有数据，也不会存入到缓存中，下次请求过来还会重复这个操作。如果说这个 key 一直没有数据，就会不断的打到数据库中。这就是缓存穿透。缓存穿透主要可以通过缓存空值，布隆过滤器的方式来进行解决。常用的就是缓存空值，当数据库也查询不到的时候，在缓存中将空值写入，这样后面的请求就会命中缓存，不会造成数据库的大压力。布隆过滤器比较适合一些固定值，来进行初步的过滤，这样可以减少误判率，同时减轻压力，以上。</p>
+<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>redis 算是必问的三个概念之一，其他两个是缓存击穿和缓存雪崩，后面也有介绍。这道题很多人容易把缓存穿透和缓存击穿来弄乱。要注意好识别，还有就是三种常见的解决方案要理解透彻。</p>
+<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>穿透的核心概念，缓存空对象解决，布隆过滤器，缓存预热。</p>
+<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p><strong>缓存穿透</strong>是指在高并发场景下，如果某一个key被高并发访问，但该key在缓存中不存在，那么请求会穿透到数据库查询。如果这个key在数据库中也不存在，就会导致每次请求都要到数据库去查询，给数据库带来压力。严重的缓存穿透会导致数据库宕机。可以根据图看到核心的重点在于不命中和返回空。解决方案也围绕这些即可。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h3 id="1、-缓存空对象"><a href="#1、-缓存空对象" class="headerlink" title="1、 缓存空对象"></a><strong>1、 缓存空对象</strong></h3><p>当数据库中查不到数据时，缓存一个空对象（例如一个标记为空或不存在的对象），并给这个空对象的缓存设置一个过期时间。这样，下次再查询该数据时，就可以直接从缓存中拿到空对象，从而避免了不必要的数据库查询。</p>
+<p>这种解决方式有两个缺点：</p>
+<p>需要缓存层提供更多的内存空间来缓存这些空对象，当空对象很多时，会浪费更多的内存。</p>
+<p>会导致缓存层和存储层的数据不一致，即使设置了较短的过期时间，也会在这段时间内造成数据不一致问题。比如缓存还是空对象，这个时候数据库已经有值了。这种引入复杂性，当数据库值变化的时候，要清空缓存。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">String key = &quot;jichiKey&quot;;</span><br><span class="line">String value = redis.get(key);</span><br><span class="line">if (value == null) &#123;</span><br><span class="line">    value = database.query(key);</span><br><span class="line">    if (value == null) &#123;</span><br><span class="line">        // 缓存空结果，设置短过期时间</span><br><span class="line">        redis.set(key, &quot;&quot;, 60);  // 60秒过期</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        redis.set(key, value, 3600);  // 1小时过期</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、-使用布隆过滤器"><a href="#2、-使用布隆过滤器" class="headerlink" title="2、 使用布隆过滤器"></a><strong>2、 使用布隆过滤器</strong></h3><p>布隆过滤器用于检测一个元素是否在集合中。访问缓存和数据库之前，先判断布隆过滤器里面有没有这个 key，如果 key 存在，可以继续往下走，如果 key 不存在，就不用往下进行走了。比较适合数据 key 相对固定的场景。可以减少误识别率。</p>
+<p>代码示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">BloomFilter&lt;String&gt; bloomFilter = new BloomFilter&lt;&gt;(expectedInsertions, falsePositiveProbability);</span><br><span class="line">// 初始化布隆过滤器，插入所有可能存在的键</span><br><span class="line">for (String key : allPossibleKeys) &#123;</span><br><span class="line">    bloomFilter.put(key);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 查询时使用布隆过滤器</span><br><span class="line">String key = &quot;jichiKey&quot;;</span><br><span class="line">if (!bloomFilter.mightContain(key)) &#123;</span><br><span class="line">    // 布隆过滤器判断不存在，直接返回</span><br><span class="line">    return null;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    // 布隆过滤器判断可能存在，查询缓存和数据库</span><br><span class="line">    String value = redis.get(key);</span><br><span class="line">    if (value == null) &#123;</span><br><span class="line">        value = database.query(key);</span><br><span class="line">        redis.set(key, value, 3600);  // 1小时过期</span><br><span class="line">    &#125;</span><br><span class="line">    return value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3、缓存预热"><a href="#3、缓存预热" class="headerlink" title="3、缓存预热"></a><strong>3、缓存预热</strong></h3><p>在系统启动时，提前将热门数据加载到缓存中，可以避免因为请求热门数据而导致的缓存穿透问题。需要根据系统的实际情况和业务需求来判断是否需要对缓存进行预热。比如在一些高并发的系统下，提前预热可以大大减少毛刺的产生，以及提高性能和系统稳定。</p>
+<p>缓存预热的经典代码:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">package com.jingdianjichi.redis.init;</span><br><span class="line"></span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line">@Component</span><br><span class="line">public abstract class AbstractCache &#123;</span><br><span class="line"></span><br><span class="line">    public void initCache()&#123;&#125;</span><br><span class="line"></span><br><span class="line">    public &lt;T&gt; T getCache(String key)&#123;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void clearCache()&#123;&#125;</span><br><span class="line"></span><br><span class="line">    public void reloadCache()&#123;</span><br><span class="line">        clearCache();</span><br><span class="line">        initCache();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">public class InitCache implements CommandLineRunner &#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void run(String... args) throws Exception &#123;</span><br><span class="line">        //我要知道哪些缓存需要进行一个预热</span><br><span class="line">        ApplicationContext applicationContext = SpringContextUtil.getApplicationContext();</span><br><span class="line">        Map&lt;String, AbstractCache&gt; beanMap = applicationContext.getBeansOfType(AbstractCache.class);</span><br><span class="line">        //调用init方法</span><br><span class="line">        if(beanMap.isEmpty())&#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        for(Map.Entry&lt;String,AbstractCache&gt; entry : beanMap.entrySet())&#123;</span><br><span class="line">            AbstractCache abstractCache = (AbstractCache) SpringContextUtil.getBean(entry.getValue().getClass());</span><br><span class="line">            abstractCache.initCache();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">public class CategoryCache extends AbstractCache &#123;</span><br><span class="line"></span><br><span class="line">    private static final String CATEGORY_CACHE_KEY = &quot;CATEGORY&quot;;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private RedisUtil redisUtil;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private RedisTemplate redisTemplate;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void initCache() &#123;</span><br><span class="line">        //跟数据库做联动了，跟其他的数据来源进行联动</span><br><span class="line">        redisUtil.set(&quot;category&quot;,&quot;知识&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public &lt;T&gt; T getCache(String key) &#123;</span><br><span class="line">        if(!redisTemplate.hasKey(key).booleanValue())&#123;</span><br><span class="line">            reloadCache();</span><br><span class="line">        &#125;</span><br><span class="line">        return (T) redisTemplate.opsForValue().get(key);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void clearCache() &#123;</span><br><span class="line">        redisTemplate.delete(CATEGORY_CACHE_KEY);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/06/redis/%E4%BB%80%E4%B9%88%E6%98%AF%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9_/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/05/06/redis/%E4%BB%80%E4%B9%88%E6%98%AF%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9_/" itemprop="url">👌什么是缓存雪崩？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-05-06T13:33:41+00:00">
+                2025-05-06
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Redis/" itemprop="url" rel="index">
+                    <span itemprop="name">Redis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="👌什么是缓存雪崩"><a href="#👌什么是缓存雪崩" class="headerlink" title="👌什么是缓存雪崩?"></a>👌什么是缓存雪崩?</h1><h1 id="口语化回答"><a href="#口语化回答" class="headerlink" title="口语化回答"></a>口语化回答</h1><p>好的，面试官，缓存雪崩主要是在同一时间，系统大量缓存失效，这个时候的大量请求都要打到数据库，增加了数据库压力，导致数据库崩溃或者不可用，一般如果产生了雪崩，就是比较严重的后果。雪崩主要的解决方案，一方面是设置合理的缓存过期时间，不要让同一时间失效，尽量的分散。另一个方案就是可以在比如服务刚启动的时候，进行缓存的预热，防止刚启动的时候，大量请求打到数据库。另一方面也要提升缓存架构的高可用，避免因为缓存服务的问题，导致请求打到数据库。以上。</p>
+<h1 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h1><p>经典的缓存三大问题之一。问的也是挺多的，面试官主要是想知道你对他的理解，相比击穿和穿透，雪崩很好理解。要注意的一个点就是雪崩相对应的解决方案要重点记一下。</p>
+<h1 id="面试得分点"><a href="#面试得分点" class="headerlink" title="面试得分点"></a>面试得分点</h1><p>同时过期失效，设置分散过期时间，热点数据预加载，高可用</p>
+<h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a><font style="color:rgb(36, 41, 47);">题目详细答案</font></h1><p><font style="color:rgb(36, 41, 47);">缓存雪崩是指在某一时刻，大量缓存数据同时失效，导致大量的请求直接穿透到数据库，瞬间给数据库带来巨大的压力，可能导致数据库崩溃或服务不可用。</font></p>
+<h2 id="雪崩的常见原因"><a href="#雪崩的常见原因" class="headerlink" title="雪崩的常见原因"></a>雪崩的常见原因</h2><ol>
+<li><strong>缓存数据过期时间相同</strong>：当缓存系统中大量数据的过期时间被设置为同一时间点或相近的时间段时，这些数据会同时失效，从而引发缓存雪崩。</li>
+<li><strong>缓存服务器故障</strong>：当缓存服务器发生故障时，如果没有有效的容错机制，缓存中的数据将无法被访问，系统可能直接请求后端服务或数据库，导致系统性能下降。</li>
+</ol>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h3 id="设置合理的缓存过期时间"><a href="#设置合理的缓存过期时间" class="headerlink" title="设置合理的缓存过期时间"></a>设置合理的缓存过期时间</h3><p>缓存过期时间的设置需要根据业务需求和数据的变化频率来确定。对于不经常变化的数据，可以设置较长的过期时间，以减少对数据库的频繁访问。对于经常变化的数据，可以设置较短的过期时间，确保缓存数据的实时性。总之就是尽量打散缓存的过期时间，最好做到均匀的时间分布，减轻系统同一时刻的压力。</p>
+<h3 id="使用热点数据预加载"><a href="#使用热点数据预加载" class="headerlink" title="使用热点数据预加载"></a>使用热点数据预加载</h3><p>预先将热点数据加载到缓存中，并设置较长的过期时间，可以避免在同一时间点大量请求直接访问数据库。可以根据业务需求，在系统启动或低峰期进行预热操作，将热点数据提前加载到缓存中。</p>
+<p>热点数据预加载可以提升系统的性能和响应速度，减轻数据库的负载。</p>
+<h3 id="缓存高可用"><a href="#缓存高可用" class="headerlink" title="缓存高可用"></a>缓存高可用</h3><p>缓存做成集群的形式，提高可用性，防止缓存挂掉后，造成的穿透问题。</p>
+<p>当缓存服务器发生故障或宕机时，需要有相应的故障转移和降级策略。可以通过监控系统来及时发现缓存故障，并进行自动切换到备份缓存服务器。同时，可以实现降级策略，当缓存失效时，系统可以直接访问数据库，保证系统的可用性。通过缓存故障转移和降级策略，可以保证系统在缓存不可用或故障的情况下仍然可以正常运行，提高系统的稳定性和容错性。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/05/06/redis/%E4%BD%BF%E7%94%A8redis%E7%BB%9F%E8%AE%A1%E7%BD%91%E7%AB%99%E7%9A%84uv%EF%BC%8C%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E5%81%9A/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +719,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -540,8 +942,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -732,8 +1134,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -932,8 +1334,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -1147,8 +1549,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -1366,8 +1768,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -1565,8 +1967,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -1772,8 +2174,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -1979,8 +2381,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -2194,8 +2596,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -2383,8 +2785,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -2592,8 +2994,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -2800,8 +3202,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -3021,8 +3423,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -3232,8 +3634,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -3427,8 +3829,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -3629,8 +4031,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -3840,8 +4242,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -3996,401 +4398,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/04/29/JVM/Jvm%E7%9A%84%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/04/29/JVM/Jvm%E7%9A%84%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/" itemprop="url">👌Jvm的垃圾回收是什么？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-04-29T13:33:41+00:00">
-                2025-04-29
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌Jvm的垃圾回收是什么？"><a href="#👌Jvm的垃圾回收是什么？" class="headerlink" title="👌Jvm的垃圾回收是什么？"></a>👌Jvm的垃圾回收是什么？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><h2 id="什么是垃圾回收？"><a href="#什么是垃圾回收？" class="headerlink" title="什么是垃圾回收？"></a>什么是垃圾回收？</h2><p>所谓垃圾回收机制（Garbage Collection， 简称GC），指自动管理动态分配的内存空间的机制，自动回收不再使用的内存，不定时去堆内存中清理不可达对象，以避免内存泄漏和内存溢出的问题。最早是在1960年代提出的。</p>
-<p>垃圾回收是 java相较于c、c++语言的优势之一。其他编程语言，如C#、Python和Ruby等，也都提供了垃圾回收机制。不可达的对象并不会马上就会直接回收， 垃圾收集器在一个Java程序中的执行是自动的，不能强制执行，程序员唯一能做的就是通过调用System.gc 方法来建议执行垃圾收集器，但其是否可以执行，什么时候执行却都是不可知的。</p>
-<p>这也是垃圾收集器的最主要的缺点。</p>
-<h2 id="为什么需要垃圾回收？"><a href="#为什么需要垃圾回收？" class="headerlink" title="为什么需要垃圾回收？"></a>为什么需要垃圾回收？</h2><p>如果不进行垃圾回收，内存迟早都会被消耗空，因为我们在不断的分配内存空间而不进行回收。除非内存无限大，我们可以任性的分配而不回收，但是事实并非如此。所以，垃圾回收是必须的。</p>
-<p>优点：</p>
-<p>减少了程序员的工作量，不需要手动管理内存</p>
-<p>动态地管理内存，根据应用程序的需要进行分配和回收，提高了内存利用率</p>
-<p>避免内存泄漏和野指针等问题，增加程序的稳定性和可靠</p>
-<p>缺点：</p>
-<p>垃圾回收会占用一定的系统资源，可能会影响程序的性能</p>
-<p>垃圾回收过程中会停止程序的执行，可能会导致程序出现卡顿等问题</p>
-<p>不一定能够完全解决内存泄漏等问题，需要在编写代码时注意内存管理和编码规范</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2025/04/29/JVM/jvm%E4%B8%89%E8%89%B2%E6%A0%87%E8%AE%B0%E6%B3%95%E7%9A%84%E4%BC%98%E7%82%B9%E5%92%8C%E7%BC%BA%E7%82%B9%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2025/04/29/JVM/jvm%E4%B8%89%E8%89%B2%E6%A0%87%E8%AE%B0%E6%B3%95%E7%9A%84%E4%BC%98%E7%82%B9%E5%92%8C%E7%BC%BA%E7%82%B9%EF%BC%9F/" itemprop="url">三色标记法的优点和缺点？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-04-29T13:33:41+00:00">
-                2025-04-29
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌jvm-三色标记法的优点和缺点？"><a href="#👌jvm-三色标记法的优点和缺点？" class="headerlink" title="👌jvm 三色标记法的优点和缺点？"></a>👌jvm 三色标记法的优点和缺点？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>三色标记法是一种用于垃圾回收的标记算法，通过将对象分为三种颜色（白色、灰色和黑色）来管理垃圾收集过程。它在并发垃圾收集器中尤其有用，因为它能够有效处理对象引用的变化。</p>
-<h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><p><strong>并发性</strong>：</p>
-<p><strong>减少停顿时间</strong>：三色标记法允许垃圾收集器在应用线程运行的同时进行标记，这大大减少了应用程序的停顿时间，提高了应用的响应性。</p>
-<p><strong>并发标记</strong>：通过颜色标记和写屏障技术，三色标记法能够在并发环境下准确标记存活对象，避免遗漏或错误标记。</p>
-<p><strong>精确性</strong>：</p>
-<p><strong>准确标记存活对象</strong>：三色标记法通过颜色状态和处理队列，确保所有存活对象都能被正确标记，从而避免存活对象被错误回收。</p>
-<p><strong>处理对象引用变化</strong>：在并发标记阶段，三色标记法能够处理对象引用的变化，确保引用变化不会导致存活对象被错误回收。</p>
-<h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2><p><strong>复杂性</strong>：</p>
-<p><strong>实现复杂</strong>：三色标记法的实现相对复杂，尤其是在维护颜色不变性和处理并发标记时，需要额外的机制（如写屏障）来确保正确性。</p>
-<p><strong>写屏障开销</strong>：维护颜色不变性需要使用写屏障技术，这会增加一定的运行时开销，可能对性能产生影响。</p>
-<p><strong>内存开销</strong>：</p>
-<p><strong>颜色状态维护</strong>：三色标记法需要为每个对象维护颜色状态，这会增加一定的内存开销。</p>
-<p><strong>处理队列</strong>：需要额外的内存来维护灰色对象的处理队列。</p>
-<p><strong>复杂的边界条件</strong>：</p>
-<p><strong>颜色不变性维护</strong>：在并发环境下，维护颜色不变性（如强三色不变性或弱三色不变性）可能会遇到复杂的边界条件，需要仔细处理以确保算法的正确性。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4441,7 +4448,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">237</span>
+                <span class="site-state-item-count">239</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -4452,7 +4459,7 @@
             
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>

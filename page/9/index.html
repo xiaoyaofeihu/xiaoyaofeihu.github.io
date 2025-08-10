@@ -270,6 +270,439 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/11/10/Mysql/Mysql%E4%BA%8B%E5%8A%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/11/10/Mysql/Mysql%E4%BA%8B%E5%8A%A1/" itemprop="url">Mysql事务</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-11-10T17:33:00+00:00">
+                2024-11-10
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="一、事务"><a href="#一、事务" class="headerlink" title="一、事务"></a>一、事务</h2><p><strong>事务指的是逻辑上的一组操作，组成这组操作的各个单元要么全都成功，要么全都失败。</strong><br><strong>事务作用：保证在一个事务中多次SQL操作要么全都成功，要么全都失败。</strong></p>
+<h3 id="1、特性"><a href="#1、特性" class="headerlink" title="1、特性"></a>1、特性</h3><ul>
+<li>原子性：事务的操作要么都发生，要么都不发生；</li>
+<li>一致性：事务前后数据的完整性必须保持一致；</li>
+<li>隔离性：一个用户的事务不能被其他用户的事务干扰；多个并发事务之间的数据相互隔离；隔离性由隔离级别保障！</li>
+<li>持久性：事务一旦提交，对数据的修改时永久性的；</li>
+</ul>
+<h3 id="2、事务并发问题"><a href="#2、事务并发问题" class="headerlink" title="2、事务并发问题"></a>2、事务并发问题</h3><ul>
+<li>脏读：一个事务读到了另一个事务未提交的数据</li>
+<li>不可重复读：一个事务读到了另一个事务已经提交(update)的数据。引发事务中的多次查询结果不<br>一致</li>
+<li>虚读 &#x2F;幻读：一个事务读到了另一个事务已经插入(insert)的数据。导致事务中多次查询的结果不一<br>致</li>
+<li>丢失更新的问题！</li>
+</ul>
+<h3 id="3、隔离级别"><a href="#3、隔离级别" class="headerlink" title="3、隔离级别"></a>3、隔离级别</h3><ul>
+<li>read uncommitted 读未提交【RU】，一个事务读到另一个事务没有提交的数据<br>存在：3个问题（脏读、不可重复读、幻读）。</li>
+<li>read committed 读已提交【RC】，一个事务读到另一个事务已经提交的数据<br>存在：2个问题（不可重复读、幻读）。<br>解决：1个问题（脏读）</li>
+<li>repeatable read:可重复读【RR】，在一个事务中读到的数据始终保持一致，无论另一个事务是<br>否提交<br>解决：3个问题（脏读、不可重复读、幻读）</li>
+<li>serializable 串行化，同时只能执行一个事务，相当于事务中的单线程<br>解决：3个问题（脏读、不可重复读、幻读）</li>
+</ul>
+<h2 id="二、事务底层"><a href="#二、事务底层" class="headerlink" title="二、事务底层"></a>二、事务底层</h2><h3 id="1、丢失更新问题"><a href="#1、丢失更新问题" class="headerlink" title="1、丢失更新问题"></a>1、丢失更新问题</h3><ul>
+<li>两个事务针对同一个数据进行修改操作时会丢失更新！</li>
+<li>解决方案：<ul>
+<li>基于锁并发控制LBCC</li>
+<li>基于版本并发控制MVCC</li>
+</ul>
+</li>
+</ul>
+<h2 id="三、MVCC"><a href="#三、MVCC" class="headerlink" title="三、MVCC"></a>三、MVCC</h2><h3 id="核心思想是读不加锁，读写不冲突"><a href="#核心思想是读不加锁，读写不冲突" class="headerlink" title="核心思想是读不加锁，读写不冲突"></a>核心思想是读不加锁，读写不冲突</h3><p><strong>MVCC 实现原理关键在于数据快照，不同的事务访问不同版本的数据快照，从而实现事务下对数据的隔离级别</strong></p>
+<p>MVCC，全称Multiversion Concurrency Control，即多版本并发控制，是数据库领域中一种用于管理并发数据访问的机制。与数据库锁相似，MVCC也是一种并发控制的解决方案，但它侧重于通过维护数据的多个版本来避免读写冲突，从而提高并发性能。</p>
+<h3 id="MVCC的基本原理"><a href="#MVCC的基本原理" class="headerlink" title="MVCC的基本原理"></a>MVCC的基本原理</h3><p>在数据库中，对数据的操作主要分为读和写两种。在并发场景下，会出现读-读并发、读-写并发和写-写并发三种情况。其中，读-读并发通常不会引发问题，写-写并发则常通过加锁来解决，而读-写并发则可以通过MVCC机制来高效处理。</p>
+<p>MVCC的核心思想是，对于同一份数据，每个事务在读取时都会看到一个特定的、一致的数据版本，这个版本是在该事务开始时刻生成的。这样，即使有其他事务在修改数据，也不会影响到当前事务的读取结果。</p>
+<h3 id="快照读与当前读"><a href="#快照读与当前读" class="headerlink" title="快照读与当前读"></a>快照读与当前读</h3><p>MVCC的实现依赖于快照读的概念。快照读是指读取的是快照数据，即快照生成时的数据状态。在MySQL中，普通的SELECT语句（不加锁）通常就是快照读。与快照读相对应的是当前读，它读取的是最新数据，通常用于加锁的SELECT操作或数据的增删改操作。</p>
+<h3 id="Undo-Log与快照"><a href="#Undo-Log与快照" class="headerlink" title="Undo Log与快照"></a>Undo Log与快照</h3><p>Undo Log是MySQL中用于回退的事务日志。在事务提交之前，MySQL会先记录更新前的数据到Undo Log中。这些“更新前的数据”实际上就是快照数据。因此，Undo Log是MVCC实现的重要手段。</p>
+<p>每当一条记录发生变更时，MySQL都会先将其快照存储到Undo Log中，并更新记录中的隐式字段。这些隐式字段包括：</p>
+<ul>
+<li><code>db_row_id</code>：隐藏主键，用于创建聚簇索引。</li>
+<li><code>db_trx_id</code>：对这条记录做了最新一次修改的事务的ID。</li>
+<li><code>db_roll_ptr</code>：回滚指针，指向这条记录的上一个版本（即Undo Log中的上一个快照的地址）。</li>
+</ul>
+<p>这样，每个快照都通过<code>db_trx_id</code>和<code>db_roll_ptr</code>字段形成了一个快照链表。</p>
+<h3 id="Read-View与可见性"><a href="#Read-View与可见性" class="headerlink" title="Read View与可见性"></a>Read View与可见性</h3><p>然而，即使有了Undo Log和快照链表，我们仍然需要确定在当前事务中应该读取哪个快照。这时，就需要用到Read View了。</p>
+<p>Read View是InnoDB中一个至关重要的概念，它是实现MVCC的基础。Read View主要用来解决可见性问题，即它会告诉当前事务应该看到哪个版本的数据。具体来说，Read View会根据当前事务的ID和其他活跃事务的ID来构建一个视图，然后基于这个视图来确定哪些数据版本对当前事务是可见的。</p>
+<p>通过Read View，InnoDB能够确保每个事务在读取数据时都能看到一个一致的快照，从而避免了读写冲突，提高了并发性能。</p>
+<p>综上所述，MVCC通过维护数据的多个版本、利用快照读和Undo Log以及Read View等机制，实现了高效的并发控制。这使得数据库能够在高并发环境下保持数据的一致性和完整性，同时提高了系统的性能和吞吐量。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><ul>
+<li>MVCC指在使用RC、RR隔离级别下，使不同事务的 读-写 、 写-读 操作并发执行，提升系统性能</li>
+<li>MVCC核心思想是读不加锁，读写不冲突。</li>
+<li>RC、RR这两个隔离级别的一个很大不同就是生成 ReadView 的时机不同</li>
+<li>RC在每一次进行普通 SELECT 操作前都会生成一个 ReadView</li>
+<li>RR在第一次进行普通 SELECT 操作前生成一个 ReadView ，之后的查询操作都重复这个ReadView</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/11/10/Mysql/Mysql%E7%B4%A2%E5%BC%95%E4%B8%8B%E6%8E%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="余声-个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/11/10/Mysql/Mysql%E7%B4%A2%E5%BC%95%E4%B8%8B%E6%8E%A8/" itemprop="url">Mysql事务</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-11-10T17:33:00+00:00">
+                2024-11-10
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="什么是索引下推"><a href="#什么是索引下推" class="headerlink" title="什么是索引下推"></a>什么是索引下推</h2><h3 id="官方索引条件下推："><a href="#官方索引条件下推：" class="headerlink" title="官方索引条件下推："></a>官方索引条件下推：</h3><blockquote>
+<p>Index Condition Pushdown，简称ICP。是MySQL5.6对使用索引从表中检索行的<br>一种优化。ICP可以减少存储引擎必须访问基表的次数以及MySQL服务器必须访问存储引擎的次数。可<br>用于 InnoDB 和 MyISAM 表，对于InnoDB表ICP仅用于辅助索引。<br>可以通过参数optimizer_switch控制ICP的开始和关闭。</p>
+</blockquote>
+<h3 id="索引下推和覆盖索引是减少回表的一种手段"><a href="#索引下推和覆盖索引是减少回表的一种手段" class="headerlink" title="索引下推和覆盖索引是减少回表的一种手段"></a>索引下推和覆盖索引是减少回表的一种手段</h3><ul>
+<li>ICP可以有效减少回表查询次数和返回给服务层的记录数，从而<br>减少了磁盘IO次数和服务层与存储引擎的交互次数。</li>
+</ul>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>以InnoDB的辅助索引为例，来讲解ICP的作用：MySQl在使用组合索引在检索数据时是使用最左前缀原<br>则来定位记录，左侧前缀之后不匹配的后缀，MySQL会怎么处理？</p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>#optimizer_switch优化相关参数开关<br>mysql&gt; show VARIABLES like ‘optimizer_switch’;<br>#关闭ICP<br>SET optimizer_switch &#x3D; ‘index_condition_pushdown&#x3D;off’;<br>#开启ICP<br>SET optimizer_switch &#x3D; ‘index_condition_pushdown&#x3D;on’;</p>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE `test1`  (</span><br><span class="line">  `id` int NOT NULL,</span><br><span class="line">  `id1` int NULL DEFAULT NULL,</span><br><span class="line">  `id2` int NULL DEFAULT NULL,</span><br><span class="line">  `id3` int NULL DEFAULT NULL,</span><br><span class="line">  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,</span><br><span class="line">  PRIMARY KEY (`id`) USING BTREE,</span><br><span class="line">  INDEX `id1`(`id1`, `id2`, `id3`) USING BTREE</span><br><span class="line">) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;</span><br><span class="line"></span><br><span class="line">-- ----------------------------</span><br><span class="line">-- Records of test1</span><br><span class="line">-- ----------------------------</span><br><span class="line">INSERT INTO `test1` VALUES (1, 2, 3, 4, &#x27;zhangsan &#x27;);</span><br><span class="line">INSERT INTO `test1` VALUES (2, 2, 3, 5, &#x27;lisi&#x27;);</span><br><span class="line">INSERT INTO `test1` VALUES (3, 2, 4, 5, &#x27;wangwu &#x27;);</span><br><span class="line"></span><br><span class="line">SET FOREIGN_KEY_CHECKS = 1;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">EXPLAIN SELECT * FROM `test1` WHERE id1 = 1 AND id2 &gt; 1 AND id3 = 3;</span><br></pre></td></tr></table></figure>
+<p>如果使用了索引下推，Extra 中是Using index condition</p>
+<h3 id="注意！！！"><a href="#注意！！！" class="headerlink" title="注意！！！"></a>注意！！！</h3><p>如果你的 EXPLAIN 输出显示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Extra: Using where; Using index</span><br><span class="line">Using where：表示部分条件是在 MySQL 层处理的，而不是完全依赖索引。</span><br><span class="line">Using index：说明查询是覆盖索引的（即所有查询的数据都可以从索引中获取，避免回表）。</span><br></pre></td></tr></table></figure>
+<p>这说明，虽然联合索引 (id1, id2, id3) 被使用，但优化器可能认为使用 索引覆盖扫描 比触发索引下推更高效。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/11/10/%E5%9F%BA%E7%A1%80/volatile/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -317,8 +750,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -544,8 +977,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -742,8 +1175,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -943,8 +1376,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -1149,8 +1582,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -1363,8 +1796,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -1562,8 +1995,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -1788,8 +2221,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -1996,8 +2429,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -2213,8 +2646,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -2418,8 +2851,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -2629,8 +3062,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -2849,8 +3282,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -3051,8 +3484,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -3249,8 +3682,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -3449,8 +3882,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -3661,8 +4094,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -3865,8 +4298,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
+              <time title="更新于" itemprop="dateModified" datetime="2025-08-10T15:59:54+00:00">
+                2025-08-10
               </time>
             
           </span>
@@ -4020,437 +4453,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/java8%E7%9A%84hashmap%E5%AE%9E%E7%8E%B0%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/java8%E7%9A%84hashmap%E5%AE%9E%E7%8E%B0%EF%BC%9F/" itemprop="url">java8的hashmap实现</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌java8的hashmap实现？"><a href="#👌java8的hashmap实现？" class="headerlink" title="👌java8的hashmap实现？"></a>👌java8的hashmap实现？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>在Java 8中，HashMap的实现进行了显著的优化，特别是在处理哈希冲突方面，引入了红黑树数据结构。这些改进旨在提高在高冲突情况下的性能。</p>
-<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><p>HashMap的底层结构仍然是基于数组和链表的组合，但在Java 8中，当链表长度超过一定阈值时，会将链表转换为红黑树，以提高操作效率。</p>
-<h2 id="存储过程"><a href="#存储过程" class="headerlink" title="存储过程"></a>存储过程</h2><ol>
-<li><strong>计算哈希值</strong>：首先，通过键的hashCode方法计算哈希值，然后对该哈希值进行扰动，以减少冲突。扰动的目的是为了使哈希值更加均匀地分布在数组中。</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">static final int hash(Object key) &#123;</span><br><span class="line">    int h;</span><br><span class="line">    return (key == null) ? 0 : (h = key.hashCode()) ^ (h &gt;&gt;&gt; 16);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li><strong>确定数组索引</strong>：通过哈希值与数组长度的减一值进行按位与运算，计算出数组的索引位置。</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">static int indexFor(int h, int length) &#123;</span><br><span class="line">    return h &amp; (length - 1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li><strong>插入节点</strong>：</li>
-</ol>
-<p>如果数组索引位置为空，直接插入新的节点。</p>
-<p>如果不为空，则需要处理哈希冲突。</p>
-<h2 id="处理哈希冲突"><a href="#处理哈希冲突" class="headerlink" title="处理哈希冲突"></a>处理哈希冲突</h2><p>在Java 8中，处理哈希冲突的方法有了显著改进：</p>
-<ol>
-<li><strong>链表</strong>：如果冲突的节点数较少（链表长度小于等于8），则使用链表存储。链表的插入操作在链表尾部进行，以保持插入顺序。</li>
-<li><strong>红黑树</strong>：如果链表长度超过8，长度大于 64HashMap会将链表转换为红黑树。红黑树是一种自平衡的二叉搜索树，其查找、插入和删除操作的时间复杂度为O(log n)，相比链表的O(n)更高效。</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if (binCount &gt;= TREEIFY_THRESHOLD - 1) // -1 for 1st</span><br><span class="line">    treeifyBin(tab, hash);</span><br></pre></td></tr></table></figure>
-
-<h2 id="取值过程"><a href="#取值过程" class="headerlink" title="取值过程"></a>取值过程</h2><p>在取值时，HashMap会先计算哈希值，然后找到对应的数组位置。如果该位置存储的是链表，则遍历链表查找；如果是红黑树，则在树中查找。</p>
-<h2 id="扩容"><a href="#扩容" class="headerlink" title="扩容"></a>扩容</h2><p>当HashMap中的元素数量超过一定阈值（通常是数组长度的0.75倍）时，会进行扩容。扩容时，HashMap会创建一个新的、更大的数组，并将旧数组中的所有元素重新哈希并放入新数组中。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">void resize(int newCapacity) &#123;</span><br><span class="line">    Node&lt;K,V&gt;[] oldTable = table;</span><br><span class="line">    int oldCapacity = oldTable.length;</span><br><span class="line">    Node&lt;K,V&gt;[] newTable = (Node&lt;K,V&gt;[])new Node[newCapacity];</span><br><span class="line">    // Rehashing elements to new table</span><br><span class="line">    for (int j = 0; j &lt; oldCapacity; ++j) &#123;</span><br><span class="line">        Node&lt;K,V&gt; e;</span><br><span class="line">        if ((e = oldTable[j]) != null) &#123;</span><br><span class="line">            oldTable[j] = null;</span><br><span class="line">            if (e.next == null)</span><br><span class="line">                newTable[e.hash &amp; (newCapacity - 1)] = e;</span><br><span class="line">            else if (e instanceof TreeNode)</span><br><span class="line">                ((TreeNode&lt;K,V&gt;)e).split(this, newTable, j, oldCapacity);</span><br><span class="line">            else &#123; // preserve order</span><br><span class="line">                Node&lt;K,V&gt; loHead = null, loTail = null;</span><br><span class="line">                Node&lt;K,V&gt; hiHead = null, hiTail = null;</span><br><span class="line">                Node&lt;K,V&gt; next;</span><br><span class="line">                do &#123;</span><br><span class="line">                    next = e.next;</span><br><span class="line">                    if ((e.hash &amp; oldCapacity) == 0) &#123;</span><br><span class="line">                        if (loTail == null)</span><br><span class="line">                            loHead = e;</span><br><span class="line">                        else</span><br><span class="line">                            loTail.next = e;</span><br><span class="line">                        loTail = e;</span><br><span class="line">                    &#125;</span><br><span class="line">                    else &#123;</span><br><span class="line">                        if (hiTail == null)</span><br><span class="line">                            hiHead = e;</span><br><span class="line">                        else</span><br><span class="line">                            hiTail.next = e;</span><br><span class="line">                        hiTail = e;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; while ((e = next) != null);</span><br><span class="line">                if (loTail != null) &#123;</span><br><span class="line">                    loTail.next = null;</span><br><span class="line">                    newTable[j] = loHead;</span><br><span class="line">                &#125;</span><br><span class="line">                if (hiTail != null) &#123;</span><br><span class="line">                    hiTail.next = null;</span><br><span class="line">                    newTable[j + oldCapacity] = hiHead;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    table = newTable;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><font style="color:rgb(36, 41, 47);">Java 8中的</font>HashMap<font style="color:rgb(36, 41, 47);">通过引入红黑树来优化哈希冲突的处理。当链表长度超过一定阈值时转换为红黑树，从而在极端情况下提高查找和插入的效率。这些改进使得</font>HashMap<font style="color:rgb(36, 41, 47);">在大多数情况下能够提供更稳定和高效的性能。</font></p>
-<blockquote>
-<p>&#x2F;uxrna62kfc64guwy&gt;</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaoyaofeihu.github.io/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/jdk7%E7%9A%84ConcurrentHashMap%E5%AE%9E%E7%8E%B0%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/11.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="余声-个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/10/16/%E9%9D%A2%E8%AF%95%E9%A2%98/jdk7%E7%9A%84ConcurrentHashMap%E5%AE%9E%E7%8E%B0%EF%BC%9F/" itemprop="url">jdk7的ConcurrentHashMap实现？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-16T13:33:41+00:00">
-                2024-10-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2025-08-03T16:14:41+00:00">
-                2025-08-03
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">面试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="👌jdk7的ConcurrentHashMap实现？"><a href="#👌jdk7的ConcurrentHashMap实现？" class="headerlink" title="👌jdk7的ConcurrentHashMap实现？"></a>👌jdk7的ConcurrentHashMap实现？</h1><h1 id="题目详细答案"><a href="#题目详细答案" class="headerlink" title="题目详细答案"></a>题目详细答案</h1><p>在JDK 7中，ConcurrentHashMap的实现与JDK 8有所不同。JDK 7中的ConcurrentHashMap使用了分段锁（Segment Locking）来实现高并发性能。</p>
-<h2 id="主要结构"><a href="#主要结构" class="headerlink" title="主要结构"></a>主要结构</h2><p>JDK 7中的ConcurrentHashMap由以下几个主要部分组成：</p>
-<ol>
-<li><strong>Segment</strong>：分段锁的核心，每个Segment是一个小的哈希表，拥有独立的锁。</li>
-<li><strong>HashEntry</strong>：哈希表中的每个节点，存储键值对。</li>
-<li><strong>ConcurrentHashMap</strong>：包含多个Segment，每个Segment管理一部分哈希表。</li>
-</ol>
-<h2 id="Segment-类"><a href="#Segment-类" class="headerlink" title="Segment 类"></a>Segment 类</h2><p>Segment类是ReentrantLock的子类，它是ConcurrentHashMap的核心部分。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">static final class Segment&lt;K,V&gt; extends ReentrantLock implements Serializable &#123;</span><br><span class="line">    transient volatile HashEntry&lt;K,V&gt;[] table;</span><br><span class="line">    transient int count;</span><br><span class="line">    transient int modCount;</span><br><span class="line">    transient int threshold;</span><br><span class="line">    final float loadFactor;</span><br><span class="line"></span><br><span class="line">    Segment(float lf, int threshold, HashEntry&lt;K,V&gt;[] tab) &#123;</span><br><span class="line">        this.loadFactor = lf;</span><br><span class="line">        this.threshold = threshold;</span><br><span class="line">        this.table = tab;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="HashEntry-类"><a href="#HashEntry-类" class="headerlink" title="HashEntry 类"></a>HashEntry 类</h2><p>HashEntry类是哈希表中的节点，存储键值对和指向下一个节点的指针。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">static final class HashEntry&lt;K,V&gt; &#123;</span><br><span class="line">    final K key;</span><br><span class="line">    final int hash;</span><br><span class="line">    volatile V value;</span><br><span class="line">    volatile HashEntry&lt;K,V&gt; next;</span><br><span class="line"></span><br><span class="line">    HashEntry(K key, int hash, HashEntry&lt;K,V&gt; next, V value) &#123;</span><br><span class="line">        this.key = key;</span><br><span class="line">        this.hash = hash;</span><br><span class="line">        this.next = next;</span><br><span class="line">        this.value = value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="ConcurrentHashMap-类"><a href="#ConcurrentHashMap-类" class="headerlink" title="ConcurrentHashMap 类"></a>ConcurrentHashMap 类</h2><p>ConcurrentHashMap类包含多个Segment，每个Segment管理一部分哈希表。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public class ConcurrentHashMap&lt;K,V&gt; extends AbstractMap&lt;K,V&gt;</span><br><span class="line">    implements ConcurrentMap&lt;K,V&gt;, Serializable &#123;</span><br><span class="line"></span><br><span class="line">    final Segment&lt;K,V&gt;[] segments;</span><br><span class="line">    transient Set&lt;K&gt; keySet;</span><br><span class="line">    transient Set&lt;Map.Entry&lt;K,V&gt;&gt; entrySet;</span><br><span class="line">    transient Collection&lt;V&gt; values;</span><br><span class="line">    static final int DEFAULT_INITIAL_CAPACITY = 16;</span><br><span class="line">    static final float DEFAULT_LOAD_FACTOR = 0.75f;</span><br><span class="line">    static final int DEFAULT_CONCURRENCY_LEVEL = 16;</span><br><span class="line">    static final int MAXIMUM_CAPACITY = 1 &lt;&lt; 30;</span><br><span class="line">    static final int MIN_SEGMENT_TABLE_CAPACITY = 2;</span><br><span class="line">    static final int MAX_SEGMENTS = 1 &lt;&lt; 16; // slightly conservative</span><br><span class="line"></span><br><span class="line">    // Other fields and methods...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="put-操作"><a href="#put-操作" class="headerlink" title="put 操作"></a>put 操作</h2><p>put操作是ConcurrentHashMap的核心操作之一，以下是其简化版实现：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">public V put(K key, V value) &#123;</span><br><span class="line">    Segment&lt;K,V&gt; s;</span><br><span class="line">    if (value == null)</span><br><span class="line">        throw new NullPointerException();</span><br><span class="line">    int hash = hash(key);</span><br><span class="line">    int j = (hash &gt;&gt;&gt; segmentShift) &amp; segmentMask;</span><br><span class="line">    if ((s = (Segment&lt;K,V&gt;)UNSAFE.getObject          // nonvolatile; recheck</span><br><span class="line">         (segments, (j &lt;&lt; SSHIFT) + SBASE)) == null) // in ensureSegment</span><br><span class="line">        s = ensureSegment(j);</span><br><span class="line">    return s.put(key, hash, value, false);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">final V put(K key, int hash, V value, boolean onlyIfAbsent) &#123;</span><br><span class="line">    HashEntry&lt;K,V&gt; node = tryLock() ? null : scanAndLockForPut(key, hash, value);</span><br><span class="line">    V oldValue;</span><br><span class="line">    try &#123;</span><br><span class="line">        HashEntry&lt;K,V&gt;[] tab = table;</span><br><span class="line">        int index = (tab.length - 1) &amp; hash;</span><br><span class="line">        HashEntry&lt;K,V&gt; first = entryAt(tab, index);</span><br><span class="line">        for (HashEntry&lt;K,V&gt; e = first;;) &#123;</span><br><span class="line">            if (e != null) &#123;</span><br><span class="line">                K k;</span><br><span class="line">                if ((k = e.key) == key || (e.hash == hash &amp;&amp; key.equals(k))) &#123;</span><br><span class="line">                    oldValue = e.value;</span><br><span class="line">                    if (!onlyIfAbsent) &#123;</span><br><span class="line">                        e.value = value;</span><br><span class="line">                        ++modCount;</span><br><span class="line">                    &#125;</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">                e = e.next;</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                if (node != null)</span><br><span class="line">                    node.setNext(first);</span><br><span class="line">                else</span><br><span class="line">                    node = new HashEntry&lt;K,V&gt;(key, hash, first, value);</span><br><span class="line">                int c = count + 1;</span><br><span class="line">                if (c &gt; threshold &amp;&amp; tab.length &lt; MAXIMUM_CAPACITY)</span><br><span class="line">                    rehash(node);</span><br><span class="line">                else</span><br><span class="line">                    setEntryAt(tab, index, node);</span><br><span class="line">                ++modCount;</span><br><span class="line">                count = c;</span><br><span class="line">                oldValue = null;</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; finally &#123;</span><br><span class="line">        unlock();</span><br><span class="line">    &#125;</span><br><span class="line">    return oldValue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="get-操作"><a href="#get-操作" class="headerlink" title="get 操作"></a>get 操作</h2><p>get操作是ConcurrentHashMap的另一个核心操作，以下是其简化版实现：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public V get(Object key) &#123;</span><br><span class="line">    Segment&lt;K,V&gt; s;</span><br><span class="line">    HashEntry&lt;K,V&gt;[] tab;</span><br><span class="line">    int h = hash(key);</span><br><span class="line">    long u = (((h &gt;&gt;&gt; segmentShift) &amp; segmentMask) &lt;&lt; SSHIFT) + SBASE;</span><br><span class="line">    if ((s = (Segment&lt;K,V&gt;)UNSAFE.getObjectVolatile(segments, u)) != null &amp;&amp;</span><br><span class="line">        (tab = s.table) != null) &#123;</span><br><span class="line">        for (HashEntry&lt;K,V&gt; e = (HashEntry&lt;K,V&gt;) UNSAFE.getObjectVolatile</span><br><span class="line">                 (tab, ((long)(((tab.length - 1) &amp; h)) &lt;&lt; TSHIFT) + TBASE);</span><br><span class="line">             e != null; e = e.next) &#123;</span><br><span class="line">            K k;</span><br><span class="line">            if ((k = e.key) == key || (e.hash == h &amp;&amp; key.equals(k)))</span><br><span class="line">                return e.value;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="主要特点"><a href="#主要特点" class="headerlink" title="主要特点"></a>主要特点</h2><ol>
-<li><strong>分段锁</strong>：ConcurrentHashMap将整个哈希表分成多个Segment，每个Segment是一个独立的小哈希表，拥有自己的锁。这样不同的线程可以并发地访问不同的Segment，显著提高并发性能。</li>
-<li><strong>高效并发</strong>：通过细粒度的锁机制，ConcurrentHashMap在高并发环境下表现出色，避免了全表锁的性能瓶颈。</li>
-<li><strong>线程安全</strong>：所有的操作都在锁的保护下进行，确保了线程安全性。</li>
-</ol>
-<p>JDK 7中的ConcurrentHashMap通过分段锁机制实现高并发性能。每个Segment是一个独立的小哈希表，拥有自己的锁，允许多个线程并发地访问不同的Segment。这种设计在高并发环境下显著提高了性能，同时保证了线程安全性。</p>
-<blockquote>
-<p>&#x2F;krsz9bcuq049gs4t&gt;</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4501,7 +4503,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">237</span>
+                <span class="site-state-item-count">239</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -4512,7 +4514,7 @@
             
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
